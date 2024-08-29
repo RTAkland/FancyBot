@@ -27,7 +27,7 @@ tasks.compileJava {
 
 
 dependencies {
-    implementation("cn.rtast:ROneBot:0.2.0")
+    implementation("cn.rtast:ROneBot:1.2.2")
     implementation("com.google.code.gson:gson:2.11.0")
     implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.14")
 }
@@ -37,6 +37,10 @@ tasks.build {
 }
 
 tasks.jar {
+    enabled = false
+}
+
+tasks.shadowJar {
     manifest {
         attributes(
             "Main-Class" to "cn.rtast.fancybot.FancyBotKt",

@@ -15,7 +15,7 @@ import kotlin.random.Random
 class JrrpCommand : BaseCommand() {
     override val commandName = "/今日人品"
 
-    override fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
         val randomNumber = Random.nextInt(0, 101)
         val scoreDesc = when (randomNumber) {
             in 0..10 -> "人品不太好呢"
@@ -24,6 +24,6 @@ class JrrpCommand : BaseCommand() {
             in 90..100 -> "人品超级好呢！"
             else -> "人品还行哦"
         }
-        listener.sendGroupMessage(message.groupId, scoreDesc)
+        listener.sendGroupMessage(message.groupId, "$scoreDesc($randomNumber)")
     }
 }

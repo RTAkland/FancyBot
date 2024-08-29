@@ -14,7 +14,7 @@ import cn.rtast.rob.util.ob.OBMessage
 class EchoCommand: BaseCommand() {
     override val commandName = "/echo"
 
-    override fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
         listener.sendGroupMessage(message.groupId, args.joinToString(" "))
     }
 }
