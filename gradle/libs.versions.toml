@@ -3,10 +3,15 @@ kotlinVersion = "2.0.10"
 ronebotVersion = "1.2.6"
 shadowVersion = "8.3.0"
 okhttpVersion = "5.0.0-alpha.14"
+exposedVersion = "0.53.0"
+sqliteJDBCVersion = "3.46.1.0"
 
 [libraries]
 rOneBot = { group = "cn.rtast", name = "ROneBot", version.ref = "ronebotVersion" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttpVersion" }
+exposedCore = { group = "org.jetbrains.exposed", name = "exposed-core", version.ref = "exposedVersion" }
+exposedJDBC = { group = "org.jetbrains.exposed", name = "exposed-jdbc", version.ref = "exposedVersion" }
+sqliteJDBC = { group = "org.xerial", name = "sqlite-jdbc", version.ref = "sqliteJDBCVersion" }
 
 [bundles]
 
