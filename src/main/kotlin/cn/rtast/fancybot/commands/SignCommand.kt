@@ -23,12 +23,12 @@ class SignCommand : BaseCommand() {
             return
         }
         val randomPoint = signManager.sign(message.sender.userId)
-        listener.sendGroupMessage(message.groupId, "你获得了 $randomPoint 点分数!\n发送‘/我的分数’ 即可查看当前的分数")
+        listener.sendGroupMessage(message.groupId, "你获得了 $randomPoint 点分数!\n发送‘/我的点数’ 即可查看当前的点数")
     }
 }
 
 class MyPointCommand: BaseCommand() {
-    override val commandNames = listOf("/我的分数", "/mp")
+    override val commandNames = listOf("/我的点数", "/mp")
 
     override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
         val status = signManager.getStatus(message.sender.userId)
@@ -36,7 +36,7 @@ class MyPointCommand: BaseCommand() {
             listener.sendGroupMessage(message.groupId, "你还没有签到过呢! 先发送‘/签到’再来查询吧~")
             return
         } else {
-            listener.sendGroupMessage(message.groupId, "你当前的分数为: ${status.points}")
+            listener.sendGroupMessage(message.groupId, "你当前的点数为: ${status.points}")
         }
     }
 }

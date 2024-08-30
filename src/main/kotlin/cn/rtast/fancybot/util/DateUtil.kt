@@ -8,13 +8,10 @@
 package cn.rtast.fancybot.util
 
 import java.time.Instant
-import java.time.LocalDate
 import java.time.ZoneId
 
-fun Long.isSameDay(other: Long): Boolean {
-    val currentDate = LocalDate.now()
-    val dateToCompare = Instant.ofEpochSecond(other)
-        .atZone(ZoneId.systemDefault())
-        .toLocalDate()
-    return currentDate == dateToCompare
+fun Long.isSameDay(otherTimestamp: Long, zoneId: ZoneId = ZoneId.systemDefault()): Boolean {
+    val thisDate = Instant.ofEpochMilli(this).atZone(zoneId).toLocalDate()
+    val otherDate = Instant.ofEpochMilli(otherTimestamp).atZone(zoneId).toLocalDate()
+    return thisDate == otherDate
 }

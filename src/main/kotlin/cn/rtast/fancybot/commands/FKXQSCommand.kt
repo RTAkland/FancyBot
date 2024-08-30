@@ -7,7 +7,7 @@
 
 package cn.rtast.fancybot.commands
 
-import cn.rtast.fancybot.entity.fkxqs.FKXQS
+import cn.rtast.fancybot.entity.FKXQS
 import cn.rtast.fancybot.util.Http
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand

@@ -7,25 +7,57 @@
 
 package cn.rtast.fancybot.util.file
 
-import cn.rtast.fancybot.entity.jrrp.JrrpRecord
-import cn.rtast.fancybot.util.JsonFileHandler
+import cn.rtast.fancybot.entity.JrrpRecord
+import cn.rtast.fancybot.entity.JrrpTable
+import cn.rtast.fancybot.util.suspendedTransaction
 import cn.rtast.fancybot.util.isSameDay
+import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.update
 import java.time.Instant
 import kotlin.random.Random
 
-class JrrpManager : JsonFileHandler<List<JrrpRecord>>("jrrp.json", listOf()) {
+class JrrpManager {
 
-    fun isJrrped(id: Long): Boolean {
-        val allJrrp = this.readArray<List<JrrpRecord>>()
-        val user = allJrrp.find { it.id == id } ?: return false
-        return user.timestamp.isSameDay(Instant.now().epochSecond)
+    private suspend fun getRecord(id: Long): JrrpRecord? {
+        return suspendedTransaction {
+            JrrpTable.selectAll().where { JrrpTable.userId eq id }.map {
+                JrrpRecord(
+                    it[JrrpTable.userId],
+                    it[JrrpTable.timestamp],
+                    it[JrrpTable.point],
+                )
+            }.singleOrNull()
+        }
     }
 
-    fun jrrp(id: Long): Int {
-        val allJrrp = this.readArray<MutableList<JrrpRecord>>()
-        allJrrp.removeAll { it.id == id }
-        allJrrp.add(JrrpRecord(id, Instant.now().epochSecond, 0))
-        this.write(allJrrp)
-        return Random.nextInt(0, 101)
+    suspend fun isJrrped(id: Long): Boolean {
+        val record = getRecord(id)
+        return if (record != null) {
+            record.timestamp.isSameDay(Instant.now().epochSecond)
+        } else {
+            false
+        }
+    }
+
+    suspend fun jrrp(id: Long): Long {
+        val randomPoint = Random.nextLong(0, 101)
+        if (getRecord(id) == null) {
+            suspendedTransaction {
+                JrrpTable.insert {
+                    it[userId] = id
+                    it[timestamp] = Instant.now().epochSecond
+                    it[point] = 0
+                }
+            }
+        }
+        val record = getRecord(id)
+        suspendedTransaction {
+            JrrpTable.update({ JrrpTable.userId eq id }) {
+                it[point] = record?.points!! + randomPoint
+                it[timestamp] = Instant.now().epochSecond
+            }
+        }
+        return randomPoint
     }
 }

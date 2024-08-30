@@ -16,6 +16,7 @@ import cn.rtast.fancybot.commands.MyPointCommand
 import cn.rtast.fancybot.commands.SignCommand
 import cn.rtast.fancybot.entity.enums.WSType
 import cn.rtast.fancybot.util.file.ConfigManager
+import cn.rtast.fancybot.util.initDatabase
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.ob.OBMessage
@@ -24,6 +25,10 @@ import org.java_websocket.WebSocket
 class FancyBot : OBMessage {
     override suspend fun onGroupMessage(websocket: WebSocket, message: GroupMessage, json: String) {
         println(message.rawMessage)
+    }
+
+    override suspend fun onWebsocketError(webSocket: WebSocket, ex: Exception) {
+        println(ex.printStackTrace())
     }
 }
 
@@ -39,7 +44,7 @@ val commands = listOf(
 
 val configManager = ConfigManager()
 
-fun main() {
+suspend fun main() {
     val fancyBot = FancyBot()
     val workType = configManager.wsType
     val accessToken = configManager.accessToken
@@ -52,4 +57,5 @@ fun main() {
     }
     val commandManager = rob.commandManager
     commands.forEach { commandManager.register(it) }
+    initDatabase()
 }

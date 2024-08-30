@@ -27,8 +27,12 @@ tasks.compileJava {
 
 
 dependencies {
+    val exposedVersion = "0.53.0"
     implementation(libs.rOneBot)
     implementation(libs.okhttp)
+    implementation("org.jetbrains.exposed:exposed-core:$exposedVersion")
+    implementation("org.jetbrains.exposed:exposed-jdbc:$exposedVersion")
+    implementation("org.xerial:sqlite-jdbc:3.46.1.0")
 }
 
 tasks.build {

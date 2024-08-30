@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.fancybot.entity.fkxqs
+package cn.rtast.fancybot.entity
 
 data class FKXQS(
     val data: Data,
