@@ -8,6 +8,8 @@
 package cn.rtast.fancybot
 
 import cn.rtast.fancybot.commands.EchoCommand
+import cn.rtast.fancybot.commands.FKXQSCommand
+import cn.rtast.fancybot.commands.HitokotoCommand
 import cn.rtast.fancybot.commands.JrrpCommand
 import cn.rtast.fancybot.commands.MusicCommand
 import cn.rtast.fancybot.commands.MyPointCommand
@@ -30,7 +32,9 @@ val commands = listOf(
     JrrpCommand(),
     MusicCommand(),
     SignCommand(),
-    MyPointCommand()
+    MyPointCommand(),
+    HitokotoCommand(),
+    FKXQSCommand()
 )
 
 val configManager = ConfigManager()
