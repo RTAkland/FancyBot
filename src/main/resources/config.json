@@ -1,3 +1,7 @@
 {
-  "cnmApi": "https://ncm.rtast.cn"
+  "ncmAPI": "https://ncm.rtast.cn",
+  "wsType": "Client",
+  "wsAddress": "ws://127.0.0.1",
+  "accessToken": "114514",
+  "port": 6760
 }

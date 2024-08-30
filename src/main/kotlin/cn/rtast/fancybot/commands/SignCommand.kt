@@ -15,7 +15,7 @@ import cn.rtast.rob.util.ob.OBMessage
 private val signManager = SignManager()
 
 class SignCommand : BaseCommand() {
-    override val commandName = "/签到"
+    override val commandNames = listOf("/签到", "/sign")
 
     override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
         if (signManager.isSigned(message.sender.userId)) {
@@ -28,7 +28,7 @@ class SignCommand : BaseCommand() {
 }
 
 class MyPointCommand: BaseCommand() {
-    override val commandName = "/我的分数"
+    override val commandNames = listOf("/我的分数", "/mp")
 
     override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
         val status = signManager.getStatus(message.sender.userId)

@@ -7,6 +7,12 @@
 
 package cn.rtast.fancybot.entity
 
+import cn.rtast.fancybot.entity.enums.WSType
+
 data class Config(
-    val cnmApi: String,
+    val ncmAPI: String,
+    val wsType: WSType,
+    val wsAddress: String,
+    val accessToken: String,
+    val port: Int,
 )

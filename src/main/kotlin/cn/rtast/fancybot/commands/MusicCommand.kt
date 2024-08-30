@@ -18,7 +18,7 @@ import cn.rtast.rob.util.ob.OBMessage
 import java.time.Instant
 
 class MusicCommand : BaseCommand() {
-    override val commandName = "/music"
+    override val commandNames = listOf("/music", "/点歌")
 
     private val searchedResult = mutableMapOf<Long, List<SearchedResult>>()
 

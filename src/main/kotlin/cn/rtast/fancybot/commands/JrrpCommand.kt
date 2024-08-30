@@ -13,7 +13,7 @@ import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.OBMessage
 
 class JrrpCommand : BaseCommand() {
-    override val commandName = "/jrrp"
+    override val commandNames = listOf("/jrrp", "/今日人品")
 
     private val jrrpManager = JrrpManager()
 

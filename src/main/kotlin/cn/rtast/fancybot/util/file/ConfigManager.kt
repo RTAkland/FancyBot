@@ -11,6 +11,9 @@ import cn.rtast.fancybot.entity.Config
 import cn.rtast.fancybot.util.JsonFileHandler
 
 class ConfigManager : JsonFileHandler<Config>("config.json") {
-
-    val ncmAPI get() = this.read<Config>().cnmApi
+    val ncmAPI get() = this.read<Config>().ncmAPI
+    val wsAddress get() = this.read<Config>().wsAddress
+    val wsPort get() = this.read<Config>().port
+    val accessToken get() = this.read<Config>().accessToken
+    val wsType get() = this.read<Config>().wsType
 }

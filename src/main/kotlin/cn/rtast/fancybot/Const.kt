@@ -8,6 +8,7 @@
 package cn.rtast.fancybot
 
 import cn.rtast.fancybot.entity.Config
+import cn.rtast.fancybot.entity.enums.WSType
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 
@@ -20,5 +21,9 @@ val gson: Gson = GsonBuilder()
 const val ROOT_PATH = "./data"
 
 val DEFAULT_CONFIG = Config(
-    cnmApi = "https://ncm.rtast.cn"
+    ncmAPI = "https://ncm.rtast.cn",
+    wsAddress = "ws://127.0.0.1",
+    wsType = WSType.Client,
+    accessToken = "114514",
+    port = 6760
 )
