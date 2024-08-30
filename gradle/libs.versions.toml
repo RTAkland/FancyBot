@@ -1,0 +1,15 @@
+[versions]
+kotlinVersion = "2.0.10"
+ronebotVersion = "1.2.4"
+shadowVersion = "8.3.0"
+okhttpVersion = "5.0.0-alpha.14"
+
+[libraries]
+rOneBot = { group = "cn.rtast", name = "ROneBot", version.ref = "ronebotVersion" }
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttpVersion" }
+
+[bundles]
+
+[plugins]
+kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinVersion" }
+shadow = { id = "com.gradleup.shadow", version.ref = "shadowVersion" }

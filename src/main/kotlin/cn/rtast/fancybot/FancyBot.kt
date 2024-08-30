@@ -10,6 +10,9 @@ package cn.rtast.fancybot
 import cn.rtast.fancybot.commands.EchoCommand
 import cn.rtast.fancybot.commands.JrrpCommand
 import cn.rtast.fancybot.commands.MusicCommand
+import cn.rtast.fancybot.commands.MyPointCommand
+import cn.rtast.fancybot.commands.SignCommand
+import cn.rtast.fancybot.util.file.ConfigManager
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.ob.OBMessage
@@ -21,13 +24,11 @@ class FancyBot : OBMessage {
     override suspend fun onGroupMessage(websocket: WebSocket, message: GroupMessage, json: String) {
         println(message.rawMessage)
     }
-}
 
-val commands = listOf(
-    EchoCommand(),
-    JrrpCommand(),
-    MusicCommand()
-)
+    override suspend fun onWebsocketError(webSocket: WebSocket, ex: Exception) {
+        println(ex.message)
+    }
+}
 
 fun createFakeServer() {
     val server = HttpServer.create(InetSocketAddress(8000), 0)
@@ -42,6 +43,15 @@ fun createFakeServer() {
     println("Server is running on port 8000...")
 }
 
+val commands = listOf(
+    EchoCommand(),
+    JrrpCommand(),
+    MusicCommand(),
+    SignCommand(),
+    MyPointCommand()
+)
+
+val configManager = ConfigManager()
 
 fun main() {
     val address = System.getenv("WS_ADDRESS")

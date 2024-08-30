@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.fancybot.entity
+package cn.rtast.fancybot.entity.music
 
 data class Search(
     val result: Result,

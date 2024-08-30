@@ -7,9 +7,10 @@
 
 package cn.rtast.fancybot.commands
 
-import cn.rtast.fancybot.entity.Search
-import cn.rtast.fancybot.entity.SearchedResult
-import cn.rtast.fancybot.entity.SongUrl
+import cn.rtast.fancybot.configManager
+import cn.rtast.fancybot.entity.music.Search
+import cn.rtast.fancybot.entity.music.SearchedResult
+import cn.rtast.fancybot.entity.music.SongUrl
 import cn.rtast.fancybot.util.Http
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
@@ -44,7 +45,7 @@ class MusicCommand : BaseCommand() {
                 }
                 val keyword = args.drop(1).joinToString(" ")
                 val result = Http.get<Search>(
-                    "https://music.api.yhdzz.cn/search",
+                    "${configManager.ncmAPI}/search",
                     mapOf("keywords" to keyword),
                 )
                 val tempResults = mutableListOf<SearchedResult>()
@@ -67,7 +68,10 @@ class MusicCommand : BaseCommand() {
                     val searchedResultGet = searchedResult[message.sender.userId]!!
                     val finalResult = searchedResultGet[index]
                     val url =
-                        Http.get<SongUrl>("https://music.api.yhdzz.cn/song/url?id=${finalResult.id}").data.first().url
+                        Http.get<SongUrl>(
+                            "${configManager.ncmAPI}/song/url",
+                            mapOf("id" to finalResult.id)
+                        ).data.first().url
                     val cqCode = "[CQ:music,type=custom,url=https://music.163.com/#/song?id=${finalResult.id}," +
                             "audio=$url,title=《${finalResult.name}》-- ${finalResult.artists}]"
                     listener.sendGroupMessage(message.groupId, cqCode)

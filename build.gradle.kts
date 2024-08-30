@@ -1,8 +1,8 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    kotlin("jvm") version "2.0.0"
-    id("com.gradleup.shadow") version "8.3.0"
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.shadow)
 }
 
 group = "cn.rtast"
@@ -27,9 +27,8 @@ tasks.compileJava {
 
 
 dependencies {
-    implementation("cn.rtast:ROneBot:1.2.2")
-    implementation("com.google.code.gson:gson:2.11.0")
-    implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.14")
+    implementation(libs.rOneBot)
+    implementation(libs.okhttp)
 }
 
 tasks.build {
