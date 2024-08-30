@@ -13,6 +13,7 @@ import cn.rtast.fancybot.commands.HitokotoCommand
 import cn.rtast.fancybot.commands.JrrpCommand
 import cn.rtast.fancybot.commands.MusicCommand
 import cn.rtast.fancybot.commands.MyPointCommand
+import cn.rtast.fancybot.commands.QRCodeCommand
 import cn.rtast.fancybot.commands.SignCommand
 import cn.rtast.fancybot.entity.enums.WSType
 import cn.rtast.fancybot.util.file.ConfigManager
@@ -39,7 +40,8 @@ val commands = listOf(
     SignCommand(),
     MyPointCommand(),
     HitokotoCommand(),
-    FKXQSCommand()
+    FKXQSCommand(),
+    QRCodeCommand()
 )
 
 val configManager = ConfigManager()
