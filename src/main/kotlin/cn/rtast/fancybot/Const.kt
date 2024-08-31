@@ -27,3 +27,7 @@ val DEFAULT_CONFIG = Config(
     accessToken = "114514",
     port = 6760
 )
+
+val ADMINS = listOf(
+    3458671395L
+)

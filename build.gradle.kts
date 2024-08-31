@@ -5,8 +5,10 @@ plugins {
     alias(libs.plugins.shadow)
 }
 
+val fancyBotVersion: String by project
+
 group = "cn.rtast"
-version = "1.0-SNAPSHOT"
+version = fancyBotVersion
 
 repositories {
     mavenCentral()

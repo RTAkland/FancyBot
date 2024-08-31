@@ -14,6 +14,7 @@ import cn.rtast.fancybot.commands.JrrpCommand
 import cn.rtast.fancybot.commands.MusicCommand
 import cn.rtast.fancybot.commands.MyPointCommand
 import cn.rtast.fancybot.commands.QRCodeCommand
+import cn.rtast.fancybot.commands.RedeemCommand
 import cn.rtast.fancybot.commands.SignCommand
 import cn.rtast.fancybot.entity.enums.WSType
 import cn.rtast.fancybot.util.file.ConfigManager
@@ -37,8 +38,7 @@ val commands = listOf(
     EchoCommand(),
     JrrpCommand(),
     MusicCommand(),
-    SignCommand(),
-    MyPointCommand(),
+    SignCommand(), RedeemCommand(), MyPointCommand(),
     HitokotoCommand(),
     FKXQSCommand(),
     QRCodeCommand()

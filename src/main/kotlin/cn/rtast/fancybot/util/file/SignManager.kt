@@ -12,8 +12,8 @@ import cn.rtast.fancybot.entity.SignTable
 import cn.rtast.fancybot.entity.SignTable.point
 import cn.rtast.fancybot.entity.SignTable.timestamp
 import cn.rtast.fancybot.entity.SignTable.userId
-import cn.rtast.fancybot.util.suspendedTransaction
 import cn.rtast.fancybot.util.isSameDay
+import cn.rtast.fancybot.util.suspendedTransaction
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.update
@@ -66,5 +66,14 @@ class SignManager {
 
     suspend fun getStatus(id: Long): JrrpRecord? {
         return getRecord(id)
+    }
+
+    suspend fun redeemItem(id: Long, itemPrice: Int) {
+        val current = getRecord(id)
+        suspendedTransaction {
+            SignTable.update({ userId eq id }) {
+                it[point] = current?.points!! - itemPrice
+            }
+        }
     }
 }

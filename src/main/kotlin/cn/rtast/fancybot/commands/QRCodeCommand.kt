@@ -9,6 +9,7 @@ package cn.rtast.fancybot.commands
 
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
+import cn.rtast.rob.util.message.MessageChain
 import cn.rtast.rob.util.ob.OBMessage
 
 class QRCodeCommand : BaseCommand() {
@@ -16,9 +17,10 @@ class QRCodeCommand : BaseCommand() {
 
     override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
         val content = args.joinToString(" ")
-        listener.sendGroupMessage(
-            message.groupId,
-            "[CQ:at,qq=${message.sender.userId}][CQ:image,file=https://api.rtast.cn/api/generate_qr?data=$content]"
-        )
+        val msg = MessageChain.Builder()
+            .addAt(message.sender.userId)
+            .addImage("https://api.rtast.cn/api/generate_qr?data=$content")
+            .build()
+        listener.sendGroupMessage(message.groupId, msg)
     }
 }
