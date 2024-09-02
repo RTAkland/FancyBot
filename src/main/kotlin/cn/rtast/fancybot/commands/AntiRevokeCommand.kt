@@ -7,9 +7,10 @@
 
 package cn.rtast.fancybot.commands
 
-import cn.rtast.fancybot.util.toJson
+import cn.rtast.rob.entity.ArrayMessage
 import cn.rtast.rob.entity.GetMessage
 import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OBMessage
@@ -29,14 +30,11 @@ class AntiRevokeCommand : BaseCommand() {
 
     companion object {
         suspend fun getMessageCallback(listener: OBMessage, message: GetMessage) {
-            val msg = MessageChain.Builder()
-                .addAt(message.data.sender.userId)
-                .addNewLine()
-                .addText("被撤回的消息如下: ")
-                .addNewLine()
-                .addText(message.data.message.toJson())
-                .build()
-            listener.sendGroupMessage(message.data.groupId!!, msg)
+            val msgList = mutableListOf<ArrayMessage>()
+            msgList.add(ArrayMessage(ArrayMessageType.at, ArrayMessage.Data(qq = message.data.sender.userId.toString())))
+            msgList.add(ArrayMessage(ArrayMessageType.text, ArrayMessage.Data(text = "\n被撤回的消息如下: ")))
+            msgList.addAll(message.data.message)
+            listener.sendGroupMessage(message.data.groupId!!, msgList)
         }
     }
 }
