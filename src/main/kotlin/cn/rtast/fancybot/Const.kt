@@ -15,7 +15,6 @@ import com.google.gson.GsonBuilder
 val gson: Gson = GsonBuilder()
     .setPrettyPrinting()
     .disableHtmlEscaping()
-    .serializeNulls()
     .create()
 
 const val ROOT_PATH = "./data"

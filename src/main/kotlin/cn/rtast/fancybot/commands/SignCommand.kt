@@ -14,15 +14,10 @@ import cn.rtast.fancybot.util.file.SignManager
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.UserRole
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.message.MessageChain
+import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OBMessage
 
 private val signManager = SignManager()
-
-private val items = mapOf(
-    "色图" to 50,
-    "黑丝" to 60
-)
 
 class SignCommand : BaseCommand() {
     override val commandNames = listOf("/签到", "/sign")
@@ -83,6 +78,12 @@ class MyPointCommand : BaseCommand() {
     }
 }
 
+private val items = mapOf(
+    "色图" to 50,
+    "黑丝" to 60,
+    "白丝" to 70
+)
+
 class RedeemCommand : BaseCommand() {
     override val commandNames = listOf("/redeem", "/兑换", "/rdm")
 
@@ -128,7 +129,7 @@ class RedeemCommand : BaseCommand() {
             .build()
         listener.sendGroupMessage(message.groupId, msg)
         when (selectedItemKey) {
-            "黑丝", "hs", "heisi" -> {
+            "黑丝" -> {
                 val url = Http.get<Heisi>("https://v2.api-m.com/api/heisi").data
                 val msg = MessageChain.Builder()
                     .addAt(message.sender.userId)
@@ -137,10 +138,19 @@ class RedeemCommand : BaseCommand() {
                 listener.sendGroupMessage(message.groupId, msg)
             }
 
-            "色图", "st", "setu" -> {
+            "色图" -> {
                 val msg = MessageChain.Builder()
                     .addAt(message.sender.userId)
                     .addImage("https://moe.jitsu.top/img/?sort=r18&size=small")
+                    .build()
+                listener.sendGroupMessage(message.groupId, msg)
+            }
+
+            "白丝" -> {
+                val url = Http.get<Heisi>("https://v2.api-m.com/api/baisi").data
+                val msg = MessageChain.Builder()
+                    .addAt(message.sender.userId)
+                    .addImage(url)
                     .build()
                 listener.sendGroupMessage(message.groupId, msg)
             }

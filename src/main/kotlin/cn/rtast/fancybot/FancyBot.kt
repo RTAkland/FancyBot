@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot
 
+import cn.rtast.fancybot.commands.AntiRevokeCommand
 import cn.rtast.fancybot.commands.EchoCommand
 import cn.rtast.fancybot.commands.FKXQSCommand
 import cn.rtast.fancybot.commands.HitokotoCommand
@@ -20,17 +21,37 @@ import cn.rtast.fancybot.entity.enums.WSType
 import cn.rtast.fancybot.util.file.ConfigManager
 import cn.rtast.fancybot.util.initDatabase
 import cn.rtast.rob.ROneBotFactory
+import cn.rtast.rob.entity.GetMessage
 import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.entity.GroupRevokeMessage
+import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OBMessage
 import org.java_websocket.WebSocket
 
 class FancyBot : OBMessage {
-    override suspend fun onGroupMessage(websocket: WebSocket, message: GroupMessage, json: String) {
+
+    override suspend fun onGroupMessage(ws: WebSocket, message: GroupMessage, json: String) {
         println(message.rawMessage)
     }
 
-    override suspend fun onWebsocketError(webSocket: WebSocket, ex: Exception) {
-        println(ex.printStackTrace())
+    override suspend fun onGroupMessageRevoke(ws: WebSocket, message: GroupRevokeMessage) {
+        val msg = MessageChain.Builder()
+            .addText("用户: ${message.userId} 被: ${message.operatorId} 撤回了一条消息")
+            .addNewLine()
+            .addText("使用/revoke ${message.messageId} 来获取被撤回的消息")
+            .build()
+        this.sendGroupMessage(message.groupId, msg)
+    }
+
+
+    override suspend fun onGetGroupMessageResponse(ws: WebSocket, message: GetMessage) {
+        if (message.data.id == "revoke") {
+            AntiRevokeCommand.getMessageCallback(this, message)
+        }
+    }
+
+    override suspend fun onWebsocketErrorEvent(ws: WebSocket, ex: Exception) {
+        ex.printStackTrace()
     }
 }
 
@@ -41,7 +62,8 @@ val commands = listOf(
     SignCommand(), RedeemCommand(), MyPointCommand(),
     HitokotoCommand(),
     FKXQSCommand(),
-    QRCodeCommand()
+    QRCodeCommand(),
+    AntiRevokeCommand()
 )
 
 val configManager = ConfigManager()

@@ -12,6 +12,7 @@ version = fancyBotVersion
 
 repositories {
     mavenCentral()
+    mavenLocal()
     maven {
         name = "repo.rtast.cn"
         url = uri("https://repo.rtast.cn/api/v4/projects/33/packages/maven")

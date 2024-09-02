@@ -14,7 +14,7 @@ import cn.rtast.fancybot.entity.music.SongUrl
 import cn.rtast.fancybot.util.Http
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.message.MessageChain
+import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OBMessage
 import java.time.Instant
 
