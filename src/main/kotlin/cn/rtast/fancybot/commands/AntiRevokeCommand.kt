@@ -31,7 +31,12 @@ class AntiRevokeCommand : BaseCommand() {
     companion object {
         suspend fun getMessageCallback(listener: OBMessage, message: GetMessage) {
             val msgList = mutableListOf<ArrayMessage>()
-            msgList.add(ArrayMessage(ArrayMessageType.at, ArrayMessage.Data(qq = message.data.sender.userId.toString())))
+            msgList.add(
+                ArrayMessage(
+                    ArrayMessageType.at,
+                    ArrayMessage.Data(qq = message.data.sender.userId.toString())
+                )
+            )
             msgList.add(ArrayMessage(ArrayMessageType.text, ArrayMessage.Data(text = "\n被撤回的消息如下: \n")))
             msgList.addAll(message.data.message)
             listener.sendGroupMessage(message.data.groupId!!, msgList)

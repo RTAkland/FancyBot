@@ -49,7 +49,7 @@ class RedeemCommand : BaseCommand() {
             listener.sendGroupMessage(message.groupId, msg)
             return
         }
-        val selectedItemPrice =selectedItem.itemPrice
+        val selectedItemPrice = selectedItem.itemPrice
         if (selectedItemPrice > status.points) {
             val msg = MessageChain.Builder()
                 .addAt(message.sender.userId)

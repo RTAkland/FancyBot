@@ -14,7 +14,7 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OBMessage
 
-class SetuItem: Item() {
+class SetuItem : Item() {
     override val itemNames = listOf("setu", "色图", "st")
     override val itemPrice = 80
 

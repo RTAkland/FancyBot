@@ -14,7 +14,7 @@ import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OBMessage
 
-class FKXQSCommand: BaseCommand() {
+class FKXQSCommand : BaseCommand() {
     override val commandNames = listOf("/fkxqs", "/fk", "/疯狂星期四")
 
     override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
