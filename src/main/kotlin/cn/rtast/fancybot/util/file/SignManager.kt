@@ -7,11 +7,11 @@
 
 package cn.rtast.fancybot.util.file
 
-import cn.rtast.fancybot.entity.JrrpRecord
-import cn.rtast.fancybot.entity.SignTable
-import cn.rtast.fancybot.entity.SignTable.point
-import cn.rtast.fancybot.entity.SignTable.timestamp
-import cn.rtast.fancybot.entity.SignTable.userId
+import cn.rtast.fancybot.entity.db.JrrpRecord
+import cn.rtast.fancybot.entity.db.SignTable
+import cn.rtast.fancybot.entity.db.SignTable.point
+import cn.rtast.fancybot.entity.db.SignTable.timestamp
+import cn.rtast.fancybot.entity.db.SignTable.userId
 import cn.rtast.fancybot.util.isSameDay
 import cn.rtast.fancybot.util.suspendedTransaction
 import org.jetbrains.exposed.sql.insert

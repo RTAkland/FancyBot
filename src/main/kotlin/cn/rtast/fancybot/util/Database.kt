@@ -8,8 +8,8 @@
 package cn.rtast.fancybot.util
 
 import cn.rtast.fancybot.ROOT_PATH
-import cn.rtast.fancybot.entity.JrrpTable
-import cn.rtast.fancybot.entity.SignTable
+import cn.rtast.fancybot.entity.db.JrrpTable
+import cn.rtast.fancybot.entity.db.SignTable
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils

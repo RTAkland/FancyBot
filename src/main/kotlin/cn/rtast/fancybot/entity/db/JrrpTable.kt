@@ -5,11 +5,11 @@
  */
 
 
-package cn.rtast.fancybot.entity
+package cn.rtast.fancybot.entity.db
 
 import org.jetbrains.exposed.sql.Table
 
-object SignTable : Table("sign") {
+object JrrpTable : Table("jrrp") {
     val id = integer("id").autoIncrement()
     val userId = long("userId").uniqueIndex()
     val timestamp = long("timestamp")
@@ -17,3 +17,9 @@ object SignTable : Table("sign") {
 
     override val primaryKey = PrimaryKey(id)
 }
+
+data class JrrpRecord(
+    val id: Long,
+    val timestamp: Long,
+    var points: Long,
+)
