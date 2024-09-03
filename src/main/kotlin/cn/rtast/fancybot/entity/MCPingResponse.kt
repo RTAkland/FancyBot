@@ -10,7 +10,7 @@ package cn.rtast.fancybot.entity
 data class MCPingResponse(
     val version: Version,
     val players: Players,
-    val favicon: String
+    val favicon: String?
 ) {
     data class Version(
         val protocol: Int,
