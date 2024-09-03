@@ -13,10 +13,8 @@ version = fancyBotVersion
 repositories {
     mavenCentral()
     mavenLocal()
-    maven {
-        name = "repo.rtast.cn"
-        url = uri("https://repo.rtast.cn/api/v4/projects/33/packages/maven")
-    }
+    maven("https://repo.rtast.cn/api/v4/projects/33/packages/maven")
+    maven("https://repo.rtast.cn/api/v4/projects/19/packages/maven")
 }
 
 tasks.compileKotlin {
@@ -35,6 +33,7 @@ dependencies {
     implementation(libs.exposedCore)
     implementation(libs.exposedJDBC)
     implementation(libs.sqliteJDBC)
+    implementation(libs.motdPinger)
 }
 
 tasks.build {

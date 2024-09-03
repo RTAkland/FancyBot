@@ -10,8 +10,10 @@ package cn.rtast.fancybot
 import cn.rtast.fancybot.commands.AntiRevokeCommand
 import cn.rtast.fancybot.commands.EchoCommand
 import cn.rtast.fancybot.commands.FKXQSCommand
+import cn.rtast.fancybot.commands.HelpCommand
 import cn.rtast.fancybot.commands.HitokotoCommand
 import cn.rtast.fancybot.commands.JrrpCommand
+import cn.rtast.fancybot.commands.MCPingCommand
 import cn.rtast.fancybot.commands.MusicCommand
 import cn.rtast.fancybot.commands.MyPointCommand
 import cn.rtast.fancybot.commands.QRCodeCommand
@@ -21,9 +23,9 @@ import cn.rtast.fancybot.entity.enums.WSType
 import cn.rtast.fancybot.items.BaisiItem
 import cn.rtast.fancybot.items.HeisiItem
 import cn.rtast.fancybot.items.SetuItem
-import cn.rtast.fancybot.util.item.ItemManager
 import cn.rtast.fancybot.util.file.ConfigManager
 import cn.rtast.fancybot.util.initDatabase
+import cn.rtast.fancybot.util.item.ItemManager
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.GetMessage
 import cn.rtast.rob.entity.GroupMessage
@@ -64,14 +66,10 @@ class FancyBot : OBMessage {
 }
 
 val commands = listOf(
-    EchoCommand(),
-    JrrpCommand(),
-    MusicCommand(),
+    EchoCommand(), JrrpCommand(), MusicCommand(),
     SignCommand(), RedeemCommand(), MyPointCommand(),
-    HitokotoCommand(),
-    FKXQSCommand(),
-    QRCodeCommand(),
-    AntiRevokeCommand()
+    HitokotoCommand(), FKXQSCommand(), QRCodeCommand(),
+    AntiRevokeCommand(), MCPingCommand(), HelpCommand()
 )
 
 val items = listOf(
