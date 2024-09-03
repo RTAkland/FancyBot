@@ -18,6 +18,10 @@ import cn.rtast.fancybot.commands.QRCodeCommand
 import cn.rtast.fancybot.commands.RedeemCommand
 import cn.rtast.fancybot.commands.SignCommand
 import cn.rtast.fancybot.entity.enums.WSType
+import cn.rtast.fancybot.items.BaisiItem
+import cn.rtast.fancybot.items.HeisiItem
+import cn.rtast.fancybot.items.SetuItem
+import cn.rtast.fancybot.util.item.ItemManager
 import cn.rtast.fancybot.util.file.ConfigManager
 import cn.rtast.fancybot.util.initDatabase
 import cn.rtast.rob.ROneBotFactory
@@ -70,7 +74,14 @@ val commands = listOf(
     AntiRevokeCommand()
 )
 
+val items = listOf(
+    HeisiItem(),
+    BaisiItem(),
+    SetuItem()
+)
+
 val configManager = ConfigManager()
+val itemManager = ItemManager()
 
 suspend fun main() {
     val fancyBot = FancyBot()
@@ -84,6 +95,7 @@ suspend fun main() {
         ROneBotFactory.createServer(port, accessToken, fancyBot)
     }
     val commandManager = rob.commandManager
-    commands.forEach { commandManager.register(it) }
     initDatabase()
+    commands.forEach { commandManager.register(it) }
+    items.forEach { itemManager.register(it) }
 }

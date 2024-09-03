@@ -8,13 +8,9 @@
 package cn.rtast.fancybot.entity
 
 data class Setu(
-    val data: List<Data>
+    val urls: URLS
 ) {
-    data class Data(
-        val urls: URLS
-    )
-
     data class URLS(
-        val original: String
+        val large: String
     )
 }
