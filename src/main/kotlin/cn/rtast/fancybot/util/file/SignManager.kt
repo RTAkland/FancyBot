@@ -68,12 +68,13 @@ class SignManager {
         return getRecord(id)
     }
 
-    suspend fun redeemItem(id: Long, itemPrice: Int) {
+    suspend fun redeemItem(id: Long, itemPrice: Int): JrrpRecord? {
         val current = getRecord(id)
         suspendedTransaction {
             SignTable.update({ userId eq id }) {
                 it[point] = current?.points!! - itemPrice
             }
         }
+        return getRecord(id)
     }
 }

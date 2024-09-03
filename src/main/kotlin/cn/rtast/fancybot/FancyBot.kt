@@ -31,7 +31,11 @@ import org.java_websocket.WebSocket
 class FancyBot : OBMessage {
 
     override suspend fun onGroupMessage(ws: WebSocket, message: GroupMessage, json: String) {
-        println(message.rawMessage)
+        val sender = message.sender.nickname
+        val senderId = message.sender.userId
+        val msg = message.rawMessage
+        val groupId = message.groupId
+        println("$sender($senderId: $groupId): $msg")
     }
 
     override suspend fun onGroupMessageRevoke(ws: WebSocket, message: GroupRevokeMessage) {

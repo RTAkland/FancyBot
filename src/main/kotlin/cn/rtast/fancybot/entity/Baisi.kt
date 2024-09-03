@@ -7,6 +7,6 @@
 
 package cn.rtast.fancybot.entity
 
-data class Heisi(
+data class Baisi(
     val data: String,
 )
