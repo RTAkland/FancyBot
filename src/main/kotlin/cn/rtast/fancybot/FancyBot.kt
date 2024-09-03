@@ -92,8 +92,9 @@ suspend fun main() {
         val port = configManager.wsPort
         ROneBotFactory.createServer(port, accessToken, fancyBot)
     }
-    val commandManager = rob.commandManager
     initDatabase()
+    val commandManager = rob.commandManager
     commands.forEach { commandManager.register(it) }
     items.forEach { itemManager.register(it) }
+    rob.addListeningGroups(*configManager.listeningGroups.toLongArray())
 }

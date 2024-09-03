@@ -3,5 +3,9 @@
   "wsType": "Client",
   "wsAddress": "ws://127.0.0.1",
   "accessToken": "114514",
-  "port": 6760
+  "port": 6760,
+  "listeningGroups": [
+    114514,
+    1919810
+  ]
 }

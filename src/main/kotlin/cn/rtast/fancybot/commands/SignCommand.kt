@@ -44,19 +44,21 @@ class MyPointCommand : BaseCommand() {
     override val commandNames = listOf("/我的点数", "/mp")
 
     override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
+        // query target's point
         if (args.isNotEmpty() && (message.sender.role == UserRole.admin || message.sender.userId in ADMINS)) {
             val targetId = args.first().toLong()
             val targetData = signManager.getStatus(targetId)
             val msg = MessageChain.Builder().addAt(message.sender.userId)
 
             if (targetData == null) {
-                msg.addText("用户不存在, 你需要先签到一次才能查询点数呢~")
+                msg.addText("用户不存在, 需要先签到一次才能查询点数呢~")
             } else {
                 msg.addText("用户: ${targetData.id} 的点数有: ${targetData.points}")
             }
             listener.sendGroupMessage(message.groupId, msg.build())
             return
         }
+        // query self point
         val status = signManager.getStatus(message.sender.userId)
         if (status == null) {
             val msg = MessageChain.Builder()

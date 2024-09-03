@@ -16,4 +16,5 @@ class ConfigManager : JsonFileHandler<Config>("config.json") {
     val wsPort get() = this.read<Config>().port
     val accessToken get() = this.read<Config>().accessToken
     val wsType get() = this.read<Config>().wsType
+    val listeningGroups get() = this.read<Config>().listeningGroups
 }

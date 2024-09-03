@@ -17,6 +17,18 @@ class RedeemCommand : BaseCommand() {
     override val commandNames = listOf("/redeem", "/兑换", "/rdm")
 
     override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
+        if (args.isEmpty()) {
+            val msg = MessageChain.Builder()
+                .addAt(message.sender.userId)
+                .addText("发送 /rdm <物品名称> 即可兑换哦!")
+                .addNewLine()
+                .addText("发送 /rdm list 即可查看所有可兑换的物品~")
+                .addNewLine()
+                .addText("发送 /mp 可以查看自己拥有的点数~")
+                .build()
+            listener.sendGroupMessage(message.groupId, msg)
+            return
+        }
         val status = signManager.getStatus(message.sender.userId)
         if (status == null) {
             val msg = MessageChain.Builder()
@@ -44,7 +56,7 @@ class RedeemCommand : BaseCommand() {
                 .addAt(message.sender.userId)
                 .addText("没有找到你想兑换的东西呢")
                 .addNewLine()
-                .addText("你可以输入/兑换 list来查看所有可兑换的物品")
+                .addText("你可以发送 /rdm list来查看所有可兑换的物品")
                 .build()
             listener.sendGroupMessage(message.groupId, msg)
             return

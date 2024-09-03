@@ -24,7 +24,8 @@ val DEFAULT_CONFIG = Config(
     wsAddress = "ws://127.0.0.1",
     wsType = WSType.Client,
     accessToken = "114514",
-    port = 6760
+    port = 6760,
+    listeningGroups = listOf(114514, 1919810)
 )
 
 val ADMINS = listOf(
