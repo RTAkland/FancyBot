@@ -15,5 +15,6 @@ data class Config(
     val wsAddress: String,
     val accessToken: String,
     val port: Int,
-    val listeningGroups: List<Long>
+    val listeningGroups: List<Long>,
+    val qweatherKey: String
 )

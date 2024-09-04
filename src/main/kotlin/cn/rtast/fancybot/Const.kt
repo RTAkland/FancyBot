@@ -25,7 +25,8 @@ val DEFAULT_CONFIG = Config(
     wsType = WSType.Client,
     accessToken = "114514",
     port = 6760,
-    listeningGroups = listOf(114514, 1919810)
+    listeningGroups = listOf(114514, 1919810),
+    qweatherKey = "114514"
 )
 
 val ADMINS = listOf(

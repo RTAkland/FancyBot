@@ -19,6 +19,7 @@ import cn.rtast.fancybot.commands.MyPointCommand
 import cn.rtast.fancybot.commands.QRCodeCommand
 import cn.rtast.fancybot.commands.RedeemCommand
 import cn.rtast.fancybot.commands.SignCommand
+import cn.rtast.fancybot.commands.WeatherCommand
 import cn.rtast.fancybot.entity.enums.WSType
 import cn.rtast.fancybot.items.BaisiItem
 import cn.rtast.fancybot.items.HeisiItem
@@ -66,14 +67,9 @@ class FancyBot : OBMessage {
     }
 }
 
-val commands = listOf(
-    EchoCommand(), JrrpCommand(),
-    MusicCommand(), SignCommand(),
-    RedeemCommand(), MyPointCommand(),
-    HitokotoCommand(), FKXQSCommand(),
-    QRCodeCommand(), AntiRevokeCommand(),
-    MCPingCommand(), HelpCommand()
-)
+val configManager = ConfigManager()
+val itemManager = ItemManager()
+val signManager = SignManager()
 
 val items = listOf(
     HeisiItem(),
@@ -81,9 +77,15 @@ val items = listOf(
     SetuItem()
 )
 
-val configManager = ConfigManager()
-val itemManager = ItemManager()
-val signManager = SignManager()
+val commands = listOf(
+    EchoCommand(), JrrpCommand(),
+    MusicCommand(), SignCommand(),
+    RedeemCommand(), MyPointCommand(),
+    HitokotoCommand(), FKXQSCommand(),
+    QRCodeCommand(), AntiRevokeCommand(),
+    MCPingCommand(), HelpCommand(),
+    WeatherCommand()
+)
 
 suspend fun main() {
     val fancyBot = FancyBot()

@@ -17,4 +17,5 @@ class ConfigManager : JsonFileHandler<Config>("config.json") {
     val accessToken get() = this.read<Config>().accessToken
     val wsType get() = this.read<Config>().wsType
     val listeningGroups get() = this.read<Config>().listeningGroups
+    val qweatherKey get() = this.read<Config>().qweatherKey
 }
