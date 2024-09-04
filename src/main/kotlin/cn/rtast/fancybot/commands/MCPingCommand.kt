@@ -7,7 +7,7 @@
 
 package cn.rtast.fancybot.commands
 
-import cn.rtast.fancybot.entity.MCPingResponse
+import cn.rtast.fancybot.entity.MCPing
 import cn.rtast.fancybot.util.fromJson
 import cn.rtast.motdpinger.MotdPinger
 import cn.rtast.rob.entity.GroupMessage
@@ -44,7 +44,7 @@ class MCPingCommand : BaseCommand() {
         }
         try {
             val rawResponse = pingInstance.pingServer(host, port)
-            val jsonResponse = rawResponse?.fromJson<MCPingResponse>()!!
+            val jsonResponse = rawResponse?.fromJson<MCPing>()!!
             val msg = MessageChain.Builder().addAt(message.sender.userId).addNewLine()
             if (jsonResponse.favicon != null) msg.addImage(jsonResponse.favicon, true)
             msg.addText("服务器地址: $host:$port")

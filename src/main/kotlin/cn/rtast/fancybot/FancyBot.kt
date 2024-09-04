@@ -24,6 +24,7 @@ import cn.rtast.fancybot.items.BaisiItem
 import cn.rtast.fancybot.items.HeisiItem
 import cn.rtast.fancybot.items.SetuItem
 import cn.rtast.fancybot.util.file.ConfigManager
+import cn.rtast.fancybot.util.file.SignManager
 import cn.rtast.fancybot.util.initDatabase
 import cn.rtast.fancybot.util.item.ItemManager
 import cn.rtast.rob.ROneBotFactory
@@ -66,10 +67,12 @@ class FancyBot : OBMessage {
 }
 
 val commands = listOf(
-    EchoCommand(), JrrpCommand(), MusicCommand(),
-    SignCommand(), RedeemCommand(), MyPointCommand(),
-    HitokotoCommand(), FKXQSCommand(), QRCodeCommand(),
-    AntiRevokeCommand(), MCPingCommand(), HelpCommand()
+    EchoCommand(), JrrpCommand(),
+    MusicCommand(), SignCommand(),
+    RedeemCommand(), MyPointCommand(),
+    HitokotoCommand(), FKXQSCommand(),
+    QRCodeCommand(), AntiRevokeCommand(),
+    MCPingCommand(), HelpCommand()
 )
 
 val items = listOf(
@@ -80,6 +83,7 @@ val items = listOf(
 
 val configManager = ConfigManager()
 val itemManager = ItemManager()
+val signManager = SignManager()
 
 suspend fun main() {
     val fancyBot = FancyBot()

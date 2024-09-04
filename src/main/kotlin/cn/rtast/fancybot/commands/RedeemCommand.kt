@@ -8,6 +8,7 @@
 package cn.rtast.fancybot.commands
 
 import cn.rtast.fancybot.itemManager
+import cn.rtast.fancybot.signManager
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
