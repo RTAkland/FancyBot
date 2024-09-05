@@ -23,17 +23,11 @@ class WeatherCommand : BaseCommand() {
         val locationName = args.first()
         val lookupLocationId = Http.get<Geo>(
             "https://geoapi.qweather.com/v2/city/lookup",
-            mapOf(
-                "location" to locationName,
-                "key" to configManager.qweatherKey
-            )
+            mapOf("location" to locationName, "key" to configManager.qweatherKey)
         ).location.first().id
         val weather = Http.get<Weather>(
             "https://devapi.qweather.com/v7/weather/now",
-            mapOf(
-                "location" to lookupLocationId,
-                "key" to configManager.qweatherKey
-            )
+            mapOf("location" to lookupLocationId, "key" to configManager.qweatherKey)
         )
         val msg = MessageChain.Builder()
             .addAt(message.sender.userId)
