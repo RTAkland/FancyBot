@@ -22,7 +22,11 @@ data class Cigarette(
         val cover: String,
         val type: CigaretteType,
         val tar: Float,
-        val nicotine: Float
+        val nicotine: Float,
+        @SerializedName("packprice")
+        val packPrice: Float,
+        @SerializedName("barprice")
+        val barPrice: Float
     )
 
     data class CigaretteType(

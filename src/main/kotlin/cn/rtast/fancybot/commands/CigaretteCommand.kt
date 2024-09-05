@@ -47,6 +47,8 @@ class CigaretteCommand : BaseCommand() {
                 .addNewLine()
                 .addText("焦油量: ${it.tar}mg | 尼古丁含量: ${it.nicotine}mg")
                 .addNewLine()
+                .addText("参考价: 单盒: ${it.packPrice}元 | 整条: ${it.barPrice}元")
+                .addNewLine()
         }
         listener.sendGroupMessage(message.groupId, msg.build())
     }
