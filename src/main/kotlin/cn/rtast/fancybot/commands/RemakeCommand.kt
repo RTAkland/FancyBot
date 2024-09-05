@@ -18,7 +18,8 @@ class RemakeCommand : BaseCommand() {
     override val commandNames = listOf("/remake", "/重开", "remake", "重开")
 
     private val locations = listOf(
-        "厕所", "首都", "农村", "市区", "大学"
+        "厕所", "首都", "农村", "市区",
+        "大学", "树上", "医院"
     )
 
     private val roles = listOf(
