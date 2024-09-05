@@ -19,6 +19,7 @@ import cn.rtast.fancybot.commands.MusicCommand
 import cn.rtast.fancybot.commands.MyPointCommand
 import cn.rtast.fancybot.commands.QRCodeCommand
 import cn.rtast.fancybot.commands.RedeemCommand
+import cn.rtast.fancybot.commands.RemakeCommand
 import cn.rtast.fancybot.commands.SignCommand
 import cn.rtast.fancybot.commands.WeatherCommand
 import cn.rtast.fancybot.entity.enums.WSType
@@ -85,7 +86,8 @@ val commands = listOf(
     HitokotoCommand(), FKXQSCommand(),
     QRCodeCommand(), AntiRevokeCommand(),
     MCPingCommand(), HelpCommand(),
-    WeatherCommand(), CigaretteCommand()
+    WeatherCommand(), CigaretteCommand(),
+    RemakeCommand()
 )
 
 suspend fun main() {
