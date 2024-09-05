@@ -50,6 +50,7 @@ class CigaretteCommand : BaseCommand() {
                 .addText("参考价: 单盒: ${it.packPrice}元 | 整条: ${it.barPrice}元")
                 .addNewLine()
         }
+        msg.addNewLine().addText("吸烟有害健康, 尽早戒烟有益健康。")
         listener.sendGroupMessage(message.groupId, msg.build())
     }
 }
