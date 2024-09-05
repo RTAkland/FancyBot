@@ -8,6 +8,7 @@
 package cn.rtast.fancybot
 
 import cn.rtast.fancybot.commands.AntiRevokeCommand
+import cn.rtast.fancybot.commands.CigaretteCommand
 import cn.rtast.fancybot.commands.EchoCommand
 import cn.rtast.fancybot.commands.FKXQSCommand
 import cn.rtast.fancybot.commands.HelpCommand
@@ -84,7 +85,7 @@ val commands = listOf(
     HitokotoCommand(), FKXQSCommand(),
     QRCodeCommand(), AntiRevokeCommand(),
     MCPingCommand(), HelpCommand(),
-    WeatherCommand()
+    WeatherCommand(), CigaretteCommand()
 )
 
 suspend fun main() {
