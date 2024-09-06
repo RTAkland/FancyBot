@@ -27,7 +27,7 @@ object BVParseCommand {
             CID_URL, mapOf("bvid" to bvid)
         )
         val msg = MessageChain.Builder()
-            .addAt(message.sender.userId)
+            .addReply(message.messageId)
             .addImage(cidResponse.data.pic)
             .addText("标题: ${cidResponse.data.title}")
             .addNewLine()
