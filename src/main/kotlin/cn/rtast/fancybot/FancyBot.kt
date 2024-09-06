@@ -19,10 +19,13 @@ import cn.rtast.fancybot.commands.MusicCommand
 import cn.rtast.fancybot.commands.MyPointCommand
 import cn.rtast.fancybot.commands.PixivCommand
 import cn.rtast.fancybot.commands.QRCodeCommand
+import cn.rtast.fancybot.commands.RUACommand
 import cn.rtast.fancybot.commands.RedeemCommand
 import cn.rtast.fancybot.commands.RemakeCommand
 import cn.rtast.fancybot.commands.SignCommand
 import cn.rtast.fancybot.commands.WeatherCommand
+import cn.rtast.fancybot.commands.misc.BVParseCommand
+import cn.rtast.fancybot.commands.misc.ImageURLCommand
 import cn.rtast.fancybot.entity.enums.WSType
 import cn.rtast.fancybot.items.BaisiItem
 import cn.rtast.fancybot.items.HeisiItem
@@ -35,6 +38,7 @@ import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.GetMessage
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.GroupRevokeMessage
+import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OBMessage
 import org.java_websocket.WebSocket
@@ -47,6 +51,16 @@ class FancyBot : OBMessage {
         val msg = message.rawMessage
         val groupId = message.groupId
         println("$sender($senderId: $groupId): $msg")
+        if (message.rawMessage.startsWith("BV") || message.rawMessage.startsWith("https://www.bilibili.com")) {
+            BVParseCommand.parse(this, message)
+        }
+        if (message.message.any { it.type == ArrayMessageType.reply }) {  // Image url parse
+            val command = message.message.reversed().find { it.type == ArrayMessageType.text }!!.data.text!!
+            val replyId = message.message.find { it.type == ArrayMessageType.reply }!!.data.id!!
+            if (command == "图来" || command == "图链") {
+                this.getMessage(replyId.toString().toLong(), "imageUrl", message.groupId)
+            }
+        }
     }
 
     override suspend fun onGroupMessageRevoke(ws: WebSocket, message: GroupRevokeMessage) {
@@ -60,8 +74,9 @@ class FancyBot : OBMessage {
 
 
     override suspend fun onGetGroupMessageResponse(ws: WebSocket, message: GetMessage) {
-        if (message.data.id == "revoke") {
-            AntiRevokeCommand.getMessageCallback(this, message)
+        when (message.data.id) {
+            "revoke" -> AntiRevokeCommand.getMessageCallback(this, message)
+            "imageUrl" -> ImageURLCommand.callback(this, message)
         }
     }
 
@@ -88,7 +103,8 @@ val commands = listOf(
     QRCodeCommand(), AntiRevokeCommand(),
     MCPingCommand(), HelpCommand(),
     WeatherCommand(), CigaretteCommand(),
-    RemakeCommand(), PixivCommand()
+    RemakeCommand(), PixivCommand(),
+    RUACommand()
 )
 
 suspend fun main() {
