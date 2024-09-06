@@ -11,6 +11,10 @@ data class Geo(
     val location: List<Location>
 ) {
     data class Location(
-        val id: String
+        val name: String,
+        val id: String,
+        val adm1: String,
+        val adm2: String,
+        val country: String,
     )
 }
