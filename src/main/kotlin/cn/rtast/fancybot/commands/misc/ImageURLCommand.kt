@@ -18,8 +18,6 @@ object ImageURLCommand {
         val image = message.data.message.find { it.type == ArrayMessageType.image }!!
         val msg = MessageChain.Builder()
             .addReply(message.data.messageId)
-            .addAt(message.data.sender.userId)
-            .addNewLine()
             .addText("哈哈哈哈图片来咯~")
             .addNewLine()
             .addText(image.data.file!!)
