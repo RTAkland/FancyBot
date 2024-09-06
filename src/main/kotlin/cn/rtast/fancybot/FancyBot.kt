@@ -17,6 +17,7 @@ import cn.rtast.fancybot.commands.JrrpCommand
 import cn.rtast.fancybot.commands.MCPingCommand
 import cn.rtast.fancybot.commands.MusicCommand
 import cn.rtast.fancybot.commands.MyPointCommand
+import cn.rtast.fancybot.commands.NslookupCommand
 import cn.rtast.fancybot.commands.PixivCommand
 import cn.rtast.fancybot.commands.QRCodeCommand
 import cn.rtast.fancybot.commands.RUACommand
@@ -104,7 +105,7 @@ val commands = listOf(
     MCPingCommand(), HelpCommand(),
     WeatherCommand(), CigaretteCommand(),
     RemakeCommand(), PixivCommand(),
-    RUACommand()
+    RUACommand(), NslookupCommand()
 )
 
 suspend fun main() {
