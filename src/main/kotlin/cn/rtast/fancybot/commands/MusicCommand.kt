@@ -10,9 +10,9 @@ package cn.rtast.fancybot.commands
 import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.entity.music.Search
 import cn.rtast.fancybot.entity.music.SearchedResult
-import cn.rtast.fancybot.entity.music.SongUrl
 import cn.rtast.fancybot.util.Http
 import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.enums.MusicShareType
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OBMessage
@@ -24,6 +24,14 @@ class MusicCommand : BaseCommand() {
     private val searchedResult = mutableMapOf<Long, List<SearchedResult>>()
 
     override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
+        if (args.isEmpty()) {
+            val msg = MessageChain.Builder()
+                .addAt(message.sender.userId)
+                .addText("发送`/点歌`或者`/music` <关键词> 来搜索音乐~")
+                .build()
+            listener.sendGroupMessage(message.groupId, msg)
+            return
+        }
         searchedResult.forEach { (key, results) ->
             val validResults = results.filter { result ->
                 Instant.now().epochSecond - result.timestamp <= 30
@@ -36,7 +44,26 @@ class MusicCommand : BaseCommand() {
         }
         val method = args.first()
         when (method) {
-            "s", "ss", "search", "搜索" -> {
+            "p", "pp", "play", "播放" -> {
+                try {
+                    val index = args.drop(1).last().toInt()
+                    val searchedResultGet = searchedResult[message.sender.userId]!!
+                    val finalResult = searchedResultGet[index]
+                    val msg = MessageChain.Builder()
+                        .addMusicShare(MusicShareType.Netease, finalResult.id.toString())
+                        .build()
+                    listener.sendGroupMessage(message.groupId, msg)
+                } catch (_: Exception) {
+                    val msg = MessageChain.Builder()
+                        .addAt(message.sender.userId)
+                        .addText("输入有误请重新搜索本次搜索结果已清除")
+                        .build()
+                    listener.sendGroupMessage(message.groupId, msg)
+                }
+                searchedResult.remove(message.sender.userId)
+            }
+
+            else -> {
                 if (searchedResult.containsKey(message.sender.userId)) {
                     searchedResult.remove(message.sender.userId)
                     val msg = MessageChain.Builder()
@@ -45,7 +72,7 @@ class MusicCommand : BaseCommand() {
                         .build()
                     listener.sendGroupMessage(message.groupId, msg)
                 }
-                val keyword = args.drop(1).joinToString(" ")
+                val keyword = args.joinToString(" ")
                 val result = Http.get<Search>(
                     "${configManager.ncmAPI}/search",
                     mapOf("keywords" to keyword),
@@ -66,33 +93,6 @@ class MusicCommand : BaseCommand() {
                     .addText(stringResult.toString())
                     .build()
                 listener.sendGroupMessage(message.groupId, msg)
-            }
-
-            "p", "pp", "play", "播放" -> {
-                try {
-                    val index = args.drop(1).last().toInt()
-                    val searchedResultGet = searchedResult[message.sender.userId]!!
-                    val finalResult = searchedResultGet[index]
-                    val url =
-                        Http.get<SongUrl>(
-                            "${configManager.ncmAPI}/song/url",
-                            mapOf("id" to finalResult.id)
-                        ).data.first().url
-                    val msg = MessageChain.Builder()
-                        .addCustomMusicShare(
-                            "https://music.163.com/#/song?id=${finalResult.id}",
-                            url,
-                            "《${finalResult.name}》-- ${finalResult.artists}"
-                        ).build()
-                    listener.sendGroupMessage(message.groupId, msg)
-                } catch (_: Exception) {
-                    val msg = MessageChain.Builder()
-                        .addAt(message.sender.userId)
-                        .addText("输入有误请重新搜索本次搜索结果已清除")
-                        .build()
-                    listener.sendGroupMessage(message.groupId, msg)
-                }
-                searchedResult.remove(message.sender.userId)
             }
         }
     }
