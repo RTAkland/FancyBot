@@ -57,7 +57,7 @@ class FancyBot : OBMessage {
         if (message.message.any { it.type == ArrayMessageType.reply }) {  // Image url parse
             val command = message.message.reversed().find { it.type == ArrayMessageType.text }!!.data.text!!
             val replyId = message.message.find { it.type == ArrayMessageType.reply }!!.data.id!!
-            if (command == "图来" || command == "图链") {
+            if (command.contains("图来") || command.contains("图链")) {
                 this.getMessage(replyId.toString().toLong(), "imageUrl", message.groupId)
             }
         }
