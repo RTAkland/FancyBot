@@ -20,6 +20,14 @@ class WeatherCommand : BaseCommand() {
     override val commandNames = listOf("/weather", "/天气")
 
     override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
+        if (args.isEmpty()) {
+            val msg = MessageChain.Builder()
+                .addAt(message.sender.userId)
+                .addText("发送/weather <地区名>即可查看实时天气哦~")
+                .build()
+            listener.sendGroupMessage(message.groupId, msg)
+            return
+        }
         val locationName = args.first()
         val lookupLocationId = Http.get<Geo>(
             "https://geoapi.qweather.com/v2/city/lookup",
