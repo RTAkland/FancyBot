@@ -42,11 +42,10 @@ import cn.rtast.rob.entity.GroupRevokeMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OBMessage
-import org.java_websocket.WebSocket
 
 class FancyBot : OBMessage {
 
-    override suspend fun onGroupMessage(ws: WebSocket, message: GroupMessage, json: String) {
+    override suspend fun onGroupMessage(message: GroupMessage, json: String) {
         val sender = message.sender.nickname
         val senderId = message.sender.userId
         val msg = message.rawMessage
@@ -64,7 +63,7 @@ class FancyBot : OBMessage {
         }
     }
 
-    override suspend fun onGroupMessageRevoke(ws: WebSocket, message: GroupRevokeMessage) {
+    override suspend fun onGroupMessageRevoke(message: GroupRevokeMessage) {
         val msg = MessageChain.Builder()
             .addText("用户: ${message.userId} 被: ${message.operatorId} 撤回了一条消息")
             .addNewLine()
@@ -74,14 +73,14 @@ class FancyBot : OBMessage {
     }
 
 
-    override suspend fun onGetGroupMessageResponse(ws: WebSocket, message: GetMessage) {
+    override suspend fun onGetGroupMessageResponse(message: GetMessage) {
         when (message.data.id) {
             "revoke" -> AntiRevokeCommand.getMessageCallback(this, message)
             "imageUrl" -> ImageURLCommand.callback(this, message)
         }
     }
 
-    override suspend fun onWebsocketErrorEvent(ws: WebSocket, ex: Exception) {
+    override suspend fun onWebsocketErrorEvent(ex: Exception) {
         ex.printStackTrace()
     }
 }
