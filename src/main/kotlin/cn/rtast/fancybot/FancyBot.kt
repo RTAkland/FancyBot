@@ -7,24 +7,7 @@
 
 package cn.rtast.fancybot
 
-import cn.rtast.fancybot.commands.AntiRevokeCommand
-import cn.rtast.fancybot.commands.CigaretteCommand
-import cn.rtast.fancybot.commands.EchoCommand
-import cn.rtast.fancybot.commands.FKXQSCommand
-import cn.rtast.fancybot.commands.HelpCommand
-import cn.rtast.fancybot.commands.HitokotoCommand
-import cn.rtast.fancybot.commands.JrrpCommand
-import cn.rtast.fancybot.commands.MCPingCommand
-import cn.rtast.fancybot.commands.MusicCommand
-import cn.rtast.fancybot.commands.MyPointCommand
-import cn.rtast.fancybot.commands.NslookupCommand
-import cn.rtast.fancybot.commands.PixivCommand
-import cn.rtast.fancybot.commands.QRCodeCommand
-import cn.rtast.fancybot.commands.RUACommand
-import cn.rtast.fancybot.commands.RedeemCommand
-import cn.rtast.fancybot.commands.RemakeCommand
-import cn.rtast.fancybot.commands.SignCommand
-import cn.rtast.fancybot.commands.WeatherCommand
+import cn.rtast.fancybot.commands.*
 import cn.rtast.fancybot.commands.misc.BVParseCommand
 import cn.rtast.fancybot.commands.misc.ImageURLCommand
 import cn.rtast.fancybot.entity.enums.WSType
@@ -32,6 +15,7 @@ import cn.rtast.fancybot.items.BaisiItem
 import cn.rtast.fancybot.items.HeisiItem
 import cn.rtast.fancybot.items.SetuItem
 import cn.rtast.fancybot.util.file.ConfigManager
+import cn.rtast.fancybot.util.file.NiuziManager
 import cn.rtast.fancybot.util.file.SignManager
 import cn.rtast.fancybot.util.initDatabase
 import cn.rtast.fancybot.util.item.ItemManager
@@ -88,6 +72,7 @@ class FancyBot : OBMessage {
 val configManager = ConfigManager()
 val itemManager = ItemManager()
 val signManager = SignManager()
+val niuziManager = NiuziManager()
 
 val items = listOf(
     HeisiItem(),
@@ -104,7 +89,9 @@ val commands = listOf(
     MCPingCommand(), HelpCommand(),
     WeatherCommand(), CigaretteCommand(),
     RemakeCommand(), PixivCommand(),
-    RUACommand(), NslookupCommand()
+    RUACommand(), NslookupCommand(),
+    NiuziSignCommand(), MyNiuziSignCommand(),
+    JiJianCommand()
 )
 
 suspend fun main() {

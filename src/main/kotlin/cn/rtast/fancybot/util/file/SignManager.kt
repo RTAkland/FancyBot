@@ -36,11 +36,7 @@ class SignManager {
 
     suspend fun isSigned(id: Long): Boolean {
         val record = getRecord(id)
-        return if (record != null) {
-            record.timestamp.isSameDay(Instant.now().epochSecond)
-        } else {
-            false
-        }
+        return record?.timestamp?.isSameDay(Instant.now().epochSecond) ?: false
     }
 
     suspend fun sign(id: Long): Long {

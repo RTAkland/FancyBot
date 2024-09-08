@@ -9,6 +9,7 @@ package cn.rtast.fancybot.util
 
 import cn.rtast.fancybot.ROOT_PATH
 import cn.rtast.fancybot.entity.db.JrrpTable
+import cn.rtast.fancybot.entity.db.NiuziTable
 import cn.rtast.fancybot.entity.db.SignTable
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.Database
@@ -20,6 +21,7 @@ suspend fun initDatabase() {
     suspendedTransaction {
         SchemaUtils.createMissingTablesAndColumns(JrrpTable)
         SchemaUtils.createMissingTablesAndColumns(SignTable)
+        SchemaUtils.createMissingTablesAndColumns(NiuziTable)
     }
 }
 
