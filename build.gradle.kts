@@ -34,6 +34,7 @@ dependencies {
     implementation(libs.exposedJDBC)
     implementation(libs.sqliteJDBC)
     implementation(libs.motdPinger)
+    implementation("com.madgag:animated-gif-lib:1.4")
 }
 
 tasks.build {

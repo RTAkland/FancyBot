@@ -10,6 +10,7 @@ package cn.rtast.fancybot
 import cn.rtast.fancybot.commands.*
 import cn.rtast.fancybot.commands.misc.BVParseCommand
 import cn.rtast.fancybot.commands.misc.ImageURLCommand
+import cn.rtast.fancybot.commands.misc.ReverseGIFCommand
 import cn.rtast.fancybot.entity.enums.WSType
 import cn.rtast.fancybot.items.BaisiItem
 import cn.rtast.fancybot.items.HeisiItem
@@ -42,7 +43,12 @@ class FancyBot : OBMessage {
             val command = message.message.reversed().find { it.type == ArrayMessageType.text }!!.data.text!!
             val replyId = message.message.find { it.type == ArrayMessageType.reply }!!.data.id!!
             if (command.contains("图来") || command.contains("图链")) {
+                // get image url
                 this.getMessage(replyId.toString().toLong(), "imageUrl", message.groupId)
+            }
+            if (command.contains("倒放") || command.contains("df")) {
+                // reverse gif
+                this.getMessage(replyId.toString().toLong(), "reverseGif", message.groupId)
             }
         }
     }
@@ -61,6 +67,7 @@ class FancyBot : OBMessage {
         when (message.data.id) {
             "revoke" -> AntiRevokeCommand.getMessageCallback(this, message)
             "imageUrl" -> ImageURLCommand.callback(this, message)
+            "reverseGif" -> ReverseGIFCommand.callback(this, message)
         }
     }
 
