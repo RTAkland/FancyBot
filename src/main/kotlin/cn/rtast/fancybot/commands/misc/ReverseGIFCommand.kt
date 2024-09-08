@@ -38,7 +38,11 @@ object ReverseGIFCommand {
     }
 
     suspend fun callback(listener: OBMessage, message: GetMessage) {
-        val gifUrl = message.data.message.find { it.type == ArrayMessageType.mface }!!.data.url!!
+        val gifUrl = if (message.data.message.find { it.type == ArrayMessageType.mface } == null) {
+            message.data.message.find { it.type == ArrayMessageType.image }!!.data.file!!
+        } else {
+            message.data.message.find { it.type == ArrayMessageType.mface }!!.data.url!!
+        }
         val base64String = this.reverseGif(gifUrl)
         val msg = MessageChain.Builder()
             .addReply(message.data.messageId)
