@@ -98,7 +98,7 @@ val commands = listOf(
     RemakeCommand(), PixivCommand(),
     RUACommand(), NslookupCommand(),
     NiuziSignCommand(), MyNiuziSignCommand(),
-    JiJianCommand()
+    JiJianCommand(), LikeMeCommand()
 )
 
 suspend fun main() {
