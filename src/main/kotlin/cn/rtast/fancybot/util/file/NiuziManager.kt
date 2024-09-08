@@ -21,6 +21,16 @@ import java.time.Instant
 import kotlin.random.Random
 
 class NiuziManager {
+
+    private suspend fun updateLength(id: Long, newLength: Double) {
+        val current = getUser(id)
+        suspendedTransaction {
+            NiuziTable.update({ userId eq id }) {
+                it[length] = current?.length!! + newLength
+            }
+        }
+    }
+
     suspend fun getUser(id: Long): Niuzi? {
         return suspendedTransaction {
             NiuziTable.selectAll().where { userId eq id }.map {
@@ -57,15 +67,6 @@ class NiuziManager {
             }
         }
         return randomLength to this.getUser(id)
-    }
-
-    suspend fun updateLength(id: Long, newLength: Double) {
-        val current = getUser(id)
-        suspendedTransaction {
-            NiuziTable.update({ userId eq id }) {
-                it[length] = current?.length!! + newLength
-            }
-        }
     }
 
     suspend fun exists(userId: Long): Boolean {
