@@ -52,6 +52,24 @@ class JiJianCommand : BaseCommand() {
 
         val target = message.message.find { it.type == ArrayMessageType.at }!!.data
         val targetId = target.qq!!.toLong()
+        if (targetId == 0L) {
+            val msg = MessageChain.Builder()
+                .addAt(message.sender.userId)
+                .addText("你的只有一根牛子，他们牛子太多啦你战胜不了他们的~")
+                .addNewLine()
+                .addText("所以你不能和他们击剑~")
+                .build()
+            listener.sendGroupMessage(message.groupId, msg)
+            return
+        }
+        if (message.sender.userId == targetId) {
+            val msg = MessageChain.Builder()
+                .addAt(message.sender.userId)
+                .addText("你不能和自己击剑啊")
+                .build()
+            listener.sendGroupMessage(message.groupId, msg)
+            return
+        }
         if (!niuziManager.exists(message.sender.userId)) {
             val msg = MessageChain.Builder()
                 .addAt(message.sender.userId)
