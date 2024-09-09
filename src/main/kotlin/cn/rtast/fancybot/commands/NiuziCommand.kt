@@ -123,7 +123,7 @@ class JiJianCommand : BaseCommand() {
     }
 }
 
-class MyNiuziSignCommand : BaseCommand() {
+class MyNiuziCommand : BaseCommand() {
     override val commandNames = listOf("我的牛子")
 
     override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {

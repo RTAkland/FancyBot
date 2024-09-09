@@ -97,7 +97,7 @@ val commands = listOf(
     WeatherCommand(), CigaretteCommand(),
     RemakeCommand(), PixivCommand(),
     RUACommand(), NslookupCommand(),
-    NiuziSignCommand(), MyNiuziSignCommand(),
+    NiuziSignCommand(), MyNiuziCommand(),
     JiJianCommand(), LikeMeCommand()
 )
 
