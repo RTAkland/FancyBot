@@ -68,6 +68,16 @@ class JiJianCommand : BaseCommand() {
             listener.sendGroupMessage(message.groupId, msg)
             return
         }
+
+        if (niuziManager.getUser(message.sender.userId)?.length!! < 0.0) {
+            val msg = MessageChain.Builder()
+                .addAt(message.sender.userId)
+                .addText("你的牛子已经凹进去了没办法进行击剑~发送`牛子签到来增加你的牛子长度吧~`")
+                .build()
+            listener.sendGroupMessage(message.groupId, msg)
+            return
+        }
+
         if (niuziManager.getUser(targetId)?.length!! < 0.0) {
             val msg = MessageChain.Builder()
                 .addAt(message.sender.userId)
