@@ -19,13 +19,16 @@ data class BVID(
     )
 
     data class Owner(
-        val name: String
+        val name: String,
+        val face: String,
     )
 
     data class Stat(
-        val view: Long,
+        val view: Int,
         val favorite: Int,
         val coin: Int,
         val like: Int,
+        val reply: Int,
+        val share: Int,
     )
 }
