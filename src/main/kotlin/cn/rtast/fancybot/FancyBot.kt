@@ -42,7 +42,7 @@ class FancyBot : OBMessage {
 
         if (message.rawMessage.startsWith("https://github.com/") ||
             message.rawMessage.startsWith("git@github.com:") ||
-            message.rawMessage.split("/").size == 2
+            (message.rawMessage.split("/").size == 2 && message.rawMessage.split("/").first().isNotEmpty())
         ) {
             GitHubParseCommand.parse(this, message)
         }
