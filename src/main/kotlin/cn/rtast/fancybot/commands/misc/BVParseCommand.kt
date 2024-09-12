@@ -20,6 +20,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.awt.Color
 import java.awt.Font
+import java.awt.RenderingHints
 import java.awt.image.BufferedImage
 import java.io.ByteArrayOutputStream
 import java.net.URI
@@ -75,6 +76,7 @@ object BVParseCommand {
         val faceImage = ImageIO.read(URI(authorFace).toURL())
         val backgroundImage = BufferedImage(CANVAS_WIDTH, CANVAS_HEIGHT, BufferedImage.TYPE_INT_RGB)
         val g2d = backgroundImage.createGraphics()
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
         g2d.color = Color(43, 43, 43)
         g2d.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
         // draw rect
