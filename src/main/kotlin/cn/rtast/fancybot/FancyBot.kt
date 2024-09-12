@@ -9,6 +9,7 @@ package cn.rtast.fancybot
 
 import cn.rtast.fancybot.commands.*
 import cn.rtast.fancybot.commands.misc.BVParseCommand
+import cn.rtast.fancybot.commands.misc.GitHubParseCommand
 import cn.rtast.fancybot.commands.misc.ImageURLCommand
 import cn.rtast.fancybot.commands.misc.ReverseGIFCommand
 import cn.rtast.fancybot.entity.bili.CardShare
@@ -38,6 +39,14 @@ class FancyBot : OBMessage {
         val msg = message.rawMessage
         val groupId = message.groupId
         println("$sender($senderId: $groupId): $msg")
+
+        if (message.rawMessage.startsWith("https://github.com/") ||
+            message.rawMessage.startsWith("git@github.com:") ||
+            message.rawMessage.split("/").size == 2
+        ) {
+            GitHubParseCommand.parse(this, message)
+        }
+
         if (message.rawMessage.startsWith("BV") ||
             message.rawMessage.startsWith("https://www.bilibili.com") ||
             message.rawMessage.contains("https://b23.tv/") ||

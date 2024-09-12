@@ -10,7 +10,9 @@ package cn.rtast.fancybot.commands.misc
 import cn.rtast.fancybot.entity.bili.BVID
 import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.Resources
+import cn.rtast.fancybot.util.drawCustomImage
 import cn.rtast.fancybot.util.str.encodeToBase64
+import cn.rtast.fancybot.util.str.setTruncat
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OBMessage
@@ -18,8 +20,6 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.awt.Color
 import java.awt.Font
-import java.awt.Graphics2D
-import java.awt.geom.RoundRectangle2D
 import java.awt.image.BufferedImage
 import java.io.ByteArrayOutputStream
 import java.net.URI
@@ -59,35 +59,6 @@ object BVParseCommand {
         }
     }
 
-    private fun drawImage(
-        image: BufferedImage,
-        g2d: Graphics2D,
-        x: Int,
-        y: Int,
-        maxWidth: Double,
-        maxHeight: Double,
-        clip: Boolean
-    ) {
-        val originalWidth = image.getWidth(null)
-        val originalHeight = image.getHeight(null)
-        val widthScale = maxWidth / originalWidth
-        val heightScale = maxHeight / originalHeight
-        val scale = minOf(widthScale, heightScale)
-        val targetWidth = (originalWidth * scale).toInt()
-        val targetHeight = (originalHeight * scale).toInt()
-        if (clip) {
-            g2d.clip = RoundRectangle2D.Float(
-                x.toFloat(),
-                y.toFloat(),
-                targetWidth.toFloat(),
-                targetHeight.toFloat(),
-                30.toFloat(),
-                30.toFloat()
-            )
-        }
-        g2d.drawImage(image, x, y, targetWidth, targetHeight, null)
-    }
-
     private fun createResponseImage(
         title: String,
         author: String,
@@ -119,35 +90,24 @@ object BVParseCommand {
         g2d.drawString(reply, 300, 290)
         g2d.drawString(share, 300, 200)
         // draw video title
-        val maxWidth = 500
-        val fontMetrics = g2d.fontMetrics
-        val textWidth = fontMetrics.stringWidth(title)
-        val truncatedText = if (textWidth > maxWidth) {
-            val ellipsisWidth = fontMetrics.stringWidth("...")
-            val width = maxWidth - ellipsisWidth
-            var endIndex = title.length
-            while (fontMetrics.stringWidth(title.substring(0, endIndex)) > width && endIndex > 0) {
-                endIndex--
-            }
-            title.substring(0, endIndex) + "..."
-        } else title
+        val truncatedText = setTruncat(title, g2d)
         g2d.font = titleFont
         g2d.drawString(truncatedText, 20, 70)
         // draw author name
         g2d.drawString(author, 40, 580)
         // draw icons
-        this.drawImage(favoriteIcon, g2d, 230, 340, 50.0, 50.0, false)
-        this.drawImage(replyIcon, g2d, 230, 250, 50.0, 50.0, false)
-        this.drawImage(shareIcon, g2d, 230, 160, 50.0, 50.0, false)
-        this.drawImage(viewIcon, g2d, 40, 340, 50.0, 50.0, false)
-        this.drawImage(coinIcon, g2d, 40, 250, 50.0, 50.0, false)
-        this.drawImage(likeIcon, g2d, 40, 160, 50.0, 50.0, false)
+        g2d.drawCustomImage(favoriteIcon, 230, 340, 50.0, 50.0, false)
+        g2d.drawCustomImage(replyIcon, 230, 250, 50.0, 50.0, false)
+        g2d.drawCustomImage(shareIcon, 230, 160, 50.0, 50.0, false)
+        g2d.drawCustomImage(viewIcon, 40, 340, 50.0, 50.0, false)
+        g2d.drawCustomImage(coinIcon, 40, 250, 50.0, 50.0, false)
+        g2d.drawCustomImage(likeIcon, 40, 160, 50.0, 50.0, false)
         // draw 22 logo
-        this.drawImage(twoTwoLogo, g2d, 800, 450, 90.0, 160.0, false)
+        g2d.drawCustomImage(twoTwoLogo, 800, 450, 90.0, 160.0, false)
         // draw author face
-        this.drawImage(faceImage, g2d, 40, 480, 60.0, 60.0, true)
+        g2d.drawCustomImage(faceImage, 40, 480, 60.0, 60.0, true)
         // draw cover image
-        this.drawImage(coverImage, g2d, 430, 140, 600.0, 300.0, true)
+        g2d.drawCustomImage(coverImage, 430, 140, 600.0, 300.0, true)
         g2d.dispose()
         val byteArrayOutputStream = ByteArrayOutputStream()
         ImageIO.write(backgroundImage, "png", byteArrayOutputStream)

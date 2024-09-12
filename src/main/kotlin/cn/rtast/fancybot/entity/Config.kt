@@ -16,5 +16,6 @@ data class Config(
     val accessToken: String,
     val port: Int,
     val listeningGroups: List<Long>,
-    val qweatherKey: String
+    val qweatherKey: String,
+    val githubKey: String,
 )
