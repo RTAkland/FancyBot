@@ -6,6 +6,7 @@ okhttpVersion = "5.0.0-alpha.14"
 exposedVersion = "0.53.0"
 sqliteJDBCVersion = "3.46.1.0"
 motdPingerVersion = "1.0.1"
+animatedGifLibVersion = "1.4"
 
 [libraries]
 rOneBot = { group = "cn.rtast", name = "ROneBot", version.ref = "ronebotVersion" }
@@ -14,6 +15,7 @@ okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhtt
 exposedCore = { group = "org.jetbrains.exposed", name = "exposed-core", version.ref = "exposedVersion" }
 exposedJDBC = { group = "org.jetbrains.exposed", name = "exposed-jdbc", version.ref = "exposedVersion" }
 sqliteJDBC = { group = "org.xerial", name = "sqlite-jdbc", version.ref = "sqliteJDBCVersion" }
+animated-gif-lib = { group = "com.madgag", name = "animated-gif-lib", version.ref = "animatedGifLibVersion" }
 
 [bundles]
 
