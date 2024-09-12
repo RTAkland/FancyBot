@@ -128,7 +128,8 @@ val commands = listOf(
     RemakeCommand(), PixivCommand(),
     RUACommand(), NslookupCommand(),
     NiuziSignCommand(), MyNiuziCommand(),
-    JiJianCommand(), LikeMeCommand()
+    JiJianCommand(), LikeMeCommand(),
+    KotlinCCommand()
 )
 
 suspend fun main() {
