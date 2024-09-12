@@ -39,20 +39,11 @@ object BVParseCommand {
     private val replyIcon = ImageIO.read(Resources.loadFromResources("bili/reply.png"))
 
     private fun Int.formatNumber(): String {
-        return when {
-            this >= 100000000 -> "${this / 100000000}亿"
-            this >= 10000 -> {
-                val wan = this / 10000
-                val remainder = this % 10000
-                if (remainder == 0) "${wan}万" else "${wan}万${remainder}"
-            }
-
-            this >= 1000 -> {
-                val remainder = this % 1000
-                if (remainder == 0) "${this / 1000}千" else "${this / 1000}千零${remainder}"
-            }
-
-            else -> this.toString()
+        return if (this >= 10000) {
+            val result = this / 10000.0
+            String.format("%.1f万", result)
+        } else {
+            this.toString()
         }
     }
 
@@ -144,7 +135,7 @@ object BVParseCommand {
         // draw author face
         this.drawImage(faceImage, g2d, 40, 480, 60.0, 60.0, true)
         // draw cover image
-        this.drawImage(coverImage, g2d, 470, 140, 600.0, 300.0, true)
+        this.drawImage(coverImage, g2d, 430, 140, 600.0, 300.0, true)
         g2d.dispose()
         val byteArrayOutputStream = ByteArrayOutputStream()
         ImageIO.write(backgroundImage, "png", byteArrayOutputStream)
@@ -152,9 +143,7 @@ object BVParseCommand {
         return imageBytes.encodeToBase64()
     }
 
-    suspend fun parse(listener: OBMessage, message: GroupMessage) {
-        val bvid = if (message.rawMessage.startsWith("BV")) message.rawMessage
-        else message.rawMessage.split("/")[4]
+    suspend fun parse(listener: OBMessage, bvid: String, message: GroupMessage) {
         val videoInfo = Http.get<BVID>(CID_URL, mapOf("bvid" to bvid))
         val authorFace = videoInfo.data.owner.face
         val title = videoInfo.data.title

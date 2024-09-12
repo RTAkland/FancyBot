@@ -27,8 +27,12 @@ import cn.rtast.rob.entity.GroupRevokeMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OBMessage
+import okhttp3.OkHttpClient
+import okhttp3.Request
 
 class FancyBot : OBMessage {
+
+    private val tempOkHttpClient = OkHttpClient()
 
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
         val sender = message.sender.nickname
@@ -36,8 +40,24 @@ class FancyBot : OBMessage {
         val msg = message.rawMessage
         val groupId = message.groupId
         println("$sender($senderId: $groupId): $msg")
-        if (message.rawMessage.startsWith("BV") || message.rawMessage.startsWith("https://www.bilibili.com")) {
-            BVParseCommand.parse(this, message)
+        if (message.rawMessage.startsWith("BV") ||
+            message.rawMessage.startsWith("https://www.bilibili.com") ||
+            message.rawMessage.contains("https://b23.tv/")
+        ) {
+            // parse bilibili video with a link, bvid or b23.tv link
+            val bvid = if (message.rawMessage.startsWith("BV")) {
+                message.rawMessage
+            } else if (message.rawMessage.contains("https://b23.tv/")) {
+                val shortUrl = message.rawMessage.split(" ").last()
+                val request = Request.Builder().url(shortUrl).build()
+                val redirectedUrl = tempOkHttpClient.newCall(request).execute()
+                redirectedUrl.use {
+                    it.request.url.toString().split("/")[4].split("?").first()
+                }
+            } else {
+                message.rawMessage.split("/")[4]
+            }
+            BVParseCommand.parse(this, bvid, message)
         }
         if (message.message.any { it.type == ArrayMessageType.reply }) {  // Image url parse
             val command = message.message.reversed().find { it.type == ArrayMessageType.text }!!.data.text!!
@@ -65,7 +85,7 @@ class FancyBot : OBMessage {
 
     override suspend fun onGetGroupMessageResponse(message: GetMessage) {
         when (message.data.id) {
-            "revoke" -> AntiRevokeCommand.getMessageCallback(this, message)
+            "revoke" -> AntiRevokeCommand.callback(this, message)
             "imageUrl" -> ImageURLCommand.callback(this, message)
             "reverseGif" -> ReverseGIFCommand.callback(this, message)
         }

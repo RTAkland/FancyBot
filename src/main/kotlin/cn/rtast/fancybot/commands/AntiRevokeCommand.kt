@@ -29,7 +29,7 @@ class AntiRevokeCommand : BaseCommand() {
     }
 
     companion object {
-        suspend fun getMessageCallback(listener: OBMessage, message: GetMessage) {
+        suspend fun callback(listener: OBMessage, message: GetMessage) {
             val msgList = mutableListOf<ArrayMessage>()
             msgList.add(
                 ArrayMessage(
