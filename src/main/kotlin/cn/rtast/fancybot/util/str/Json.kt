@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.fancybot.util
+package cn.rtast.fancybot.util.str
 
 import cn.rtast.fancybot.gson
 import com.google.gson.reflect.TypeToken

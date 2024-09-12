@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.util
 
+import cn.rtast.fancybot.util.str.fromJson
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.FormBody

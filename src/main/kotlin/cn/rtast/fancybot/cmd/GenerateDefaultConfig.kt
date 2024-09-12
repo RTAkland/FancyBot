@@ -8,7 +8,7 @@
 package cn.rtast.fancybot.cmd
 
 import cn.rtast.fancybot.DEFAULT_CONFIG
-import cn.rtast.fancybot.util.toJson
+import cn.rtast.fancybot.util.str.toJson
 import java.io.File
 
 fun main() {

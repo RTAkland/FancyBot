@@ -9,6 +9,8 @@ package cn.rtast.fancybot.util
 
 import cn.rtast.fancybot.ROOT_PATH
 import cn.rtast.fancybot.gson
+import cn.rtast.fancybot.util.str.fromArrayJson
+import cn.rtast.fancybot.util.str.fromJson
 import java.io.File
 
 abstract class JsonFileHandler<T> {

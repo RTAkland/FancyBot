@@ -8,7 +8,7 @@
 package cn.rtast.fancybot.commands
 
 import cn.rtast.fancybot.entity.MCPing
-import cn.rtast.fancybot.util.fromJson
+import cn.rtast.fancybot.util.str.fromJson
 import cn.rtast.motdpinger.MotdPinger
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand

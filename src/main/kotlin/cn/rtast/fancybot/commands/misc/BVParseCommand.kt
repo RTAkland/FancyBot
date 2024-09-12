@@ -14,6 +14,8 @@ import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OBMessage
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import java.awt.Color
 import java.awt.Font
 import java.awt.Graphics2D
@@ -37,6 +39,16 @@ object BVParseCommand {
     private val shareIcon = ImageIO.read(Resources.loadFromResources("bili/share.png"))
     private val favoriteIcon = ImageIO.read(Resources.loadFromResources("bili/favorite.png"))
     private val replyIcon = ImageIO.read(Resources.loadFromResources("bili/reply.png"))
+
+    private val tempOkHttpClient = OkHttpClient()
+
+    fun getShortUrlBVID(shortUrl: String): String {
+        val request = Request.Builder().url(shortUrl.split(" ").last()).build()
+        val redirectedUrl = tempOkHttpClient.newCall(request).execute()
+        redirectedUrl.use {
+            return it.request.url.toString().split("/")[4].split("?").first()
+        }
+    }
 
     private fun Int.formatNumber(): String {
         return if (this >= 10000) {

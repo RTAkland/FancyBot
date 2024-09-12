@@ -11,6 +11,7 @@ import cn.rtast.fancybot.commands.*
 import cn.rtast.fancybot.commands.misc.BVParseCommand
 import cn.rtast.fancybot.commands.misc.ImageURLCommand
 import cn.rtast.fancybot.commands.misc.ReverseGIFCommand
+import cn.rtast.fancybot.entity.bili.CardShare
 import cn.rtast.fancybot.entity.enums.WSType
 import cn.rtast.fancybot.items.BaisiItem
 import cn.rtast.fancybot.items.HeisiItem
@@ -20,6 +21,7 @@ import cn.rtast.fancybot.util.file.NiuziManager
 import cn.rtast.fancybot.util.file.SignManager
 import cn.rtast.fancybot.util.initDatabase
 import cn.rtast.fancybot.util.item.ItemManager
+import cn.rtast.fancybot.util.str.fromJson
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.GetMessage
 import cn.rtast.rob.entity.GroupMessage
@@ -27,12 +29,8 @@ import cn.rtast.rob.entity.GroupRevokeMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OBMessage
-import okhttp3.OkHttpClient
-import okhttp3.Request
 
 class FancyBot : OBMessage {
-
-    private val tempOkHttpClient = OkHttpClient()
 
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
         val sender = message.sender.nickname
@@ -42,18 +40,21 @@ class FancyBot : OBMessage {
         println("$sender($senderId: $groupId): $msg")
         if (message.rawMessage.startsWith("BV") ||
             message.rawMessage.startsWith("https://www.bilibili.com") ||
-            message.rawMessage.contains("https://b23.tv/")
+            message.rawMessage.contains("https://b23.tv/") ||
+            message.message.find { it.type == ArrayMessageType.json } != null
         ) {
             // parse bilibili video with a link, bvid or b23.tv link
             val bvid = if (message.rawMessage.startsWith("BV")) {
                 message.rawMessage
             } else if (message.rawMessage.contains("https://b23.tv/")) {
                 val shortUrl = message.rawMessage.split(" ").last()
-                val request = Request.Builder().url(shortUrl).build()
-                val redirectedUrl = tempOkHttpClient.newCall(request).execute()
-                redirectedUrl.use {
-                    it.request.url.toString().split("/")[4].split("?").first()
-                }
+                BVParseCommand.getShortUrlBVID(shortUrl)
+            } else if (message.message.find { it.type == ArrayMessageType.json } != null) {
+                val card = message.message.find { it.type == ArrayMessageType.json }!!
+                    .data.data!!.toString().fromJson<CardShare>()
+                if (!card.meta.detail.title.contains("哔哩哔哩")) return
+                val shortUrl = card.meta.detail.qqDocUrl
+                BVParseCommand.getShortUrlBVID(shortUrl)
             } else {
                 message.rawMessage.split("/")[4]
             }
