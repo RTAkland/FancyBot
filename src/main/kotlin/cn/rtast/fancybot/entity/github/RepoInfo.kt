@@ -13,7 +13,7 @@ data class RepoInfo(
     val owner: Owner,
     @SerializedName("full_name")
     val fullName: String,
-    val description: String,
+    val description: String?,
     @SerializedName("forks_count")
     val forksCount: Int,
     val language: String,

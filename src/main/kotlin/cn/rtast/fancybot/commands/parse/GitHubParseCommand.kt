@@ -36,7 +36,7 @@ object GitHubParseCommand {
     private val forkIcon = ImageIO.read(Resources.loadFromResources("github/fork.png"))
     private val customFont = Font("Serif", Font.ITALIC, 50).deriveFont(Font.ITALIC).deriveFont(Font.BOLD)
     private val titleCustomFont = Font("Serif", Font.ITALIC, 75).deriveFont(Font.ITALIC).deriveFont(Font.BOLD)
-    private val descriptionCustomFont = Font("Serif", Font.ITALIC, 50).deriveFont(Font.ITALIC).deriveFont(Font.BOLD)
+    private val descriptionCustomFont = Font("Serif", Font.ITALIC, 40).deriveFont(Font.ITALIC).deriveFont(Font.BOLD)
 
     private val languageColors = mapOf(
         "Kotlin" to Color(169, 123, 255),
@@ -49,6 +49,14 @@ object GitHubParseCommand {
         "PHP" to Color(79, 93, 149),
         "TypeScript" to Color(43, 116, 137),
         "Swift" to Color(240, 81, 56),
+        "SCSS" to Color(198, 83, 140),
+        "Visual Basic 6.0" to Color(44, 99, 83),
+        "Astro" to Color(255, 90, 3),
+        "Rust" to Color(222, 165, 132),
+        "PowerShell" to Color(1, 36, 86),
+        "MDX" to Color(252, 179, 44),
+        "Shell" to Color(137, 224, 81),
+        "CMake" to Color(218, 52, 52),
         "Unknown" to Color(211, 211, 211)
     )
 
@@ -96,8 +104,8 @@ object GitHubParseCommand {
         val truncatedFullNameText = setTruncat(repoStat.fullName, g2d, 1000)
         g2d.drawString(truncatedFullNameText, 80, 280)
         g2d.font = descriptionCustomFont
-        val truncatedDescription = setTruncat(repoStat.description, g2d, 1000)
-        g2d.drawString(truncatedDescription, 20, 450)
+        val truncatedDescription = setTruncat(repoStat.description ?: "暂无描述~", g2d, 1000)
+        g2d.drawString(truncatedDescription, 80, 450)
         val avatarImage = ImageIO.read(URI(repoStat.owner.avatarUrl).toURL())
         g2d.drawCustomImage(avatarImage, 1200, 300, 300.0, 300.0, true)
         val byteArrayOutputStream = ByteArrayOutputStream()
