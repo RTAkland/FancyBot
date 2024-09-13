@@ -74,8 +74,6 @@ class NiuziManager {
     }
 
     suspend fun jijian(fromUser: Long, targetUser: Long): Pair<Boolean, Double> {
-        val fromUserStatus = getUser(fromUser)!!
-        val targetUserStatus = getUser(targetUser)!!
         val randomLength = Random.nextDouble(1.0, 10.0)
         val success = Random.nextBoolean()
         if (success) {
