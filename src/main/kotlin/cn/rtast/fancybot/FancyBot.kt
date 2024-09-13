@@ -8,10 +8,25 @@
 package cn.rtast.fancybot
 
 import cn.rtast.fancybot.commands.*
-import cn.rtast.fancybot.commands.misc.BVParseCommand
-import cn.rtast.fancybot.commands.misc.GitHubParseCommand
-import cn.rtast.fancybot.commands.misc.ImageURLCommand
-import cn.rtast.fancybot.commands.misc.ReverseGIFCommand
+import cn.rtast.fancybot.commands.CompilerCommand
+import cn.rtast.fancybot.commands.lookup.CigaretteCommand
+import cn.rtast.fancybot.commands.lookup.MCPingCommand
+import cn.rtast.fancybot.commands.lookup.MusicCommand
+import cn.rtast.fancybot.commands.lookup.NslookupCommand
+import cn.rtast.fancybot.commands.lookup.PixivCommand
+import cn.rtast.fancybot.commands.lookup.QRCodeCommand
+import cn.rtast.fancybot.commands.lookup.WeatherCommand
+import cn.rtast.fancybot.commands.parse.BVParseCommand
+import cn.rtast.fancybot.commands.parse.GitHubParseCommand
+import cn.rtast.fancybot.commands.parse.ImageURLCommand
+import cn.rtast.fancybot.commands.parse.ReverseGIFCommand
+import cn.rtast.fancybot.commands.record.JiJianCommand
+import cn.rtast.fancybot.commands.record.JrrpCommand
+import cn.rtast.fancybot.commands.record.MyNiuziCommand
+import cn.rtast.fancybot.commands.record.MyPointCommand
+import cn.rtast.fancybot.commands.record.NiuziSignCommand
+import cn.rtast.fancybot.commands.record.RedeemCommand
+import cn.rtast.fancybot.commands.record.SignCommand
 import cn.rtast.fancybot.entity.bili.CardShare
 import cn.rtast.fancybot.entity.enums.WSType
 import cn.rtast.fancybot.items.BaisiItem
@@ -129,7 +144,7 @@ val commands = listOf(
     RUACommand(), NslookupCommand(),
     NiuziSignCommand(), MyNiuziCommand(),
     JiJianCommand(), LikeMeCommand(),
-    KotlinCCommand()
+    CompilerCommand()
 )
 
 suspend fun main() {

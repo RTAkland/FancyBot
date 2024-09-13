@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.fancybot.commands
+package cn.rtast.fancybot.commands.lookup
 
 import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.entity.music.Search

@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.fancybot.entity.kcs
+package cn.rtast.fancybot.entity.compiler
 
 data class KCSPayload(
     val files: List<File>,

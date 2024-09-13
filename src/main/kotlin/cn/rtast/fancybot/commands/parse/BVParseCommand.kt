@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.fancybot.commands.misc
+package cn.rtast.fancybot.commands.parse
 
 import cn.rtast.fancybot.entity.bili.BVID
 import cn.rtast.fancybot.util.Http

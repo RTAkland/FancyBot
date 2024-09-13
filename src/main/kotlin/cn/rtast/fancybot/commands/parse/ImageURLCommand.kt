@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.fancybot.commands.misc
+package cn.rtast.fancybot.commands.parse
 
 import cn.rtast.rob.entity.GetMessage
 import cn.rtast.rob.enums.ArrayMessageType

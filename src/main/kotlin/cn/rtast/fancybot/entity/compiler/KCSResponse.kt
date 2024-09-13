@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.fancybot.entity.kcs
+package cn.rtast.fancybot.entity.compiler
 
 import com.google.gson.annotations.SerializedName
 

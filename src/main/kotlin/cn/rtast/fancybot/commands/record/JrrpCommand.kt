@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.fancybot.commands
+package cn.rtast.fancybot.commands.record
 
 import cn.rtast.fancybot.util.file.JrrpManager
 import cn.rtast.rob.entity.GroupMessage

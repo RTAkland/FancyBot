@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.fancybot.commands
+package cn.rtast.fancybot.commands.record
 
 import cn.rtast.fancybot.signManager
 import cn.rtast.rob.entity.GroupMessage

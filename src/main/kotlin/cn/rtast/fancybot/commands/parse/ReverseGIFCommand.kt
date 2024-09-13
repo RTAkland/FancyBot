@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.fancybot.commands.misc
+package cn.rtast.fancybot.commands.parse
 
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.rob.entity.GetMessage

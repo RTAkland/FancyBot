@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.fancybot.commands
+package cn.rtast.fancybot.commands.lookup
 
 import cn.rtast.fancybot.entity.cigarette.Cigarette
 import cn.rtast.fancybot.util.Http
