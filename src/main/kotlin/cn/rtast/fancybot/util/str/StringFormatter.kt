@@ -22,3 +22,12 @@ fun setTruncat(origin: String, g2d: Graphics2D, maxWidth: Int = 500): String {
         origin.substring(0, endIndex) + "..."
     } else origin
 }
+
+fun Int.formatNumber(): String {
+    return if (this >= 10000) {
+        val result = this / 10000.0
+        String.format("%.1f万", result)
+    } else {
+        this.toString()
+    }
+}

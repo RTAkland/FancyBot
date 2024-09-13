@@ -14,12 +14,18 @@ data class CardShare(
 ) {
     data class Meta(
         @SerializedName("detail_1")
-        val detail: Detail
+        val detail: Detail?,
+        val news: News?
     )
 
     data class Detail(
         val title: String,
         @SerializedName("qqdocurl")
         val qqDocUrl: String,
+    )
+
+    data class News(
+        val tag: String,
+        val jumpUrl: String
     )
 }

@@ -58,9 +58,7 @@ class FancyBot : OBMessage {
         if (message.rawMessage.startsWith("https://github.com/") ||
             message.rawMessage.startsWith("git@github.com:") ||
             (message.rawMessage.split("/").size == 2 && message.rawMessage.split("/").first().isNotEmpty())
-        ) {
-            GitHubParseCommand.parse(this, message)
-        }
+        ) GitHubParseCommand.parse(this, message)
 
         if (message.rawMessage.startsWith("BV") ||
             message.rawMessage.startsWith("https://www.bilibili.com") ||
@@ -70,14 +68,19 @@ class FancyBot : OBMessage {
             // parse bilibili video with a link, bvid or b23.tv link
             val bvid = if (message.rawMessage.startsWith("BV")) {
                 message.rawMessage
-            } else if (message.rawMessage.contains("https://b23.tv/")) {
+            } else if (message.rawMessage.split(" ").last().startsWith("https://b23.tv/")) {
                 val shortUrl = message.rawMessage.split(" ").last()
                 BVParseCommand.getShortUrlBVID(shortUrl)
             } else if (message.message.find { it.type == ArrayMessageType.json } != null) {
                 val card = message.message.find { it.type == ArrayMessageType.json }!!
                     .data.data!!.toString().fromJson<CardShare>()
-                if (!card.meta.detail.title.contains("哔哩哔哩")) return
-                val shortUrl = card.meta.detail.qqDocUrl
+                val shortUrl = if (card.meta.detail == null) {
+                    if (!card.meta.news?.tag!!.contains("哔哩哔哩")) return
+                    card.meta.news.jumpUrl
+                } else {
+                    if (!card.meta.detail.title.contains("哔哩哔哩")) return
+                    card.meta.detail.qqDocUrl
+                }
                 BVParseCommand.getShortUrlBVID(shortUrl)
             } else {
                 message.rawMessage.split("/")[4]

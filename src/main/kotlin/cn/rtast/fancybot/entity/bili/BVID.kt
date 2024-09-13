@@ -19,6 +19,7 @@ data class BVID(
     )
 
     data class Owner(
+        val mid: Long,
         val name: String,
         val face: String,
     )

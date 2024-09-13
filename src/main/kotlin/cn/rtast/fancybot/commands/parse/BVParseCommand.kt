@@ -8,10 +8,12 @@
 package cn.rtast.fancybot.commands.parse
 
 import cn.rtast.fancybot.entity.bili.BVID
+import cn.rtast.fancybot.entity.bili.UserStat
 import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.Resources
 import cn.rtast.fancybot.util.drawCustomImage
 import cn.rtast.fancybot.util.str.encodeToBase64
+import cn.rtast.fancybot.util.str.formatNumber
 import cn.rtast.fancybot.util.str.setTruncat
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.ob.MessageChain
@@ -29,6 +31,7 @@ import javax.imageio.ImageIO
 object BVParseCommand {
 
     private const val CID_URL = "https://api.bilibili.com/x/web-interface/view"
+    private const val USER_STAT_URL = "https://api.bilibili.com/x/relation/stat"
     private const val CANVAS_WIDTH = 1000
     private const val CANVAS_HEIGHT = 600
     private val titleFont = Font("Serif", Font.ITALIC, 40).deriveFont(Font.ITALIC)
@@ -51,15 +54,6 @@ object BVParseCommand {
         }
     }
 
-    private fun Int.formatNumber(): String {
-        return if (this >= 10000) {
-            val result = this / 10000.0
-            String.format("%.1f万", result)
-        } else {
-            this.toString()
-        }
-    }
-
     private fun createResponseImage(
         title: String,
         author: String,
@@ -70,7 +64,8 @@ object BVParseCommand {
         coin: String,
         share: String,
         like: String,
-        favorite: String
+        favorite: String,
+        fans: Int,
     ): String {
         val coverImage = ImageIO.read(URI(picUrl).toURL())
         val faceImage = ImageIO.read(URI(authorFace).toURL())
@@ -106,6 +101,9 @@ object BVParseCommand {
         g2d.drawCustomImage(likeIcon, 40, 160, 50.0, 50.0, false)
         // draw 22 logo
         g2d.drawCustomImage(twoTwoLogo, 800, 450, 90.0, 160.0, false)
+        // draw fans count
+        g2d.font = numberFont
+        g2d.drawString(fans.formatNumber() + "粉丝", 120, 520)
         // draw author face
         g2d.drawCustomImage(faceImage, 40, 480, 60.0, 60.0, true)
         // draw cover image
@@ -119,6 +117,7 @@ object BVParseCommand {
 
     suspend fun parse(listener: OBMessage, bvid: String, message: GroupMessage) {
         val videoInfo = Http.get<BVID>(CID_URL, mapOf("bvid" to bvid))
+        val fans = Http.get<UserStat>(USER_STAT_URL, mapOf("vmid" to videoInfo.data.owner.mid)).data.follower
         val authorFace = videoInfo.data.owner.face
         val title = videoInfo.data.title
         val author = videoInfo.data.owner.name
@@ -132,7 +131,7 @@ object BVParseCommand {
         val image = this.createResponseImage(
             title, author, authorFace,
             coverPicUrl, reply, view, coin,
-            share, like, favorite
+            share, like, favorite, fans
         )
         val msg = MessageChain.Builder()
             .addReply(message.messageId)
