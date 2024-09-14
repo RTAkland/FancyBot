@@ -1,0 +1,32 @@
+name: Build YeeeesMOTD
+on:
+  - push
+jobs:
+  build:
+    strategy:
+      matrix:
+        java:
+          - 21
+        os:
+          - ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Validate gradle wrapper
+        uses: gradle/wrapper-validation-action@v1
+      - name: Setup jdk ${{ matrix.java }}
+        uses: actions/setup-java@v1
+        with:
+          java-version: ${{ matrix.java }}
+      - name: Make Gradle wrapper executable
+        run: chmod +x ./gradlew
+      - name: Build
+        run: ./gradlew build
+      - name: Deploy Bot to MCSM
+        run: ./gradlew deployBot
+        env:
+          MCSM_API_KEY: ${{ secrets.MCSM_API_KEY }}
+          MCSM_API_URL: ${{ secrets.MCSM_API_URL }}
+          MCSM_DAEMON_ID: ${{ secrets.MCSM_DAEMON_ID }}
+          MCSM_INSTANCE_ID: ${{ secrets.MCSM_INSTANCE_ID }}
