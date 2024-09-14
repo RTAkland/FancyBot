@@ -20,10 +20,17 @@ data class RepoInfo(
     @SerializedName("stargazers_count")
     val starsCount: Int,
     @SerializedName("open_issues_count")
-    val openIssueCount: Int
+    val openIssueCount: Int,
+    val fork: Boolean,
+    val parent: Parent?
 ) {
     data class Owner(
         @SerializedName("avatar_url")
         val avatarUrl: String,
+    )
+
+    data class Parent(
+        @SerializedName("full_name")
+        val fullName: String,
     )
 }

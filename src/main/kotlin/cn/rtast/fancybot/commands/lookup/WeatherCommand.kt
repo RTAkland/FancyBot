@@ -30,8 +30,8 @@ class WeatherCommand : BaseCommand() {
 
     private val canvasWidth = 800
     private val canvasHeight = 600
-    private val font = Font("Serif", Font.ITALIC, 60).deriveFont(Font.BOLD)
-    private val locationFont = Font("Serif", Font.ITALIC, 50)
+    private val font = Font("Serif", Font.PLAIN, 60).deriveFont(Font.BOLD or Font.ITALIC)
+    private val locationFont = Font("Serif", Font.PLAIN, 50).deriveFont(Font.BOLD or Font.ITALIC)
 
     private fun createWeatherCard(weather: Weather, geoResult: Geo.Location): String {
         val emptyImage = BufferedImage(canvasWidth, canvasHeight, BufferedImage.TYPE_INT_RGB)

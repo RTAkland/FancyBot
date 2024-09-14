@@ -34,9 +34,10 @@ object GitHubParseCommand {
     private val starIcon = ImageIO.read(Resources.loadFromResources("github/star.png"))
     private val issueIcon = ImageIO.read(Resources.loadFromResources("github/issue.png"))
     private val forkIcon = ImageIO.read(Resources.loadFromResources("github/fork.png"))
-    private val customFont = Font("Serif", Font.ITALIC, 50).deriveFont(Font.BOLD)
-    private val titleCustomFont = Font("Serif", Font.ITALIC, 75).deriveFont(Font.BOLD)
-    private val descriptionCustomFont = Font("Serif", Font.ITALIC, 40).deriveFont(Font.BOLD)
+    private val customFont = Font("Serif", Font.PLAIN, 50).deriveFont(Font.BOLD or Font.ITALIC)
+    private val titleCustomFont = Font("Serif", Font.PLAIN, 75).deriveFont(Font.BOLD or Font.ITALIC)
+    private val forkParentFont = Font("Serif", Font.PLAIN, 35).deriveFont(Font.ITALIC)
+    private val descriptionCustomFont = Font("Serif", Font.PLAIN, 40).deriveFont(Font.BOLD or Font.ITALIC)
 
     private val languageColors = mapOf(
         "Kotlin" to Color(169, 123, 255),
@@ -57,6 +58,7 @@ object GitHubParseCommand {
         "MDX" to Color(252, 179, 44),
         "Shell" to Color(137, 224, 81),
         "CMake" to Color(218, 52, 52),
+        "HTML" to Color(227, 76, 38),
         "Unknown" to Color(211, 211, 211)
     )
 
@@ -89,10 +91,10 @@ object GitHubParseCommand {
         g2d.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
         g2d.color = this.getLanguageColor(repoStat.language)
         g2d.fillRect(0, CANVAS_HEIGHT - 20, CANVAS_WIDTH, 20)
-        g2d.drawCustomImage(githubLogo, 1300, 780, 100.0, 100.0, false) // draw github logo
-        g2d.drawCustomImage(starIcon, 100, 730, 70.0, 70.0, false) // draw star icon
-        g2d.drawCustomImage(issueIcon, 500, 730, 70.0, 70.0, false)  // draw issue icon
-        g2d.drawCustomImage(forkIcon, 900, 730, 70.0, 70.0, false)  // draw fork icon
+        g2d.drawCustomImage(githubLogo, 1300, 740, 100.0, 100.0, false) // draw github logo
+        g2d.drawCustomImage(starIcon, 80, 785, 70.0, 70.0, false) // draw star icon
+        g2d.drawCustomImage(issueIcon, 480, 785, 70.0, 70.0, false)  // draw issue icon
+        g2d.drawCustomImage(forkIcon, 880, 780, 70.0, 70.0, false)  // draw fork icon
         g2d.color = Color(60, 60, 60)
         g2d.drawString("Stars", 160, 840)
         g2d.drawString("Issues", 560, 840)
@@ -100,6 +102,13 @@ object GitHubParseCommand {
         g2d.drawString(repoStat.starsCount.formatNumber(), 200, 780)
         g2d.drawString(repoStat.openIssueCount.formatNumber(), 600, 780)
         g2d.drawString(repoStat.forksCount.formatNumber(), 1000, 780)
+        if (repoStat.fork) {
+            g2d.font = forkParentFont
+            val parentName = repoStat.parent?.fullName!!
+            val truncatedParentFullName = setTruncat("Forked from: $parentName", g2d, 1000)
+            g2d.drawString(truncatedParentFullName, 80, 540)
+        }
+        g2d.color = Color(60, 60, 60)
         g2d.font = titleCustomFont
         val truncatedFullNameText = setTruncat(repoStat.fullName, g2d, 1000)
         g2d.drawString(truncatedFullNameText, 80, 280)
@@ -107,7 +116,7 @@ object GitHubParseCommand {
         val truncatedDescription = setTruncat(repoStat.description ?: "暂无描述~", g2d, 1000)
         g2d.drawString(truncatedDescription, 80, 450)
         val avatarImage = ImageIO.read(URI(repoStat.owner.avatarUrl).toURL())
-        g2d.drawCustomImage(avatarImage, 1200, 300, 300.0, 300.0, true)
+        g2d.drawCustomImage(avatarImage, 1200, 160, 300.0, 300.0, true)
         val byteArrayOutputStream = ByteArrayOutputStream()
         ImageIO.write(canvas, "png", byteArrayOutputStream)
         val imageBytes = byteArrayOutputStream.toByteArray()
