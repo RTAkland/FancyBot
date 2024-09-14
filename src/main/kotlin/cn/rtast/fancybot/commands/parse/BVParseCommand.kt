@@ -34,8 +34,8 @@ object BVParseCommand {
     private const val USER_STAT_URL = "https://api.bilibili.com/x/relation/stat"
     private const val CANVAS_WIDTH = 1000
     private const val CANVAS_HEIGHT = 600
-    private val titleFont = Font("Serif", Font.ITALIC, 40).deriveFont(Font.ITALIC)
-    private val numberFont = Font("Serif", Font.ITALIC, 25).deriveFont(Font.ITALIC)
+    private val titleFont = Font("Serif", Font.ITALIC, 40)
+    private val numberFont = Font("Serif", Font.ITALIC, 25)
     private val twoTwoLogo = ImageIO.read(Resources.loadFromResources("bili/22-coin.png"))
     private val likeIcon = ImageIO.read(Resources.loadFromResources("bili/like.png"))
     private val coinIcon = ImageIO.read(Resources.loadFromResources("bili/coin.png"))

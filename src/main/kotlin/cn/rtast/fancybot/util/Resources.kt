@@ -13,4 +13,9 @@ object Resources {
     fun loadFromResources(filename: String): InputStream {
         return this::class.java.classLoader.getResourceAsStream(filename)
     }
+
+    fun loadFromResourcesAsBytes(filename: String): ByteArray? {
+        val inputStream = this::class.java.classLoader.getResourceAsStream(filename)
+        return inputStream?.use { it.readBytes() }
+    }
 }

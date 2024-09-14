@@ -20,7 +20,7 @@ fun Graphics2D.drawCustomImage(
     y: Int,
     maxWidth: Double,
     maxHeight: Double,
-    clip: Boolean
+    clip: Boolean = false
 ) {
     val originalWidth = image.getWidth(null)
     val originalHeight = image.getHeight(null)
@@ -61,4 +61,13 @@ fun BufferedImage.toByteArray(): ByteArray {
         ImageIO.write(this, "png", outputStream)
         return outputStream.toByteArray()
     }
+}
+
+fun Graphics2D.drawCenteredText(text: String, x: Int, y: Int) {
+    val metrics = this.fontMetrics
+    val textWidth = metrics.stringWidth(text)
+    val textHeight = metrics.height
+    val drawX = x - textWidth / 2
+    val drawY = y + textHeight / 2
+    this.drawString(text, drawX, drawY)
 }

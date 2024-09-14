@@ -11,13 +11,46 @@ import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.entity.weather.Geo
 import cn.rtast.fancybot.entity.weather.Weather
 import cn.rtast.fancybot.util.Http
+import cn.rtast.fancybot.util.Resources
+import cn.rtast.fancybot.util.drawCenteredText
+import cn.rtast.fancybot.util.drawCustomImage
+import cn.rtast.fancybot.util.str.encodeToBase64
+import cn.rtast.fancybot.util.toBufferedImage
+import cn.rtast.fancybot.util.toByteArray
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OBMessage
+import java.awt.Color
+import java.awt.Font
+import java.awt.image.BufferedImage
 
 class WeatherCommand : BaseCommand() {
     override val commandNames = listOf("/weather", "/天气")
+
+    private val canvasWidth = 800
+    private val canvasHeight = 600
+    private val font = Font("Serif", Font.ITALIC, 60).deriveFont(Font.BOLD)
+    private val locationFont = Font("Serif", Font.ITALIC, 50)
+
+    private fun createWeatherCard(weather: Weather, geoResult: Geo.Location): String {
+        val emptyImage = BufferedImage(canvasWidth, canvasHeight, BufferedImage.TYPE_INT_RGB)
+        val g2d = emptyImage.createGraphics()
+        val weatherIcon = Resources.loadFromResourcesAsBytes("qweather/${weather.now.icon}.png")
+            ?: Resources.loadFromResourcesAsBytes("qweather/100.png")!!
+        g2d.color = Color(209, 238, 238)
+        g2d.fillRect(0, 0, canvasWidth, canvasHeight)
+        g2d.drawCustomImage(weatherIcon.toBufferedImage(), canvasWidth / 2 - 230, canvasHeight / 2 - 80, 230.0, 230.0)
+        g2d.color = Color.BLACK
+        g2d.font = font
+        g2d.drawString("${weather.now.temp}℃", canvasWidth / 2, canvasHeight / 2 + 20)
+        g2d.drawString(weather.now.text, canvasWidth / 2, canvasHeight / 2 + 100)
+        g2d.font = locationFont
+        g2d.drawCenteredText("${geoResult.adm1}-${geoResult.adm2}-${geoResult.name}", canvasWidth / 2, 90)
+        g2d.color = Color(155, 48, 255)
+        g2d.drawCenteredText("数据来源: ${weather.refer.sources.joinToString(",")}", canvasWidth / 2, canvasHeight - 80)
+        return emptyImage.toByteArray().encodeToBase64()
+    }
 
     override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
@@ -39,16 +72,8 @@ class WeatherCommand : BaseCommand() {
                 mapOf("location" to lookupLocation.id, "key" to configManager.qweatherKey)
             )
             val msg = MessageChain.Builder()
-                .addAt(message.sender.userId)
-                .addNewLine()
-                .addText("地区: ${lookupLocation.country}")
-                .addText("-${lookupLocation.adm1}")
-                .addText("-${lookupLocation.adm2}")
-                .addText("-${lookupLocation.name}")
-                .addNewLine()
-                .addText("温度: ${weather.now.temp} ℃ | ${weather.now.text}/${weather.now.windDir}")
-                .addNewLine()
-                .addText("数据来源: ${weather.refer.sources.joinToString(",")}")
+                .addReply(message.messageId)
+                .addImage(this.createWeatherCard(weather, lookupLocation), true)
                 .build()
             listener.sendGroupMessage(message.groupId, msg)
         } catch (_: NullPointerException) {

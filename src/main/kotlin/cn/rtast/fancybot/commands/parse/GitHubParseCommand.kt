@@ -34,9 +34,9 @@ object GitHubParseCommand {
     private val starIcon = ImageIO.read(Resources.loadFromResources("github/star.png"))
     private val issueIcon = ImageIO.read(Resources.loadFromResources("github/issue.png"))
     private val forkIcon = ImageIO.read(Resources.loadFromResources("github/fork.png"))
-    private val customFont = Font("Serif", Font.ITALIC, 50).deriveFont(Font.ITALIC).deriveFont(Font.BOLD)
-    private val titleCustomFont = Font("Serif", Font.ITALIC, 75).deriveFont(Font.ITALIC).deriveFont(Font.BOLD)
-    private val descriptionCustomFont = Font("Serif", Font.ITALIC, 40).deriveFont(Font.ITALIC).deriveFont(Font.BOLD)
+    private val customFont = Font("Serif", Font.ITALIC, 50).deriveFont(Font.BOLD)
+    private val titleCustomFont = Font("Serif", Font.ITALIC, 75).deriveFont(Font.BOLD)
+    private val descriptionCustomFont = Font("Serif", Font.ITALIC, 40).deriveFont(Font.BOLD)
 
     private val languageColors = mapOf(
         "Kotlin" to Color(169, 123, 255),

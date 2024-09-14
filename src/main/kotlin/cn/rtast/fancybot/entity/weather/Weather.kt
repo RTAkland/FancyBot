@@ -14,7 +14,8 @@ data class Weather(
     data class Now(
         val temp: String,
         val text: String,
-        val windDir: String
+        val windDir: String,
+        val icon: String,
     )
 
     data class Refer(
