@@ -1,4 +1,4 @@
-name: Build YeeeesMOTD
+name: Deploy FancyBot to MCSM
 on:
   - push
 jobs:
@@ -6,7 +6,7 @@ jobs:
     strategy:
       matrix:
         java:
-          - 21
+          - 17
         os:
           - ubuntu-latest
     runs-on: ${{ matrix.os }}
