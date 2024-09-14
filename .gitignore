@@ -1,5 +1,5 @@
-/.gradle
+**/.gradle
 /.idea
-/build
-/.kotlin
+**/build
+**/.kotlin
 /data
