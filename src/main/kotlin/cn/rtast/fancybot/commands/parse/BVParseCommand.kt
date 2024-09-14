@@ -7,8 +7,10 @@
 
 package cn.rtast.fancybot.commands.parse
 
-import cn.rtast.fancybot.entity.bili.BVID
+import cn.rtast.fancybot.entity.bili.ShortUrl
 import cn.rtast.fancybot.entity.bili.UserStat
+import cn.rtast.fancybot.entity.bili.VideoStat
+import cn.rtast.fancybot.entity.bili.ViewCount
 import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.Resources
 import cn.rtast.fancybot.util.drawCustomImage
@@ -30,8 +32,10 @@ import javax.imageio.ImageIO
 
 object BVParseCommand {
 
-    private const val CID_URL = "https://api.bilibili.com/x/web-interface/view"
+    private const val VIDEO_STAT_URL = "https://api.bilibili.com/x/web-interface/view"
     private const val USER_STAT_URL = "https://api.bilibili.com/x/relation/stat"
+    private const val SHORT_URL_API_URL = "https://api.bilibili.com/x/share/click"
+    private const val VIEW_COUNT_URL = "https://api.bilibili.com/x/player/online/total"
     private const val CANVAS_WIDTH = 1000
     private const val CANVAS_HEIGHT = 600
     private val titleFont = Font("Serif", Font.ITALIC, 40)
@@ -46,12 +50,32 @@ object BVParseCommand {
 
     private val tempOkHttpClient = OkHttpClient()
 
-    fun getShortUrlBVID(shortUrl: String): String {
-        val request = Request.Builder().url(shortUrl.split(" ").last()).build()
-        val redirectedUrl = tempOkHttpClient.newCall(request).execute()
-        redirectedUrl.use {
-            return it.request.url.toString().split("/")[4].split("?").first()
-        }
+    private fun generateShortUrl(bvid: String, oid: Long): String {
+        val result = Http.post<ShortUrl>(
+            SHORT_URL_API_URL, mapOf(
+                "buvid" to bvid,
+                "build" to 6114514,
+                "platform" to "unix",
+                "share_channel" to "COPY",
+                "share_mode" to 2,
+                "share_id" to "main.ugc-video-detail.0.0.pv",
+                "oid" to oid
+            )
+        )
+        return result.data.content.split(" ").last()
+    }
+
+    private fun getViewCount(bvid: String, cid: Long): String {
+        return Http.get<ViewCount>(
+            VIEW_COUNT_URL, mapOf(
+                "bvid" to bvid,
+                "cid" to cid
+            )
+        ).data.total
+    }
+
+    private fun getVideoStat(bvid: String): VideoStat {
+        return Http.get<VideoStat>(VIDEO_STAT_URL, mapOf("bvid" to bvid))
     }
 
     private fun createResponseImage(
@@ -66,6 +90,7 @@ object BVParseCommand {
         like: String,
         favorite: String,
         fans: Int,
+        viewCount: String,
     ): String {
         val coverImage = ImageIO.read(URI(picUrl).toURL())
         val faceImage = ImageIO.read(URI(authorFace).toURL())
@@ -104,6 +129,8 @@ object BVParseCommand {
         // draw fans count
         g2d.font = numberFont
         g2d.drawString(fans.formatNumber() + "粉丝", 120, 520)
+        // draw viewing count
+        g2d.drawString("${viewCount}人正在观看", 40, 460)
         // draw author face
         g2d.drawCustomImage(faceImage, 40, 480, 60.0, 60.0, true)
         // draw cover image
@@ -112,8 +139,18 @@ object BVParseCommand {
         return canvas.toByteArray().encodeToBase64()
     }
 
+    fun getShortUrlBVID(shortUrl: String): String {
+        val request = Request.Builder().url(shortUrl.split(" ").last()).build()
+        val redirectedUrl = tempOkHttpClient.newCall(request).execute()
+        redirectedUrl.use {
+            return it.request.url.toString().split("/")[4].split("?").first()
+        }
+    }
+
     suspend fun parse(listener: OBMessage, bvid: String, message: GroupMessage) {
-        val videoInfo = Http.get<BVID>(CID_URL, mapOf("bvid" to bvid))
+        val videoInfo = this.getVideoStat(bvid)
+        val viewCount = this.getViewCount(bvid, videoInfo.data.cid)
+        val shortUrl = this.generateShortUrl(bvid, videoInfo.data.aid)
         val fans = Http.get<UserStat>(USER_STAT_URL, mapOf("vmid" to videoInfo.data.owner.mid)).data.follower
         val authorFace = videoInfo.data.owner.face
         val title = videoInfo.data.title
@@ -128,11 +165,12 @@ object BVParseCommand {
         val image = this.createResponseImage(
             title, author, authorFace,
             coverPicUrl, reply, view, coin,
-            share, like, favorite, fans
+            share, like, favorite, fans, viewCount
         )
         val msg = MessageChain.Builder()
             .addReply(message.messageId)
             .addImage(image, true)
+            .addText(shortUrl)
             .build()
         listener.sendGroupMessage(message.groupId, msg)
     }

@@ -83,7 +83,7 @@ class FancyBot : OBMessage {
                 }
                 BVParseCommand.getShortUrlBVID(shortUrl)
             } else {
-                message.rawMessage.split("/")[4]
+                message.rawMessage.split("?").first().split("/").filter { it.isNotEmpty() && it.isNotBlank() }.last()
             }
             BVParseCommand.parse(this, bvid, message)
         }

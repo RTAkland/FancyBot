@@ -7,10 +7,11 @@
 
 package cn.rtast.fancybot.entity.bili
 
-data class BVID(
+data class VideoStat(
     val data: Data
 ) {
     data class Data(
+        val aid: Long,
         val pic: String,
         val title: String,
         val owner: Owner,

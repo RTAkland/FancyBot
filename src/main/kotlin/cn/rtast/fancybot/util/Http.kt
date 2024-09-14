@@ -100,7 +100,7 @@ object Http {
     @JvmOverloads
     inline fun <reified T> post(
         url: String,
-        formBody: Map<String, String>? = null,
+        formBody: Map<String, Any>? = null,
         headers: Map<String, String>? = null,
         params: Map<String, Any>? = null
     ): T {
@@ -108,7 +108,7 @@ object Http {
         val paramsUrl = buildParams(url, params)
         formBody?.let {
             it.forEach { (key, value) ->
-                body.add(key, value)
+                body.add(key, value.toString())
             }
         }
         val request = Request.Builder()
@@ -146,48 +146,34 @@ object Http {
         return this.executeRequest(headerRequest.build())
     }
 
-    inline fun <reified T> getAsync(
-        url: String,
-        params: Map<String, Any>? = null,
-        headers: Map<String, String>? = null,
-        noinline callback: (T?) -> Unit
-    ) {
-        val paramsUrl = buildParams(url, params)
-        val request = Request.Builder()
-            .url(paramsUrl)
-            .get()
-
-        executeRequestAsync(request, headers) { response ->
-            try {
-                callback(response.fromJson<T>())
-            } catch (e: Exception) {
-                e.printStackTrace()
-                callback(null)
-            }
-        }
-    }
-
-    inline fun <reified T> postAsync(
-        url: String,
-        jsonBody: String,
-        headers: Map<String, String>? = null,
-        params: Map<String, Any>? = null,
-        noinline callback: (T?) -> Unit
-    ) {
-        val body = jsonBody.toRequestBody(jsonMediaType)
-        val paramsUrl = buildParams(url, params)
-        val request = Request.Builder()
-            .post(body)
-            .url(paramsUrl)
-        this.addHeaders(request, jsonHeader)
-
-        executeRequestAsync(request, headers) { response ->
-            try {
-                callback(response.fromJson<T>())
-            } catch (e: Exception) {
-                e.printStackTrace()
-                callback(null)
-            }
-        }
-    }
+//    @JvmOverloads
+//    fun post(
+//        url: String,
+//        form: Map<String, Any>,
+//        headers: Map<String, String>? = null,
+//        params: Map<String, Any>? = null
+//    ): String {
+//        val formBody = FormBody.Builder()
+//        form.forEach {
+//            formBody.add(it.key, it.value.toString())
+//        }
+//        val paramsUrl = buildParams(url, params)
+//        val request = Request.Builder()
+//            .post(formBody.build())
+//            .url(paramsUrl)
+//        this.addHeaders(request, jsonHeader)
+//        val headerRequest = addHeaders(request, headers)
+//        return this.executeRequest(headerRequest.build())
+//    }
+//
+//    @JvmOverloads
+//    inline fun <reified T> post(
+//        url: String,
+//        form: Map<String, Any>,
+//        headers: Map<String, String>? = null,
+//        params: Map<String, Any>? = null
+//    ): T {
+//        val result = post(url, form, headers, params)
+//        return result.fromJson<T>()
+//    }
 }
