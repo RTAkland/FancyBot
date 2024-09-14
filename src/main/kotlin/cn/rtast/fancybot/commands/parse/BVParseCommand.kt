@@ -15,6 +15,7 @@ import cn.rtast.fancybot.util.drawCustomImage
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.fancybot.util.str.formatNumber
 import cn.rtast.fancybot.util.str.setTruncat
+import cn.rtast.fancybot.util.toByteArray
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OBMessage
@@ -24,7 +25,6 @@ import java.awt.Color
 import java.awt.Font
 import java.awt.RenderingHints
 import java.awt.image.BufferedImage
-import java.io.ByteArrayOutputStream
 import java.net.URI
 import javax.imageio.ImageIO
 
@@ -69,8 +69,8 @@ object BVParseCommand {
     ): String {
         val coverImage = ImageIO.read(URI(picUrl).toURL())
         val faceImage = ImageIO.read(URI(authorFace).toURL())
-        val backgroundImage = BufferedImage(CANVAS_WIDTH, CANVAS_HEIGHT, BufferedImage.TYPE_INT_RGB)
-        val g2d = backgroundImage.createGraphics()
+        val canvas = BufferedImage(CANVAS_WIDTH, CANVAS_HEIGHT, BufferedImage.TYPE_INT_RGB)
+        val g2d = canvas.createGraphics()
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
         g2d.color = Color(43, 43, 43)
         g2d.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
@@ -109,10 +109,7 @@ object BVParseCommand {
         // draw cover image
         g2d.drawCustomImage(coverImage, 430, 140, 600.0, 300.0, true)
         g2d.dispose()
-        val byteArrayOutputStream = ByteArrayOutputStream()
-        ImageIO.write(backgroundImage, "png", byteArrayOutputStream)
-        val imageBytes = byteArrayOutputStream.toByteArray()
-        return imageBytes.encodeToBase64()
+        return canvas.toByteArray().encodeToBase64()
     }
 
     suspend fun parse(listener: OBMessage, bvid: String, message: GroupMessage) {

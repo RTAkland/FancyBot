@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.entity
 
+import cn.rtast.fancybot.entity.enums.ImageType
 import cn.rtast.fancybot.entity.enums.WSType
 
 data class Config(
@@ -18,4 +19,5 @@ data class Config(
     val listeningGroups: List<Long>,
     val qweatherKey: String,
     val githubKey: String,
+    val imageType: ImageType,
 )

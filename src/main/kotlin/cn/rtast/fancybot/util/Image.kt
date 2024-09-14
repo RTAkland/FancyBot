@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.util
 
+import cn.rtast.fancybot.configManager
 import java.awt.Graphics2D
 import java.awt.geom.RoundRectangle2D
 import java.awt.image.BufferedImage
@@ -58,7 +59,7 @@ fun ByteArray.toBufferedImage(): BufferedImage {
 
 fun BufferedImage.toByteArray(): ByteArray {
     ByteArrayOutputStream().use { outputStream ->
-        ImageIO.write(this, "png", outputStream)
+        ImageIO.write(this, configManager.imageType.typeName, outputStream)
         return outputStream.toByteArray()
     }
 }

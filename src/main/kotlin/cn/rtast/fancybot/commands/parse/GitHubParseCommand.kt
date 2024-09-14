@@ -14,6 +14,7 @@ import cn.rtast.fancybot.util.Resources
 import cn.rtast.fancybot.util.drawCustomImage
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.fancybot.util.str.setTruncat
+import cn.rtast.fancybot.util.toByteArray
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OBMessage
@@ -21,7 +22,6 @@ import java.awt.Color
 import java.awt.Font
 import java.awt.RenderingHints
 import java.awt.image.BufferedImage
-import java.io.ByteArrayOutputStream
 import java.net.URI
 import javax.imageio.ImageIO
 
@@ -117,10 +117,7 @@ object GitHubParseCommand {
         g2d.drawString(truncatedDescription, 80, 450)
         val avatarImage = ImageIO.read(URI(repoStat.owner.avatarUrl).toURL())
         g2d.drawCustomImage(avatarImage, 1200, 160, 300.0, 300.0, true)
-        val byteArrayOutputStream = ByteArrayOutputStream()
-        ImageIO.write(canvas, "png", byteArrayOutputStream)
-        val imageBytes = byteArrayOutputStream.toByteArray()
-        return imageBytes.encodeToBase64()
+        return canvas.toByteArray().encodeToBase64()
     }
 
     suspend fun parse(listener: OBMessage, message: GroupMessage) {

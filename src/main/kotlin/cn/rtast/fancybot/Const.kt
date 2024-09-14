@@ -8,6 +8,7 @@
 package cn.rtast.fancybot
 
 import cn.rtast.fancybot.entity.Config
+import cn.rtast.fancybot.entity.enums.ImageType
 import cn.rtast.fancybot.entity.enums.WSType
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -27,7 +28,8 @@ val DEFAULT_CONFIG = Config(
     port = 6760,
     listeningGroups = listOf(114514, 1919810),
     qweatherKey = "114514",
-    githubKey = "1919810"
+    githubKey = "1919810",
+    imageType = ImageType.PNG
 )
 
 val ADMINS = listOf(

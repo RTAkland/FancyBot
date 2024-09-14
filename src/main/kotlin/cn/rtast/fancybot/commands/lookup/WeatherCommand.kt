@@ -37,7 +37,7 @@ class WeatherCommand : BaseCommand() {
         val emptyImage = BufferedImage(canvasWidth, canvasHeight, BufferedImage.TYPE_INT_RGB)
         val g2d = emptyImage.createGraphics()
         val weatherIcon = Resources.loadFromResourcesAsBytes("qweather/${weather.now.icon}.png")
-            ?: Resources.loadFromResourcesAsBytes("qweather/100.png")!!
+            ?: Resources.loadFromResourcesAsBytes("qweather/999.png")!!
         g2d.color = Color(209, 238, 238)
         g2d.fillRect(0, 0, canvasWidth, canvasHeight)
         g2d.drawCustomImage(weatherIcon.toBufferedImage(), canvasWidth / 2 - 230, canvasHeight / 2 - 80, 230.0, 230.0)
