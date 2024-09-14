@@ -145,35 +145,4 @@ object Http {
         val headerRequest = addHeaders(request, headers)
         return this.executeRequest(headerRequest.build())
     }
-
-//    @JvmOverloads
-//    fun post(
-//        url: String,
-//        form: Map<String, Any>,
-//        headers: Map<String, String>? = null,
-//        params: Map<String, Any>? = null
-//    ): String {
-//        val formBody = FormBody.Builder()
-//        form.forEach {
-//            formBody.add(it.key, it.value.toString())
-//        }
-//        val paramsUrl = buildParams(url, params)
-//        val request = Request.Builder()
-//            .post(formBody.build())
-//            .url(paramsUrl)
-//        this.addHeaders(request, jsonHeader)
-//        val headerRequest = addHeaders(request, headers)
-//        return this.executeRequest(headerRequest.build())
-//    }
-//
-//    @JvmOverloads
-//    inline fun <reified T> post(
-//        url: String,
-//        form: Map<String, Any>,
-//        headers: Map<String, String>? = null,
-//        params: Map<String, Any>? = null
-//    ): T {
-//        val result = post(url, form, headers, params)
-//        return result.fromJson<T>()
-//    }
 }
