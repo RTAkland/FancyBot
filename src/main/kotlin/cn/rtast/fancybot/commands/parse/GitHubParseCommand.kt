@@ -109,6 +109,7 @@ object GitHubParseCommand {
         g2d.drawString(truncatedDescription, 80, 450)
         val avatarImage = ImageIO.read(URI(repoStat.owner.avatarUrl).toURL())
         g2d.drawCustomImage(avatarImage, 1200, 160, 300.0, 300.0, true)
+        g2d.dispose()
         return canvas.toByteArray().encodeToBase64()
     }
 

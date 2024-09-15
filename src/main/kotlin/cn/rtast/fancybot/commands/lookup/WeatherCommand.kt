@@ -49,6 +49,7 @@ class WeatherCommand : BaseCommand() {
         g2d.drawCenteredText("${geoResult.adm1}-${geoResult.adm2}-${geoResult.name}", canvasWidth / 2, 90)
         g2d.color = Color(155, 48, 255)
         g2d.drawCenteredText("数据来源: ${weather.refer.sources.joinToString(",")}", canvasWidth / 2, canvasHeight - 80)
+        g2d.dispose()
         return emptyImage.toByteArray().encodeToBase64()
     }
 
