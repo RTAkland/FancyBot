@@ -31,3 +31,12 @@ fun Int.formatNumber(): String {
         this.toString()
     }
 }
+
+fun Int.formatNumberEnglish(): String {
+    return when {
+        this >= 1_000_000 -> String.format("%.1fM", this / 1_000_000.0)
+        this >= 10_000 -> String.format("%.1fk", this / 1_000.0)
+        this >= 1_000 -> String.format("%dk", this / 1_000)
+        else -> this.toString()
+    }
+}

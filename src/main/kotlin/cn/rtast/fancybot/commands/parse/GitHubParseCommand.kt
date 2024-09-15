@@ -13,6 +13,7 @@ import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.Resources
 import cn.rtast.fancybot.util.drawCustomImage
 import cn.rtast.fancybot.util.str.encodeToBase64
+import cn.rtast.fancybot.util.str.formatNumberEnglish
 import cn.rtast.fancybot.util.str.setTruncat
 import cn.rtast.fancybot.util.toByteArray
 import cn.rtast.rob.entity.GroupMessage
@@ -62,15 +63,6 @@ object GitHubParseCommand {
         "Unknown" to Color(211, 211, 211)
     )
 
-    private fun Int.formatNumber(): String {
-        return when {
-            this >= 1_000_000 -> String.format("%.1fM", this / 1_000_000.0)
-            this >= 10_000 -> String.format("%.1fk", this / 1_000.0)
-            this >= 1_000 -> String.format("%dk", this / 1_000)
-            else -> this.toString()
-        }
-    }
-
     private fun getLanguageColor(language: String): Color {
         return languageColors[language] ?: languageColors["Unknown"]!!
     }
@@ -99,9 +91,9 @@ object GitHubParseCommand {
         g2d.drawString("Stars", 160, 840)
         g2d.drawString("Issues", 560, 840)
         g2d.drawString("Forks", 960, 840)
-        g2d.drawString(repoStat.starsCount.formatNumber(), 200, 780)
-        g2d.drawString(repoStat.openIssueCount.formatNumber(), 600, 780)
-        g2d.drawString(repoStat.forksCount.formatNumber(), 1000, 780)
+        g2d.drawString(repoStat.starsCount.formatNumberEnglish(), 200, 780)
+        g2d.drawString(repoStat.openIssueCount.formatNumberEnglish(), 600, 780)
+        g2d.drawString(repoStat.forksCount.formatNumberEnglish(), 1000, 780)
         if (repoStat.fork) {
             g2d.font = forkParentFont
             val parentName = repoStat.parent?.fullName!!
