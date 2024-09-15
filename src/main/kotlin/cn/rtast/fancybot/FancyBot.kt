@@ -57,10 +57,9 @@ class FancyBot : OBMessage {
         val groupId = message.groupId
         println("$sender($senderId: $groupId): $msg")
 
-        if (message.rawMessage.startsWith("https://github.com/") ||
-            message.rawMessage.startsWith("git@github.com:") ||
-            (message.rawMessage.split("/").size == 2 && message.rawMessage.split("/").first().isNotEmpty())
-        ) GitHubParseCommand.parse(this, message)
+        if (message.rawMessage.startsWith("https://github.com/") || message.rawMessage.startsWith("git@github.com:")) {
+            GitHubParseCommand.parse(this, message)
+        }
 
         if (message.rawMessage.startsWith("BV") ||
             message.rawMessage.startsWith("https://www.bilibili.com") ||
