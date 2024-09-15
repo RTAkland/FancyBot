@@ -20,4 +20,6 @@ class ConfigManager : JsonFileHandler<Config>("config.json") {
     val qweatherKey get() = this.read<Config>().qweatherKey
     val githubKey get() = this.read<Config>().githubKey
     val imageType get() = this.read<Config>().imageType
+    val openAIAPIHost get() = this.read<Config>().openAIAPIHost
+    val openAIAPIKey get() = this.read<Config>().openAIAPIKey
 }

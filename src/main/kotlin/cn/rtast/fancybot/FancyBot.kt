@@ -10,6 +10,7 @@ package cn.rtast.fancybot
 import cn.rtast.fancybot.commands.*
 import cn.rtast.fancybot.commands.CompilerCommand
 import cn.rtast.fancybot.commands.lookup.CigaretteCommand
+import cn.rtast.fancybot.commands.lookup.GPTCommand
 import cn.rtast.fancybot.commands.lookup.MCPingCommand
 import cn.rtast.fancybot.commands.lookup.MusicCommand
 import cn.rtast.fancybot.commands.lookup.NslookupCommand
@@ -147,7 +148,7 @@ val commands = listOf(
     RUACommand(), NslookupCommand(),
     NiuziSignCommand(), MyNiuziCommand(),
     JiJianCommand(), LikeMeCommand(),
-    CompilerCommand()
+    CompilerCommand(), GPTCommand()
 )
 
 suspend fun main() {

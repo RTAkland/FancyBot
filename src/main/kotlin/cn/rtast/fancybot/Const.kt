@@ -29,7 +29,9 @@ val DEFAULT_CONFIG = Config(
     listeningGroups = listOf(114514, 1919810),
     qweatherKey = "114514",
     githubKey = "1919810",
-    imageType = ImageType.PNG
+    imageType = ImageType.PNG,
+    openAIAPIHost = "https://api.moonshot.cn",
+    openAIAPIKey = "114514"
 )
 
 val ADMINS = listOf(

@@ -9,5 +9,8 @@
     1919810
   ],
   "qweatherKey": "114514",
-  "githubKey": "1919810"
+  "githubKey": "1919810",
+  "imageType": "PNG",
+  "openAIAPIHost": "https://api.moonshot.cn",
+  "openAIAPIKey": "114514"
 }

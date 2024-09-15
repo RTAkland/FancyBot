@@ -8,15 +8,11 @@
 package cn.rtast.fancybot.util
 
 import cn.rtast.fancybot.util.str.fromJson
-import okhttp3.Call
-import okhttp3.Callback
 import okhttp3.FormBody
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
-import okhttp3.Response
-import java.io.IOException
 
 object Http {
 
@@ -54,24 +50,6 @@ object Http {
 
     private fun executeRequest(request: Request): String {
         return okHttpClient.newCall(request).execute().body.string()
-    }
-
-    fun executeRequestAsync(
-        requestBuilder: Request.Builder,
-        headers: Map<String, String>?,
-        callback: (String) -> Unit
-    ) {
-        this.addHeaders(requestBuilder, headers)
-        okHttpClient.newCall(requestBuilder.build()).enqueue(object : Callback {
-            override fun onResponse(call: Call, response: Response) {
-                val responseBody = response.body.string()
-                callback(responseBody)
-            }
-
-            override fun onFailure(call: Call, e: IOException) {
-                callback(e.toString())
-            }
-        })
     }
 
     @JvmOverloads

@@ -20,4 +20,6 @@ data class Config(
     val qweatherKey: String,
     val githubKey: String,
     val imageType: ImageType,
+    val openAIAPIHost: String,
+    val openAIAPIKey: String
 )
