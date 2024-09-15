@@ -26,7 +26,7 @@ import java.awt.Font
 import java.awt.image.BufferedImage
 
 class WeatherCommand : BaseCommand() {
-    override val commandNames = listOf("/weather", "/天气")
+    override val commandNames = listOf("/weather", "/天气", "天气")
 
     private val canvasWidth = 800
     private val canvasHeight = 600
