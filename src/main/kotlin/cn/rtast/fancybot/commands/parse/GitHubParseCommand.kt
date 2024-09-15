@@ -12,6 +12,7 @@ import cn.rtast.fancybot.entity.github.RepoInfo
 import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.Resources
 import cn.rtast.fancybot.util.drawCustomImage
+import cn.rtast.fancybot.util.drawString
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.fancybot.util.str.formatNumberEnglish
 import cn.rtast.fancybot.util.str.setTruncat
@@ -82,7 +83,7 @@ object GitHubParseCommand {
         g2d.color = Color.WHITE
         g2d.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
         g2d.color = this.getLanguageColor(repoStat.language)
-        g2d.fillRect(0, CANVAS_HEIGHT - 20, CANVAS_WIDTH, 20)
+        g2d.fillRect(0, CANVAS_HEIGHT - 20, CANVAS_WIDTH, 35)
         g2d.drawCustomImage(githubLogo, 1300, 740, 100.0, 100.0, false) // draw github logo
         g2d.drawCustomImage(starIcon, 80, 785, 70.0, 70.0, false) // draw star icon
         g2d.drawCustomImage(issueIcon, 480, 785, 70.0, 70.0, false)  // draw issue icon
@@ -98,15 +99,14 @@ object GitHubParseCommand {
             g2d.font = forkParentFont
             val parentName = repoStat.parent?.fullName!!
             val truncatedParentFullName = setTruncat("Forked from: $parentName", g2d, 1000)
-            g2d.drawString(truncatedParentFullName, 80, 540)
+            g2d.drawString(truncatedParentFullName, 80, 435)
         }
         g2d.color = Color(60, 60, 60)
         g2d.font = titleCustomFont
         val truncatedFullNameText = setTruncat(repoStat.fullName, g2d, 1000)
         g2d.drawString(truncatedFullNameText, 80, 280)
         g2d.font = descriptionCustomFont
-        val truncatedDescription = setTruncat(repoStat.description ?: "暂无描述~", g2d, 1000)
-        g2d.drawString(truncatedDescription, 80, 450)
+        g2d.drawString(repoStat.description ?: "暂无描述~", 80, 520, 800)
         val avatarImage = ImageIO.read(URI(repoStat.owner.avatarUrl).toURL())
         g2d.drawCustomImage(avatarImage, 1200, 160, 300.0, 300.0, true)
         g2d.dispose()

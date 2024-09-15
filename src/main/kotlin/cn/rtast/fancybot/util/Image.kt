@@ -72,3 +72,24 @@ fun Graphics2D.drawCenteredText(text: String, x: Int, y: Int) {
     val drawY = y + textHeight / 2
     this.drawString(text, drawX, drawY)
 }
+
+fun Graphics2D.drawString(text: String, x: Int, y: Int, maxWidth: Int) {
+    val fm = this.fontMetrics
+    val lineHeight = fm.height
+    var curY = y
+    val words = text.split(" ")
+    val line = StringBuilder()
+    for (word in words) {
+        if (fm.stringWidth("$line$word ") <= maxWidth) {
+            line.append(word).append(" ")
+        } else {
+            this.drawString(line.toString(), x, curY)
+            curY += lineHeight
+            line.setLength(0)
+            line.append(word).append(" ")
+        }
+    }
+    if (line.isNotEmpty()) {
+        this.drawString(line.toString(), x, curY)
+    }
+}
