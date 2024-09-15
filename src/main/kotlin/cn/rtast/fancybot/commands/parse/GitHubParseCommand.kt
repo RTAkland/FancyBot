@@ -40,6 +40,8 @@ object GitHubParseCommand {
     private val titleCustomFont = Font("Serif", Font.PLAIN, 75).deriveFont(Font.BOLD or Font.ITALIC)
     private val forkParentFont = Font("Serif", Font.PLAIN, 35).deriveFont(Font.ITALIC)
     private val descriptionCustomFont = Font("Serif", Font.PLAIN, 40).deriveFont(Font.BOLD or Font.ITALIC)
+    private val backgroundColor = Color.WHITE
+    private val textColor = Color(60, 60, 60)
 
     private val languageColors = mapOf(
         "Kotlin" to Color(169, 123, 255),
@@ -80,7 +82,7 @@ object GitHubParseCommand {
         val g2d = canvas.createGraphics()
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
         g2d.font = customFont
-        g2d.color = Color.WHITE
+        g2d.color = backgroundColor
         g2d.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
         g2d.color = this.getLanguageColor(repoStat.language)
         g2d.fillRect(0, CANVAS_HEIGHT - 20, CANVAS_WIDTH, 35)
@@ -88,7 +90,7 @@ object GitHubParseCommand {
         g2d.drawCustomImage(starIcon, 80, 785, 70.0, 70.0, false) // draw star icon
         g2d.drawCustomImage(issueIcon, 480, 785, 70.0, 70.0, false)  // draw issue icon
         g2d.drawCustomImage(forkIcon, 880, 780, 70.0, 70.0, false)  // draw fork icon
-        g2d.color = Color(60, 60, 60)
+        g2d.color = textColor
         g2d.drawString("Stars", 160, 840)
         g2d.drawString("Issues", 560, 840)
         g2d.drawString("Forks", 960, 840)
@@ -101,7 +103,6 @@ object GitHubParseCommand {
             val truncatedParentFullName = setTruncat("Forked from: $parentName", g2d, 1000)
             g2d.drawString(truncatedParentFullName, 80, 435)
         }
-        g2d.color = Color(60, 60, 60)
         g2d.font = titleCustomFont
         val truncatedFullNameText = setTruncat(repoStat.fullName, g2d, 1000)
         g2d.drawString(truncatedFullNameText, 80, 280)

@@ -61,6 +61,7 @@ class GithubUserCommand : BaseCommand() {
         }
         g2d.drawString("114514/1919810", 40, 560)
         g2d.drawCustomImage(userAvatar, 40, canvasHeight / 2 - 250, 170.0, 170.0, true)
+        g2d.dispose()
         return canvas.toByteArray().encodeToBase64()
     }
 

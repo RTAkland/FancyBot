@@ -32,22 +32,25 @@ class WeatherCommand : BaseCommand() {
     private val canvasHeight = 600
     private val font = Font("Serif", Font.PLAIN, 60).deriveFont(Font.BOLD or Font.ITALIC)
     private val locationFont = Font("Serif", Font.PLAIN, 50).deriveFont(Font.BOLD or Font.ITALIC)
+    private val backgroundColor = Color(209, 238, 238)
+    private val textColor = Color.BLACK
+    private val licenseColor = Color(155, 48, 255)
 
     private fun createWeatherCard(weather: Weather, geoResult: Geo.Location): String {
         val emptyImage = BufferedImage(canvasWidth, canvasHeight, BufferedImage.TYPE_INT_RGB)
         val g2d = emptyImage.createGraphics()
         val weatherIcon = Resources.loadFromResourcesAsBytes("qweather/${weather.now.icon}.png")
             ?: Resources.loadFromResourcesAsBytes("qweather/999.png")!!
-        g2d.color = Color(209, 238, 238)
+        g2d.color = backgroundColor
         g2d.fillRect(0, 0, canvasWidth, canvasHeight)
         g2d.drawCustomImage(weatherIcon.toBufferedImage(), canvasWidth / 2 - 230, canvasHeight / 2 - 80, 230.0, 230.0)
-        g2d.color = Color.BLACK
+        g2d.color = textColor
         g2d.font = font
         g2d.drawString("${weather.now.temp}℃", canvasWidth / 2, canvasHeight / 2 + 20)
         g2d.drawString(weather.now.text, canvasWidth / 2, canvasHeight / 2 + 100)
         g2d.font = locationFont
         g2d.drawCenteredText("${geoResult.adm1}-${geoResult.adm2}-${geoResult.name}", canvasWidth / 2, 90)
-        g2d.color = Color(155, 48, 255)
+        g2d.color = licenseColor
         g2d.drawCenteredText("数据来源: ${weather.refer.sources.joinToString(",")}", canvasWidth / 2, canvasHeight - 80)
         g2d.dispose()
         return emptyImage.toByteArray().encodeToBase64()

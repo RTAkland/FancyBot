@@ -38,6 +38,9 @@ object BVParseCommand {
     private const val VIEW_COUNT_URL = "https://api.bilibili.com/x/player/online/total"
     private const val CANVAS_WIDTH = 1000
     private const val CANVAS_HEIGHT = 600
+    private val backgroundColor = Color(43, 43, 43)
+    private val upBarColor = Color(102, 102, 102)
+    private val textColor = Color.WHITE
     private val titleFont = Font("Serif", Font.ITALIC, 40)
     private val numberFont = Font("Serif", Font.ITALIC, 25)
     private val twoTwoLogo = ImageIO.read(Resources.loadFromResources("bili/22-coin.png"))
@@ -97,12 +100,12 @@ object BVParseCommand {
         val canvas = BufferedImage(CANVAS_WIDTH, CANVAS_HEIGHT, BufferedImage.TYPE_INT_RGB)
         val g2d = canvas.createGraphics()
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
-        g2d.color = Color(43, 43, 43)
+        g2d.color = backgroundColor
         g2d.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
         // draw rect
-        g2d.color = Color(102, 102, 102)
+        g2d.color = upBarColor
         g2d.fillRect(0, 0, CANVAS_WIDTH, 120)
-        g2d.color = Color.WHITE
+        g2d.color = textColor
         // draw numbers
         g2d.font = numberFont
         g2d.drawString(like, 110, 200)
