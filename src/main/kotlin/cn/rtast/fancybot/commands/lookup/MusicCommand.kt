@@ -10,6 +10,7 @@ package cn.rtast.fancybot.commands.lookup
 import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.entity.music.Search
 import cn.rtast.fancybot.entity.music.SearchedResult
+import cn.rtast.fancybot.entity.music.SongUrl
 import cn.rtast.fancybot.util.Http
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.MusicShareType
@@ -23,7 +24,16 @@ class MusicCommand : BaseCommand() {
 
     private val searchedResult = mutableMapOf<Long, List<SearchedResult>>()
 
-    override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
+    companion object {
+        fun searchSong(keyword: String): Search {
+            return Http.get<Search>(
+                "${configManager.ncmAPI}/search",
+                mapOf("keywords" to keyword),
+            )
+        }
+    }
+
+    private suspend fun legacyMusicCommand(listener: OBMessage, message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             val msg = MessageChain.Builder()
                 .addAt(message.sender.userId)
@@ -73,10 +83,7 @@ class MusicCommand : BaseCommand() {
                     listener.sendGroupMessage(message.groupId, msg)
                 }
                 val keyword = args.joinToString(" ")
-                val result = Http.get<Search>(
-                    "${configManager.ncmAPI}/search",
-                    mapOf("keywords" to keyword),
-                )
+                val result = searchSong(keyword)
                 val tempResults = mutableListOf<SearchedResult>()
                 result.result.songs.asSequence().take(5).forEach {
                     val artists = it.artists.joinToString(", ") { it.name }
@@ -95,5 +102,53 @@ class MusicCommand : BaseCommand() {
                 listener.sendGroupMessage(message.groupId, msg)
             }
         }
+    }
+
+    override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
+        if (args.last() == "legacy" || args.last() == "l" || args.last() in "0".."4") {
+            this.legacyMusicCommand(listener, message, args)
+            return
+        }
+        if (args.isEmpty()) {
+            val msg = MessageChain.Builder()
+                .addAt(message.sender.userId)
+                .addText("发送`点歌 <歌名>`即可点第一首搜索到的歌曲~")
+                .addNewLine()
+                .addText("发送`点歌 <歌名> [l|legacy]`即可使用旧版点歌系统")
+                .build()
+            listener.sendGroupMessage(message.groupId, msg)
+            return
+        }
+
+        val keyword = args.joinToString(" ")
+        val result = searchSong(keyword).result.songs.asSequence().first().id
+        val msg = MessageChain.Builder()
+            .addMusicShare(MusicShareType.Netease, result.toString())
+            .build()
+        listener.sendGroupMessage(message.groupId, msg)
+    }
+}
+
+class MusicPlayUrlCommand : BaseCommand() {
+    override val commandNames = listOf("/lj", "lj", "song", "/song")
+
+    private fun getPlayUrl(id: String): String {
+        return Http.get<SongUrl>("${configManager.ncmAPI}/song/url", mapOf("id" to id)).data.first().url
+    }
+
+    override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
+        val url = if (args.last() == "id" || args.last() == "i") {
+            val id = args.first()
+            this.getPlayUrl(id)
+        } else {
+            val keyword = args.joinToString(" ")
+            val id = MusicCommand.searchSong(keyword).result.songs.first().id.toString()
+            this.getPlayUrl(id)
+        }
+        val msg = MessageChain.Builder()
+            .addReply(message.messageId)
+            .addText(url)
+            .build()
+        listener.sendGroupMessage(message.groupId, msg)
     }
 }

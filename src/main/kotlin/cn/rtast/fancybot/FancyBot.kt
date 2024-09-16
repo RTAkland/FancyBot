@@ -14,6 +14,7 @@ import cn.rtast.fancybot.commands.lookup.GPTCommand
 import cn.rtast.fancybot.commands.lookup.GithubUserCommand
 import cn.rtast.fancybot.commands.lookup.MCPingCommand
 import cn.rtast.fancybot.commands.lookup.MusicCommand
+import cn.rtast.fancybot.commands.lookup.MusicPlayUrlCommand
 import cn.rtast.fancybot.commands.lookup.NslookupCommand
 import cn.rtast.fancybot.commands.lookup.PixivCommand
 import cn.rtast.fancybot.commands.lookup.QRCodeCommand
@@ -149,7 +150,8 @@ val commands = listOf(
     NiuziSignCommand(), MyNiuziCommand(),
     JiJianCommand(), LikeMeCommand(),
     CompilerCommand(), GPTCommand(),
-    GithubUserCommand(), AboutCommand()
+    GithubUserCommand(), AboutCommand(),
+    MusicPlayUrlCommand()
 )
 
 suspend fun main() {
