@@ -94,7 +94,7 @@ object GitHubParseCommand {
         g2d.drawString("Stars", 160, 840)
         g2d.drawString("Issues", 560, 840)
         g2d.drawString("Forks", 960, 840)
-        g2d.drawString(repoStat.starsCount.formatNumberEnglish(), 200, 780)
+        g2d.drawString(repoStat.starsCount.formatNumberEnglish(), 180, 780)
         g2d.drawString(repoStat.openIssueCount.formatNumberEnglish(), 600, 780)
         g2d.drawString(repoStat.forksCount.formatNumberEnglish(), 1000, 780)
         if (repoStat.fork) {
