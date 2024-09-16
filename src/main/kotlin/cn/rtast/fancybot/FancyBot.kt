@@ -149,7 +149,7 @@ val commands = listOf(
     NiuziSignCommand(), MyNiuziCommand(),
     JiJianCommand(), LikeMeCommand(),
     CompilerCommand(), GPTCommand(),
-    GithubUserCommand()
+    GithubUserCommand(), AboutCommand()
 )
 
 suspend fun main() {
