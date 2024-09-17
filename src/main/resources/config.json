@@ -12,5 +12,13 @@
   "githubKey": "1919810",
   "imageType": "PNG",
   "openAIAPIHost": "https://api.moonshot.cn",
-  "openAIAPIKey": "114514"
+  "openAIAPIKey": "114514",
+  "smtpHost": "127.0.0.1",
+  "smtpPort": 25,
+  "smtpUser": "114514",
+  "smtpPassword": "1919810",
+  "smtpFromAddress": "fancybot@repo.rtast.cn",
+  "admins": [
+    3458671395
+  ]
 }

@@ -152,7 +152,8 @@ val commands = listOf(
     JiJianCommand(), LikeMeCommand(),
     CompilerCommand(), GPTCommand(),
     GithubUserCommand(), AboutCommand(),
-    MusicPlayUrlCommand(), DomainPriceCommand()
+    MusicPlayUrlCommand(), DomainPriceCommand(),
+    SendMailCommand()
 )
 
 suspend fun main() {

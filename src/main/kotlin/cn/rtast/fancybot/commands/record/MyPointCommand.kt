@@ -7,7 +7,7 @@
 
 package cn.rtast.fancybot.commands.record
 
-import cn.rtast.fancybot.ADMINS
+import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.signManager
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.UserRole
@@ -20,7 +20,7 @@ class MyPointCommand : BaseCommand() {
 
     override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
         // query target's point
-        if (args.isNotEmpty() && (message.sender.role == UserRole.admin || message.sender.userId in ADMINS)) {
+        if (args.isNotEmpty() && (message.sender.role == UserRole.admin || message.sender.userId in configManager.admins)) {
             val targetId = args.first().toLong()
             val targetData = signManager.getStatus(targetId)
             val msg = MessageChain.Builder().addAt(message.sender.userId)

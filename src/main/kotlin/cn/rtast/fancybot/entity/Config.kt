@@ -21,5 +21,11 @@ data class Config(
     val githubKey: String,
     val imageType: ImageType,
     val openAIAPIHost: String,
-    val openAIAPIKey: String
+    val openAIAPIKey: String,
+    val smtpHost: String,
+    val smtpPort: Int,
+    val smtpUser: String,
+    val smtpPassword: String,
+    val smtpFromAddress: String,
+    val admins: List<Long>
 )

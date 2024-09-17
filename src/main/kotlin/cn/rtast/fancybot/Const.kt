@@ -31,9 +31,11 @@ val DEFAULT_CONFIG = Config(
     githubKey = "1919810",
     imageType = ImageType.PNG,
     openAIAPIHost = "https://api.moonshot.cn",
-    openAIAPIKey = "114514"
-)
-
-val ADMINS = listOf(
-    3458671395L
+    openAIAPIKey = "114514",
+    smtpHost = "127.0.0.1",
+    smtpPort = 25,
+    smtpUser = "114514",
+    smtpPassword = "1919810",
+    smtpFromAddress = "fancybot@repo.rtast.cn",
+    admins = listOf(3458671395L)
 )

@@ -36,6 +36,7 @@ dependencies {
     implementation(libs.sqliteJDBC)
     implementation(libs.motdPinger)
     implementation(libs.animated.gif.lib)
+    implementation(libs.simple.java.mail)
 }
 
 tasks.build {
