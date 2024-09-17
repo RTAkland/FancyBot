@@ -26,7 +26,7 @@ class DomainPriceCommand : BaseCommand() {
 
     private val canvasWidth = 300
     private val canvasHeight = 200
-    private val backgroundColor = Color(255, 250, 205)
+    private val backgroundColor = Color(255, 250, 200)
     private val secondLayerColor = Color(240, 255, 240)
     private val textColor = Color.BLACK
     private val domainApi = "https://dnspod.cloud.tencent.com"
