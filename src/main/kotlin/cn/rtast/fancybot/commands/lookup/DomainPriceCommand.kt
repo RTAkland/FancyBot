@@ -87,16 +87,7 @@ class DomainPriceCommand : BaseCommand() {
         val suffix = args.first()
         val domain = if (suffix.contains(".")) args.first() else "rtast.$suffix"
         val response = Http.post<PriceResponse>(
-            "$domainApi/cgi/capi",
-            PricePayload(listOf(domain)).toJson(),
-            params = mapOf(
-                "action" to "BatchCheckDomain",
-                "from" to "domain_buy",
-                "csrfCode" to "",
-                "uin" to 0,
-                "_" to "1726541082487",
-                "notUseInnerMark" to 1
-            )
+            "$domainApi/cgi/capi", PricePayload(listOf(domain)).toJson(), params = mapOf("action" to "BatchCheckDomain")
         ).data.response.domainList.first()
 
         val cardImage =
