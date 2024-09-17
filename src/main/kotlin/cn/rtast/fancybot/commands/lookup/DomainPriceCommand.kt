@@ -49,8 +49,8 @@ class DomainPriceCommand : BaseCommand() {
         g2d.font = font
         g2d.color = textColor
         g2d.drawString("域名后缀: $suffix 首年注册价格: ${domainPrice.first}元", 50, 130)
-        g2d.drawString("续费价格: ${domainPrice.second}元", 50, 150)
-        g2d.drawString("数据来源: 腾讯云", 50, 170)
+        g2d.drawString("续费价格: ${domainPrice.second}元", 50, 160)
+        g2d.drawString("数据来源: 腾讯云", 50, 190)
         g2d.dispose()
         return canvas.toByteArray().encodeToBase64()
     }
@@ -66,10 +66,10 @@ class DomainPriceCommand : BaseCommand() {
         g2d.font = font
         g2d.color = textColor
         g2d.drawString("域名$domain${if (available) "可以注册" else "已被注册"}", 50, 110)
-        g2d.drawString("${if (premium) "是" else "不是"}白金域名", 50, 130)
-        g2d.drawString("首年年注册价格: ${domainPrice.first}元", 50, 150)
-        g2d.drawString("续费价格: ${domainPrice.second}元", 50, 170)
-        g2d.drawString("数据来源: 腾讯云", 50, 190)
+        g2d.drawString("${if (premium) "是" else "不是"}白金域名", 50, 140)
+        g2d.drawString("首年年注册价格: ${domainPrice.first}元", 50, 170)
+        g2d.drawString("续费价格: ${domainPrice.second}元", 50, 200)
+        g2d.drawString("数据来源: 腾讯云", 50, 230)
         g2d.dispose()
         return canvas.toByteArray().encodeToBase64()
     }
