@@ -24,13 +24,13 @@ import java.awt.image.BufferedImage
 class DomainPriceCommand : BaseCommand() {
     override val commandNames = listOf("/domain")
 
-    private val canvasWidth = 300
-    private val canvasHeight = 200
+    private val canvasWidth = 400
+    private val canvasHeight = 300
     private val backgroundColor = Color(255, 250, 200)
     private val secondLayerColor = Color(240, 255, 240)
     private val textColor = Color.BLACK
     private val domainApi = "https://dnspod.cloud.tencent.com"
-    private val font = Font("Serif", Font.PLAIN, 13)
+    private val font = Font("Serif", Font.PLAIN, 20)
 
     private fun createCommonCanvas(): BufferedImage {
         val canvas = BufferedImage(canvasWidth, canvasHeight, BufferedImage.TYPE_INT_RGB)
@@ -48,9 +48,9 @@ class DomainPriceCommand : BaseCommand() {
         val g2d = canvas.createGraphics()
         g2d.font = font
         g2d.color = textColor
-        g2d.drawString("域名后缀: $suffix 首年注册价格: ${domainPrice.first}元", 50, 80)
-        g2d.drawString("续费价格: ${domainPrice.second}元", 50, 100)
-        g2d.drawString("数据来源: 腾讯云", 50, 120)
+        g2d.drawString("域名后缀: $suffix 首年注册价格: ${domainPrice.first}元", 50, 130)
+        g2d.drawString("续费价格: ${domainPrice.second}元", 50, 150)
+        g2d.drawString("数据来源: 腾讯云", 50, 170)
         g2d.dispose()
         return canvas.toByteArray().encodeToBase64()
     }
@@ -65,11 +65,11 @@ class DomainPriceCommand : BaseCommand() {
         val g2d = canvas.createGraphics()
         g2d.font = font
         g2d.color = textColor
-        g2d.drawString("域名$domain${if (available) "可以注册" else "已被注册"}", 50, 60)
-        g2d.drawString("${if (premium) "是" else "不是"}白金域名", 50, 80)
-        g2d.drawString("首年年注册价格: ${domainPrice.first}元", 50, 100)
-        g2d.drawString("续费价格: ${domainPrice.second}元", 50, 120)
-        g2d.drawString("数据来源: 腾讯云", 50, 140)
+        g2d.drawString("域名$domain${if (available) "可以注册" else "已被注册"}", 50, 110)
+        g2d.drawString("${if (premium) "是" else "不是"}白金域名", 50, 130)
+        g2d.drawString("首年年注册价格: ${domainPrice.first}元", 50, 150)
+        g2d.drawString("续费价格: ${domainPrice.second}元", 50, 170)
+        g2d.drawString("数据来源: 腾讯云", 50, 190)
         g2d.dispose()
         return canvas.toByteArray().encodeToBase64()
     }
