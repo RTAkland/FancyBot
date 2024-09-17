@@ -30,7 +30,7 @@ class DomainPriceCommand : BaseCommand() {
     private val secondLayerColor = Color(240, 255, 240)
     private val textColor = Color.BLACK
     private val domainApi = "https://dnspod.cloud.tencent.com"
-    private val font = Font("Serif", Font.PLAIN, 15)
+    private val font = Font("Serif", Font.PLAIN, 13)
 
     private fun createCommonCanvas(): BufferedImage {
         val canvas = BufferedImage(canvasWidth, canvasHeight, BufferedImage.TYPE_INT_RGB)
