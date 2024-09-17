@@ -26,6 +26,10 @@ data class PriceResponse(
         @SerializedName("RealPrice")
         val realPrice: Int,
         @SerializedName("Price")
-        val price: Int
+        val price: Int,
+        @SerializedName("Premium")
+        val premium: Boolean,
+        @SerializedName("Available")
+        val available: Boolean,
     )
 }

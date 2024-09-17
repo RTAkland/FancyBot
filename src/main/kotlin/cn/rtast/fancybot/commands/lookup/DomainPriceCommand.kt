@@ -28,14 +28,22 @@ class DomainPriceCommand : BaseCommand() {
     private val backgroundColor = Color(255, 250, 205)
     private val secondLayerColor = Color(240, 255, 240)
     private val textColor = Color.BLACK
+    private val domainApi = "https://dnspod.cloud.tencent.com"
 
-    private fun createDomainCard(suffix: String, domainPrice: Pair<Int, Int>): String {
+    private fun createCommonCanvas(): BufferedImage {
         val canvas = BufferedImage(canvasWidth, canvasHeight, BufferedImage.TYPE_INT_RGB)
         val g2d = canvas.createGraphics()
         g2d.color = backgroundColor
         g2d.fillRect(0, 0, canvasWidth, canvasHeight)
         g2d.color = secondLayerColor
         g2d.fillRect(20, 20, canvasWidth - 40, canvasHeight - 40)
+        g2d.dispose()
+        return canvas
+    }
+
+    private fun createDomainPriceCard(suffix: String, domainPrice: Pair<Int, Int>): String {
+        val canvas = this.createCommonCanvas()
+        val g2d = canvas.createGraphics()
         g2d.color = textColor
         g2d.drawString("域名后缀: $suffix 首年注册价格: ${domainPrice.first}元", 50, 80)
         g2d.drawString("续费价格: ${domainPrice.second}元", 50, 100)
@@ -44,21 +52,39 @@ class DomainPriceCommand : BaseCommand() {
         return canvas.toByteArray().encodeToBase64()
     }
 
-    private val domainApi = "https://dnspod.cloud.tencent.com"
+    private fun createRegisterCard(
+        domain: String,
+        available: Boolean,
+        premium: Boolean,
+        domainPrice: Pair<Int, Int>
+    ): String {
+        val canvas = this.createCommonCanvas()
+        val g2d = canvas.createGraphics()
+        g2d.color = textColor
+        g2d.drawString("域名$domain${if (available) "可以注册" else "已被注册"}", 50, 60)
+        g2d.drawString("${if (premium) "是" else "不是"}白金域名", 50, 80)
+        g2d.drawString("首年年注册价格: ${domainPrice.first}元", 50, 100)
+        g2d.drawString("续费价格: ${domainPrice.second}元", 50, 120)
+        g2d.drawString("数据来源: 腾讯云", 50, 140)
+        g2d.dispose()
+        return canvas.toByteArray().encodeToBase64()
+    }
+
 
     override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             val msg = MessageChain.Builder()
                 .addAt(message.sender.userId)
-                .addText("发送`/domain <域名后缀>`即可查询对应的注册和续费价格~")
+                .addText("发送`/domain <域名>`即可查询对应的注册和续费价格~")
                 .build()
             listener.sendGroupMessage(message.groupId, msg)
             return
         }
         val suffix = args.first()
+        val domain = if (suffix.contains(".")) args.first() else "rtast.$suffix"
         val response = Http.post<PriceResponse>(
             "$domainApi/cgi/capi",
-            PricePayload(listOf("rtast.$suffix")).toJson(),
+            PricePayload(listOf(domain)).toJson(),
             params = mapOf(
                 "action" to "BatchCheckDomain",
                 "from" to "domain_buy",
@@ -68,7 +94,18 @@ class DomainPriceCommand : BaseCommand() {
                 "notUseInnerMark" to 1
             )
         ).data.response.domainList.first()
-        val cardImage = this.createDomainCard(suffix, response.realPrice to response.price)
+
+        val cardImage =
+            if (suffix.contains(".")) {
+                this.createRegisterCard(
+                    domain,
+                    response.available,
+                    response.premium,
+                    response.realPrice to response.price
+                )
+            } else {
+                this.createDomainPriceCard(suffix, response.realPrice to response.price)
+            }
         val msg = MessageChain.Builder()
             .addAt(message.sender.userId)
             .addImage(cardImage, true)
