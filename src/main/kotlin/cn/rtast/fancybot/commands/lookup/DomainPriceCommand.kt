@@ -18,6 +18,7 @@ import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OBMessage
 import java.awt.Color
+import java.awt.Font
 import java.awt.image.BufferedImage
 
 class DomainPriceCommand : BaseCommand() {
@@ -29,6 +30,7 @@ class DomainPriceCommand : BaseCommand() {
     private val secondLayerColor = Color(240, 255, 240)
     private val textColor = Color.BLACK
     private val domainApi = "https://dnspod.cloud.tencent.com"
+    private val font = Font("Serif", Font.PLAIN, 15)
 
     private fun createCommonCanvas(): BufferedImage {
         val canvas = BufferedImage(canvasWidth, canvasHeight, BufferedImage.TYPE_INT_RGB)
@@ -44,6 +46,7 @@ class DomainPriceCommand : BaseCommand() {
     private fun createDomainPriceCard(suffix: String, domainPrice: Pair<Int, Int>): String {
         val canvas = this.createCommonCanvas()
         val g2d = canvas.createGraphics()
+        g2d.font = font
         g2d.color = textColor
         g2d.drawString("域名后缀: $suffix 首年注册价格: ${domainPrice.first}元", 50, 80)
         g2d.drawString("续费价格: ${domainPrice.second}元", 50, 100)
@@ -60,6 +63,7 @@ class DomainPriceCommand : BaseCommand() {
     ): String {
         val canvas = this.createCommonCanvas()
         val g2d = canvas.createGraphics()
+        g2d.font = font
         g2d.color = textColor
         g2d.drawString("域名$domain${if (available) "可以注册" else "已被注册"}", 50, 60)
         g2d.drawString("${if (premium) "是" else "不是"}白金域名", 50, 80)
