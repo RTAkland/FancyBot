@@ -1,6 +1,6 @@
 [versions]
 kotlinVersion = "2.0.10"
-ronebotVersion = "1.7.2"
+ronebotVersion = "1.8.1"
 shadowVersion = "8.3.0"
 okhttpVersion = "5.0.0-alpha.14"
 exposedVersion = "0.53.0"
@@ -17,7 +17,7 @@ exposedCore = { group = "org.jetbrains.exposed", name = "exposed-core", version.
 exposedJDBC = { group = "org.jetbrains.exposed", name = "exposed-jdbc", version.ref = "exposedVersion" }
 sqliteJDBC = { group = "org.xerial", name = "sqlite-jdbc", version.ref = "sqliteJDBCVersion" }
 animated-gif-lib = { group = "com.madgag", name = "animated-gif-lib", version.ref = "animatedGifLibVersion" }
-simple-java-mail = {group="org.simplejavamail", name="simple-java-mail",version.ref="simpleJavaMailVersion"}
+simple-java-mail = { group = "org.simplejavamail", name = "simple-java-mail", version.ref = "simpleJavaMailVersion" }
 
 [bundles]
 

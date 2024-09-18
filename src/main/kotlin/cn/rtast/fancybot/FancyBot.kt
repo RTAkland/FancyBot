@@ -159,7 +159,7 @@ val commands = listOf(
     CompilerCommand(), GPTCommand(),
     GithubUserCommand(), AboutCommand(),
     MusicPlayUrlCommand(), DomainPriceCommand(),
-    SendMailCommand()
+    SendMailCommand(), ZiBiCommand()
 )
 
 suspend fun main() {
