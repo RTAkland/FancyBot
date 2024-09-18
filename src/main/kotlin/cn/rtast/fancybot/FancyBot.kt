@@ -24,6 +24,7 @@ import cn.rtast.fancybot.commands.parse.BVParseCommand
 import cn.rtast.fancybot.commands.parse.GitHubParseCommand
 import cn.rtast.fancybot.commands.parse.ImageURLCommand
 import cn.rtast.fancybot.commands.parse.ReverseGIFCommand
+import cn.rtast.fancybot.commands.parse.filterBadWord
 import cn.rtast.fancybot.commands.record.JiJianCommand
 import cn.rtast.fancybot.commands.record.JrrpCommand
 import cn.rtast.fancybot.commands.record.MyNiuziCommand
@@ -36,6 +37,7 @@ import cn.rtast.fancybot.entity.enums.WSType
 import cn.rtast.fancybot.items.BaisiItem
 import cn.rtast.fancybot.items.HeisiItem
 import cn.rtast.fancybot.items.SetuItem
+import cn.rtast.fancybot.util.file.BadWordManager
 import cn.rtast.fancybot.util.file.ConfigManager
 import cn.rtast.fancybot.util.file.NiuziManager
 import cn.rtast.fancybot.util.file.SignManager
@@ -58,6 +60,8 @@ class FancyBot : OBMessage {
         val msg = message.rawMessage
         val groupId = message.groupId
         println("$sender($senderId: $groupId): $msg")
+
+        filterBadWord(message)
 
         if (message.rawMessage.startsWith("https://github.com/") || message.rawMessage.startsWith("git@github.com:")) {
             GitHubParseCommand.parse(this, message)
@@ -105,6 +109,7 @@ class FancyBot : OBMessage {
     }
 
     override suspend fun onGroupMessageRevoke(message: GroupRevokeMessage) {
+        if (!configManager.enableAntiRevoke) return
         val msg = MessageChain.Builder()
             .addText("用户: ${message.userId} 被: ${message.operatorId} 撤回了一条消息")
             .addNewLine()
@@ -131,6 +136,7 @@ val configManager = ConfigManager()
 val itemManager = ItemManager()
 val signManager = SignManager()
 val niuziManager = NiuziManager()
+val badWordManager = BadWordManager()
 
 val items = listOf(
     HeisiItem(),

@@ -20,5 +20,6 @@
   "smtpFromAddress": "fancybot@repo.rtast.cn",
   "admins": [
     3458671395
-  ]
+  ],
+  "enableAntiRevoke": true
 }

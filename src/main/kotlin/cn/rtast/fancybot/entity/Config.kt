@@ -27,5 +27,6 @@ data class Config(
     val smtpUser: String,
     val smtpPassword: String,
     val smtpFromAddress: String,
-    val admins: List<Long>
+    val admins: List<Long>,
+    val enableAntiRevoke: Boolean
 )

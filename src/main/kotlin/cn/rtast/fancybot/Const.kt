@@ -37,5 +37,6 @@ val DEFAULT_CONFIG = Config(
     smtpUser = "114514",
     smtpPassword = "1919810",
     smtpFromAddress = "fancybot@repo.rtast.cn",
-    admins = listOf(3458671395L)
+    admins = listOf(3458671395L),
+    enableAntiRevoke = true
 )

@@ -28,4 +28,5 @@ class ConfigManager : JsonFileHandler<Config>("config.json") {
     val smtpPassword get() = this.read<Config>().smtpPassword
     val smtpFromAddress get() = this.read<Config>().smtpFromAddress
     val admins get() = this.read<Config>().admins
+    val enableAntiRevoke get() = this.read<Config>().enableAntiRevoke
 }
