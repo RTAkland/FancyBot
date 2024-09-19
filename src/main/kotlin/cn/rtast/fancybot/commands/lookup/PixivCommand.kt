@@ -12,7 +12,7 @@ import cn.rtast.fancybot.util.Http
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OBMessage
+import cn.rtast.rob.util.ob.OneBotListener
 
 class PixivCommand : BaseCommand() {
     override val commandNames = listOf("/pixiv", "/p")
@@ -20,7 +20,7 @@ class PixivCommand : BaseCommand() {
     private val pixivRankingURL = "https://proxy.rtast.cn/https/www.pixiv.net/ranking.php?format=json&mode=daily&p=1"
     private val imageProxyURL = "https://pixiv.nl"
 
-    override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             val msg = MessageChain.Builder()
                 .addAt(message.sender.userId)

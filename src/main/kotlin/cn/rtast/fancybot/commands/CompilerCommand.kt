@@ -16,7 +16,7 @@ import cn.rtast.fancybot.util.str.toJson
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OBMessage
+import cn.rtast.rob.util.ob.OneBotListener
 
 class CompilerCommand : BaseCommand() {
     override val commandNames = listOf("/compiler", "/exec")
@@ -24,7 +24,7 @@ class CompilerCommand : BaseCommand() {
     private val kotlinCompilerServer = "https://api.kotlinlang.org/api/2.0.20/compiler/run"
     private val glotCompilerServer = "https://glot.io/run"
 
-    override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             val msg = MessageChain.Builder()
                 .addAt(message.sender.userId)

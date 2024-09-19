@@ -12,12 +12,12 @@ import cn.rtast.fancybot.util.Http
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OBMessage
+import cn.rtast.rob.util.ob.OneBotListener
 
 class CigaretteCommand : BaseCommand() {
     override val commandNames = listOf("/香烟", "/tobacco", "/cigarette")
 
-    override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             val msg = MessageChain.Builder()
                 .addAt(message.sender.userId)

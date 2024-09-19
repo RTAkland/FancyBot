@@ -12,7 +12,7 @@ import cn.rtast.fancybot.util.randomBooleanWithProbability
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OBMessage
+import cn.rtast.rob.util.ob.OneBotListener
 
 class RemakeCommand : BaseCommand() {
     override val commandNames = listOf("/remake", "/重开", "remake", "重开")
@@ -28,7 +28,7 @@ class RemakeCommand : BaseCommand() {
         "鸽子", "鼠鼠", "化石", "狗狗"
     )
 
-    override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         val isSuccess = randomBooleanWithProbability(0.7)
         val msg = MessageChain.Builder().addReply(message.messageId)
         if (isSuccess) {

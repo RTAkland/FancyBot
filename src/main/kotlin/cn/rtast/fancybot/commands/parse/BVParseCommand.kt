@@ -20,7 +20,7 @@ import cn.rtast.fancybot.util.str.setTruncat
 import cn.rtast.fancybot.util.toByteArray
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OBMessage
+import cn.rtast.rob.util.ob.OneBotListener
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.awt.Color
@@ -150,7 +150,7 @@ object BVParseCommand {
         }
     }
 
-    suspend fun parse(listener: OBMessage, bvid: String, message: GroupMessage) {
+    suspend fun parse(listener: OneBotListener, bvid: String, message: GroupMessage) {
         val videoInfo = this.getVideoStat(bvid)
         val viewCount = this.getViewCount(bvid, videoInfo.data.cid)
         val shortUrl = this.generateShortUrl(bvid, videoInfo.data.aid)

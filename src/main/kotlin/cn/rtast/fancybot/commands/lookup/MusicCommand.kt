@@ -16,7 +16,7 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.MusicShareType
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OBMessage
+import cn.rtast.rob.util.ob.OneBotListener
 import java.time.Instant
 
 class MusicCommand : BaseCommand() {
@@ -33,7 +33,7 @@ class MusicCommand : BaseCommand() {
         }
     }
 
-    private suspend fun legacyMusicCommand(listener: OBMessage, message: GroupMessage, args: List<String>) {
+    private suspend fun legacyMusicCommand(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             val msg = MessageChain.Builder()
                 .addAt(message.sender.userId)
@@ -104,7 +104,7 @@ class MusicCommand : BaseCommand() {
         }
     }
 
-    override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (args.last() == "legacy" || args.last() == "l" || args.last() in "0".."4") {
             this.legacyMusicCommand(listener, message, args)
             return
@@ -136,7 +136,7 @@ class MusicPlayUrlCommand : BaseCommand() {
         return Http.get<SongUrl>("${configManager.ncmAPI}/song/url", mapOf("id" to id)).data.first().url
     }
 
-    override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         val url = if (args.last() == "id" || args.last() == "i") {
             val id = args.first()
             this.getPlayUrl(id)

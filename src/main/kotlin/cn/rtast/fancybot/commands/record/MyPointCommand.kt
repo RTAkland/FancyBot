@@ -13,12 +13,12 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.UserRole
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OBMessage
+import cn.rtast.rob.util.ob.OneBotListener
 
 class MyPointCommand : BaseCommand() {
     override val commandNames = listOf("/我的点数", "/mp")
 
-    override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         // query target's point
         if (args.isNotEmpty() && (message.sender.role == UserRole.admin || message.sender.userId in configManager.admins)) {
             val targetId = args.first().toLong()

@@ -10,11 +10,11 @@ package cn.rtast.fancybot.commands.parse
 import cn.rtast.rob.entity.GetMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OBMessage
+import cn.rtast.rob.util.ob.OneBotListener
 
 object ImageURLCommand {
 
-    suspend fun callback(listener: OBMessage, message: GetMessage) {
+    suspend fun callback(listener: OneBotListener, message: GetMessage) {
         val msg = MessageChain.Builder()
             .addReply(message.data.messageId)
             .addText("哈哈哈哈图片来咯~")

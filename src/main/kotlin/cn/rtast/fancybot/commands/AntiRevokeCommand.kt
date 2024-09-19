@@ -7,18 +7,22 @@
 
 package cn.rtast.fancybot.commands
 
+import cn.rtast.fancybot.configManager
 import cn.rtast.rob.entity.ArrayMessage
 import cn.rtast.rob.entity.GetMessage
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OBMessage
+import cn.rtast.rob.util.ob.OneBotListener
 
 class AntiRevokeCommand : BaseCommand() {
     override val commandNames = listOf("/revoke", "/rv", "/防撤回")
 
-    override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+        if (message.sender.userId !in configManager.admins) {
+            message.reply("你不许用防撤回")
+        }
         val messageId = args.first().toLong()
         listener.getMessage(messageId, "revoke", message.groupId)
         val msg = MessageChain.Builder()
@@ -29,7 +33,7 @@ class AntiRevokeCommand : BaseCommand() {
     }
 
     companion object {
-        suspend fun callback(listener: OBMessage, message: GetMessage) {
+        suspend fun callback(listener: OneBotListener, message: GetMessage) {
             val msgList = mutableListOf<ArrayMessage>()
             msgList.add(
                 ArrayMessage(

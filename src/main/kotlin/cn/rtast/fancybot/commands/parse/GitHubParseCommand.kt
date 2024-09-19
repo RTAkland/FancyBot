@@ -19,7 +19,7 @@ import cn.rtast.fancybot.util.str.setTruncat
 import cn.rtast.fancybot.util.toByteArray
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OBMessage
+import cn.rtast.rob.util.ob.OneBotListener
 import java.awt.Color
 import java.awt.Font
 import java.awt.RenderingHints
@@ -114,7 +114,7 @@ object GitHubParseCommand {
         return canvas.toByteArray().encodeToBase64()
     }
 
-    suspend fun parse(listener: OBMessage, message: GroupMessage) {
+    suspend fun parse(listener: OneBotListener, message: GroupMessage) {
         val path = message.rawMessage
             .replace(".git", "")
             .replace("https://github.com/", "")

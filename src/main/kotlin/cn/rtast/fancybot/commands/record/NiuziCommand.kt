@@ -12,12 +12,12 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OBMessage
+import cn.rtast.rob.util.ob.OneBotListener
 
 class NiuziSignCommand : BaseCommand() {
     override val commandNames = listOf("牛子签到")
 
-    override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (niuziManager.isSigned(message.sender.userId)) {
             val msg = MessageChain.Builder()
                 .addAt(message.sender.userId)
@@ -40,7 +40,7 @@ class NiuziSignCommand : BaseCommand() {
 class JiJianCommand : BaseCommand() {
     override val commandNames = listOf("击剑", "jj")
 
-    override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             val msg = MessageChain.Builder()
                 .addAt(message.sender.userId)
@@ -126,7 +126,7 @@ class JiJianCommand : BaseCommand() {
 class MyNiuziCommand : BaseCommand() {
     override val commandNames = listOf("我的牛子")
 
-    override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         val niuzi = niuziManager.getUser(message.sender.userId)
         if (niuzi == null) {
             val msg = MessageChain.Builder()

@@ -45,14 +45,15 @@ import cn.rtast.fancybot.util.initDatabase
 import cn.rtast.fancybot.util.item.ItemManager
 import cn.rtast.fancybot.util.str.fromJson
 import cn.rtast.rob.ROneBotFactory
+import cn.rtast.rob.entity.AddFriendRequest
 import cn.rtast.rob.entity.GetMessage
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.GroupRevokeMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OBMessage
+import cn.rtast.rob.util.ob.OneBotListener
 
-class FancyBot : OBMessage {
+class FancyBot : OneBotListener {
 
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
         val sender = message.sender.nickname
@@ -130,6 +131,10 @@ class FancyBot : OBMessage {
     override suspend fun onWebsocketErrorEvent(ex: Exception) {
         ex.printStackTrace()
     }
+
+    override suspend fun onAddFriendRequest(event: AddFriendRequest) {
+        event.approve()
+    }
 }
 
 val configManager = ConfigManager()
@@ -159,7 +164,8 @@ val commands = listOf(
     CompilerCommand(), GPTCommand(),
     GithubUserCommand(), AboutCommand(),
     MusicPlayUrlCommand(), DomainPriceCommand(),
-    SendMailCommand(), ZiBiCommand()
+    SendMailCommand(), ZiBiCommand(),
+    UnsetZiBiCommand()
 )
 
 suspend fun main() {

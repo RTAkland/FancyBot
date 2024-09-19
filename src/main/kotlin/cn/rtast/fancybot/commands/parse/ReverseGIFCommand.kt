@@ -11,7 +11,7 @@ import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.rob.entity.GetMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OBMessage
+import cn.rtast.rob.util.ob.OneBotListener
 import com.madgag.gif.fmsware.AnimatedGifEncoder
 import com.madgag.gif.fmsware.GifDecoder
 import java.io.ByteArrayOutputStream
@@ -37,7 +37,7 @@ object ReverseGIFCommand {
         return gifBytes.encodeToBase64()
     }
 
-    suspend fun callback(listener: OBMessage, message: GetMessage) {
+    suspend fun callback(listener: OneBotListener, message: GetMessage) {
         val gifUrl = if (message.data.message.find { it.type == ArrayMessageType.mface } == null) {
             message.data.message.find { it.type == ArrayMessageType.image }!!.data.file!!
         } else {

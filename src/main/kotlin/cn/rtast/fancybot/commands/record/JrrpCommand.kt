@@ -11,14 +11,14 @@ import cn.rtast.fancybot.util.file.JrrpManager
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OBMessage
+import cn.rtast.rob.util.ob.OneBotListener
 
 class JrrpCommand : BaseCommand() {
     override val commandNames = listOf("/jrrp", "/今日人品")
 
     private val jrrpManager = JrrpManager()
 
-    override suspend fun executeGroup(listener: OBMessage, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (jrrpManager.isJrrped(message.sender.userId)) {
             val msg = MessageChain.Builder()
                 .addAt(message.sender.userId)
