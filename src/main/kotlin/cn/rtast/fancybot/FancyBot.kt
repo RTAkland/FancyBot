@@ -46,12 +46,14 @@ import cn.rtast.fancybot.util.item.ItemManager
 import cn.rtast.fancybot.util.str.fromJson
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.AddFriendRequest
+import cn.rtast.rob.entity.FileEvent
 import cn.rtast.rob.entity.GetMessage
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.GroupRevokeMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
+import java.io.File
 
 class FancyBot : OneBotListener {
 
@@ -135,6 +137,10 @@ class FancyBot : OneBotListener {
     override suspend fun onAddFriendRequest(event: AddFriendRequest) {
         event.approve()
     }
+
+    override suspend fun onGroupFileUpload(event: FileEvent) {
+        event.saveTo("./files")
+    }
 }
 
 val configManager = ConfigManager()
@@ -168,6 +174,10 @@ val commands = listOf(
     UnsetZiBiCommand()
 )
 
+fun initFilesDir() {
+    File("./files").also { it.mkdir() }
+}
+
 suspend fun main() {
     val fancyBot = FancyBot()
     val workType = configManager.wsType
@@ -180,6 +190,7 @@ suspend fun main() {
         ROneBotFactory.createServer(port, accessToken, fancyBot)
     }
     initDatabase()
+    initFilesDir()
     val commandManager = rob.commandManager
     commands.forEach { commandManager.register(it) }
     items.forEach { itemManager.register(it) }
