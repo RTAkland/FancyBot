@@ -8,6 +8,7 @@ sqliteJDBCVersion = "3.46.1.0"
 motdPingerVersion = "1.0.1"
 animatedGifLibVersion = "1.4"
 simpleJavaMailVersion = "8.11.3"
+jsoupVersion = "1.18.1"
 
 [libraries]
 rOneBot = { group = "cn.rtast", name = "ROneBot", version.ref = "ronebotVersion" }
@@ -18,6 +19,7 @@ exposedJDBC = { group = "org.jetbrains.exposed", name = "exposed-jdbc", version.
 sqliteJDBC = { group = "org.xerial", name = "sqlite-jdbc", version.ref = "sqliteJDBCVersion" }
 animated-gif-lib = { group = "com.madgag", name = "animated-gif-lib", version.ref = "animatedGifLibVersion" }
 simple-java-mail = { group = "org.simplejavamail", name = "simple-java-mail", version.ref = "simpleJavaMailVersion" }
+jsoup = { group = "org.jsoup", name = "jsoup", version.ref = "jsoupVersion" }
 
 [bundles]
 

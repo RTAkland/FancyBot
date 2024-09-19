@@ -20,6 +20,7 @@ import cn.rtast.fancybot.commands.lookup.NslookupCommand
 import cn.rtast.fancybot.commands.lookup.PixivCommand
 import cn.rtast.fancybot.commands.lookup.QRCodeCommand
 import cn.rtast.fancybot.commands.lookup.WeatherCommand
+import cn.rtast.fancybot.commands.lookup.WikipediaCommand
 import cn.rtast.fancybot.commands.parse.BVParseCommand
 import cn.rtast.fancybot.commands.parse.GitHubParseCommand
 import cn.rtast.fancybot.commands.parse.ImageURLCommand
@@ -167,7 +168,7 @@ val commands = listOf(
     GithubUserCommand(), AboutCommand(),
     MusicPlayUrlCommand(), DomainPriceCommand(),
     SendMailCommand(), ZiBiCommand(),
-    UnsetZiBiCommand()
+    UnsetZiBiCommand(), WikipediaCommand()
 )
 
 fun initFilesDir() {
