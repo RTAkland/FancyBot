@@ -100,14 +100,14 @@ object GitHubParseCommand {
         if (repoStat.fork) {
             g2d.font = forkParentFont
             val parentName = repoStat.parent?.fullName!!
-            val truncatedParentFullName = setTruncat("Forked from: $parentName", g2d, 1000)
-            g2d.drawString(truncatedParentFullName, 80, 435)
+            val truncatedParentFullName = setTruncat("复刻自 $parentName", g2d, 1000)
+            g2d.drawString(truncatedParentFullName, 80, 335)
         }
         g2d.font = titleCustomFont
         val truncatedFullNameText = setTruncat(repoStat.fullName, g2d, 1000)
         g2d.drawString(truncatedFullNameText, 80, 280)
         g2d.font = descriptionCustomFont
-        g2d.drawString(repoStat.description ?: "暂无描述~", 80, 520, 800)
+        g2d.drawString(repoStat.description ?: "暂无描述~", 80, 400, 800)
         val avatarImage = ImageIO.read(URI(repoStat.owner.avatarUrl).toURL())
         g2d.drawCustomImage(avatarImage, 1200, 160, 300.0, 300.0, true)
         g2d.dispose()
