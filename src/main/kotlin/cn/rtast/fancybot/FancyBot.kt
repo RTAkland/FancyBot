@@ -65,10 +65,16 @@ import cn.rtast.rob.entity.GroupRevokeMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.File
+import java.net.URI
 import java.time.Instant
 
 class FancyBot : OneBotListener {
+
+    private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
         val sender = message.sender.nickname
@@ -77,6 +83,19 @@ class FancyBot : OneBotListener {
         val groupId = message.groupId
         val messageId = message.messageId
         println("$sender($senderId: $groupId >>> $messageId): $msg")
+
+        coroutineScope.launch {
+            message.message.forEach {
+                if (it.type == ArrayMessageType.image) {
+                    val filename = it.data.file!!.split("=").last() + ".png"
+                    URI(it.data.file!!).toURL().openConnection().inputStream.use { input ->
+                        File("./files/images/$filename").outputStream().use { output ->
+                            output.write(input.readBytes())
+                        }
+                    }
+                }
+            }
+        }
 
         AsciiArtCommand.callback(message)
 
@@ -202,7 +221,7 @@ val commands = listOf(
 val START_UP_TIME = Instant.now().epochSecond
 
 fun initFilesDir() {
-    File("./files").also { it.mkdir() }
+    File("./files/images").also { it.mkdirs() }
 }
 
 suspend fun main() {
