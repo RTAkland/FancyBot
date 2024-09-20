@@ -7,7 +7,10 @@
 
 package cn.rtast.fancybot
 
-import cn.rtast.fancybot.commands.misc.CompilerCommand
+import cn.rtast.fancybot.commands.AboutCommand
+import cn.rtast.fancybot.commands.EchoCommand
+import cn.rtast.fancybot.commands.HelpCommand
+import cn.rtast.fancybot.commands.StatusCommand
 import cn.rtast.fancybot.commands.lookup.CigaretteCommand
 import cn.rtast.fancybot.commands.lookup.DomainPriceCommand
 import cn.rtast.fancybot.commands.lookup.GPTCommand
@@ -20,11 +23,9 @@ import cn.rtast.fancybot.commands.lookup.PixivCommand
 import cn.rtast.fancybot.commands.lookup.QRCodeCommand
 import cn.rtast.fancybot.commands.lookup.WeatherCommand
 import cn.rtast.fancybot.commands.lookup.WikipediaCommand
-import cn.rtast.fancybot.commands.AboutCommand
 import cn.rtast.fancybot.commands.misc.AntiRevokeCommand
-import cn.rtast.fancybot.commands.EchoCommand
+import cn.rtast.fancybot.commands.misc.CompilerCommand
 import cn.rtast.fancybot.commands.misc.FKXQSCommand
-import cn.rtast.fancybot.commands.HelpCommand
 import cn.rtast.fancybot.commands.misc.HitokotoCommand
 import cn.rtast.fancybot.commands.misc.LikeMeCommand
 import cn.rtast.fancybot.commands.misc.RUACommand
@@ -65,6 +66,7 @@ import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 import java.io.File
+import java.time.Instant
 
 class FancyBot : OneBotListener {
 
@@ -183,8 +185,10 @@ val commands = listOf(
     MusicPlayUrlCommand(), DomainPriceCommand(),
     SendMailCommand(), ZiBiCommand(),
     UnsetZiBiCommand(), WikipediaCommand(),
-    AsciiArtCommand()
+    AsciiArtCommand(), StatusCommand()
 )
+
+val START_UP_TIME = Instant.now().epochSecond
 
 fun initFilesDir() {
     File("./files").also { it.mkdir() }
