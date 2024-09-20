@@ -31,7 +31,6 @@ class AsciiArtCommand : BaseCommand() {
         val width = this.width
         val height = this.height
         val asciiArt = StringBuilder()
-
         for (y in 0 until height step 2) {
             for (x in 0 until width) {
                 val pixel = Color(this.getRGB(x, y))
@@ -58,7 +57,6 @@ class AsciiArtCommand : BaseCommand() {
             }
             asciiArt.append("\n")
         }
-
         return asciiArt.toString()
     }
 
