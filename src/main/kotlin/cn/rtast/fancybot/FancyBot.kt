@@ -155,6 +155,17 @@ class FancyBot : OneBotListener {
     override suspend fun onGroupFileUpload(event: FileEvent) {
         event.saveTo("./files")
     }
+
+    override suspend fun onLeaveEvent(groupId: Long, userId: Long, operator: Long, time: Long) {
+        val msg = MessageChain.Builder()
+            .addText("有人退群了")
+            .addNewLine()
+            .addText("QQ: $userId | 操作者: ${if (operator == 0L) "主动退出" else operator}")
+            .addNewLine()
+            .addText("下次再见吧~~~")
+            .build()
+        this.sendGroupMessage(groupId, msg)
+    }
 }
 
 val configManager = ConfigManager()
