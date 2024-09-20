@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.commands.lookup
 
+import cn.rtast.fancybot.entity.wiki.PageInfoResponse
 import cn.rtast.fancybot.entity.wiki.WikipediaResponse
 import cn.rtast.fancybot.util.Http
 import cn.rtast.rob.entity.GroupMessage
@@ -26,6 +27,12 @@ class WikipediaCommand : BaseCommand() {
     }
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+        if (args.isEmpty()) {
+            val msg = MessageChain.Builder()
+                .addText("发送`/wiki <关键字>`即可查询出最匹配的wiki页面~")
+                .build()
+            message.reply(msg)
+        }
         val title = args.first()
         val response = Http.get<WikipediaResponse>(
             wikipediaAPI,
@@ -36,10 +43,22 @@ class WikipediaCommand : BaseCommand() {
                 "format" to "json"
             )
         ).query.search.first()
+        val fullUrl = Http.get<PageInfoResponse>(
+            wikipediaAPI,
+            mapOf(
+                "action" to "query",
+                "prop" to "info",
+                "pageids" to response.pageId,
+                "inprop" to "url",
+                "format" to "json"
+            )
+        ).query.pages.values.first().fullUrl
         val msg = MessageChain.Builder()
             .addText("标题: ${response.title} 内容片段如下")
             .addNewLine()
             .addText(response.snippet.extractPlainTextFromHtml())
+            .addNewLine(2)
+            .addText(fullUrl)
             .build()
         message.reply(msg)
     }

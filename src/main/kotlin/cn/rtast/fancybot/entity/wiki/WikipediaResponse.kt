@@ -7,6 +7,8 @@
 
 package cn.rtast.fancybot.entity.wiki
 
+import com.google.gson.annotations.SerializedName
+
 data class WikipediaResponse(
     val query: Query
 ) {
@@ -15,6 +17,8 @@ data class WikipediaResponse(
     )
 
     data class Search(
+        @SerializedName("pageid")
+        val pageId: Long,
         val title: String,
         val snippet: String,
     )
