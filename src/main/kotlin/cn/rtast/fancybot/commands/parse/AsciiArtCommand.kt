@@ -99,10 +99,7 @@ class AsciiArtCommand : BaseCommand() {
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (message.sender.userId !in waitingList) {
-            val msg = MessageChain.Builder()
-                .addText("请继续发送一张图片，如果输入错误则取消本次操作")
-                .build()
-            message.reply(msg)
+            message.reply("请继续发送一张图片，如果输入错误则取消本次操作")
             waitingList.add(message.sender.userId)
             return
         } else {
