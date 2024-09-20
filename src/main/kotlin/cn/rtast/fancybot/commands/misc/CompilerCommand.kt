@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.fancybot.commands
+package cn.rtast.fancybot.commands.misc
 
 import cn.rtast.fancybot.entity.compiler.GLOTPayload
 import cn.rtast.fancybot.entity.compiler.GLOTResponse

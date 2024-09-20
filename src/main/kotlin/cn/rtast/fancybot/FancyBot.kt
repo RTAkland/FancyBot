@@ -7,8 +7,7 @@
 
 package cn.rtast.fancybot
 
-import cn.rtast.fancybot.commands.*
-import cn.rtast.fancybot.commands.CompilerCommand
+import cn.rtast.fancybot.commands.misc.CompilerCommand
 import cn.rtast.fancybot.commands.lookup.CigaretteCommand
 import cn.rtast.fancybot.commands.lookup.DomainPriceCommand
 import cn.rtast.fancybot.commands.lookup.GPTCommand
@@ -21,6 +20,18 @@ import cn.rtast.fancybot.commands.lookup.PixivCommand
 import cn.rtast.fancybot.commands.lookup.QRCodeCommand
 import cn.rtast.fancybot.commands.lookup.WeatherCommand
 import cn.rtast.fancybot.commands.lookup.WikipediaCommand
+import cn.rtast.fancybot.commands.AboutCommand
+import cn.rtast.fancybot.commands.misc.AntiRevokeCommand
+import cn.rtast.fancybot.commands.EchoCommand
+import cn.rtast.fancybot.commands.misc.FKXQSCommand
+import cn.rtast.fancybot.commands.HelpCommand
+import cn.rtast.fancybot.commands.misc.HitokotoCommand
+import cn.rtast.fancybot.commands.misc.LikeMeCommand
+import cn.rtast.fancybot.commands.misc.RUACommand
+import cn.rtast.fancybot.commands.misc.RemakeCommand
+import cn.rtast.fancybot.commands.misc.SendMailCommand
+import cn.rtast.fancybot.commands.misc.UnsetZiBiCommand
+import cn.rtast.fancybot.commands.misc.ZiBiCommand
 import cn.rtast.fancybot.commands.parse.AsciiArtCommand
 import cn.rtast.fancybot.commands.parse.BVParseCommand
 import cn.rtast.fancybot.commands.parse.GitHubParseCommand
@@ -125,7 +136,7 @@ class FancyBot : OneBotListener {
 
     override suspend fun onGetGroupMessageResponse(message: GetMessage) {
         when (message.data.id) {
-            "revoke" -> AntiRevokeCommand.callback(this, message)
+            "revoke" -> AntiRevokeCommand.Companion.callback(this, message)
             "imageUrl" -> ImageURLCommand.callback(this, message)
             "reverseGif" -> ReverseGIFCommand.callback(this, message)
         }

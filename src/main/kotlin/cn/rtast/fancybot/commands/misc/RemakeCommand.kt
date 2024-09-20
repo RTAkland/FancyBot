@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.fancybot.commands
+package cn.rtast.fancybot.commands.misc
 
 import cn.rtast.fancybot.entity.enums.CountryList
 import cn.rtast.fancybot.util.randomBooleanWithProbability
