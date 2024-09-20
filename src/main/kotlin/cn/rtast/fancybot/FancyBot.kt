@@ -65,6 +65,8 @@ class FancyBot : OneBotListener {
         val messageId = message.messageId
         println("$sender($senderId: $groupId >>> $messageId): $msg")
 
+        AsciiArtCommand.callback(message)
+
         if (message.rawMessage.startsWith("https://github.com/") || message.rawMessage.startsWith("git@github.com:")) {
             GitHubParseCommand.parse(this, message)
         }
