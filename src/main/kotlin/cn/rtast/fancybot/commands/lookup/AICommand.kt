@@ -18,18 +18,18 @@ import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 
-class GPTCommand : BaseCommand() {
-    override val commandNames = listOf("/gpt")
+class AICommand : BaseCommand() {
+    override val commandNames = listOf("/ai", "问AI")
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             val msg = MessageChain.Builder()
                 .addAt(message.sender.userId)
-                .addText("发送`/gpt [模型] <问题>`即可询问AI哦~")
+                .addText("发送`/ai [模型] <问题>`即可询问AI哦~")
                 .addNewLine()
                 .addText("不指定模型默认为`moonshot-v1-8k`")
                 .addNewLine()
-                .addText("发送`/gpt list`可以获取可用的模型列表~")
+                .addText("发送`/ai list`可以获取可用的模型列表~")
                 .build()
             listener.sendGroupMessage(message.groupId, msg)
             return

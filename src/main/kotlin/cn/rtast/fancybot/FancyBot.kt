@@ -13,7 +13,7 @@ import cn.rtast.fancybot.commands.HelpCommand
 import cn.rtast.fancybot.commands.StatusCommand
 import cn.rtast.fancybot.commands.lookup.CigaretteCommand
 import cn.rtast.fancybot.commands.lookup.DomainPriceCommand
-import cn.rtast.fancybot.commands.lookup.GPTCommand
+import cn.rtast.fancybot.commands.lookup.AICommand
 import cn.rtast.fancybot.commands.lookup.GithubUserCommand
 import cn.rtast.fancybot.commands.lookup.MCPingCommand
 import cn.rtast.fancybot.commands.lookup.MusicCommand
@@ -217,7 +217,7 @@ val commands = listOf(
     RUACommand(), NslookupCommand(),
     NiuziSignCommand(), MyNiuziCommand(),
     JiJianCommand(), LikeMeCommand(),
-    CompilerCommand(), GPTCommand(),
+    CompilerCommand(), AICommand(),
     GithubUserCommand(), AboutCommand(),
     MusicPlayUrlCommand(), DomainPriceCommand(),
     SendMailCommand(), ZiBiCommand(),
