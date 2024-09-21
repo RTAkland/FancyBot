@@ -62,6 +62,7 @@ import cn.rtast.rob.entity.FileEvent
 import cn.rtast.rob.entity.GetMessage
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.GroupRevokeMessage
+import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
@@ -184,6 +185,16 @@ class FancyBot : OneBotListener {
             .addText("下次再见吧~~~")
             .build()
         this.sendGroupMessage(groupId, msg)
+    }
+
+    override suspend fun onPrivateMessage(message: PrivateMessage, json: String) {
+        if (message.rawMessage.contains("1+1")) {
+            message.reply("1+1=2")
+        }
+
+        if (message.rawMessage == "ping") {
+            message.reply("pong")
+        }
     }
 }
 
