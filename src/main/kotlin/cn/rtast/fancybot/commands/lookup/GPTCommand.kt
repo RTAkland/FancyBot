@@ -61,7 +61,6 @@ class GPTCommand : BaseCommand() {
         )
         val msg = MessageChain.Builder()
             .addReply(message.messageId)
-            .addNewLine()
             .addText(response.choices.first().message.content)
             .build()
         listener.sendGroupMessage(message.groupId, msg)
