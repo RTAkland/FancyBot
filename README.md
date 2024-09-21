@@ -44,8 +44,6 @@ OneBot协议本身并不是一个很好的协议, 在Kritor、Laana等新型协�
     - 你可以直接使用该项目提供的功能, 无需任何授权
     - 你可以在**注明来源版权信息**的情况下对源代码进行任意分发和修改以及衍生
 
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FRTAkland%2FYeeeesMOTD.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FRTAkland%2FYeeeesMOTD?ref=badge_large)
-
 # 鸣谢
 
 <div>
