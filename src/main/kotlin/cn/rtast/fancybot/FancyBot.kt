@@ -27,6 +27,7 @@ import cn.rtast.fancybot.commands.misc.AntiRevokeCommand
 import cn.rtast.fancybot.commands.misc.CompilerCommand
 import cn.rtast.fancybot.commands.misc.FKXQSCommand
 import cn.rtast.fancybot.commands.misc.HitokotoCommand
+import cn.rtast.fancybot.commands.misc.JueCommand
 import cn.rtast.fancybot.commands.misc.LikeMeCommand
 import cn.rtast.fancybot.commands.misc.RUACommand
 import cn.rtast.fancybot.commands.misc.RemakeCommand
@@ -63,7 +64,6 @@ import cn.rtast.rob.entity.FileEvent
 import cn.rtast.rob.entity.GetMessage
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.GroupRevokeMessage
-import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
@@ -86,8 +86,10 @@ class FancyBot : OneBotListener {
         val messageId = message.messageId
         println("$sender($senderId: $groupId >>> $messageId): $msg")
 
-        val calculateResult = CalculateCommand.parse(message.rawMessage)
-        calculateResult?.let { message.reply(calculateResult) }
+        if (message.rawMessage.toList().any { it in arrayListOf<Char>('*', '-', '/', '+', '=') }) {
+            val calculateResult = CalculateCommand.parse(message.rawMessage)
+            calculateResult?.let { message.reply(calculateResult) }
+        }
 
         coroutineScope.launch {
             message.message.forEach {
@@ -220,7 +222,8 @@ val commands = listOf(
     MusicPlayUrlCommand(), DomainPriceCommand(),
     SendMailCommand(), ZiBiCommand(),
     UnsetZiBiCommand(), WikipediaCommand(),
-    AsciiArtCommand(), StatusCommand()
+    AsciiArtCommand(), StatusCommand(),
+    JueCommand()
 )
 
 val START_UP_TIME = Instant.now().epochSecond

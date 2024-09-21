@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.commands.parse
 
+import cn.rtast.fancybot.util.makeGif
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.rob.entity.GetMessage
 import cn.rtast.rob.enums.ArrayMessageType
@@ -24,16 +25,7 @@ object ReverseGIFCommand {
         val decoder = GifDecoder()
         decoder.read(gifStream)
         val frames = (0 until decoder.frameCount).map { decoder.getFrame(it) }.reversed()
-        val byteArrayOutputStream = ByteArrayOutputStream()
-        val encoder = AnimatedGifEncoder()
-        encoder.start(byteArrayOutputStream)
-        encoder.setRepeat(0)
-        for (i in frames.indices) {
-            encoder.setDelay(decoder.getDelay(decoder.frameCount - i - 1))
-            encoder.addFrame(frames[i])
-        }
-        encoder.finish()
-        val gifBytes = byteArrayOutputStream.toByteArray()
+        val gifBytes = decoder.makeGif(frames)
         return gifBytes.encodeToBase64()
     }
 

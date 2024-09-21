@@ -9,11 +9,24 @@ package cn.rtast.fancybot.util
 
 import cn.rtast.fancybot.configManager
 import java.awt.Graphics2D
+import java.awt.geom.Ellipse2D
 import java.awt.geom.RoundRectangle2D
 import java.awt.image.BufferedImage
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import javax.imageio.ImageIO
+
+
+private fun BufferedImage.getScaledWidth(maxWidth: Double, maxHeight: Double): Pair<Int, Int> {
+    val originalWidth = this.getWidth(null)
+    val originalHeight = this.getHeight(null)
+    val widthScale = maxWidth / originalWidth
+    val heightScale = maxHeight / originalHeight
+    val scale = minOf(widthScale, heightScale)
+    val targetWidth = (originalWidth * scale).toInt()
+    val targetHeight = (originalHeight * scale).toInt()
+    return targetWidth to targetHeight
+}
 
 fun Graphics2D.drawCustomImage(
     image: BufferedImage,
@@ -23,13 +36,7 @@ fun Graphics2D.drawCustomImage(
     maxHeight: Double,
     clip: Boolean = false
 ) {
-    val originalWidth = image.getWidth(null)
-    val originalHeight = image.getHeight(null)
-    val widthScale = maxWidth / originalWidth
-    val heightScale = maxHeight / originalHeight
-    val scale = minOf(widthScale, heightScale)
-    val targetWidth = (originalWidth * scale).toInt()
-    val targetHeight = (originalHeight * scale).toInt()
+    val (targetWidth, targetHeight) = image.getScaledWidth(maxWidth, maxHeight)
     if (clip) {
         this.clip = RoundRectangle2D.Float(
             x.toFloat(),
@@ -41,6 +48,21 @@ fun Graphics2D.drawCustomImage(
         )
     }
     this.drawImage(image, x, y, targetWidth, targetHeight, null)
+    this.clip = null
+}
+
+fun Graphics2D.drawCircularImage(
+    image: BufferedImage,
+    x: Int,
+    y: Int,
+    maxWidth: Double,
+    maxHeight: Double,
+) {
+    val (targetWidth, targetHeight) = image.getScaledWidth(maxWidth, maxHeight)
+    val circle = Ellipse2D.Double(x.toDouble(), y.toDouble(), targetWidth.toDouble(), targetHeight.toDouble());
+    this.clip = circle
+    this.drawImage(image, x, y, targetWidth, targetHeight, null)
+    this.clip = null
 }
 
 fun BufferedImage.scaleImage(size: Pair<Int, Int>): BufferedImage {
