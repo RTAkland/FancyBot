@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.commands.misc
 
+import cn.rtast.fancybot.entity.Hitokoto
 import cn.rtast.fancybot.util.Http
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
@@ -14,14 +15,15 @@ import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 
 class HitokotoCommand : BaseCommand() {
-    override val commandNames = listOf("/hitokoto", "/1")
+    override val commandNames = listOf("/hitokoto", "/1", "一言", "1")
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
-        val response = Http.get("https://v1.jinrishici.com/rensheng/mengxiang.txt")
+        val response = Http.get<Hitokoto>("https://v1.hitokoto.cn/?c=b")
         val msg = MessageChain.Builder()
-            .addAt(message.sender.userId)
-            .addText(response)
+            .addText("⌊${response.sentence}⌉   ---《${response.from}》")
+            .addNewLine()
+            .addText("https://hitokoto.cn/?uuid=${response.uuid}")
             .build()
-        listener.sendGroupMessage(message.groupId, msg)
+        message.reply(msg)
     }
 }
