@@ -85,6 +85,10 @@ class FancyBot : OneBotListener {
         val messageId = message.messageId
         println("$sender($senderId: $groupId >>> $messageId): $msg")
 
+        if (message.rawMessage.contains("1+1")) {
+            message.reply("1+1=2")
+        }
+
         coroutineScope.launch {
             message.message.forEach {
                 if (it.type == ArrayMessageType.image) {
