@@ -38,6 +38,7 @@ dependencies {
     implementation(libs.animated.gif.lib)
     implementation(libs.simple.java.mail)
     implementation(libs.jsoup)
+    implementation(libs.nashorn.core)
 }
 
 tasks.build {

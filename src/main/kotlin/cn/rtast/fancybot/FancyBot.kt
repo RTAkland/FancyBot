@@ -35,6 +35,7 @@ import cn.rtast.fancybot.commands.misc.UnsetZiBiCommand
 import cn.rtast.fancybot.commands.misc.ZiBiCommand
 import cn.rtast.fancybot.commands.parse.AsciiArtCommand
 import cn.rtast.fancybot.commands.parse.BVParseCommand
+import cn.rtast.fancybot.commands.parse.CalculateCommand
 import cn.rtast.fancybot.commands.parse.GitHubParseCommand
 import cn.rtast.fancybot.commands.parse.ImageURLCommand
 import cn.rtast.fancybot.commands.parse.ReverseGIFCommand
@@ -85,9 +86,8 @@ class FancyBot : OneBotListener {
         val messageId = message.messageId
         println("$sender($senderId: $groupId >>> $messageId): $msg")
 
-        if (message.rawMessage.contains("1+1")) {
-            message.reply("1+1=2")
-        }
+        val calculateResult = CalculateCommand.parse(message.rawMessage)
+        calculateResult?.let { message.reply(calculateResult) }
 
         coroutineScope.launch {
             message.message.forEach {
@@ -189,16 +189,6 @@ class FancyBot : OneBotListener {
             .addText("下次再见吧~~~")
             .build()
         this.sendGroupMessage(groupId, msg)
-    }
-
-    override suspend fun onPrivateMessage(message: PrivateMessage, json: String) {
-        if (message.rawMessage.contains("1+1")) {
-            message.reply("1+1=2")
-        }
-
-        if (message.rawMessage == "ping") {
-            message.reply("pong")
-        }
     }
 }
 

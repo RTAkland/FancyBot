@@ -9,6 +9,7 @@ motdPingerVersion = "1.0.1"
 animatedGifLibVersion = "1.4"
 simpleJavaMailVersion = "8.11.3"
 jsoupVersion = "1.18.1"
+nashornVersion = "15.4"
 
 [libraries]
 rOneBot = { group = "cn.rtast", name = "ROneBot", version.ref = "ronebotVersion" }
@@ -20,6 +21,7 @@ sqliteJDBC = { group = "org.xerial", name = "sqlite-jdbc", version.ref = "sqlite
 animated-gif-lib = { group = "com.madgag", name = "animated-gif-lib", version.ref = "animatedGifLibVersion" }
 simple-java-mail = { group = "org.simplejavamail", name = "simple-java-mail", version.ref = "simpleJavaMailVersion" }
 jsoup = { group = "org.jsoup", name = "jsoup", version.ref = "jsoupVersion" }
+nashorn-core = { group = "org.openjdk.nashorn", name = "nashorn-core", version.ref = "nashornVersion" }
 
 [bundles]
 
