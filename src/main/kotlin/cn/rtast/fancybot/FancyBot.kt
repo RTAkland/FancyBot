@@ -79,6 +79,10 @@ class FancyBot : OneBotListener {
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
+    override suspend fun onWebsocketOpenEvent() {
+        this.broadcastMessage("FancyBot启动成功了呢~")
+    }
+
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
         val sender = message.sender.nickname
         val senderId = message.sender.userId
