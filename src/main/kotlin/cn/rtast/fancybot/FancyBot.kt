@@ -169,7 +169,7 @@ class FancyBot : OneBotListener {
 
     override suspend fun onGetGroupMessageResponse(message: GetMessage) {
         when (message.data.id) {
-            "revoke" -> AntiRevokeCommand.Companion.callback(this, message)
+            "revoke" -> AntiRevokeCommand.callback(this, message)
             "imageUrl" -> ImageURLCommand.callback(this, message)
             "reverseGif" -> ReverseGIFCommand.callback(this, message)
         }
@@ -244,14 +244,15 @@ suspend fun main() {
     val rob = if (workType == WSType.Client) {
         val address = configManager.wsAddress
         ROneBotFactory.createClient(address, accessToken, fancyBot)
+            .also { it.addListeningGroups(*configManager.listeningGroups.toLongArray()) }
     } else {
         val port = configManager.wsPort
         ROneBotFactory.createServer(port, accessToken, fancyBot)
+            .also { it.addListeningGroups(*configManager.listeningGroups.toLongArray()) }
     }
     initDatabase()
     initFilesDir()
     val commandManager = rob.commandManager
     commands.forEach { commandManager.register(it) }
     items.forEach { itemManager.register(it) }
-    rob.addListeningGroups(*configManager.listeningGroups.toLongArray())
 }
