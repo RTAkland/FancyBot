@@ -11,9 +11,9 @@ import cn.rtast.fancybot.commands.AboutCommand
 import cn.rtast.fancybot.commands.EchoCommand
 import cn.rtast.fancybot.commands.HelpCommand
 import cn.rtast.fancybot.commands.StatusCommand
+import cn.rtast.fancybot.commands.lookup.AICommand
 import cn.rtast.fancybot.commands.lookup.CigaretteCommand
 import cn.rtast.fancybot.commands.lookup.DomainPriceCommand
-import cn.rtast.fancybot.commands.lookup.AICommand
 import cn.rtast.fancybot.commands.lookup.GithubUserCommand
 import cn.rtast.fancybot.commands.lookup.MCPingCommand
 import cn.rtast.fancybot.commands.lookup.MusicCommand
@@ -46,6 +46,7 @@ import cn.rtast.fancybot.commands.record.MyNiuziCommand
 import cn.rtast.fancybot.commands.record.MyPointCommand
 import cn.rtast.fancybot.commands.record.NiuziSignCommand
 import cn.rtast.fancybot.commands.record.RedeemCommand
+import cn.rtast.fancybot.commands.record.ShortLinkCommand
 import cn.rtast.fancybot.commands.record.SignCommand
 import cn.rtast.fancybot.entity.bili.CardShare
 import cn.rtast.fancybot.entity.enums.WSType
@@ -223,7 +224,7 @@ val commands = listOf(
     SendMailCommand(), ZiBiCommand(),
     UnsetZiBiCommand(), WikipediaCommand(),
     AsciiArtCommand(), StatusCommand(),
-    JueCommand()
+    JueCommand(), ShortLinkCommand()
 )
 
 val START_UP_TIME = Instant.now().epochSecond
