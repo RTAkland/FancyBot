@@ -9,13 +9,19 @@ package cn.rtast.fancybot.commands.lookup
 
 import cn.rtast.fancybot.entity.cigarette.Cigarette
 import cn.rtast.fancybot.util.Http
+import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.segment.Node
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
+import cn.rtast.rob.util.ob.NodeMessageChain
 import cn.rtast.rob.util.ob.OneBotListener
+import java.net.URI
 
 class CigaretteCommand : BaseCommand() {
     override val commandNames = listOf("/香烟", "/tobacco", "/cigarette")
+
+    private val apiUrl = "https://www.yanyue.cn/api/rc/product/yanlist"
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
@@ -31,26 +37,32 @@ class CigaretteCommand : BaseCommand() {
         }
         val limit = if (args.size == 1) 3 else if (args.last().toInt() > 10) 3 else args.last().toInt()
         val productName = args.first()
-        val result = Http.get<Cigarette>(
-            "https://www.yanyue.cn/api/rc/product/yanlist",
-            mapOf("productname" to productName)
-        )
-        val msg = MessageChain.Builder()
-            .addAt(message.sender.userId)
-            .addNewLine()
+        val result = Http.get<Cigarette>(apiUrl, mapOf("productname" to productName))
+        val nodeMsg = NodeMessageChain.Builder()
+        val headerMsg = MessageChain.Builder()
             .addText("搜索到${result.totalCount}条结果, 仅展示前 $limit 条结果哦~")
-            .addNewLine()
-
+            .build()
+        val headerNode = Node(Node.Data("", message.userId.toString(), headerMsg.finalArrayMsgList))
+        nodeMsg.addNode(headerNode)
         result.productList.asSequence().take(limit).forEach {
-            msg.addImage(it.cover)
+            val imageBase64 = URI(it.cover).toURL().readBytes().encodeToBase64()
+            val tempMsg = MessageChain.Builder()
+                .addImage(imageBase64, true)
                 .addText("名称: ${it.productName} | 类型: ${it.type.typeName}")
                 .addNewLine()
                 .addText("焦油量: ${it.tar}mg | 尼古丁含量: ${it.nicotine}mg")
                 .addNewLine()
                 .addText("参考价: 单盒: ${it.packPrice}元 | 整条: ${it.barPrice}元")
                 .addNewLine()
+                .build()
+            val tempNode = Node(Node.Data("", message.userId.toString(), tempMsg.finalArrayMsgList))
+            nodeMsg.addNode(tempNode)
         }
-        msg.addNewLine().addText("吸烟有害健康, 尽早戒烟有益健康。")
-        listener.sendGroupMessage(message.groupId, msg.build())
+        val footerMsg = MessageChain.Builder()
+            .addText("吸烟有害健康, 尽早戒烟有益健康。")
+            .build()
+        val footerNode = Node(Node.Data("", message.userId.toString(), footerMsg.finalArrayMsgList))
+        nodeMsg.addNode(footerNode)
+        listener.sendGroupForwardMsg(message.groupId, nodeMsg.build())
     }
 }
