@@ -75,6 +75,17 @@ class FancyBot : OneBotListener {
             calculateResult?.let { message.reply(calculateResult) }
         }
 
+        ReverseGIFCommand.callback(message)
+        AsciiArtCommand.callback(message)
+        if (message.message.any { it.type == ArrayMessageType.reply }) {  // Image url parse
+            val command = message.message.reversed().find { it.type == ArrayMessageType.text }!!.data.text!!
+            val replyId = message.message.find { it.type == ArrayMessageType.reply }!!.data.id!!
+            if (command.contains("图来") || command.contains("图链")) {
+                val getMsg = this.getMessage(replyId.toString().toLong())
+                ImageURLCommand.callback(message, getMsg)
+            }
+        }
+
         coroutineScope.launch {
             message.message.forEach {
                 if (it.type == ArrayMessageType.image) {
@@ -87,8 +98,6 @@ class FancyBot : OneBotListener {
                 }
             }
         }
-
-        AsciiArtCommand.callback(message)
 
         if (message.rawMessage.startsWith("https://github.com/") || message.rawMessage.startsWith("git@github.com:")) {
             GitHubParseCommand.parse(this, message)
@@ -117,21 +126,11 @@ class FancyBot : OneBotListener {
                 }
                 BVParseCommand.getShortUrlBVID(shortUrl)
             } else {
-                message.rawMessage.split("?").first().split("/").filter { it.isNotEmpty() && it.isNotBlank() }.last()
+                message.rawMessage.split("?").first()
+                    .split("/")
+                    .last { it.isNotEmpty() && it.isNotBlank() }
             }
             BVParseCommand.parse(this, bvid, message)
-        }
-        if (message.message.any { it.type == ArrayMessageType.reply }) {  // Image url parse
-            val command = message.message.reversed().find { it.type == ArrayMessageType.text }!!.data.text!!
-            val replyId = message.message.find { it.type == ArrayMessageType.reply }!!.data.id!!
-            if (command.contains("图来") || command.contains("图链")) {
-                // get image url
-                this.getMessage(replyId.toString().toLong(), "imageUrl", message.groupId)
-            }
-            if (command.contains("倒放") || command.contains("df")) {
-                // reverse gif
-                this.getMessage(replyId.toString().toLong(), "reverseGif", message.groupId)
-            }
         }
     }
 
@@ -143,15 +142,6 @@ class FancyBot : OneBotListener {
             .addText("使用/revoke ${message.messageId} 来获取被撤回的消息")
             .build()
         this.sendGroupMessage(message.groupId, msg)
-    }
-
-
-    override suspend fun onGetGroupMessageResponse(message: GetMessage) {
-        when (message.data.id) {
-            "revoke" -> AntiRevokeCommand.callback(this, message)
-            "imageUrl" -> ImageURLCommand.callback(this, message)
-            "reverseGif" -> ReverseGIFCommand.callback(this, message)
-        }
     }
 
     override suspend fun onWebsocketErrorEvent(ex: Exception) {
@@ -209,7 +199,7 @@ val commands = listOf(
     AsciiArtCommand(), StatusCommand(),
     JueCommand(), ShortLinkCommand(),
     TenSetuCommand(), ShotSelfCommand(),
-    ShotOtherCommand()
+    ShotOtherCommand(), ReverseGIFCommand()
 )
 
 val START_UP_TIME = Instant.now().epochSecond
