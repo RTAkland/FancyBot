@@ -22,8 +22,8 @@ class TenSetuCommand : BaseCommand() {
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         val nodeImages = mutableListOf<Image>()
         repeat(10) {
-            val url = Http.get<Setu>("https://api.rtast.cn/api/setu").urls.large
-            nodeImages.add(Image(Image.Data(url)))
+            val response = Http.get<Setu>("https://api.rtast.cn/api/setu")
+            if (!response.r18) nodeImages.add(Image(Image.Data(response.urls.large)))
         }
         val node = Node(Node.Data("ROBOT", "1845464277", nodeImages))
         val nodeMsg = NodeMessageChain.Builder()
