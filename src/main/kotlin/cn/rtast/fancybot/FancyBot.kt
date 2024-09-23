@@ -70,7 +70,7 @@ class FancyBot : OneBotListener {
         val messageId = message.messageId
         println("$sender($senderId: $groupId >>> $messageId): $msg")
 
-        if (message.rawMessage.toList().any { it in arrayListOf<Char>('*', '-', '/', '+', '=') }) {
+        if (message.rawMessage.toList().any { it in arrayListOf('*', '-', '/', '+', '=') }) {
             val calculateResult = CalculateCommand.parse(message.rawMessage)
             calculateResult?.let { message.reply(calculateResult) }
         }
