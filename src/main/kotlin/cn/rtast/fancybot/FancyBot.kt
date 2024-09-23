@@ -11,18 +11,7 @@ import cn.rtast.fancybot.commands.AboutCommand
 import cn.rtast.fancybot.commands.EchoCommand
 import cn.rtast.fancybot.commands.HelpCommand
 import cn.rtast.fancybot.commands.StatusCommand
-import cn.rtast.fancybot.commands.lookup.AICommand
-import cn.rtast.fancybot.commands.lookup.CigaretteCommand
-import cn.rtast.fancybot.commands.lookup.DomainPriceCommand
-import cn.rtast.fancybot.commands.lookup.GithubUserCommand
-import cn.rtast.fancybot.commands.lookup.MCPingCommand
-import cn.rtast.fancybot.commands.lookup.MusicCommand
-import cn.rtast.fancybot.commands.lookup.MusicPlayUrlCommand
-import cn.rtast.fancybot.commands.lookup.NslookupCommand
-import cn.rtast.fancybot.commands.lookup.PixivCommand
-import cn.rtast.fancybot.commands.lookup.QRCodeCommand
-import cn.rtast.fancybot.commands.lookup.WeatherCommand
-import cn.rtast.fancybot.commands.lookup.WikipediaCommand
+import cn.rtast.fancybot.commands.lookup.*
 import cn.rtast.fancybot.commands.misc.*
 import cn.rtast.fancybot.commands.parse.AsciiArtCommand
 import cn.rtast.fancybot.commands.parse.BVParseCommand
@@ -219,7 +208,8 @@ val commands = listOf(
     UnsetZiBiCommand(), WikipediaCommand(),
     AsciiArtCommand(), StatusCommand(),
     JueCommand(), ShortLinkCommand(),
-    TenSetuCommand()
+    TenSetuCommand(), ShotSelfCommand(),
+    ShotOtherCommand()
 )
 
 val START_UP_TIME = Instant.now().epochSecond
