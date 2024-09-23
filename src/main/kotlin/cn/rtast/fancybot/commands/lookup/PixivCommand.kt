@@ -9,16 +9,18 @@ package cn.rtast.fancybot.commands.lookup
 
 import cn.rtast.fancybot.entity.pixiv.Ranking
 import cn.rtast.fancybot.util.Http
+import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
+import java.net.URI
 
 class PixivCommand : BaseCommand() {
     override val commandNames = listOf("/pixiv", "/p")
 
     private val pixivRankingURL = "https://proxy.rtast.cn/https/www.pixiv.net/ranking.php?format=json&mode=daily&p=1"
-    private val imageProxyURL = "https://pixiv.nl"
+    private val imageProxyURL = "https://pixiv.re"
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
@@ -29,8 +31,7 @@ class PixivCommand : BaseCommand() {
             listener.sendGroupMessage(message.groupId, msg)
             return
         }
-        val keyword = args.first()
-        when (keyword) {
+        when (val keyword = args.first()) {
             "rank", "排名", "r" -> {
                 val msg = MessageChain.Builder()
                     .addAt(message.sender.userId)
@@ -39,9 +40,13 @@ class PixivCommand : BaseCommand() {
 
                 val result = Http.get<Ranking>(pixivRankingURL)
                 result.contents.asSequence().take(5).forEach {
-                    msg.addText(it.title)
-                        .addImage(it.getOriginUrl())
-                        .addNewLine()
+                    try {
+                        val imageBase64 = URI(it.getOriginUrl()).toURL().readBytes().encodeToBase64()
+                        msg.addText(it.title)
+                            .addImage(imageBase64, true)
+                            .addNewLine()
+                    } catch (_: Exception) {
+                    }
                 }
                 listener.sendGroupMessage(message.groupId, msg.build())
                 return
@@ -50,10 +55,12 @@ class PixivCommand : BaseCommand() {
             else -> {
                 try {
                     val id = keyword.toLong()
+                    val imageBase64 = URI("$imageProxyURL/$id.png").toURL().readBytes().encodeToBase64()
+                    println(imageBase64)
                     val msg = MessageChain.Builder()
                         .addAt(message.sender.userId)
                         .addText("来咯~ 你要的图片~~~")
-                        .addImage("$imageProxyURL/$id.png")
+                        .addImage(imageBase64, true)
                         .build()
                     listener.sendGroupMessage(message.groupId, msg)
                 } catch (_: Exception) {
