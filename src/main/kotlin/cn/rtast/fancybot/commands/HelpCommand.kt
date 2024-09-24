@@ -18,7 +18,10 @@ class HelpCommand : BaseCommand() {
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         val allCommands = commands.joinToString("\n") {
-            "[${it.javaClass.name.split(".").last().replace("Command", "")}] 命令:${it.commandNames.joinToString(",")}"
+            "[${
+                it.javaClass.name.split(".")
+                    .last().replace("Command", "")
+            }] 命令:${it.commandNames.joinToString(",")}"
         }
         val msg = MessageChain.Builder()
             .addAt(message.sender.userId)
