@@ -192,7 +192,8 @@ val commands = listOf(
     JueCommand(), ShortLinkCommand(),
     TenSetuCommand(), ShotSelfCommand(),
     ShotOtherCommand(), ReverseGIFCommand(),
-    NiuziTransferCommand(), NiuziQueryCommand()
+    NiuziTransferCommand(), NiuziQueryCommand(),
+    GenshinCommand()
 )
 
 val START_UP_TIME = Instant.now().epochSecond
