@@ -61,6 +61,10 @@ class FancyBot : OneBotListener {
         val messageId = message.messageId
         println("$sender($senderId: $groupId >>> $messageId): $msg")
 
+        if (message.rawMessage.contains("原神")) {
+            message.reply("你原神牛魔呢")
+        }
+
         if (message.rawMessage.toList().any { it in arrayListOf('*', '-', '/', '+', '=') }) {
             val calculateResult = CalculateCommand.parse(message.rawMessage)
             calculateResult?.let { message.reply(calculateResult) }
@@ -189,8 +193,7 @@ val commands = listOf(
     TenSetuCommand(), ShotSelfCommand(),
     ShotOtherCommand(), ReverseGIFCommand(),
     NiuziTransferCommand(), NiuziQueryCommand(),
-    GenshinCommand(), HelpCommand(),
-    MusicCommand(),
+    HelpCommand(), MusicCommand(),
 )
 
 val START_UP_TIME = Instant.now().epochSecond
