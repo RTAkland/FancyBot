@@ -200,6 +200,7 @@ val commands = listOf(
     NiuziBankCommand(), WithdrawCommand(),
     BankTransferCommand(), CreateBankAccountCommand(),
     BankBalanceCommand(), DepositCommand(),
+    DMSearchCommand()
 )
 
 val START_UP_TIME = Instant.now().epochSecond
