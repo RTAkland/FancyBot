@@ -165,46 +165,6 @@ class FancyBot : OneBotListener {
     }
 }
 
-val configManager = ConfigManager()
-val itemManager = ItemManager()
-val niuziManager = NiuziManager()
-val niuziBankManager = NiuziBankManager()
-
-val items = listOf(
-    HeisiItem(),
-    BaisiItem(),
-    SetuItem()
-)
-
-val commands = listOf(
-    EchoCommand(), JrrpCommand(),
-    RedeemCommand(), HitokotoCommand(),
-    FKXQSCommand(), QRCodeCommand(),
-    AntiRevokeCommand(), MCPingCommand(),
-    WeatherCommand(), CigaretteCommand(),
-    RemakeCommand(), PixivCommand(),
-    RUACommand(), NslookupCommand(),
-    CompilerCommand(), AICommand(),
-    GithubUserCommand(), AboutCommand(),
-    MusicPlayUrlCommand(), DomainPriceCommand(),
-    SendMailCommand(), ZiBiCommand(),
-    UnsetZiBiCommand(), WikipediaCommand(),
-    AsciiArtCommand(), StatusCommand(),
-    JueCommand(), ShortLinkCommand(),
-    TenSetuCommand(), ShotSelfCommand(),
-    ShotOtherCommand(), ReverseGIFCommand(),
-    HelpCommand(), MusicCommand(),
-    LikeMeCommand(), NiuziTransferCommand(),
-    NiuziSignCommand(), NiuziJiJianCommand(),
-    NiuziQueryCommand(), MyNiuziCommand(),
-    NiuziBankCommand(), WithdrawCommand(),
-    BankTransferCommand(), CreateBankAccountCommand(),
-    BankBalanceCommand(), DepositCommand(),
-    DMSearchCommand()
-)
-
-val START_UP_TIME = Instant.now().epochSecond
-
 fun initFilesDir() {
     File("./files/images").also { it.mkdirs() }
 }
