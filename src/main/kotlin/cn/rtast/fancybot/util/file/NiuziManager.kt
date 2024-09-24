@@ -12,6 +12,7 @@ import cn.rtast.fancybot.entity.db.NiuziTable
 import cn.rtast.fancybot.entity.db.NiuziTable.length
 import cn.rtast.fancybot.entity.db.NiuziTable.timestamp
 import cn.rtast.fancybot.entity.db.NiuziTable.userId
+import cn.rtast.fancybot.entity.db.SignTable
 import cn.rtast.fancybot.util.isSameDay
 import cn.rtast.fancybot.util.suspendedTransaction
 import org.jetbrains.exposed.sql.insert
@@ -94,5 +95,15 @@ class NiuziManager {
             this.updateLength(targetUser, randomLength)
         }
         return success to randomLength
+    }
+
+    suspend fun redeemItem(id: Long, itemPrice: Double): Niuzi? {
+        val current = getUser(id)
+        suspendedTransaction {
+            NiuziTable.update({ userId eq id }) {
+                it[length] = current?.length!! - itemPrice
+            }
+        }
+        return getUser(id)
     }
 }

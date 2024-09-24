@@ -16,9 +16,9 @@ import cn.rtast.rob.util.ob.OneBotListener
 
 class BaisiItem : Item() {
     override val itemNames = listOf("baisi", "白丝", "bs")
-    override val itemPrice = 70
+    override val itemPrice = 5.0
 
-    override suspend fun redeemInGroup(listener: OneBotListener, message: GroupMessage, after: Long) {
+    override suspend fun redeemInGroup(listener: OneBotListener, message: GroupMessage, after: Double) {
         val url = Http.get<Baisi>("https://v2.api-m.com/api/baisi").data
         val msg = MessageChain.Builder()
             .addAt(message.sender.userId)

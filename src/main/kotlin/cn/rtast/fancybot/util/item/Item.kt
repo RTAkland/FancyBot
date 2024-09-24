@@ -8,22 +8,15 @@
 package cn.rtast.fancybot.util.item
 
 import cn.rtast.rob.entity.GroupMessage
-import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.util.ob.OneBotListener
 
 abstract class Item {
     abstract val itemNames: List<String>
-    abstract val itemPrice: Int
+    abstract val itemPrice: Double
 
-    protected open suspend fun redeemInGroup(listener: OneBotListener, message: GroupMessage, after: Long) {}
+    protected open suspend fun redeemInGroup(listener: OneBotListener, message: GroupMessage, after: Double) {}
 
-    protected open suspend fun redeemInPrivate(listener: OneBotListener, message: PrivateMessage, after: Long) {}
-
-    suspend fun redeemGroup(listener: OneBotListener, message: GroupMessage, after: Long) {
+    suspend fun redeemGroup(listener: OneBotListener, message: GroupMessage, after: Double) {
         this.redeemInGroup(listener, message, after)
-    }
-
-    suspend fun redeemPrivate(listener: OneBotListener, message: PrivateMessage, after: Long) {
-        this.redeemInPrivate(listener, message, after)
     }
 }

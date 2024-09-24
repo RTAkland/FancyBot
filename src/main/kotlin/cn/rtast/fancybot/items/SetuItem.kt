@@ -17,9 +17,9 @@ import cn.rtast.rob.util.ob.OneBotListener
 
 class SetuItem : Item() {
     override val itemNames = listOf("setu", "色图", "st")
-    override val itemPrice = 80
+    override val itemPrice = 10.0
 
-    override suspend fun redeemInGroup(listener: OneBotListener, message: GroupMessage, after: Long) {
+    override suspend fun redeemInGroup(listener: OneBotListener, message: GroupMessage, after: Double) {
         val url = Http.get("https://api.rtast.cn/api/setu")
             .fromArrayJson<List<Setu>>().first().urls.large
         val msg = MessageChain.Builder()

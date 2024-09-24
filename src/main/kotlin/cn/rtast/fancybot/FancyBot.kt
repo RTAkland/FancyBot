@@ -27,7 +27,6 @@ import cn.rtast.fancybot.items.HeisiItem
 import cn.rtast.fancybot.items.SetuItem
 import cn.rtast.fancybot.util.file.ConfigManager
 import cn.rtast.fancybot.util.file.NiuziManager
-import cn.rtast.fancybot.util.file.SignManager
 import cn.rtast.fancybot.util.initDatabase
 import cn.rtast.fancybot.util.item.ItemManager
 import cn.rtast.fancybot.util.str.fromJson
@@ -162,7 +161,6 @@ class FancyBot : OneBotListener {
 
 val configManager = ConfigManager()
 val itemManager = ItemManager()
-val signManager = SignManager()
 val niuziManager = NiuziManager()
 
 val items = listOf(
@@ -173,11 +171,9 @@ val items = listOf(
 
 val commands = listOf(
     EchoCommand(), JrrpCommand(),
-    MusicCommand(), SignCommand(),
-    RedeemCommand(), MyPointCommand(),
-    HitokotoCommand(), FKXQSCommand(),
-    QRCodeCommand(), AntiRevokeCommand(),
-    MCPingCommand(), HelpCommand(),
+    RedeemCommand(), HitokotoCommand(),
+    FKXQSCommand(), QRCodeCommand(),
+    AntiRevokeCommand(), MCPingCommand(),
     WeatherCommand(), CigaretteCommand(),
     RemakeCommand(), PixivCommand(),
     RUACommand(), NslookupCommand(),
@@ -193,7 +189,8 @@ val commands = listOf(
     TenSetuCommand(), ShotSelfCommand(),
     ShotOtherCommand(), ReverseGIFCommand(),
     NiuziTransferCommand(), NiuziQueryCommand(),
-    GenshinCommand()
+    GenshinCommand(), HelpCommand(),
+    MusicCommand(),
 )
 
 val START_UP_TIME = Instant.now().epochSecond

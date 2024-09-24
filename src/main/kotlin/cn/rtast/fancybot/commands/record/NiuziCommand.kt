@@ -15,20 +15,16 @@ import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 
 class NiuziSignCommand : BaseCommand() {
-    override val commandNames = listOf("牛子签到")
+    override val commandNames = listOf("牛子签到", "签到")
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (niuziManager.isSigned(message.sender.userId)) {
-            val msg = MessageChain.Builder()
-                .addAt(message.sender.userId)
-                .addText("你今天已经对你的牛子使用了签到啦,明天再来吧~")
-                .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply("你今天已经对你的牛子使用了签到啦,明天再来吧~")
             return
         }
         val afterStatus = niuziManager.sign(message.sender.userId)
         val msg = MessageChain.Builder()
-            .addAt(message.sender.userId)
+            .addReply(message.messageId)
             .addText("签到成功~")
             .addNewLine()
             .addText("你的牛子增加了${afterStatus.first}cm~ 总长度为: ${afterStatus.second?.length}")
@@ -42,11 +38,7 @@ class JiJianCommand : BaseCommand() {
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
-            val msg = MessageChain.Builder()
-                .addAt(message.sender.userId)
-                .addText("发送`击剑 @xxx`即可对某人进行击剑")
-                .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply("发送`击剑 @xxx`即可对某人进行击剑")
             return
         }
 
@@ -54,7 +46,7 @@ class JiJianCommand : BaseCommand() {
         val targetId = target.qq!!.toLong()
         if (targetId == 0L) {
             val msg = MessageChain.Builder()
-                .addAt(message.sender.userId)
+                .addReply(message.messageId)
                 .addText("你的只有一根牛子，他们牛子太多啦你战胜不了他们的~")
                 .addNewLine()
                 .addText("所以你不能和他们击剑~")
@@ -63,54 +55,30 @@ class JiJianCommand : BaseCommand() {
             return
         }
         if (message.sender.userId == targetId) {
-            val msg = MessageChain.Builder()
-                .addAt(message.sender.userId)
-                .addText("你不能和自己击剑啊")
-                .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply("你不能和自己击剑啊")
             return
         }
         if (!niuziManager.exists(message.sender.userId)) {
-            val msg = MessageChain.Builder()
-                .addAt(message.sender.userId)
-                .addText("你还没有牛子呢, 发送`牛子签到`领取你的牛子吧~")
-                .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply("你还没有牛子呢, 发送`牛子签到`领取你的牛子吧~")
             return
         }
         if (!niuziManager.exists(targetId)) {
-            val msg = MessageChain.Builder()
-                .addAt(targetId)
-                .addText("对方还没有牛子呢, 提醒他领取一根牛子吧~")
-                .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply("对方还没有牛子呢, 提醒他领取一根牛子吧~")
             return
         }
 
         if (niuziManager.getUser(message.sender.userId)?.length!! < 0.0) {
-            val msg = MessageChain.Builder()
-                .addAt(message.sender.userId)
-                .addText("你的牛子已经凹进去了没办法进行击剑~发送`牛子签到来增加你的牛子长度吧~`")
-                .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply("你的牛子已经凹进去了没办法进行击剑~发送`牛子签到`来增加你的牛子长度吧~")
             return
         }
 
         if (niuziManager.getUser(targetId)?.length!! < 0.0) {
-            val msg = MessageChain.Builder()
-                .addAt(message.sender.userId)
-                .addText("他已经没有牛子啦！(他的牛子已经凹进去了！！)你不能和他击剑")
-                .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply("他已经没有牛子啦！(他的牛子已经凹进去了！！)你不能和他击剑")
             return
         }
         val result = niuziManager.jijian(message.sender.userId, targetId)
         if (result.first) {
-            val msg = MessageChain.Builder()
-                .addAt(message.sender.userId)
-                .addText("你以已绝对的长度在这场击剑中获胜了~, 你的牛子增加了${result.second}cm")
-                .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply("你以已绝对的长度在这场击剑中获胜了~, 你的牛子增加了${result.second}cm")
         } else {
             val msg = MessageChain.Builder()
                 .addAt(message.sender.userId)
@@ -124,16 +92,12 @@ class JiJianCommand : BaseCommand() {
 }
 
 class MyNiuziCommand : BaseCommand() {
-    override val commandNames = listOf("我的牛子")
+    override val commandNames = listOf("我的牛子", "/mp", "mp")
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         val niuzi = niuziManager.getUser(message.sender.userId)
         if (niuzi == null) {
-            val msg = MessageChain.Builder()
-                .addAt(message.sender.userId)
-                .addText("你还没有牛子呢, 发送`牛子签到`来领取一根专属于你的牛子吧~")
-                .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply("你还没有牛子呢, 发送`牛子签到`来领取一根专属于你的牛子吧~")
             return
         }
         val msg = MessageChain.Builder()
@@ -153,7 +117,7 @@ class MyNiuziCommand : BaseCommand() {
 }
 
 class NiuziTransferCommand : BaseCommand() {
-    override val commandNames = listOf("牛子转账")
+    override val commandNames = listOf("牛子转账", "转账", "/zz")
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
@@ -188,10 +152,14 @@ class NiuziTransferCommand : BaseCommand() {
 }
 
 class NiuziQueryCommand : BaseCommand() {
-    override val commandNames = listOf("牛子查询")
+    override val commandNames = listOf("牛子查询", "nq")
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
-        val target = args.last().toLong()
+        if (args.isEmpty()) {
+            message.reply("输入`牛子查询 @某人`即可查询他的牛子长度")
+            return
+        }
+        val target = message.message.find { it.type == ArrayMessageType.at }?.data?.qq!!.toLong()
         val targetNiuzi = niuziManager.getUser(target)
         if (targetNiuzi == null) {
             message.reply("他还没有牛子")

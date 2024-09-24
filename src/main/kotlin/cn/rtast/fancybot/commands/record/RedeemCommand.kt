@@ -8,7 +8,7 @@
 package cn.rtast.fancybot.commands.record
 
 import cn.rtast.fancybot.itemManager
-import cn.rtast.fancybot.signManager
+import cn.rtast.fancybot.niuziManager
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
@@ -25,12 +25,12 @@ class RedeemCommand : BaseCommand() {
                 .addNewLine()
                 .addText("发送 /rdm list 即可查看所有可兑换的物品~")
                 .addNewLine()
-                .addText("发送 /mp 可以查看自己拥有的点数~")
+                .addText("发送 `我的牛子` 可以查看自己的牛子长度~")
                 .build()
             listener.sendGroupMessage(message.groupId, msg)
             return
         }
-        val status = signManager.getStatus(message.sender.userId)
+        val status = niuziManager.getUser(message.sender.userId)
         if (status == null) {
             val msg = MessageChain.Builder()
                 .addAt(message.sender.userId)
@@ -63,22 +63,22 @@ class RedeemCommand : BaseCommand() {
             return
         }
         val selectedItemPrice = selectedItem.itemPrice
-        if (selectedItemPrice > status.points) {
+        if (selectedItemPrice > status.length) {
             val msg = MessageChain.Builder()
                 .addAt(message.sender.userId)
-                .addText("你的积分不够兑换这个物品呢~")
+                .addText("你的牛子长度不够兑换这个物品呢~")
                 .addNewLine()
-                .addText("你有: ${status.points}个积分, 兑换需要: $selectedItemPrice 个积分~\"")
+                .addText("你有: ${status.length}cm, 兑换需要: $selectedItemPrice cm~\"")
                 .build()
             listener.sendGroupMessage(message.groupId, msg)
             return
         }
-        val afterStatus = signManager.redeemItem(message.sender.userId, selectedItemPrice)?.points!!
+        val afterStatus = niuziManager.redeemItem(message.sender.userId, selectedItemPrice)?.length!!
         val msg = MessageChain.Builder()
             .addAt(message.sender.userId)
             .addText("兑换成功正在发送奖品中~")
             .addNewLine()
-            .addText("你花费了 $selectedItemPrice 点积分来兑换奖品, 还剩 $afterStatus 点积分")
+            .addText("你花费了${selectedItemPrice}cm来兑换奖品, 还剩${afterStatus}cm")
             .build()
         listener.sendGroupMessage(message.groupId, msg)
         selectedItem.redeemGroup(listener, message, afterStatus)
