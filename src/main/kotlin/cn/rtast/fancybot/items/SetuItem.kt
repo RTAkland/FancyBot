@@ -10,6 +10,7 @@ package cn.rtast.fancybot.items
 import cn.rtast.fancybot.entity.Setu
 import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.item.Item
+import cn.rtast.fancybot.util.str.fromArrayJson
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
@@ -19,7 +20,8 @@ class SetuItem : Item() {
     override val itemPrice = 80
 
     override suspend fun redeemInGroup(listener: OneBotListener, message: GroupMessage, after: Long) {
-        val url = Http.get<Setu>("https://api.rtast.cn/api/setu").urls.large
+        val url = Http.get("https://api.rtast.cn/api/setu")
+            .fromArrayJson<List<Setu>>().first().urls.large
         val msg = MessageChain.Builder()
             .addAt(message.sender.userId)
             .addImage(url)

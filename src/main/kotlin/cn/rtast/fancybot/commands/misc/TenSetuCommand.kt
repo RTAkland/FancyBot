@@ -10,6 +10,7 @@ package cn.rtast.fancybot.commands.misc
 import cn.rtast.fancybot.entity.Setu
 import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.str.encodeToBase64
+import cn.rtast.fancybot.util.str.fromArrayJson
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.segment.Node
 import cn.rtast.rob.util.BaseCommand
@@ -23,15 +24,13 @@ class TenSetuCommand : BaseCommand() {
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         val nodeMsg = NodeMessageChain.Builder()
-        repeat(10) {
-            val response = Http.get<Setu>("https://api.rtast.cn/api/setu")
-            if (!response.r18) {
+        val response = Http.get("https://api.rtast.cn/api/setu?size=10").fromArrayJson<List<Setu>>()
+        response.forEach {
+            if (it.r18) {
                 try {
-                    val imageBase64 = URI(response.urls.large).toURL().readBytes().encodeToBase64()
+                    val imageBase64 = URI(it.urls.large).toURL().readBytes().encodeToBase64()
                     val tempMsg = MessageChain.Builder().addImage(imageBase64, true).build()
-                    val tempNode = Node(
-                        Node.Data("", message.userId.toString(), tempMsg.finalArrayMsgList)
-                    )
+                    val tempNode = Node(Node.Data("", message.userId.toString(), tempMsg.finalArrayMsgList))
                     nodeMsg.addNode(tempNode)
                 } catch (_: Exception) {
                 }
