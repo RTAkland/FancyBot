@@ -50,7 +50,9 @@ class ShotOtherCommand : BaseCommand() {
             message.reply("发送`骂 @某人`可以骂他~")
             return
         }
+        var times = if (args.size == 1) 10 else if (args.last() == "") 10 else args.last().toInt()
+        if (times >= 200) times = 10
         val target = message.message.find { it.type == ArrayMessageType.at }?.data!!
-        listener.sendGroupForwardMsg(message.groupId, generateNodeMessage(target.name!!, target.qq!!))
+        listener.sendGroupForwardMsg(message.groupId, generateNodeMessage(target.name!!, target.qq!!, times))
     }
 }
