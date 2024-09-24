@@ -10,21 +10,16 @@ package cn.rtast.fancybot.commands.lookup
 import cn.rtast.fancybot.entity.wiki.PageInfoResponse
 import cn.rtast.fancybot.entity.wiki.WikipediaResponse
 import cn.rtast.fancybot.util.Http
+import cn.rtast.fancybot.util.str.extractPlainTextFromHtml
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
-import org.jsoup.Jsoup
 
 class WikipediaCommand : BaseCommand() {
     override val commandNames = listOf("/wiki", "/wk")
 
     private val wikipediaAPI = "https://proxy.rtast.cn/https/zh.wikipedia.org/w/api.php"
-
-    private fun String.extractPlainTextFromHtml(): String {
-        val doc = Jsoup.parse(this)
-        return doc.text()
-    }
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {

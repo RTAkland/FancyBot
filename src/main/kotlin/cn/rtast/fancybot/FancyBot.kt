@@ -41,7 +41,6 @@ import cn.rtast.fancybot.util.str.fromJson
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.AddFriendRequest
 import cn.rtast.rob.entity.FileEvent
-import cn.rtast.rob.entity.GetMessage
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.GroupRevokeMessage
 import cn.rtast.rob.enums.ArrayMessageType
@@ -199,7 +198,8 @@ val commands = listOf(
     AsciiArtCommand(), StatusCommand(),
     JueCommand(), ShortLinkCommand(),
     TenSetuCommand(), ShotSelfCommand(),
-    ShotOtherCommand(), ReverseGIFCommand()
+    ShotOtherCommand(), ReverseGIFCommand(),
+    DMCommand()
 )
 
 val START_UP_TIME = Instant.now().epochSecond

@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.util.str
 
+import org.jsoup.Jsoup
 import java.awt.Graphics2D
 
 fun setTruncat(origin: String, g2d: Graphics2D, maxWidth: Int = 500): String {
@@ -39,4 +40,9 @@ fun Int.formatNumberEnglish(): String {
         this >= 1_000 -> String.format("%dk", this / 1_000)
         else -> this.toString()
     }
+}
+
+fun String.extractPlainTextFromHtml(): String {
+    val doc = Jsoup.parse(this)
+    return doc.text()
 }
