@@ -10,7 +10,7 @@ package cn.rtast.fancybot.util
 import java.io.InputStream
 
 object Resources {
-    fun loadFromResources(filename: String): InputStream {
+    fun loadFromResources(filename: String): InputStream? {
         return this::class.java.classLoader.getResourceAsStream(filename)
     }
 

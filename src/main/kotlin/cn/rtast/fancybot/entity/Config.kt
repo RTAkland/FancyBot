@@ -22,11 +22,14 @@ data class Config(
     val imageType: ImageType,
     val openAIAPIHost: String,
     val openAIAPIKey: String,
+    val openAIModel: String,
     val smtpHost: String,
     val smtpPort: Int,
     val smtpUser: String,
     val smtpPassword: String,
     val smtpFromAddress: String,
     val admins: List<Long>,
-    val enableAntiRevoke: Boolean
+    val enableAntiRevoke: Boolean,
+    val llamaUrl: String,
+    val llamaModel: String,
 )

@@ -22,6 +22,7 @@ class ConfigManager : JsonFileHandler<Config>("config.json") {
     val imageType get() = this.read<Config>().imageType
     val openAIAPIHost get() = this.read<Config>().openAIAPIHost
     val openAIAPIKey get() = this.read<Config>().openAIAPIKey
+    val openAIModel get() = this.read<Config>().openAIModel
     val smtpHost get() = this.read<Config>().smtpHost
     val smtpPort get() = this.read<Config>().smtpPort
     val smtpUser get() = this.read<Config>().smtpUser
@@ -29,4 +30,6 @@ class ConfigManager : JsonFileHandler<Config>("config.json") {
     val smtpFromAddress get() = this.read<Config>().smtpFromAddress
     val admins get() = this.read<Config>().admins
     val enableAntiRevoke get() = this.read<Config>().enableAntiRevoke
+    val llamaUrl get() = this.read<Config>().llamaUrl
+    val llamaModel get() = this.read<Config>().llamaModel
 }

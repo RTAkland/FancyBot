@@ -52,13 +52,16 @@ val DEFAULT_CONFIG = Config(
     imageType = ImageType.PNG,
     openAIAPIHost = "https://api.moonshot.cn",
     openAIAPIKey = "114514",
+    openAIModel = "moonshot-v1-8k",
     smtpHost = "127.0.0.1",
     smtpPort = 25,
     smtpUser = "114514",
     smtpPassword = "1919810",
     smtpFromAddress = "fancybot@repo.rtast.cn",
     admins = listOf(3458671395L),
-    enableAntiRevoke = true
+    enableAntiRevoke = true,
+    llamaUrl = "http://127.0.0.1",
+    llamaModel = "llama3.1"
 )
 
 val configManager = ConfigManager()
@@ -96,7 +99,7 @@ val commands = listOf(
     NiuziBankCommand(), WithdrawCommand(),
     BankTransferCommand(), CreateBankAccountCommand(),
     BankBalanceCommand(), DepositCommand(),
-    DMSearchCommand()
+    DMSearchCommand(), LlamaCommand()
 )
 
 val START_UP_TIME = Instant.now().epochSecond

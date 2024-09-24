@@ -11,7 +11,8 @@ import cn.rtast.fancybot.entity.enums.GPTUserRole
 
 data class ChatCompletionsPayload(
     val model: String,
-    val messages: List<Message>
+    val messages: List<Message>,
+    val stream: Boolean = false
 ) {
     data class Message(
         val content: String,

@@ -13,6 +13,7 @@
   "imageType": "PNG",
   "openAIAPIHost": "https://api.moonshot.cn",
   "openAIAPIKey": "114514",
+  "openAIModel": "moonshot-v1-8k",
   "smtpHost": "127.0.0.1",
   "smtpPort": 25,
   "smtpUser": "114514",
@@ -21,5 +22,7 @@
   "admins": [
     3458671395
   ],
-  "enableAntiRevoke": true
+  "enableAntiRevoke": true,
+  "llamaUrl": "http://127.0.0.1",
+  "llamaModel": "llama3.1"
 }
