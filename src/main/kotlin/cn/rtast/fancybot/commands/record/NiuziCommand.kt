@@ -151,3 +151,52 @@ class MyNiuziCommand : BaseCommand() {
         listener.sendGroupMessage(message.groupId, msg.build())
     }
 }
+
+class NiuziTransferCommand : BaseCommand() {
+    override val commandNames = listOf("牛子转账")
+
+    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+        if (args.isEmpty()) {
+            message.reply("发送`牛子转账 @某人 <长度>` 即可把自己的牛子长度转账给TA")
+            return
+        }
+        val target = message.message.find { it.type == ArrayMessageType.at }!!.data.qq!!.toLong()
+        val targetNiuzi = niuziManager.getUser(target)
+        if (targetNiuzi == null) niuziManager.createBlankUser(target)
+        val transferLength = args.last().toDouble()
+        val currentNiuzi = niuziManager.getUser(message.sender.userId)
+        if (currentNiuzi == null) {
+            message.reply("你没有牛子没办法转账")
+            return
+        }
+        if (currentNiuzi.length <= 0.0) {
+            message.reply("你已经没有牛子可以转账了")
+            return
+        }
+        if (currentNiuzi.length < transferLength) {
+            message.reply("你的牛子长度不够转账这么多 >>>${transferLength}cm")
+            return
+        }
+        if (transferLength <= 0) {
+            message.reply("长度必须大于0!")
+            return
+        }
+        niuziManager.updateLength(message.sender.userId, -transferLength)
+        niuziManager.updateLength(target, transferLength)
+        message.reply("转账成功, 你的长度减少了: ${transferLength}cm, 对方的长度增加了 ${transferLength}cm")
+    }
+}
+
+class NiuziQueryCommand : BaseCommand() {
+    override val commandNames = listOf("牛子查询")
+
+    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+        val target = args.last().toLong()
+        val targetNiuzi = niuziManager.getUser(target)
+        if (targetNiuzi == null) {
+            message.reply("他还没有牛子")
+            return
+        }
+        message.reply("他的牛子长度为: ${targetNiuzi.length}cm")
+    }
+}

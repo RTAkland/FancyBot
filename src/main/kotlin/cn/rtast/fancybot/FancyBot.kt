@@ -19,14 +19,7 @@ import cn.rtast.fancybot.commands.parse.CalculateCommand
 import cn.rtast.fancybot.commands.parse.GitHubParseCommand
 import cn.rtast.fancybot.commands.parse.ImageURLCommand
 import cn.rtast.fancybot.commands.parse.ReverseGIFCommand
-import cn.rtast.fancybot.commands.record.JiJianCommand
-import cn.rtast.fancybot.commands.record.JrrpCommand
-import cn.rtast.fancybot.commands.record.MyNiuziCommand
-import cn.rtast.fancybot.commands.record.MyPointCommand
-import cn.rtast.fancybot.commands.record.NiuziSignCommand
-import cn.rtast.fancybot.commands.record.RedeemCommand
-import cn.rtast.fancybot.commands.record.ShortLinkCommand
-import cn.rtast.fancybot.commands.record.SignCommand
+import cn.rtast.fancybot.commands.record.*
 import cn.rtast.fancybot.entity.bili.CardShare
 import cn.rtast.fancybot.entity.enums.WSType
 import cn.rtast.fancybot.items.BaisiItem
@@ -41,7 +34,6 @@ import cn.rtast.fancybot.util.str.fromJson
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.AddFriendRequest
 import cn.rtast.rob.entity.FileEvent
-import cn.rtast.rob.entity.GetMessage
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.GroupRevokeMessage
 import cn.rtast.rob.enums.ArrayMessageType
@@ -199,7 +191,8 @@ val commands = listOf(
     AsciiArtCommand(), StatusCommand(),
     JueCommand(), ShortLinkCommand(),
     TenSetuCommand(), ShotSelfCommand(),
-    ShotOtherCommand(), ReverseGIFCommand()
+    ShotOtherCommand(), ReverseGIFCommand(),
+    NiuziTransferCommand(), NiuziQueryCommand()
 )
 
 val START_UP_TIME = Instant.now().epochSecond

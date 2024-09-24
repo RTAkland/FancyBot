@@ -22,11 +22,21 @@ import kotlin.random.Random
 
 class NiuziManager {
 
-    private suspend fun updateLength(id: Long, newLength: Double) {
+    suspend fun updateLength(id: Long, newLength: Double) {
         val current = getUser(id)
         suspendedTransaction {
             NiuziTable.update({ userId eq id }) {
                 it[length] = current?.length!! + newLength
+            }
+        }
+    }
+
+    suspend fun createBlankUser(id: Long) {
+        suspendedTransaction {
+            NiuziTable.insert {
+                it[timestamp] = Instant.now().epochSecond
+                it[length] = 0.0
+                it[userId] = id
             }
         }
     }
@@ -49,7 +59,7 @@ class NiuziManager {
     }
 
     suspend fun sign(id: Long): Pair<Double, Niuzi?> {
-        val randomLength = Random.nextDouble(-5.0, 10.0)
+        val randomLength = Random.nextDouble(1.0, 10.0)
         if (getUser(id) == null) {
             suspendedTransaction {
                 NiuziTable.insert {
