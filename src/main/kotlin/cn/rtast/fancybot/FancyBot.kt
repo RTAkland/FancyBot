@@ -13,6 +13,7 @@ import cn.rtast.fancybot.commands.HelpCommand
 import cn.rtast.fancybot.commands.StatusCommand
 import cn.rtast.fancybot.commands.lookup.*
 import cn.rtast.fancybot.commands.misc.*
+import cn.rtast.fancybot.commands.niuzi.*
 import cn.rtast.fancybot.commands.parse.AsciiArtCommand
 import cn.rtast.fancybot.commands.parse.BVParseCommand
 import cn.rtast.fancybot.commands.parse.CalculateCommand
@@ -26,6 +27,7 @@ import cn.rtast.fancybot.items.BaisiItem
 import cn.rtast.fancybot.items.HeisiItem
 import cn.rtast.fancybot.items.SetuItem
 import cn.rtast.fancybot.util.file.ConfigManager
+import cn.rtast.fancybot.util.file.NiuziBankManager
 import cn.rtast.fancybot.util.file.NiuziManager
 import cn.rtast.fancybot.util.initDatabase
 import cn.rtast.fancybot.util.item.ItemManager
@@ -166,6 +168,7 @@ class FancyBot : OneBotListener {
 val configManager = ConfigManager()
 val itemManager = ItemManager()
 val niuziManager = NiuziManager()
+val niuziBankManager = NiuziBankManager()
 
 val items = listOf(
     HeisiItem(),
@@ -181,8 +184,6 @@ val commands = listOf(
     WeatherCommand(), CigaretteCommand(),
     RemakeCommand(), PixivCommand(),
     RUACommand(), NslookupCommand(),
-    NiuziSignCommand(), MyNiuziCommand(),
-    JiJianCommand(), LikeMeCommand(),
     CompilerCommand(), AICommand(),
     GithubUserCommand(), AboutCommand(),
     MusicPlayUrlCommand(), DomainPriceCommand(),
@@ -192,8 +193,13 @@ val commands = listOf(
     JueCommand(), ShortLinkCommand(),
     TenSetuCommand(), ShotSelfCommand(),
     ShotOtherCommand(), ReverseGIFCommand(),
-    NiuziTransferCommand(), NiuziQueryCommand(),
     HelpCommand(), MusicCommand(),
+    LikeMeCommand(), NiuziTransferCommand(),
+    NiuziSignCommand(), NiuziJiJianCommand(),
+    NiuziQueryCommand(), MyNiuziCommand(),
+    NiuziBankCommand(), WithdrawCommand(),
+    BankTransferCommand(), CreateBankAccountCommand(),
+    BankBalanceCommand(), DepositCommand(),
 )
 
 val START_UP_TIME = Instant.now().epochSecond

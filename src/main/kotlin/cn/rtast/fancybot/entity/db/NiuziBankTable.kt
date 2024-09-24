@@ -1,7 +1,7 @@
 /*
  * Copyright © 2024 RTAkland
  * Author: RTAkland
- * Date: 2024/9/8
+ * Date: 2024/9/24
  */
 
 
@@ -9,16 +9,18 @@ package cn.rtast.fancybot.entity.db
 
 import org.jetbrains.exposed.sql.Table
 
-object NiuziTable : Table("niuzi") {
-    val length = double("length")
+object NiuziBankTable: Table("niuzi_bank") {
     val id = long("id").autoIncrement()
     val userId = long("userId").uniqueIndex()
     val timestamp = long("timestamp")
+    val balance = double("balance")
+    val interestRate = double("interest_rate")
     override val primaryKey = PrimaryKey(id)
 }
 
-data class Niuzi(
+data class NiuziBankAccount(
     val userId: Long,
-    val length: Double,
+    val balance: Double,
+    val interestRate: Double,
     val timestamp: Long
 )

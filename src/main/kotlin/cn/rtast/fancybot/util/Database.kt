@@ -9,8 +9,8 @@ package cn.rtast.fancybot.util
 
 import cn.rtast.fancybot.ROOT_PATH
 import cn.rtast.fancybot.entity.db.JrrpTable
+import cn.rtast.fancybot.entity.db.NiuziBankTable
 import cn.rtast.fancybot.entity.db.NiuziTable
-import cn.rtast.fancybot.entity.db.SignTable
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
@@ -20,7 +20,7 @@ suspend fun initDatabase() {
     Database.connect("jdbc:sqlite:file:$ROOT_PATH/data.sqlite", "org.sqlite.JDBC")
     suspendedTransaction {
         SchemaUtils.createMissingTablesAndColumns(JrrpTable)
-        SchemaUtils.createMissingTablesAndColumns(SignTable)
+        SchemaUtils.createMissingTablesAndColumns(NiuziBankTable)
         SchemaUtils.createMissingTablesAndColumns(NiuziTable)
     }
 }

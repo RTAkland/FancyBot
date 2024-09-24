@@ -12,7 +12,6 @@ import cn.rtast.fancybot.entity.db.NiuziTable
 import cn.rtast.fancybot.entity.db.NiuziTable.length
 import cn.rtast.fancybot.entity.db.NiuziTable.timestamp
 import cn.rtast.fancybot.entity.db.NiuziTable.userId
-import cn.rtast.fancybot.entity.db.SignTable
 import cn.rtast.fancybot.util.isSameDay
 import cn.rtast.fancybot.util.suspendedTransaction
 import org.jetbrains.exposed.sql.insert
@@ -23,13 +22,14 @@ import kotlin.random.Random
 
 class NiuziManager {
 
-    suspend fun updateLength(id: Long, newLength: Double) {
+    suspend fun updateLength(id: Long, newLength: Double): Niuzi? {
         val current = getUser(id)
         suspendedTransaction {
             NiuziTable.update({ userId eq id }) {
                 it[length] = current?.length!! + newLength
             }
         }
+        return getUser(id)
     }
 
     suspend fun createBlankUser(id: Long) {
