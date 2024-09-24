@@ -103,6 +103,10 @@ class WithdrawCommand : BaseCommand() {
             message.reply("你的牛子长度不足无法取出 >>> $amount")
             return
         }
+        if (amount <= 0) {
+            message.reply("取出的长度必须大于0!")
+            return
+        }
         val result = niuziBankManager.withdraw(message.sender.userId, amount)
         niuziManager.updateLength(message.sender.userId, amount + amount * INTEREST_RATE)
         message.reply("取牛子成功, 你现在还剩${result.balance}cm的牛子在银行内")
@@ -116,6 +120,10 @@ class DepositCommand : BaseCommand() {
         val currentBalance = niuziBankManager.getUser(message.sender.userId)
         val niuzi = niuziManager.getUser(message.sender.userId)
         val amount = args.last().toDouble()
+        if (amount <= 0) {
+            message.reply("存款必须大于0!")
+            return
+        }
         if (currentBalance == null) {
             noAccount(message)
             return
