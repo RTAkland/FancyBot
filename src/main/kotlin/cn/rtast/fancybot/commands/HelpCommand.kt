@@ -13,6 +13,8 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
+import kotlin.reflect.full.findAnnotation
+import kotlin.reflect.full.hasAnnotation
 
 @CommandDescription("帮助")
 class HelpCommand : BaseCommand() {
@@ -21,12 +23,8 @@ class HelpCommand : BaseCommand() {
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         val msg = MessageChain.Builder()
         commands.sortedBy { it::class.simpleName }.forEach {
-            val description =
-                if (!it.javaClass.isAnnotationPresent(CommandDescription::class.java)) {
-                    "暂无描述"
-                } else {
-                    it.javaClass.getAnnotation(CommandDescription::class.java)?.description!!
-                }
+            val description = if (!it::class.hasAnnotation<CommandDescription>()) "暂无描述"
+            else it::class.findAnnotation<CommandDescription>()?.description!!
             val commandName = it::class.simpleName?.replace("Command", "")!!
             val commandNames = it.commandNames.joinToString(",")
             msg.addText("[$commandName] [$description] 命令: $commandNames")
