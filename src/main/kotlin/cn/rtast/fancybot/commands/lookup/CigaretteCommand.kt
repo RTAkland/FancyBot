@@ -11,7 +11,6 @@ import cn.rtast.fancybot.entity.cigarette.Cigarette
 import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.rob.entity.GroupMessage
-import cn.rtast.rob.segment.Node
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.NodeMessageChain
@@ -42,8 +41,7 @@ class CigaretteCommand : BaseCommand() {
         val headerMsg = MessageChain.Builder()
             .addText("搜索到${result.totalCount}条结果, 仅展示前 $limit 条结果哦~")
             .build()
-        val headerNode = Node(Node.Data("", message.userId.toString(), headerMsg.finalArrayMsgList))
-        nodeMsg.addNode(headerNode)
+        nodeMsg.addMessageChain(headerMsg, message.sender.userId)
         result.productList.asSequence().take(limit).forEach {
             val imageBase64 = URI(it.cover).toURL().readBytes().encodeToBase64()
             val tempMsg = MessageChain.Builder()
@@ -55,14 +53,13 @@ class CigaretteCommand : BaseCommand() {
                 .addText("参考价: 单盒: ${it.packPrice}元 | 整条: ${it.barPrice}元")
                 .addNewLine()
                 .build()
-            val tempNode = Node(Node.Data("", message.userId.toString(), tempMsg.finalArrayMsgList))
-            nodeMsg.addNode(tempNode)
+            nodeMsg.addMessageChain(tempMsg, message.sender.userId)
         }
         val footerMsg = MessageChain.Builder()
             .addText("吸烟有害健康, 尽早戒烟有益健康。")
             .build()
-        val footerNode = Node(Node.Data("", message.userId.toString(), footerMsg.finalArrayMsgList))
-        nodeMsg.addNode(footerNode)
-        listener.sendGroupForwardMsg(message.groupId, nodeMsg.build())
+        nodeMsg.addMessageChain(footerMsg, message.sender.userId)
+        message.reply(nodeMsg.build())
+        message.sender.groupPoke()
     }
 }

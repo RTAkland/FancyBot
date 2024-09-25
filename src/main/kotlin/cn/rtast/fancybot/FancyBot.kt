@@ -7,36 +7,18 @@
 
 package cn.rtast.fancybot
 
-import cn.rtast.fancybot.commands.AboutCommand
-import cn.rtast.fancybot.commands.EchoCommand
-import cn.rtast.fancybot.commands.HelpCommand
-import cn.rtast.fancybot.commands.StatusCommand
-import cn.rtast.fancybot.commands.lookup.*
-import cn.rtast.fancybot.commands.misc.*
-import cn.rtast.fancybot.commands.niuzi.*
 import cn.rtast.fancybot.commands.parse.AsciiArtCommand
 import cn.rtast.fancybot.commands.parse.BVParseCommand
 import cn.rtast.fancybot.commands.parse.CalculateCommand
 import cn.rtast.fancybot.commands.parse.GitHubParseCommand
 import cn.rtast.fancybot.commands.parse.ImageURLCommand
 import cn.rtast.fancybot.commands.parse.ReverseGIFCommand
-import cn.rtast.fancybot.commands.record.*
 import cn.rtast.fancybot.entity.bili.CardShare
 import cn.rtast.fancybot.entity.enums.WSType
-import cn.rtast.fancybot.items.BaisiItem
-import cn.rtast.fancybot.items.HeisiItem
-import cn.rtast.fancybot.items.SetuItem
-import cn.rtast.fancybot.util.file.ConfigManager
-import cn.rtast.fancybot.util.file.NiuziBankManager
-import cn.rtast.fancybot.util.file.NiuziManager
 import cn.rtast.fancybot.util.initDatabase
-import cn.rtast.fancybot.util.item.ItemManager
 import cn.rtast.fancybot.util.str.fromJson
 import cn.rtast.rob.ROneBotFactory
-import cn.rtast.rob.entity.AddFriendRequest
-import cn.rtast.rob.entity.FileEvent
-import cn.rtast.rob.entity.GroupMessage
-import cn.rtast.rob.entity.GroupRevokeMessage
+import cn.rtast.rob.entity.*
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
@@ -45,7 +27,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
 import java.net.URI
-import java.time.Instant
 
 class FancyBot : OneBotListener {
 

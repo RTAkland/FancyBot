@@ -12,7 +12,6 @@ import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.fancybot.util.str.fromArrayJson
 import cn.rtast.rob.entity.GroupMessage
-import cn.rtast.rob.segment.Node
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.NodeMessageChain
@@ -30,8 +29,7 @@ class TenSetuCommand : BaseCommand() {
                 try {
                     val imageBase64 = URI(it.urls.large).toURL().readBytes().encodeToBase64()
                     val tempMsg = MessageChain.Builder().addImage(imageBase64, true).build()
-                    val tempNode = Node(Node.Data("", message.userId.toString(), tempMsg.finalArrayMsgList))
-                    nodeMsg.addNode(tempNode)
+                    nodeMsg.addMessageChain(tempMsg, message.sender.userId)
                 } catch (_: Exception) {
                 }
             }
@@ -41,8 +39,7 @@ class TenSetuCommand : BaseCommand() {
             .addNewLine()
             .addText("因为过滤了R18的图片~")
             .build()
-        val footerNode = Node(Node.Data("", message.userId.toString(), footerMsg.finalArrayMsgList))
-        nodeMsg.addNode(footerNode)
+        nodeMsg.addMessageChain(footerMsg, message.sender.userId)
         listener.sendGroupForwardMsg(message.groupId, nodeMsg.build())
     }
 }

@@ -9,24 +9,17 @@ package cn.rtast.fancybot.commands.lookup
 
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType
-import cn.rtast.rob.segment.Node
-import cn.rtast.rob.segment.PlainText
 import cn.rtast.rob.util.BaseCommand
+import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.NodeMessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 
 
-private fun generateNodeMessage(targetName: String, targetId: String, times: Int = 10): NodeMessageChain {
+private fun generateNodeMessage(targetId: String, times: Int = 10): NodeMessageChain {
     val nodeMsg = NodeMessageChain.Builder()
     repeat(times) {
-        val node = Node(
-            Node.Data(
-                targetName,
-                targetId,
-                listOf(PlainText(PlainText.Data("我是傻逼")))
-            )
-        )
-        nodeMsg.addNode(node)
+        val msg = MessageChain.Builder().addText("我是傻逼").build()
+        nodeMsg.addMessageChain(msg, targetId.toLong())
     }
     return nodeMsg.build()
 }
@@ -35,10 +28,7 @@ class ShotSelfCommand : BaseCommand() {
     override val commandNames = listOf("骂我")
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
-        listener.sendGroupForwardMsg(
-            message.groupId,
-            generateNodeMessage(message.sender.nickname, message.sender.userId.toString())
-        )
+        listener.sendGroupForwardMsg(message.groupId, generateNodeMessage(message.sender.userId.toString()))
     }
 }
 
@@ -53,6 +43,6 @@ class ShotOtherCommand : BaseCommand() {
         var times = if (args.size == 1) 10 else if (args.last() == "") 10 else args.last().toInt()
         if (times >= 200) times = 10
         val target = message.message.find { it.type == ArrayMessageType.at }?.data!!
-        listener.sendGroupForwardMsg(message.groupId, generateNodeMessage(target.name!!, target.qq!!, times))
+        listener.sendGroupForwardMsg(message.groupId, generateNodeMessage(target.qq!!, times))
     }
 }
