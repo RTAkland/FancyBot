@@ -16,9 +16,4 @@ jobs:
       - name: Count lines of code
         id: cloc
         run: |
-          cloc . > cloc.txt
-      - name: Add cloc output to summary
-        run: |
-          echo "```txt" >> $GITHUB_STEP_SUMMARY
-          cat cloc.txt >> $GITHUB_STEP_SUMMARY
-          echo "```" >> $GITHUB_STEP_SUMMARY
+          cloc . >> $GITHUB_STEP_SUMMARY
