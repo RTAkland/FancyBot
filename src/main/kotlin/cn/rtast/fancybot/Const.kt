@@ -75,6 +75,8 @@ val items = listOf(
     SetuItem()
 )
 
+val START_UP_TIME = Instant.now().epochSecond
+
 val commands = listOf(
     EchoCommand(), JrrpCommand(),
     RedeemCommand(), HitokotoCommand(),
@@ -101,5 +103,3 @@ val commands = listOf(
     BankBalanceCommand(), DepositCommand(),
     DMSearchCommand(), LlamaCommand()
 )
-
-val START_UP_TIME = Instant.now().epochSecond
