@@ -1,0 +1,27 @@
+name: Count Lines of Code
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  count-loc:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: Install cloc
+        run: sudo apt-get install -y cloc
+      - name: Count lines of code
+        id: cloc
+        run: |
+          cloc --json . > cloc.json
+      - name: Add cloc output to summary
+        run: |
+          lines=$(jq '.SUM.code' cloc.json)  # 提取代码行数
+          echo "# Code Statistics" >> $GITHUB_STEP_SUMMARY
+          echo "Total lines of code: $lines" >> $GITHUB_STEP_SUMMARY
+          echo "```json" >> $GITHUB_STEP_SUMMARY
+          cat cloc.json >> $GITHUB_STEP_SUMMARY
+          echo "```" >> $GITHUB_STEP_SUMMARY
