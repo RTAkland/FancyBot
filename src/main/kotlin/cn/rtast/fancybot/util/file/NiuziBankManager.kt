@@ -76,7 +76,7 @@ class NiuziBankManager {
 
     suspend fun transfer(from: Long, target: Long, amount: Double): NiuziBankAccount? {
         suspendedTransaction {
-            this.decreaseBalance(from, -amount)
+            this.decreaseBalance(from, amount)
             this.increaseBalance(target, amount)
         }
         return this.getUser(from)
