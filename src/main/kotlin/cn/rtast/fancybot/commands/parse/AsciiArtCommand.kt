@@ -14,6 +14,8 @@ import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.awt.Color
 import java.awt.Font
 import java.awt.image.BufferedImage
@@ -84,7 +86,9 @@ class AsciiArtCommand : BaseCommand() {
             if (message.sender.userId in waitingList) {
                 if (message.message.any { it.type == ArrayMessageType.image }) {
                     val url = message.message.find { it.type == ArrayMessageType.image }!!.data.file!!
-                    val bufferedImage = ImageIO.read(URI(url).toURL())
+                    val bufferedImage = withContext(Dispatchers.IO) {
+                        ImageIO.read(URI(url).toURL())
+                    }
                     val imageBase64 =
                         bufferedImage.convertToAscii().saveAsciiArtToImage(bufferedImage.width, bufferedImage.height)
                     val msg = MessageChain.Builder().addImage(imageBase64, true).build()

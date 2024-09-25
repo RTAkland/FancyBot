@@ -16,8 +16,8 @@ import okhttp3.RequestBody.Companion.toRequestBody
 
 object Http {
 
-    val jsonMediaType = "application/json; charset=utf-8".toMediaType()
-    val jsonHeader = mapOf(
+    private val jsonMediaType = "application/json; charset=utf-8".toMediaType()
+    private val jsonHeader = mapOf(
         "Content-Type" to "application/json; charset=utf-8",
         "Accept" to "application/json"
     )

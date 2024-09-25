@@ -11,6 +11,8 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.net.InetAddress
 
 class NslookupCommand : BaseCommand() {
@@ -20,7 +22,9 @@ class NslookupCommand : BaseCommand() {
         val msg = MessageChain.Builder()
             .addReply(message.messageId)
             .addText("域名: ${args.first()}解析后的IP地址为: ")
-            .addText(InetAddress.getByName(args.first()).hostAddress)
+            .addText(withContext(Dispatchers.IO) {
+                InetAddress.getByName(args.first())
+            }.hostAddress)
             .build()
         listener.sendGroupMessage(message.groupId, msg)
     }
