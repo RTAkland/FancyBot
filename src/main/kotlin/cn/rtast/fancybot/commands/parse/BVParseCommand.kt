@@ -16,7 +16,7 @@ import cn.rtast.fancybot.util.Resources
 import cn.rtast.fancybot.util.drawCustomImage
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.fancybot.util.str.formatNumber
-import cn.rtast.fancybot.util.str.setTruncat
+import cn.rtast.fancybot.util.str.setTruncate
 import cn.rtast.fancybot.util.toByteArray
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.ob.MessageChain
@@ -115,7 +115,7 @@ object BVParseCommand {
         g2d.drawString(reply, 300, 290)
         g2d.drawString(share, 300, 200)
         // draw video title
-        val truncatedText = setTruncat(title, g2d)
+        val truncatedText = setTruncate(title, g2d)
         g2d.font = titleFont
         g2d.drawString(truncatedText, 20, 70)
         // draw author name

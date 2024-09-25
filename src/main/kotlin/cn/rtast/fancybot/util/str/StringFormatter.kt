@@ -9,7 +9,7 @@ package cn.rtast.fancybot.util.str
 
 import java.awt.Graphics2D
 
-fun setTruncat(origin: String, g2d: Graphics2D, maxWidth: Int = 500): String {
+fun setTruncate(origin: String, g2d: Graphics2D, maxWidth: Int = 500): String {
     val fontMetrics = g2d.fontMetrics
     val textWidth = fontMetrics.stringWidth(origin)
     return if (textWidth > maxWidth) {

@@ -15,7 +15,7 @@ import cn.rtast.fancybot.util.drawCustomImage
 import cn.rtast.fancybot.util.drawString
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.fancybot.util.str.formatNumberEnglish
-import cn.rtast.fancybot.util.str.setTruncat
+import cn.rtast.fancybot.util.str.setTruncate
 import cn.rtast.fancybot.util.toByteArray
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.ob.MessageChain
@@ -100,11 +100,11 @@ object GitHubParseCommand {
         if (repoStat.fork) {
             g2d.font = forkParentFont
             val parentName = repoStat.parent?.fullName!!
-            val truncatedParentFullName = setTruncat("复刻自 $parentName", g2d, 1000)
+            val truncatedParentFullName = setTruncate("复刻自 $parentName", g2d, 1000)
             g2d.drawString(truncatedParentFullName, 80, 335)
         }
         g2d.font = titleCustomFont
-        val truncatedFullNameText = setTruncat(repoStat.fullName, g2d, 1000)
+        val truncatedFullNameText = setTruncate(repoStat.fullName, g2d, 1000)
         g2d.drawString(truncatedFullNameText, 80, 280)
         g2d.font = descriptionCustomFont
         g2d.drawString(repoStat.description ?: "暂无描述~", 80, 400, 800)
