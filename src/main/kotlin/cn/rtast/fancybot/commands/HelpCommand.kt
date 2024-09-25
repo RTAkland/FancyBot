@@ -14,7 +14,7 @@ import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 
-@CommandDescription("AAAA")
+@CommandDescription("帮助")
 class HelpCommand : BaseCommand() {
     override val commandNames = listOf("/help", "/帮助")
 
