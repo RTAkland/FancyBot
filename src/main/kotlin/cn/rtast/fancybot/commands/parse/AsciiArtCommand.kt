@@ -86,9 +86,7 @@ class AsciiArtCommand : BaseCommand() {
             if (message.sender.userId in waitingList) {
                 if (message.message.any { it.type == ArrayMessageType.image }) {
                     val url = message.message.find { it.type == ArrayMessageType.image }!!.data.file!!
-                    val bufferedImage = withContext(Dispatchers.IO) {
-                        ImageIO.read(URI(url).toURL())
-                    }
+                    val bufferedImage = withContext(Dispatchers.IO) { ImageIO.read(URI(url).toURL()) }
                     val imageBase64 =
                         bufferedImage.convertToAscii().saveAsciiArtToImage(bufferedImage.width, bufferedImage.height)
                     val msg = MessageChain.Builder().addImage(imageBase64, true).build()
