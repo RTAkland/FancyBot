@@ -17,7 +17,7 @@ class HelpCommand : BaseCommand() {
     override val commandNames = listOf("/help", "/帮助")
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
-        val allCommands = commands.joinToString("\n") {
+        val allCommands = commands.sortedBy { it::class.simpleName }.joinToString("\n") {
             "[${
                 it.javaClass.name.split(".")
                     .last().replace("Command", "")
