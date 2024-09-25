@@ -24,7 +24,7 @@ private const val INTEREST_RATE = 0.54
 
 @CommandDescription("牛子银行根命令")
 class NiuziBankCommand : BaseCommand() {
-    override val commandNames = listOf("牛子银行", "/银行")
+    override val commandNames = listOf("牛子银行")
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         val msg = MessageChain.Builder()

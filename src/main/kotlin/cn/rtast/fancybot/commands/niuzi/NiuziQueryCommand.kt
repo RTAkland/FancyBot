@@ -16,7 +16,7 @@ import cn.rtast.rob.util.ob.OneBotListener
 
 @CommandDescription("查询别人的牛子长度")
 class NiuziQueryCommand : BaseCommand() {
-    override val commandNames = listOf("牛子查询", "nq")
+    override val commandNames = listOf("牛子查询")
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {

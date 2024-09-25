@@ -16,7 +16,7 @@ import cn.rtast.rob.util.ob.OneBotListener
 
 @CommandDescription("将自己的牛子长度转账给别人")
 class NiuziTransferCommand : BaseCommand() {
-    override val commandNames = listOf("牛子转账", "转账", "/zz")
+    override val commandNames = listOf("牛子转账", "zz")
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {

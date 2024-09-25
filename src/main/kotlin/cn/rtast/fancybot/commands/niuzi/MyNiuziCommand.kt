@@ -17,7 +17,7 @@ import cn.rtast.rob.util.ob.OneBotListener
 
 @CommandDescription("查询自己牛子的长度")
 class MyNiuziCommand : BaseCommand() {
-    override val commandNames = listOf("我的牛子", "/mp", "mp")
+    override val commandNames = listOf("我的牛子", "mp")
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         val niuzi = niuziManager.getUser(message.sender.userId)

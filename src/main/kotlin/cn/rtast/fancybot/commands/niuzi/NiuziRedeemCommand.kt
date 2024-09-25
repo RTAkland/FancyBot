@@ -17,7 +17,7 @@ import cn.rtast.rob.util.ob.OneBotListener
 
 @CommandDescription("使用牛子长度兑换物品")
 class NiuziRedeemCommand : BaseCommand() {
-    override val commandNames = listOf("/redeem", "/兑换", "/rdm")
+    override val commandNames = listOf("/rdm")
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
