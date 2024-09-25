@@ -8,12 +8,14 @@
 package cn.rtast.fancybot.commands
 
 import cn.rtast.fancybot.START_UP_TIME
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 import java.time.Instant
 
+@CommandDescription("状态")
 class StatusCommand : BaseCommand() {
     override val commandNames = listOf("/status")
 

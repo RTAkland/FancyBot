@@ -16,9 +16,9 @@ import cn.rtast.fancybot.commands.misc.*
 import cn.rtast.fancybot.commands.niuzi.*
 import cn.rtast.fancybot.commands.parse.AsciiArtCommand
 import cn.rtast.fancybot.commands.parse.ReverseGIFCommand
-import cn.rtast.fancybot.commands.record.JrrpCommand
-import cn.rtast.fancybot.commands.record.RedeemCommand
-import cn.rtast.fancybot.commands.record.ShortLinkCommand
+import cn.rtast.fancybot.commands.misc.JrrpCommand
+import cn.rtast.fancybot.commands.niuzi.NiuziRedeemCommand
+import cn.rtast.fancybot.commands.misc.ShortLinkCommand
 import cn.rtast.fancybot.entity.Config
 import cn.rtast.fancybot.entity.enums.ImageType
 import cn.rtast.fancybot.entity.enums.WSType
@@ -80,7 +80,7 @@ val START_UP_TIME = Instant.now().epochSecond
 
 val commands = listOf(
     EchoCommand(), JrrpCommand(),
-    RedeemCommand(), HitokotoCommand(),
+    NiuziRedeemCommand(), HitokotoCommand(),
     FKXQSCommand(), QRCodeCommand(),
     AntiRevokeCommand(), MCPingCommand(),
     WeatherCommand(), CigaretteCommand(),

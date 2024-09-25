@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.commands.lookup
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.entity.bgm.BGMSearch
 import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.str.encodeToBase64
@@ -18,8 +19,9 @@ import cn.rtast.rob.util.ob.OneBotListener
 import okhttp3.OkHttpClient
 import okhttp3.Request
 
+@CommandDescription("搜索动漫")
 class DMSearchCommand : BaseCommand() {
-    override val commandNames = listOf("/dm", "动漫", "dm")
+    override val commandNames = listOf("/dm", "动漫")
 
     private val client = OkHttpClient()
 

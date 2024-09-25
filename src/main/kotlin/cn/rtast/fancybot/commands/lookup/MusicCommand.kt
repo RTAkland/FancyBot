@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.commands.lookup
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.entity.music.Search
 import cn.rtast.fancybot.entity.music.SearchedResult
@@ -27,8 +28,9 @@ import java.io.FileNotFoundException
 import java.net.URI
 import java.time.Instant
 
+@CommandDescription("网易云音乐点歌")
 class MusicCommand : BaseCommand() {
-    override val commandNames = listOf("/music", "/点歌", "点歌")
+    override val commandNames = listOf("点歌")
 
     private val searchedResult = mutableMapOf<Long, List<SearchedResult>>()
 
@@ -137,8 +139,9 @@ class MusicCommand : BaseCommand() {
     }
 }
 
+@CommandDescription("获取网易云音乐链接")
 class MusicPlayUrlCommand : BaseCommand() {
-    override val commandNames = listOf("/lj", "lj", "song", "/song")
+    override val commandNames = listOf("lj")
 
     private fun getPlayUrl(id: String): String {
         return Http.get<SongUrl>("${configManager.ncmAPI}/song/url", mapOf("id" to id)).data.first().url
@@ -161,8 +164,9 @@ class MusicPlayUrlCommand : BaseCommand() {
     }
 }
 
+@CommandDescription("QQ音乐点歌")
 class QQMusicCommand : BaseCommand() {
-    override val commandNames = listOf("qm", "/qqm", "qqm", "/qm", "q点歌")
+    override val commandNames = listOf("qm", "/qm")
 
     private val qqMusicApiUrl = configManager.qqMusicApiUrl
 

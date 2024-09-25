@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.commands.misc
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.entity.compiler.GLOTPayload
 import cn.rtast.fancybot.entity.compiler.GLOTResponse
 import cn.rtast.fancybot.entity.compiler.KCSPayload
@@ -18,6 +19,7 @@ import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 
+@CommandDescription("执行不同语言的代码片段")
 class CompilerCommand : BaseCommand() {
     override val commandNames = listOf("/compiler", "/exec")
 

@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.commands.parse
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.util.makeGif
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.rob.entity.GroupMessage
@@ -17,6 +18,7 @@ import cn.rtast.rob.util.ob.OneBotListener
 import com.madgag.gif.fmsware.GifDecoder
 import java.net.URI
 
+@CommandDescription("倒放GIF")
 class ReverseGIFCommand : BaseCommand() {
     override val commandNames = listOf("倒放")
 

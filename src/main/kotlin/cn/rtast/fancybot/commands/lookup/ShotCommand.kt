@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.commands.lookup
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.BaseCommand
@@ -24,6 +25,7 @@ private fun generateNodeMessage(targetId: String, times: Int = 10): NodeMessageC
     return nodeMsg.build()
 }
 
+@CommandDescription("骂自己(好爽)")
 class ShotSelfCommand : BaseCommand() {
     override val commandNames = listOf("骂我")
 
@@ -32,6 +34,7 @@ class ShotSelfCommand : BaseCommand() {
     }
 }
 
+@CommandDescription("骂别人(更爽了")
 class ShotOtherCommand : BaseCommand() {
     override val commandNames = listOf("骂")
 

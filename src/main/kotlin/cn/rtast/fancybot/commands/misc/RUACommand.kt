@@ -7,12 +7,14 @@
 
 package cn.rtast.fancybot.commands.misc
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 
+@CommandDescription("RUA!")
 class RUACommand : BaseCommand() {
     override val commandNames = listOf("/rua", "rua")
 

@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.commands.lookup
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.entity.pixiv.Ranking
 import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.str.encodeToBase64
@@ -16,8 +17,9 @@ import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 import java.net.URI
 
+@CommandDescription("获取Pixiv上的图片")
 class PixivCommand : BaseCommand() {
-    override val commandNames = listOf("/pixiv", "/p")
+    override val commandNames = listOf("/p")
 
     private val pixivRankingURL = "https://proxy.rtast.cn/https/www.pixiv.net/ranking.php?format=json&mode=daily&p=1"
     private val imageProxyURL = "https://pixiv.re"

@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.commands.parse
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.fancybot.util.toByteArray
 import cn.rtast.rob.entity.GroupMessage
@@ -23,6 +24,7 @@ import java.net.URI
 import javax.imageio.ImageIO
 import kotlin.math.roundToInt
 
+@CommandDescription("将图片转换成ASCII字符画!")
 class AsciiArtCommand : BaseCommand() {
     override val commandNames = listOf("/ascii", "/asc")
 

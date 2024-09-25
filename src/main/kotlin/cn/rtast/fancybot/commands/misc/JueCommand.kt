@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.commands.misc
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.util.Resources
 import cn.rtast.fancybot.util.drawCircularImage
 import cn.rtast.fancybot.util.makeGif
@@ -21,6 +22,7 @@ import com.madgag.gif.fmsware.GifDecoder
 import java.awt.image.BufferedImage
 import java.net.URI
 
+@CommandDescription("撅撅你")
 class JueCommand : BaseCommand() {
     override val commandNames = listOf("撅")
 

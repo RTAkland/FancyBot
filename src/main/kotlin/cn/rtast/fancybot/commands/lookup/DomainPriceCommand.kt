@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.commands.lookup
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.entity.domain.PricePayload
 import cn.rtast.fancybot.entity.domain.PriceResponse
 import cn.rtast.fancybot.util.Http
@@ -21,6 +22,7 @@ import java.awt.Color
 import java.awt.Font
 import java.awt.image.BufferedImage
 
+@CommandDescription("查询域名价格")
 class DomainPriceCommand : BaseCommand() {
     override val commandNames = listOf("/domain")
 

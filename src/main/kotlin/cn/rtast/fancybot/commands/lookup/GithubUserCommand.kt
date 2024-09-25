@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.commands.lookup
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.entity.github.UserInfo
 import cn.rtast.fancybot.util.Http
@@ -24,8 +25,9 @@ import java.awt.Font
 import java.awt.image.BufferedImage
 import java.net.URI
 
+@CommandDescription("获取Github用户信息")
 class GithubUserCommand : BaseCommand() {
-    override val commandNames = listOf("/gh", "/github", "gh")
+    override val commandNames = listOf("/gh")
 
     private val userInfoUrl = "https://api.github.com/users"
     private val backgroundColor = Color(255, 255, 240)

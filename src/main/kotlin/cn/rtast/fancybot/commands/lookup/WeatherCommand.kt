@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.commands.lookup
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.entity.weather.Geo
 import cn.rtast.fancybot.entity.weather.Weather
@@ -25,8 +26,9 @@ import java.awt.Color
 import java.awt.Font
 import java.awt.image.BufferedImage
 
+@CommandDescription("查询天气")
 class WeatherCommand : BaseCommand() {
-    override val commandNames = listOf("/weather", "/天气", "天气")
+    override val commandNames = listOf("天气")
 
     private val canvasWidth = 800
     private val canvasHeight = 600

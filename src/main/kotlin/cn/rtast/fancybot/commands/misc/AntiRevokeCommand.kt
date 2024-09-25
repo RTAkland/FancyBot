@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.commands.misc
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.configManager
 import cn.rtast.rob.entity.ArrayMessage
 import cn.rtast.rob.entity.GroupMessage
@@ -14,6 +15,7 @@ import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.OneBotListener
 
+@CommandDescription("防撤回(获取消息)")
 class AntiRevokeCommand : BaseCommand() {
     override val commandNames = listOf("/revoke", "/rv", "/防撤回")
 

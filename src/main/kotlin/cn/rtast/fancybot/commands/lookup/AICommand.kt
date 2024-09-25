@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.commands.lookup
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.entity.gpt.ChatCompletionsPayload
 import cn.rtast.fancybot.entity.gpt.ChatCompletionsResponse
@@ -20,8 +21,9 @@ import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.NodeMessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 
+@CommandDescription("问AI(GPT)")
 class AICommand : BaseCommand() {
-    override val commandNames = listOf("/ai", "问AI")
+    override val commandNames = listOf("/ai")
 
     private val openAIModel = configManager.openAIModel
 
@@ -71,6 +73,7 @@ class AICommand : BaseCommand() {
     }
 }
 
+@CommandDescription("问AI(LLAMA)")
 class LlamaCommand : BaseCommand() {
     override val commandNames = listOf("/llama")
 

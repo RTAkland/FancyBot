@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.commands.lookup
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.motdpinger.BedrockPing
 import cn.rtast.motdpinger.JavaPing
 import cn.rtast.rob.entity.GroupMessage
@@ -15,8 +16,9 @@ import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 import java.net.SocketException
 
+@CommandDescription("PingMC服务器")
 class MCPingCommand : BaseCommand() {
-    override val commandNames = listOf("/mcping", "/mcPing")
+    override val commandNames = listOf("/mcping")
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {

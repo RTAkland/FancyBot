@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.commands.lookup
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
@@ -16,8 +17,9 @@ import kotlinx.coroutines.withContext
 import java.net.InetAddress
 import java.net.UnknownHostException
 
+@CommandDescription("解析域名获取IP地址")
 class NslookupCommand : BaseCommand() {
-    override val commandNames = listOf("/nslookup", "/ns")
+    override val commandNames = listOf("/ns")
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         val host = args.joinToString(" ")

@@ -7,10 +7,12 @@
 
 package cn.rtast.fancybot.commands
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.OneBotListener
 
+@CommandDescription("Echo")
 class EchoCommand : BaseCommand() {
     override val commandNames = listOf("/echo")
 

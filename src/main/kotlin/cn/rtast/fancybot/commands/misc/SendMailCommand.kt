@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.commands.misc
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.configManager
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
@@ -16,6 +17,7 @@ import org.simplejavamail.api.mailer.config.TransportStrategy
 import org.simplejavamail.email.EmailBuilder
 import org.simplejavamail.mailer.MailerBuilder
 
+@CommandDescription("发送邮件!")
 class SendMailCommand : BaseCommand() {
     override val commandNames = listOf("/mail")
 

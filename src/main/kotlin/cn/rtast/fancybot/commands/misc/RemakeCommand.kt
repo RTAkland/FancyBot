@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.commands.misc
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.entity.enums.CountryList
 import cn.rtast.fancybot.util.randomBooleanWithProbability
 import cn.rtast.rob.entity.GroupMessage
@@ -14,8 +15,9 @@ import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 
+@CommandDescription("人生重开模拟器")
 class RemakeCommand : BaseCommand() {
-    override val commandNames = listOf("/remake", "/重开", "remake", "重开")
+    override val commandNames = listOf("remake")
 
     private val locations = listOf(
         "厕所", "首都", "农村", "市区",

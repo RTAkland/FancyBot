@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.commands.lookup
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.entity.wiki.PageInfoResponse
 import cn.rtast.fancybot.entity.wiki.WikipediaResponse
 import cn.rtast.fancybot.util.Http
@@ -16,6 +17,7 @@ import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 import org.jsoup.Jsoup
 
+@CommandDescription("查询wiki百科")
 class WikipediaCommand : BaseCommand() {
     override val commandNames = listOf("/wiki", "/wk")
 

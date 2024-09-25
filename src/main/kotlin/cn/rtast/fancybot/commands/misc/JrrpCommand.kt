@@ -5,14 +5,16 @@
  */
 
 
-package cn.rtast.fancybot.commands.record
+package cn.rtast.fancybot.commands.misc
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.util.file.JrrpManager
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 
+@CommandDescription("今日人品~")
 class JrrpCommand : BaseCommand() {
     override val commandNames = listOf("/jrrp", "/今日人品")
 

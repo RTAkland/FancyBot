@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.commands.lookup
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.entity.cigarette.Cigarette
 import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.str.encodeToBase64
@@ -17,8 +18,9 @@ import cn.rtast.rob.util.ob.NodeMessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 import java.net.URI
 
+@CommandDescription("查询香烟价格")
 class CigaretteCommand : BaseCommand() {
-    override val commandNames = listOf("/香烟", "/tobacco", "/cigarette")
+    override val commandNames = listOf("/tobacco")
 
     private val apiUrl = "https://www.yanyue.cn/api/rc/product/yanlist"
 

@@ -7,13 +7,15 @@
 
 package cn.rtast.fancybot.commands.lookup
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 
+@CommandDescription("生成二维码")
 class QRCodeCommand : BaseCommand() {
-    override val commandNames = listOf("/qrcode", "/qr", "/二维码")
+    override val commandNames = listOf("/qr")
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         val content = args.joinToString(" ")

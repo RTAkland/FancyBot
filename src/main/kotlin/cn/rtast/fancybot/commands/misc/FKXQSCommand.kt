@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.commands.misc
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.entity.FKXQS
 import cn.rtast.fancybot.util.Http
 import cn.rtast.rob.entity.GroupMessage
@@ -14,6 +15,7 @@ import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 
+@CommandDescription("今天是疯狂星期四!")
 class FKXQSCommand : BaseCommand() {
     override val commandNames = listOf("/fkxqs", "/fk", "/疯狂星期四")
 

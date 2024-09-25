@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.commands.misc
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.util.BaseCommand
@@ -15,6 +16,7 @@ import cn.rtast.rob.util.ob.OneBotListener
 
 val users = mutableMapOf<Long, Long>()
 
+@CommandDescription("自闭去吧你")
 class ZiBiCommand : BaseCommand() {
     override val commandNames = listOf("/自闭", "自闭")
 
@@ -40,6 +42,7 @@ class ZiBiCommand : BaseCommand() {
     }
 }
 
+@CommandDescription("我好像突然想开了")
 class UnsetZiBiCommand : BaseCommand() {
     override val commandNames = listOf("我想开了")
 

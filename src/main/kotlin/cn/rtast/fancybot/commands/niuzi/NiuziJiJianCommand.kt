@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.commands.niuzi
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.niuziManager
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType
@@ -14,6 +15,7 @@ import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 
+@CommandDescription("来一起激情击剑吧!")
 class NiuziJiJianCommand : BaseCommand() {
     override val commandNames = listOf("击剑", "jj")
 

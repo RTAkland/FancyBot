@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.commands.niuzi
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.niuziBankManager
 import cn.rtast.fancybot.niuziManager
 import cn.rtast.rob.entity.GroupMessage
@@ -21,6 +22,7 @@ private suspend fun noAccount(message: GroupMessage) {
 
 private const val INTEREST_RATE = 0.54
 
+@CommandDescription("牛子银行根命令")
 class NiuziBankCommand : BaseCommand() {
     override val commandNames = listOf("牛子银行", "/银行")
 
@@ -34,6 +36,7 @@ class NiuziBankCommand : BaseCommand() {
     }
 }
 
+@CommandDescription("查询牛子银行的余额")
 class BankBalanceCommand : BaseCommand() {
     override val commandNames = listOf("余额查询")
 
@@ -47,6 +50,7 @@ class BankBalanceCommand : BaseCommand() {
     }
 }
 
+@CommandDescription("创建一个空的牛子银行账户")
 class CreateBankAccountCommand : BaseCommand() {
     override val commandNames = listOf("创建账户")
 
@@ -60,6 +64,7 @@ class CreateBankAccountCommand : BaseCommand() {
     }
 }
 
+@CommandDescription("用于牛子银行之间转账")
 class BankTransferCommand : BaseCommand() {
     override val commandNames = listOf("银行转账")
 
@@ -84,6 +89,7 @@ class BankTransferCommand : BaseCommand() {
     }
 }
 
+@CommandDescription("牛子银行提现")
 class WithdrawCommand : BaseCommand() {
     override val commandNames = listOf("取牛子")
 
@@ -113,6 +119,7 @@ class WithdrawCommand : BaseCommand() {
     }
 }
 
+@CommandDescription("牛子银行存入")
 class DepositCommand : BaseCommand() {
     override val commandNames = listOf("存牛子")
 

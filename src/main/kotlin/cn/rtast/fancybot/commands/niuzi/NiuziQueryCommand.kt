@@ -7,12 +7,14 @@
 
 package cn.rtast.fancybot.commands.niuzi
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.niuziManager
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.OneBotListener
 
+@CommandDescription("查询别人的牛子长度")
 class NiuziQueryCommand : BaseCommand() {
     override val commandNames = listOf("牛子查询", "nq")
 

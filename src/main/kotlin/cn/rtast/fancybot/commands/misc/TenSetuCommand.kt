@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.commands.misc
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.entity.Setu
 import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.str.encodeToBase64
@@ -18,6 +19,7 @@ import cn.rtast.rob.util.ob.NodeMessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 import java.net.URI
 
+@CommandDescription("老板你好, 给我来十张色图")
 class TenSetuCommand : BaseCommand() {
     override val commandNames = listOf("十张色图")
 
