@@ -10,6 +10,7 @@ package cn.rtast.fancybot.commands.lookup
 import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.motdpinger.BedrockPing
 import cn.rtast.motdpinger.JavaPing
+import cn.rtast.motdpinger.removeColorCodes
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
@@ -76,9 +77,9 @@ class MCPingCommand : BaseCommand() {
                         .addNewLine()
                         .addText("在线玩家: ${response.onlinePlayers}/${response.maxPlayers}")
                         .addNewLine()
-                        .addText("MOTD: ${response.motd}")
+                        .addText("MOTD: ${response.motd.removeColorCodes()}")
                         .addNewLine()
-                        .addText(response.subTitle)
+                        .addText(response.subTitle.removeColorCodes())
                     message.reply(msg.build())
                 }catch (_: SocketException) {
                     message.reply("无法从服务器接收Ping结果请检查服务器地址是否正确 >>> $host:$port")
