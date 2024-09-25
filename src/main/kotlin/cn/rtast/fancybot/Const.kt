@@ -61,7 +61,8 @@ val DEFAULT_CONFIG = Config(
     admins = listOf(3458671395L),
     enableAntiRevoke = true,
     llamaUrl = "http://127.0.0.1",
-    llamaModel = "llama3.1"
+    llamaModel = "llama3.1",
+    qqMusicApiUrl = "http://127.0.0.1:3200"
 )
 
 val configManager = ConfigManager()
@@ -101,5 +102,6 @@ val commands = listOf(
     NiuziBankCommand(), WithdrawCommand(),
     BankTransferCommand(), CreateBankAccountCommand(),
     BankBalanceCommand(), DepositCommand(),
-    DMSearchCommand(), LlamaCommand()
+    DMSearchCommand(), LlamaCommand(),
+    QQMusicCommand()
 )

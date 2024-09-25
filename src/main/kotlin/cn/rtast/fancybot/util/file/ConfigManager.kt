@@ -32,4 +32,5 @@ class ConfigManager : JsonFileHandler<Config>("config.json") {
     val enableAntiRevoke get() = this.read<Config>().enableAntiRevoke
     val llamaUrl get() = this.read<Config>().llamaUrl
     val llamaModel get() = this.read<Config>().llamaModel
+    val qqMusicApiUrl get() = this.read<Config>().qqMusicApiUrl
 }
