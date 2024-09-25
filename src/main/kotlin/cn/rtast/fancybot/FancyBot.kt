@@ -136,7 +136,7 @@ class FancyBot : OneBotListener {
 
     override suspend fun onLeaveEvent(groupId: Long, userId: Long, operator: Long, time: Long) {
         val msg = MessageChain.Builder()
-            .addText("有人退群了")
+            .addText("有人坐飞船离开了本星系~")
             .addNewLine()
             .addText("QQ: $userId | 操作者: ${if (operator == 0L) "主动退出" else operator}")
             .addNewLine()
