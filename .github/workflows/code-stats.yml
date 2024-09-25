@@ -16,12 +16,9 @@ jobs:
       - name: Count lines of code
         id: cloc
         run: |
-          cloc --json . > cloc.json
+          cloc . > cloc.txt
       - name: Add cloc output to summary
         run: |
-          lines=$(jq '.SUM.code' cloc.json)  # 提取代码行数
-          echo "# Code Statistics" >> $GITHUB_STEP_SUMMARY
-          echo "Total lines of code: $lines" >> $GITHUB_STEP_SUMMARY
-          echo "```json" >> $GITHUB_STEP_SUMMARY
-          cat cloc.json >> $GITHUB_STEP_SUMMARY
+          echo "```txt" >> $GITHUB_STEP_SUMMARY
+          cat cloc.txt >> $GITHUB_STEP_SUMMARY
           echo "```" >> $GITHUB_STEP_SUMMARY
