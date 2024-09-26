@@ -10,7 +10,6 @@ package cn.rtast.fancybot.commands.parse
 import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.util.makeGif
 import cn.rtast.fancybot.util.str.encodeToBase64
-import cn.rtast.fancybot.util.toBufferedImage
 import cn.rtast.fancybot.util.toByteArray
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType

@@ -81,7 +81,7 @@ class MCPingCommand : BaseCommand() {
                         .addNewLine()
                         .addText(response.subTitle.removeColorCodes())
                     message.reply(msg.build())
-                }catch (_: SocketException) {
+                } catch (_: SocketException) {
                     message.reply("无法从服务器接收Ping结果请检查服务器地址是否正确 >>> $host:$port")
                 }
             }

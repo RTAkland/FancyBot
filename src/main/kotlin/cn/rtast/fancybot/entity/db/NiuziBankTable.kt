@@ -9,7 +9,7 @@ package cn.rtast.fancybot.entity.db
 
 import org.jetbrains.exposed.sql.Table
 
-object NiuziBankTable: Table("niuzi_bank") {
+object NiuziBankTable : Table("niuzi_bank") {
     val id = long("id").autoIncrement()
     val userId = long("userId").uniqueIndex()
     val timestamp = long("timestamp")
