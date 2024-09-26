@@ -12,19 +12,30 @@ import cn.rtast.fancybot.entity.FKXQS
 import cn.rtast.fancybot.util.Http
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
+import java.time.DayOfWeek
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
 
 @CommandDescription("今天是疯狂星期四!")
 class FKXQSCommand : BaseCommand() {
-    override val commandNames = listOf("/fkxqs", "/fk", "/疯狂星期四")
+    override val commandNames = listOf("/fkxqs", "/kfc")
+
+    private fun isThursday(): Boolean {
+        val dateTime = LocalDateTime.ofInstant(
+            Instant.now(),
+            ZoneId.of("Asia/Shanghai")
+        )
+        return dateTime.dayOfWeek == DayOfWeek.THURSDAY
+    }
+
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
-        val response = Http.get<FKXQS>("https://api.shadiao.pro/kfc").data.text
-        val msg = MessageChain.Builder()
-            .addAt(message.sender.userId)
-            .addText(response)
-            .build()
-        listener.sendGroupMessage(message.groupId, msg)
+        if (!isThursday()) {
+            message.reply("很可惜今天并不是星期四~")
+            return
+        }
+        message.reply(Http.get<FKXQS>("https://api.shadiao.pro/kfc").data.text)
     }
 }
