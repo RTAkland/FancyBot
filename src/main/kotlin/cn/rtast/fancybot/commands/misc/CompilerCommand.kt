@@ -28,11 +28,7 @@ class CompilerCommand : BaseCommand() {
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
-            val msg = MessageChain.Builder()
-                .addAt(message.sender.userId)
-                .addText("使用`/exec` <语言> <代码> 即可执行~")
-                .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply("使用`/exec` <语言> <代码> 即可执行~")
             return
         }
         val language = args.first()
@@ -53,7 +49,7 @@ class CompilerCommand : BaseCommand() {
             }
         }
         val msg = MessageChain.Builder()
-            .addAt(message.sender.userId)
+            .addReply(message.messageId)
             .addText("执行结果如下:")
             .addNewLine()
             .addText(response.replace("<outStream>", "").replace("</outStream>", ""))
