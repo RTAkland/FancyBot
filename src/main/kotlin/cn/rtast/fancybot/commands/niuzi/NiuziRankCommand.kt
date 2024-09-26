@@ -16,8 +16,12 @@ import cn.rtast.rob.util.ob.OneBotListener
 
 
 private suspend fun getUserInfo(listener: OneBotListener, groupId: Long, userId: Long): String {
-    val info = listener.getGroupMemberInfo(groupId, userId)
-    return info.card ?: info.nickname
+    try {
+        val info = listener.getGroupMemberInfo(groupId, userId)
+        return info.card ?: info.nickname
+    } catch (_: NullPointerException) {
+        return userId.toString()
+    }
 }
 
 class NiuziRankCommand : BaseCommand() {
@@ -28,7 +32,7 @@ class NiuziRankCommand : BaseCommand() {
         val msg = MessageChain.Builder().addText("牛子长度排行榜如下").addNewLine()
         allNiuzi.forEach {
             val userName = getUserInfo(listener, message.groupId, it.userId)
-            msg.addText("$userName | ${it.length}cm").addNewLine()
+            msg.addText("[$userName] | ${it.length}cm").addNewLine()
         }
         message.reply(msg.build())
     }
@@ -43,7 +47,7 @@ class NiuziBankRankCommand : BaseCommand() {
         val msg = MessageChain.Builder().addText("牛子银行富豪榜排行如下").addNewLine()
         allNiuziBankAccounts.forEach {
             val userName = getUserInfo(listener, message.groupId, it.userId)
-            msg.addText("$userName | ${it.balance}cm").addNewLine()
+            msg.addText("[$userName] | ${it.balance}cm").addNewLine()
         }
         message.reply(msg.build())
     }
