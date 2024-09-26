@@ -47,11 +47,11 @@ class HelpCommand : BaseCommand() {
             }
             val description = matchedCommand::class.findAnnotation<CommandDescription>()?.description ?: "暂无描述"
             val msg = MessageChain.Builder()
-                .addText("命令名称: ${matchedCommand::class.simpleName}")
+                .addText("类名: ${matchedCommand::class.simpleName}")
                 .addNewLine()
-                .addText("指令别名: ${matchedCommand.commandNames.joinToString(",")}")
+                .addText("指令: ${matchedCommand.commandNames.joinToString(",")}")
                 .addNewLine()
-                .addText("指令描述: $description")
+                .addText("描述: $description")
                 .build()
             message.reply(msg)
         }
