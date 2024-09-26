@@ -8,7 +8,7 @@
 package cn.rtast.fancybot.commands.misc
 
 import cn.rtast.fancybot.annotations.CommandDescription
-import cn.rtast.fancybot.entity.FKXQS
+import cn.rtast.fancybot.entity.KFC
 import cn.rtast.fancybot.util.Http
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
@@ -36,6 +36,6 @@ class KFCCommand : BaseCommand() {
             message.reply("很可惜今天并不是星期四~")
             return
         }
-        message.reply(Http.get<FKXQS>("https://api.shadiao.pro/kfc").data.text)
+        message.reply(Http.get<KFC>("https://api.shadiao.pro/kfc").data.text)
     }
 }

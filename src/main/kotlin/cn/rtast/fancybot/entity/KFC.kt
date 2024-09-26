@@ -7,7 +7,7 @@
 
 package cn.rtast.fancybot.entity
 
-data class FKXQS(
+data class KFC(
     val data: Data,
 ) {
     data class Data(
