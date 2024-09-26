@@ -32,5 +32,6 @@ data class Config(
     val enableAntiRevoke: Boolean,
     val llamaUrl: String,
     val llamaModel: String,
-    val qqMusicApiUrl: String
+    val qqMusicApiUrl: String,
+    val startUpNoticeUser: Long
 )

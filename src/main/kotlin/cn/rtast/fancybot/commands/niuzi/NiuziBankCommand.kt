@@ -8,8 +8,10 @@
 package cn.rtast.fancybot.commands.niuzi
 
 import cn.rtast.fancybot.annotations.CommandDescription
+import cn.rtast.fancybot.commands
 import cn.rtast.fancybot.niuziBankManager
 import cn.rtast.fancybot.niuziManager
+import cn.rtast.fancybot.util.getUserName
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.BaseCommand
@@ -20,20 +22,22 @@ private suspend fun noAccount(message: GroupMessage) {
     message.reply("你还没有银行账户呢, 发送`创建账户`来创建一个账户吧~")
 }
 
-suspend fun OneBotListener.getUserName(groupId: Long, userId: Long): String {
-    val info = this.getGroupMemberInfo(groupId, userId)
-    return info.card ?: info.nickname
-}
-
-private const val INTEREST_RATE = 0.54
+private const val INTEREST_RATE = 0.0054
 
 @CommandDescription("牛子银行根命令")
 class NiuziBankCommand : BaseCommand() {
     override val commandNames = listOf("牛子银行")
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+        val niuziCommands = commands.filter {
+            it::class.simpleName?.startsWith("Niuzi")!! && !it::class.simpleName?.lowercase()?.contains("redeem")!!
+        }.joinToString("\n") { it.commandNames.joinToString(",") { join -> "`$join`" } }
         val msg = MessageChain.Builder()
-            .addText("发送`余额查询` `银行转账` `取牛子` `存牛子` `创建账户` 即可做出对应的操作")
+            .addText("发送")
+            .addNewLine()
+            .addText(niuziCommands)
+            .addNewLine()
+            .addText("即可做出对应的操作")
             .addNewLine()
             .addText("银行利率是0.54%")
             .build()

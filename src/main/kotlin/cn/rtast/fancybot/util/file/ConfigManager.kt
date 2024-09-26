@@ -11,26 +11,28 @@ import cn.rtast.fancybot.entity.Config
 import cn.rtast.fancybot.util.JsonFileHandler
 
 class ConfigManager : JsonFileHandler<Config>("config.json") {
-    val ncmAPI get() = this.read<Config>().ncmAPI
-    val wsAddress get() = this.read<Config>().wsAddress
-    val wsPort get() = this.read<Config>().port
-    val accessToken get() = this.read<Config>().accessToken
-    val wsType get() = this.read<Config>().wsType
-    val listeningGroups get() = this.read<Config>().listeningGroups
-    val qweatherKey get() = this.read<Config>().qweatherKey
-    val githubKey get() = this.read<Config>().githubKey
-    val imageType get() = this.read<Config>().imageType
-    val openAIAPIHost get() = this.read<Config>().openAIAPIHost
-    val openAIAPIKey get() = this.read<Config>().openAIAPIKey
-    val openAIModel get() = this.read<Config>().openAIModel
-    val smtpHost get() = this.read<Config>().smtpHost
-    val smtpPort get() = this.read<Config>().smtpPort
-    val smtpUser get() = this.read<Config>().smtpUser
-    val smtpPassword get() = this.read<Config>().smtpPassword
-    val smtpFromAddress get() = this.read<Config>().smtpFromAddress
-    val admins get() = this.read<Config>().admins
-    val enableAntiRevoke get() = this.read<Config>().enableAntiRevoke
-    val llamaUrl get() = this.read<Config>().llamaUrl
-    val llamaModel get() = this.read<Config>().llamaModel
-    val qqMusicApiUrl get() = this.read<Config>().qqMusicApiUrl
+    private val config = this.read<Config>()
+    val ncmAPI = config.ncmAPI
+    val wsAddress = config.wsAddress
+    val wsPort = config.port
+    val accessToken = config.accessToken
+    val wsType = config.wsType
+    val listeningGroups = config.listeningGroups
+    val qweatherKey = config.qweatherKey
+    val githubKey = config.githubKey
+    val imageType = config.imageType
+    val openAIAPIHost = config.openAIAPIHost
+    val openAIAPIKey = config.openAIAPIKey
+    val openAIModel = config.openAIModel
+    val smtpHost = config.smtpHost
+    val smtpPort = config.smtpPort
+    val smtpUser = config.smtpUser
+    val smtpPassword = config.smtpPassword
+    val smtpFromAddress = config.smtpFromAddress
+    val admins = config.admins
+    val enableAntiRevoke = config.enableAntiRevoke
+    val llamaUrl = config.llamaUrl
+    val llamaModel = config.llamaModel
+    val qqMusicApiUrl = config.qqMusicApiUrl
+    val startUpNoticeUser = config.startUpNoticeUser
 }
