@@ -17,7 +17,7 @@ import cn.rtast.rob.util.ob.OneBotListener
 
 @CommandDescription("生成短链接")
 class ShortLinkCommand : BaseCommand() {
-    override val commandNames = listOf("/s", "/sl", "/shortlink", "/short")
+    override val commandNames = listOf("/s")
 
     private val shortLinkApi = "https://api.rtast.cn"
 
