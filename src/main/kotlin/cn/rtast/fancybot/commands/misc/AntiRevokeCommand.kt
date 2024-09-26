@@ -17,7 +17,7 @@ import cn.rtast.rob.util.ob.OneBotListener
 
 @CommandDescription("防撤回(获取消息)")
 class AntiRevokeCommand : BaseCommand() {
-    override val commandNames = listOf("/revoke", "/rv", "/防撤回")
+    override val commandNames = listOf("/revoke", "/rv")
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (message.sender.userId !in configManager.admins) message.reply("你不许用防撤回")
