@@ -8,13 +8,16 @@
 package cn.rtast.fancybot.commands.parse
 
 import cn.rtast.fancybot.annotations.CommandDescription
+import cn.rtast.fancybot.util.makeGif
 import cn.rtast.fancybot.util.str.encodeToBase64
+import cn.rtast.fancybot.util.toBufferedImage
 import cn.rtast.fancybot.util.toByteArray
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
+import com.madgag.gif.fmsware.GifDecoder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.awt.Color
@@ -67,7 +70,7 @@ class AsciiArtCommand : BaseCommand() {
         }
 
 
-        private fun String.saveAsciiArtToImage(width: Int, height: Int): String {
+        private fun String.saveAsciiArtToImage(width: Int, height: Int): BufferedImage {
             val imgWidth = width * FONT_SIZE / 2
             val imgHeight = height * FONT_SIZE / 2
             val img = BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_RGB)
@@ -81,7 +84,7 @@ class AsciiArtCommand : BaseCommand() {
                 g2d.drawString(line, 0, (index + 1) * FONT_SIZE)
             }
             g2d.dispose()
-            return img.toByteArray().encodeToBase64()
+            return img
         }
 
         suspend fun callback(message: GroupMessage) {
@@ -91,11 +94,31 @@ class AsciiArtCommand : BaseCommand() {
                     val url = if (message.message.any { it.type == ArrayMessageType.image })
                         message.message.find { it.type == ArrayMessageType.image }!!.data.file!!
                     else message.message.find { it.type == ArrayMessageType.mface }!!.data.url!!
-                    val bufferedImage = withContext(Dispatchers.IO) { ImageIO.read(URI(url).toURL()) }
-                    val imageBase64 =
-                        bufferedImage.convertToAscii().saveAsciiArtToImage(bufferedImage.width, bufferedImage.height)
-                    val msg = MessageChain.Builder().addImage(imageBase64, true).build()
-                    message.reply(msg)
+                    val gifStream = withContext(Dispatchers.IO) { URI(url).toURL().openStream() }
+                    val decoder = GifDecoder()
+                    try {
+                        decoder.read(gifStream)
+                        if (decoder.frameCount == 0) {
+                            val bufferedImage = withContext(Dispatchers.IO) { ImageIO.read(URI(url).toURL()) }
+                            val imageBase64 = bufferedImage.convertToAscii()
+                                .saveAsciiArtToImage(bufferedImage.width, bufferedImage.height)
+                                .toByteArray().encodeToBase64()
+                            val msg = MessageChain.Builder().addImage(imageBase64, true).build()
+                            message.reply(msg)
+                        } else {
+                            println("Making gif ascii art, frames: ${decoder.frameCount}")
+                            val frames = (0 until decoder.frameCount).map { decoder.getFrame(it) }
+                            val asciiFrames = mutableListOf<BufferedImage>()
+                            val width = frames.first().width
+                            val height = frames.first().height
+                            frames.forEach { asciiFrames.add(it.convertToAscii().saveAsciiArtToImage(width, height)) }
+                            val gifBytes = decoder.makeGif(asciiFrames)
+                            val gifBase64 = gifBytes.encodeToBase64()
+                            message.reply(MessageChain.Builder().addImage(gifBase64, true).build())
+                        }
+                    } catch (_: Exception) {
+                        message.reply("处理GIF失败")
+                    }
                 } else {
                     message.reply("回复错误已取消本次操作")
                 }
