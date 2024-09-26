@@ -42,17 +42,11 @@ class NiuziManager {
         }
     }
 
-    suspend fun getUser(id: Long): Niuzi? {
-        return suspendedTransaction {
-            NiuziTable.selectAll().where { userId eq id }.map {
-                Niuzi(
-                    it[userId],
-                    it[length],
-                    it[timestamp]
-                )
-            }.singleOrNull()
+    suspend fun getUser(id: Long): Niuzi? =
+        suspendedTransaction {
+            NiuziTable.selectAll().where { userId eq id }.map { Niuzi(it[userId], it[length], it[timestamp]) }
+                .singleOrNull()
         }
-    }
 
     suspend fun isSigned(id: Long): Boolean {
         val record = getUser(id)
@@ -106,4 +100,7 @@ class NiuziManager {
         }
         return getUser(id)
     }
+
+    suspend fun getAllNiuzi(): List<Niuzi> =
+        suspendedTransaction { NiuziTable.selectAll().map { Niuzi(it[userId], it[length], it[timestamp]) } }
 }

@@ -103,5 +103,6 @@ val commands = listOf(
     BankTransferCommand(), CreateBankAccountCommand(),
     BankBalanceCommand(), DepositCommand(),
     DMSearchCommand(), LlamaCommand(),
-    QQMusicCommand(), BullShitGenerateCommand()
+    QQMusicCommand(), BullShitGenerateCommand(),
+    NiuziRankCommand(), NiuziBankRankCommand()
 )

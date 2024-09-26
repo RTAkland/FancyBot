@@ -81,4 +81,10 @@ class NiuziBankManager {
         }
         return this.getUser(from)
     }
+
+    suspend fun getAllAccount(): List<NiuziBankAccount> =
+        suspendedTransaction {
+            NiuziBankTable.selectAll()
+                .map { NiuziBankAccount(it[userId], it[balance], it[interestRate], it[timestamp]) }
+        }
 }
