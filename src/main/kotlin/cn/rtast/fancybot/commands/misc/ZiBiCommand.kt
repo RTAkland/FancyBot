@@ -31,13 +31,14 @@ class ZiBiCommand : BaseCommand() {
                 .addText("私聊发送`我想开了`即可取消禁言~")
                 .build()
             message.reply(msg)
-            users[message.sender.userId] = message.groupId
         } catch (_: Exception) {
             val msg = MessageChain.Builder()
                 .addText("你输入有误所以我决定让你自闭1天~")
                 .build()
             message.reply(msg)
             message.sender.ban(86400)
+        } finally {
+            users[message.sender.userId] = message.groupId
         }
     }
 }
