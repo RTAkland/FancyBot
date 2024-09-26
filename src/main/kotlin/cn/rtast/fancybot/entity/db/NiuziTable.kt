@@ -14,11 +14,13 @@ object NiuziTable : Table("niuzi") {
     val id = long("id").autoIncrement()
     val userId = long("userId").uniqueIndex()
     val timestamp = long("timestamp")
+    val nickname = varchar("nickname", 255)
     override val primaryKey = PrimaryKey(id)
 }
 
 data class Niuzi(
     val userId: Long,
     val length: Double,
-    val timestamp: Long
+    val timestamp: Long,
+    val nickname: String,
 )

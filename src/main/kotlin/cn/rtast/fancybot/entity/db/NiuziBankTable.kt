@@ -15,6 +15,7 @@ object NiuziBankTable: Table("niuzi_bank") {
     val timestamp = long("timestamp")
     val balance = double("balance")
     val interestRate = double("interest_rate")
+    val nickname = varchar("nickname", 255)
     override val primaryKey = PrimaryKey(id)
 }
 
@@ -22,5 +23,6 @@ data class NiuziBankAccount(
     val userId: Long,
     val balance: Double,
     val interestRate: Double,
-    val timestamp: Long
+    val timestamp: Long,
+    val nickname: String
 )

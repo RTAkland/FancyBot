@@ -10,6 +10,7 @@ package cn.rtast.fancybot.util.file
 import cn.rtast.fancybot.entity.db.Niuzi
 import cn.rtast.fancybot.entity.db.NiuziTable
 import cn.rtast.fancybot.entity.db.NiuziTable.length
+import cn.rtast.fancybot.entity.db.NiuziTable.nickname
 import cn.rtast.fancybot.entity.db.NiuziTable.timestamp
 import cn.rtast.fancybot.entity.db.NiuziTable.userId
 import cn.rtast.fancybot.util.isSameDay
@@ -44,8 +45,9 @@ class NiuziManager {
 
     suspend fun getUser(id: Long): Niuzi? =
         suspendedTransaction {
-            NiuziTable.selectAll().where { userId eq id }.map { Niuzi(it[userId], it[length], it[timestamp]) }
-                .singleOrNull()
+            NiuziTable.selectAll().where { userId eq id }.map {
+                Niuzi(it[userId], it[length], it[timestamp], it[nickname])
+            }.singleOrNull()
         }
 
     suspend fun isSigned(id: Long): Boolean {
@@ -53,7 +55,7 @@ class NiuziManager {
         return record?.timestamp?.isSameDay(Instant.now().epochSecond) ?: false
     }
 
-    suspend fun sign(id: Long): Pair<Double, Niuzi?> {
+    suspend fun sign(id: Long, username: String): Pair<Double, Niuzi?> {
         val randomLength = Random.nextDouble(1.0, 10.0)
         if (getUser(id) == null) {
             suspendedTransaction {
@@ -61,6 +63,7 @@ class NiuziManager {
                     it[userId] = id
                     it[timestamp] = Instant.now().epochSecond
                     it[length] = 0.0
+                    it[nickname] = username
                 }
             }
         }
@@ -102,5 +105,7 @@ class NiuziManager {
     }
 
     suspend fun getAllNiuzi(): List<Niuzi> =
-        suspendedTransaction { NiuziTable.selectAll().map { Niuzi(it[userId], it[length], it[timestamp]) } }
+        suspendedTransaction {
+            NiuziTable.selectAll().map { Niuzi(it[userId], it[length], it[timestamp], it[nickname]) }
+        }
 }
