@@ -39,7 +39,7 @@ class HelpCommand : BaseCommand() {
         } else {
             val commandName = args.first().replace("/", "")
             val matchedCommand = commands.find {
-                it.commandNames.map { map -> map.replace("/", "") }.contains(commandName)
+                it.commandNames.map { map -> map.replace("/", "").lowercase() }.contains(commandName)
             }
             if (matchedCommand == null) {
                 message.reply("未查询到该命令")
