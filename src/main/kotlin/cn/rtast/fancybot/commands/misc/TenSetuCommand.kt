@@ -26,14 +26,12 @@ class TenSetuCommand : BaseCommand() {
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         val nodeMsg = NodeMessageChain.Builder()
         val response = Http.get("https://api.rtast.cn/api/setu?size=10").fromArrayJson<List<Setu>>()
-        response.forEach {
-            if (it.r18) {
-                try {
-                    val imageBase64 = URI(it.urls.large).toURL().readBytes().encodeToBase64()
-                    val tempMsg = MessageChain.Builder().addImage(imageBase64, true).build()
-                    nodeMsg.addMessageChain(tempMsg, message.sender.userId)
-                } catch (_: Exception) {
-                }
+        response.filter { !it.r18 }.map { it.urls.large }.forEach {
+            try {
+                val imageBase64 = URI(it).toURL().readBytes().encodeToBase64()
+                val tempMsg = MessageChain.Builder().addImage(imageBase64, true).build()
+                nodeMsg.addMessageChain(tempMsg, message.sender.userId)
+            } catch (_: Exception) {
             }
         }
         val footerMsg = MessageChain.Builder()
