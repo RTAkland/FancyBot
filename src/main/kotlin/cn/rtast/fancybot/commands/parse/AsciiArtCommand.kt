@@ -86,8 +86,11 @@ class AsciiArtCommand : BaseCommand() {
 
         suspend fun callback(message: GroupMessage) {
             if (message.sender.userId in waitingList) {
-                if (message.message.any { it.type == ArrayMessageType.image }) {
-                    val url = message.message.find { it.type == ArrayMessageType.image }!!.data.file!!
+                if (message.message.any { it.type == ArrayMessageType.image }
+                    || message.message.any { it.type == ArrayMessageType.mface }) {
+                    val url = if (message.message.any { it.type == ArrayMessageType.image })
+                        message.message.find { it.type == ArrayMessageType.image }!!.data.file!!
+                    else message.message.find { it.type == ArrayMessageType.mface }!!.data.url!!
                     val bufferedImage = withContext(Dispatchers.IO) { ImageIO.read(URI(url).toURL()) }
                     val imageBase64 =
                         bufferedImage.convertToAscii().saveAsciiArtToImage(bufferedImage.width, bufferedImage.height)
