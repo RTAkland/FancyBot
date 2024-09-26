@@ -81,7 +81,7 @@ val START_UP_TIME = Instant.now().epochSecond
 val commands = listOf(
     EchoCommand(), JrrpCommand(),
     NiuziRedeemCommand(), HitokotoCommand(),
-    FKXQSCommand(), QRCodeCommand(),
+    KFCCommand(), QRCodeCommand(),
     AntiRevokeCommand(), MCPingCommand(),
     WeatherCommand(), CigaretteCommand(),
     RemakeCommand(), PixivCommand(),

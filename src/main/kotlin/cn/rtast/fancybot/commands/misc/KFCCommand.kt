@@ -19,7 +19,7 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 
 @CommandDescription("今天是疯狂星期四!")
-class FKXQSCommand : BaseCommand() {
+class KFCCommand : BaseCommand() {
     override val commandNames = listOf("/fkxqs", "/kfc")
 
     private fun isThursday(): Boolean {
