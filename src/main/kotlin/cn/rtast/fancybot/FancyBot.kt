@@ -14,6 +14,7 @@ import cn.rtast.fancybot.util.initDatabase
 import cn.rtast.fancybot.util.str.fromJson
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
+import cn.rtast.rob.entity.lagrange.FileEvent
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
