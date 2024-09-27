@@ -20,10 +20,7 @@ class HeisiItem : Item() {
 
     override suspend fun redeemInGroup(listener: OneBotListener, message: GroupMessage, after: Double) {
         val url = Http.get<Baisi>("https://v2.api-m.com/api/heisi").data
-        val msg = MessageChain.Builder()
-            .addAt(message.sender.userId)
-            .addImage(url)
-            .build()
-        listener.sendGroupMessage(message.groupId, msg)
+        val msg = MessageChain.Builder().addImage(url).build()
+        message.reply(msg)
     }
 }

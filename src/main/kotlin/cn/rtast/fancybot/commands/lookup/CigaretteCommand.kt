@@ -27,13 +27,11 @@ class CigaretteCommand : BaseCommand() {
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             val msg = MessageChain.Builder()
-                .addAt(message.sender.userId)
-                .addNewLine()
                 .addText("发送/tobacco <名称> [数量] 来搜索结果哦~")
                 .addNewLine()
                 .addText("最多只能显示出10条结果哦, 不指定数量的话默认是3条~")
                 .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply(msg)
             return
         }
         val limit = if (args.size == 1) 3 else if (args.last().toInt() > 10) 3 else args.last().toInt()

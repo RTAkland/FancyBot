@@ -24,13 +24,11 @@ class MCPingCommand : BaseCommand() {
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             val msg = MessageChain.Builder()
-                .addAt(message.sender.userId)
-                .addNewLine()
                 .addText("使用方法: /mcping <host>:[port] [java|be]")
                 .addNewLine()
                 .addText("不添加平台默认Java版~")
                 .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply(msg)
             return
         }
         val platform = if (args.size == 2) args.last() else "java"

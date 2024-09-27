@@ -8,10 +8,8 @@
 package cn.rtast.fancybot
 
 import cn.rtast.fancybot.commands.parse.*
-import cn.rtast.fancybot.entity.bili.CardShare
 import cn.rtast.fancybot.entity.enums.WSType
 import cn.rtast.fancybot.util.initDatabase
-import cn.rtast.fancybot.util.str.fromJson
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.lagrange.FileEvent
@@ -40,6 +38,9 @@ class FancyBot : OneBotListener {
         val messageId = message.messageId
         println("$sender($senderId: $groupId >>> $messageId): $msg")
 
+        ReverseGIFCommand.callback(message)
+        AsciiArtCommand.callback(message)
+
         if (message.rawMessage.contains("原神")) {
             message.reply("你原神牛魔呢")
         }
@@ -49,9 +50,6 @@ class FancyBot : OneBotListener {
             calculateResult?.let { message.reply(calculateResult) }
         }
 
-        ReverseGIFCommand.callback(message)
-        AsciiArtCommand.callback(message)
-
         if (message.message.any { it.type == ArrayMessageType.reply }) {  // Image url parse
             val command = message.message.reversed().find { it.type == ArrayMessageType.text }!!.data.text!!
             val replyId = message.message.find { it.type == ArrayMessageType.reply }!!.data.id!!
@@ -59,6 +57,18 @@ class FancyBot : OneBotListener {
                 val getMsg = this.getMessage(replyId.toString().toLong())
                 ImageURLCommand.callback(message, getMsg)
             }
+        }
+
+        if (message.rawMessage.startsWith("https://github.com/") || message.rawMessage.startsWith("git@github.com:")) {
+            GitHubParseCommand.parse(this, message)
+        }
+
+        if (message.rawMessage.startsWith("BV") ||
+            message.rawMessage.startsWith("https://www.bilibili.com") ||
+            message.rawMessage.contains("https://b23.tv/") ||
+            message.message.find { it.type == ArrayMessageType.json } != null
+        ) {
+            BVParseCommand.parse(this, message)
         }
 
         coroutineScope.launch {
@@ -72,40 +82,6 @@ class FancyBot : OneBotListener {
                     }
                 }
             }
-        }
-
-        if (message.rawMessage.startsWith("https://github.com/") || message.rawMessage.startsWith("git@github.com:")) {
-            GitHubParseCommand.parse(this, message)
-        }
-
-        if (message.rawMessage.startsWith("BV") ||
-            message.rawMessage.startsWith("https://www.bilibili.com") ||
-            message.rawMessage.contains("https://b23.tv/") ||
-            message.message.find { it.type == ArrayMessageType.json } != null
-        ) {
-            // parse bilibili video with a link, bvid or b23.tv link
-            val bvid = if (message.rawMessage.startsWith("BV")) {
-                message.rawMessage
-            } else if (message.rawMessage.split(" ").last().startsWith("https://b23.tv/")) {
-                val shortUrl = message.rawMessage.split(" ").last()
-                BVParseCommand.getShortUrlBVID(shortUrl)
-            } else if (message.message.find { it.type == ArrayMessageType.json } != null) {
-                val card = message.message.find { it.type == ArrayMessageType.json }!!
-                    .data.data!!.toString().fromJson<CardShare>()
-                val shortUrl = if (card.meta.detail == null) {
-                    if (!card.meta.news?.tag!!.contains("哔哩哔哩")) return
-                    card.meta.news.jumpUrl
-                } else {
-                    if (!card.meta.detail.title.contains("哔哩哔哩")) return
-                    card.meta.detail.qqDocUrl
-                }
-                BVParseCommand.getShortUrlBVID(shortUrl)
-            } else {
-                message.rawMessage.split("?").first()
-                    .split("/")
-                    .last { it.isNotEmpty() && it.isNotBlank() }
-            }
-            BVParseCommand.parse(this, bvid, message)
         }
     }
 

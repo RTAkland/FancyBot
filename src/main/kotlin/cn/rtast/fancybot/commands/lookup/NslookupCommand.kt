@@ -25,11 +25,10 @@ class NslookupCommand : BaseCommand() {
         val host = args.joinToString(" ")
         try {
             val msg = MessageChain.Builder()
-                .addReply(message.messageId)
                 .addText("域名: ${host}解析后的IP地址为: ")
                 .addText(withContext(Dispatchers.IO) { InetAddress.getByName(host) }.hostAddress)
                 .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply(msg)
         } catch (_: UnknownHostException) {
             message.reply("未知的主机名: $host")
         } catch (e: Exception) {

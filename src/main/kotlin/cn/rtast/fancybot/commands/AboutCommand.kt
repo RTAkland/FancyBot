@@ -19,8 +19,6 @@ class AboutCommand : BaseCommand() {
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         val msg = MessageChain.Builder()
-            .addAt(message.sender.userId)
-            .addNewLine()
             .addText("Bot名称: FancyBot")
             .addNewLine()
             .addText("作者: RTAkland")
@@ -29,6 +27,6 @@ class AboutCommand : BaseCommand() {
             .addNewLine()
             .addText("项目地址: https://repo.rtast.cn/RTAkland/FancyBot")
             .build()
-        listener.sendGroupMessage(message.groupId, msg)
+        message.reply(msg)
     }
 }

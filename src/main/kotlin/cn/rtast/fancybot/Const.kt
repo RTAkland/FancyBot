@@ -24,6 +24,7 @@ import cn.rtast.fancybot.entity.enums.ImageType
 import cn.rtast.fancybot.entity.enums.WSType
 import cn.rtast.fancybot.items.BaisiItem
 import cn.rtast.fancybot.items.HeisiItem
+import cn.rtast.fancybot.items.NiuziItem
 import cn.rtast.fancybot.items.SetuItem
 import cn.rtast.fancybot.util.file.ConfigManager
 import cn.rtast.fancybot.util.file.NiuziBankManager
@@ -71,13 +72,12 @@ val itemManager = ItemManager()
 val niuziManager = NiuziManager()
 val niuziBankManager = NiuziBankManager()
 
-val items = listOf(
-    HeisiItem(),
-    BaisiItem(),
-    SetuItem()
-)
-
 val START_UP_TIME = Instant.now().epochSecond
+
+val items = listOf(
+    HeisiItem(), BaisiItem(), SetuItem(),
+    NiuziItem()
+)
 
 val commands = listOf(
     EchoCommand(), JrrpCommand(),

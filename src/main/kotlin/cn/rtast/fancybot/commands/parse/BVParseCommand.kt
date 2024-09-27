@@ -7,18 +7,17 @@
 
 package cn.rtast.fancybot.commands.parse
 
-import cn.rtast.fancybot.entity.bili.ShortUrl
-import cn.rtast.fancybot.entity.bili.UserStat
-import cn.rtast.fancybot.entity.bili.VideoStat
-import cn.rtast.fancybot.entity.bili.ViewCount
+import cn.rtast.fancybot.entity.bili.*
 import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.Resources
 import cn.rtast.fancybot.util.drawCustomImage
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.fancybot.util.str.formatNumber
+import cn.rtast.fancybot.util.str.fromJson
 import cn.rtast.fancybot.util.str.setTruncate
 import cn.rtast.fancybot.util.toByteArray
 import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 import okhttp3.OkHttpClient
@@ -150,7 +149,29 @@ object BVParseCommand {
         }
     }
 
-    suspend fun parse(listener: OneBotListener, bvid: String, message: GroupMessage) {
+    suspend fun parse(listener: OneBotListener, message: GroupMessage) {
+        // parse bilibili video with a link, bvid or b23.tv link
+        val bvid = if (message.rawMessage.startsWith("BV")) {
+            message.rawMessage
+        } else if (message.rawMessage.split(" ").last().startsWith("https://b23.tv/")) {
+            val shortUrl = message.rawMessage.split(" ").last()
+            BVParseCommand.getShortUrlBVID(shortUrl)
+        } else if (message.message.find { it.type == ArrayMessageType.json } != null) {
+            val card = message.message.find { it.type == ArrayMessageType.json }!!
+                .data.data!!.toString().fromJson<CardShare>()
+            val shortUrl = if (card.meta.detail == null) {
+                if (!card.meta.news?.tag!!.contains("哔哩哔哩")) return
+                card.meta.news.jumpUrl
+            } else {
+                if (!card.meta.detail.title.contains("哔哩哔哩")) return
+                card.meta.detail.qqDocUrl
+            }
+            BVParseCommand.getShortUrlBVID(shortUrl)
+        } else {
+            message.rawMessage.split("?").first()
+                .split("/")
+                .last { it.isNotEmpty() && it.isNotBlank() }
+        }
         val videoInfo = this.getVideoStat(bvid)
         val viewCount = this.getViewCount(bvid, videoInfo.data.cid)
         val shortUrl = this.generateShortUrl(bvid, videoInfo.data.aid)

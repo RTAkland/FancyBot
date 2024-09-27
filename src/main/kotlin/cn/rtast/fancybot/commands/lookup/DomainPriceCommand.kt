@@ -24,7 +24,7 @@ import java.awt.image.BufferedImage
 
 @CommandDescription("查询域名价格")
 class DomainPriceCommand : BaseCommand() {
-    override val commandNames = listOf("/domain")
+    override val commandNames = listOf("/domain", "/dp")
 
     private val canvasWidth = 400
     private val canvasHeight = 300
@@ -80,10 +80,9 @@ class DomainPriceCommand : BaseCommand() {
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             val msg = MessageChain.Builder()
-                .addAt(message.sender.userId)
                 .addText("发送`/domain <域名>`即可查询对应的注册和续费价格~")
                 .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply(msg)
             return
         }
         val suffix = args.first()
@@ -103,10 +102,7 @@ class DomainPriceCommand : BaseCommand() {
             } else {
                 this.createDomainPriceCard(suffix, response.realPrice to response.price)
             }
-        val msg = MessageChain.Builder()
-            .addAt(message.sender.userId)
-            .addImage(cardImage, true)
-            .build()
-        listener.sendGroupMessage(message.groupId, msg)
+        val msg = MessageChain.Builder().addImage(cardImage, true).build()
+        message.reply(msg)
     }
 }

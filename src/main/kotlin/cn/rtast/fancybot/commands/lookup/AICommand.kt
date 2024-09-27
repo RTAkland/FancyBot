@@ -30,14 +30,13 @@ class AICommand : BaseCommand() {
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             val msg = MessageChain.Builder()
-                .addAt(message.sender.userId)
                 .addText("发送`/ai [模型] <问题>`即可询问AI哦~")
                 .addNewLine()
                 .addText("不指定模型默认为从配置文件中读取 >>>${openAIModel}")
                 .addNewLine()
                 .addText("发送`/ai list`可以获取可用的模型列表~")
                 .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply(msg)
             return
         }
 
@@ -48,12 +47,11 @@ class AICommand : BaseCommand() {
             )
             val modelsString = models.data.joinToString(", ") { it.id }
             val msg = MessageChain.Builder()
-                .addReply(message.messageId)
                 .addText("可用的模型列表如下: ")
                 .addNewLine()
                 .addText(modelsString)
                 .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply(msg)
             return
         }
 

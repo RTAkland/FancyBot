@@ -20,9 +20,8 @@ class QRCodeCommand : BaseCommand() {
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         val content = args.joinToString(" ")
         val msg = MessageChain.Builder()
-            .addAt(message.sender.userId)
             .addImage("https://api.rtast.cn/api/generate_qr?data=$content")
             .build()
-        listener.sendGroupMessage(message.groupId, msg)
+        message.reply(msg)
     }
 }

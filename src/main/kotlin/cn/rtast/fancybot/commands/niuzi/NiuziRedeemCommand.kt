@@ -22,7 +22,7 @@ class NiuziRedeemCommand : BaseCommand() {
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             val msg = MessageChain.Builder()
-                .addAt(message.sender.userId)
+                .addReply(message.messageId)
                 .addText("发送 /rdm <物品名称> 即可兑换哦!")
                 .addNewLine()
                 .addText("发送 /rdm list 即可查看所有可兑换的物品~")
@@ -35,7 +35,7 @@ class NiuziRedeemCommand : BaseCommand() {
         val status = niuziManager.getUser(message.sender.userId)
         if (status == null) {
             val msg = MessageChain.Builder()
-                .addAt(message.sender.userId)
+                .addReply(message.messageId)
                 .addText("你还没有签到过呢要签到一次才能兑换哦~")
                 .build()
             listener.sendGroupMessage(message.groupId, msg)
@@ -44,19 +44,15 @@ class NiuziRedeemCommand : BaseCommand() {
         val item = args.first()
         if (item == "list" || item == "列表") {
             val priceTable =
-                itemManager.items.joinToString("\n") { "[${it.itemNames.joinToString("|")}]:${it.itemPrice}积分" }
-            val msg = MessageChain.Builder()
-                .addAt(message.sender.userId)
-                .addNewLine()
-                .addText(priceTable)
-                .build()
-            listener.sendGroupMessage(message.groupId, msg)
+                itemManager.items.joinToString("\n")
+                { "[${it.itemNames.joinToString("|")}]:${it.itemPrice}cm" }
+            message.reply(priceTable)
             return
         }
         val selectedItem = itemManager.items.find { it.itemNames.any { any -> any == item } }
         if (selectedItem == null) {
             val msg = MessageChain.Builder()
-                .addAt(message.sender.userId)
+                .addReply(message.messageId)
                 .addText("没有找到你想兑换的东西呢")
                 .addNewLine()
                 .addText("你可以发送 /rdm list来查看所有可兑换的物品")
@@ -67,7 +63,7 @@ class NiuziRedeemCommand : BaseCommand() {
         val selectedItemPrice = selectedItem.itemPrice
         if (selectedItemPrice > status.length) {
             val msg = MessageChain.Builder()
-                .addAt(message.sender.userId)
+                .addReply(message.messageId)
                 .addText("你的牛子长度不够兑换这个物品呢~")
                 .addNewLine()
                 .addText("你有: ${status.length}cm, 兑换需要: $selectedItemPrice cm~\"")
@@ -77,7 +73,7 @@ class NiuziRedeemCommand : BaseCommand() {
         }
         val afterStatus = niuziManager.redeemItem(message.sender.userId, selectedItemPrice)?.length!!
         val msg = MessageChain.Builder()
-            .addAt(message.sender.userId)
+            .addReply(message.messageId)
             .addText("兑换成功正在发送奖品中~")
             .addNewLine()
             .addText("你花费了${selectedItemPrice}cm来兑换奖品, 还剩${afterStatus}cm")

@@ -31,10 +31,7 @@ class SetuItem : Item() {
             return
         }
         val imageBase64 = URI(response.urls.large).toURL().readBytes().encodeToBase64()
-        val msg = MessageChain.Builder()
-            .addAt(message.sender.userId)
-            .addImage(imageBase64, true)
-            .build()
-        listener.sendGroupMessage(message.groupId, msg)
+        val msg = MessageChain.Builder().addImage(imageBase64, true).build()
+        message.reply(msg)
     }
 }

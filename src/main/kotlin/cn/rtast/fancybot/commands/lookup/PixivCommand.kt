@@ -14,6 +14,7 @@ import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
+import cn.rtast.rob.util.ob.NodeMessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 import java.net.URI
 
@@ -27,30 +28,35 @@ class PixivCommand : BaseCommand() {
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             val msg = MessageChain.Builder()
-                .addAt(message.sender.userId)
-                .addText("发送/pixiv <id> | rank 来进行操作哦~")
+                .addText("发送`/pixiv <id> | rank` 来进行操作哦~")
                 .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply(msg)
             return
         }
         when (val keyword = args.first()) {
             "rank", "排名", "r" -> {
-                val msg = MessageChain.Builder()
-                    .addAt(message.sender.userId)
-                    .addText("今日Pixiv Ranking~")
-                    .addNewLine()
-
+                val node = NodeMessageChain.Builder()
+                    .addMessageChain(
+                        MessageChain.Builder().addText("今日Pixiv Ranking~").build(),
+                        message.sender.userId
+                    )
                 val result = Http.get<Ranking>(pixivRankingURL)
                 result.contents.asSequence().take(5).forEach {
                     try {
+                        val msg = MessageChain.Builder()
                         val imageBase64 = URI(it.getOriginUrl()).toURL().readBytes().encodeToBase64()
-                        msg.addText(it.title)
-                            .addImage(imageBase64, true)
+                        msg.addImage(imageBase64, true)
+                            .addText("标题: ${it.title}")
                             .addNewLine()
+                            .addText("用户: ${it.userName}(${it.userId}) | 作品ID: ${it.illustId}")
+                            .addNewLine()
+                            .addText("日期: ${it.date}")
+                        node.addMessageChain(msg.build(), message.sender.userId)
                     } catch (_: Exception) {
                     }
                 }
-                listener.sendGroupMessage(message.groupId, msg.build())
+                node.addMessageChain(MessageChain.Builder().addText("图片来源: Pixiv").build(), message.sender.userId)
+                message.reply(node.build())
                 return
             }
 
@@ -58,19 +64,14 @@ class PixivCommand : BaseCommand() {
                 try {
                     val id = keyword.toLong()
                     val imageBase64 = URI("$imageProxyURL/$id.png").toURL().readBytes().encodeToBase64()
-                    println(imageBase64)
                     val msg = MessageChain.Builder()
-                        .addAt(message.sender.userId)
-                        .addText("来咯~ 你要的图片~~~")
                         .addImage(imageBase64, true)
+                        .addText("图片来源: Pixiv")
                         .build()
-                    listener.sendGroupMessage(message.groupId, msg)
+                    message.reply(msg)
                 } catch (_: Exception) {
-                    val msg = MessageChain.Builder()
-                        .addAt(message.sender.userId)
-                        .addText("输入错误~检查一下有没有输错吧~")
-                        .build()
-                    listener.sendGroupMessage(message.groupId, msg)
+                    val msg = MessageChain.Builder().addText("输入错误~检查一下有没有输错吧~").build()
+                    message.reply(msg)
                 }
             }
         }

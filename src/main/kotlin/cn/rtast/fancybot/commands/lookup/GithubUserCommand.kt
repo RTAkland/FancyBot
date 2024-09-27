@@ -69,11 +69,8 @@ class GithubUserCommand : BaseCommand() {
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
-            val msg = MessageChain.Builder()
-                .addAt(message.sender.userId)
-                .addText("发送`gh <用户名>`即可查询用户的信息~")
-                .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            val msg = MessageChain.Builder().addText("发送`gh <用户名>`即可查询用户的信息~").build()
+            message.reply(msg)
             return
         }
         val username = args.first()
@@ -82,10 +79,7 @@ class GithubUserCommand : BaseCommand() {
             headers = mapOf("Authorization" to configManager.githubKey)
         )
         val image = this.createUserInfoCard(userInfo)
-        val msg = MessageChain.Builder()
-            .addReply(message.messageId)
-            .addImage(image, true)
-            .build()
-        listener.sendGroupMessage(message.groupId, msg)
+        val msg = MessageChain.Builder().addImage(image, true).build()
+        message.reply(msg)
     }
 }
