@@ -36,6 +36,7 @@ class ReverseGIFCommand : BaseCommand() {
 
         suspend fun callback(message: GroupMessage) {
             if (message.sender.userId !in waitingList) return
+            waitingList.removeIf { it == message.sender.userId }
             val gifUrl = if (message.message.find { it.type == ArrayMessageType.mface } == null) {
                 message.message.find { it.type == ArrayMessageType.image }!!.data.file!!
             } else {
@@ -44,14 +45,13 @@ class ReverseGIFCommand : BaseCommand() {
             val base64String = this.reverseGif(gifUrl)
             val msg = MessageChain.Builder().addImage(base64String, true).build()
             message.reply(msg)
-            waitingList.removeIf { it == message.sender.userId }
         }
     }
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (message.sender.userId !in waitingList) {
-            waitingList.add(message.sender.userId)
             message.reply("发送一张动图来继续操作")
+            waitingList.add(message.sender.userId)
         } else {
             message.reply("发送错误本次操作已取消")
             waitingList.removeIf { it == message.sender.userId }

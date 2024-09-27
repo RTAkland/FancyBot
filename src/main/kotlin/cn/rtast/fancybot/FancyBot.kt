@@ -7,12 +7,7 @@
 
 package cn.rtast.fancybot
 
-import cn.rtast.fancybot.commands.parse.AsciiArtCommand
-import cn.rtast.fancybot.commands.parse.BVParseCommand
-import cn.rtast.fancybot.commands.parse.CalculateCommand
-import cn.rtast.fancybot.commands.parse.GitHubParseCommand
-import cn.rtast.fancybot.commands.parse.ImageURLCommand
-import cn.rtast.fancybot.commands.parse.ReverseGIFCommand
+import cn.rtast.fancybot.commands.parse.*
 import cn.rtast.fancybot.entity.bili.CardShare
 import cn.rtast.fancybot.entity.enums.WSType
 import cn.rtast.fancybot.util.initDatabase
@@ -55,6 +50,7 @@ class FancyBot : OneBotListener {
 
         ReverseGIFCommand.callback(message)
         AsciiArtCommand.callback(message)
+
         if (message.message.any { it.type == ArrayMessageType.reply }) {  // Image url parse
             val command = message.message.reversed().find { it.type == ArrayMessageType.text }!!.data.text!!
             val replyId = message.message.find { it.type == ArrayMessageType.reply }!!.data.id!!

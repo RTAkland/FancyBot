@@ -87,41 +87,40 @@ class AsciiArtCommand : BaseCommand() {
         }
 
         suspend fun callback(message: GroupMessage) {
-            if (message.sender.userId in waitingList) {
-                if (message.message.any { it.type == ArrayMessageType.image }
-                    || message.message.any { it.type == ArrayMessageType.mface }) {
-                    val url = if (message.message.any { it.type == ArrayMessageType.image })
-                        message.message.find { it.type == ArrayMessageType.image }!!.data.file!!
-                    else message.message.find { it.type == ArrayMessageType.mface }!!.data.url!!
-                    val gifStream = withContext(Dispatchers.IO) { URI(url).toURL().openStream() }
-                    val decoder = GifDecoder()
-                    try {
-                        decoder.read(gifStream)
-                        if (decoder.frameCount == 0) {
-                            val bufferedImage = withContext(Dispatchers.IO) { ImageIO.read(URI(url).toURL()) }
-                            val imageBase64 = bufferedImage.convertToAscii()
-                                .saveAsciiArtToImage(bufferedImage.width, bufferedImage.height)
-                                .toByteArray().encodeToBase64()
-                            val msg = MessageChain.Builder().addImage(imageBase64, true).build()
-                            message.reply(msg)
-                        } else {
-                            println("Making gif ascii art, frames: ${decoder.frameCount}")
-                            val frames = (0 until decoder.frameCount).map { decoder.getFrame(it) }
-                            val asciiFrames = mutableListOf<BufferedImage>()
-                            val width = frames.first().width
-                            val height = frames.first().height
-                            frames.forEach { asciiFrames.add(it.convertToAscii().saveAsciiArtToImage(width, height)) }
-                            val gifBytes = decoder.makeGif(asciiFrames)
-                            val gifBase64 = gifBytes.encodeToBase64()
-                            message.reply(MessageChain.Builder().addImage(gifBase64, true).build())
-                        }
-                    } catch (_: Exception) {
-                        message.reply("处理GIF失败")
+            if (message.sender.userId !in waitingList) return
+            waitingList.removeIf { it == message.sender.userId }
+            if (message.message.any { it.type == ArrayMessageType.image }
+                || message.message.any { it.type == ArrayMessageType.mface }) {
+                val url = if (message.message.any { it.type == ArrayMessageType.image })
+                    message.message.find { it.type == ArrayMessageType.image }!!.data.file!!
+                else message.message.find { it.type == ArrayMessageType.mface }!!.data.url!!
+                val gifStream = withContext(Dispatchers.IO) { URI(url).toURL().openStream() }
+                val decoder = GifDecoder()
+                try {
+                    decoder.read(gifStream)
+                    if (decoder.frameCount == 0) {
+                        val bufferedImage = withContext(Dispatchers.IO) { ImageIO.read(URI(url).toURL()) }
+                        val imageBase64 = bufferedImage.convertToAscii()
+                            .saveAsciiArtToImage(bufferedImage.width, bufferedImage.height)
+                            .toByteArray().encodeToBase64()
+                        val msg = MessageChain.Builder().addImage(imageBase64, true).build()
+                        message.reply(msg)
+                    } else {
+                        println("Making gif ascii art, frames: ${decoder.frameCount}")
+                        val frames = (0 until decoder.frameCount).map { decoder.getFrame(it) }
+                        val asciiFrames = mutableListOf<BufferedImage>()
+                        val width = frames.first().width
+                        val height = frames.first().height
+                        frames.forEach { asciiFrames.add(it.convertToAscii().saveAsciiArtToImage(width, height)) }
+                        val gifBytes = decoder.makeGif(asciiFrames)
+                        val gifBase64 = gifBytes.encodeToBase64()
+                        message.reply(MessageChain.Builder().addImage(gifBase64, true).build())
                     }
-                } else {
-                    message.reply("回复错误已取消本次操作")
+                } catch (_: Exception) {
+                    message.reply("处理GIF失败")
                 }
-                waitingList.removeIf { it == message.sender.userId }
+            } else {
+                message.reply("回复错误已取消本次操作")
             }
         }
     }
