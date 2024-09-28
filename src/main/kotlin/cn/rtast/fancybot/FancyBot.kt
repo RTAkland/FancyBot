@@ -13,6 +13,7 @@ import cn.rtast.fancybot.util.initDatabase
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.lagrange.FileEvent
+import cn.rtast.rob.entity.lagrange.PokeEvent
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
@@ -116,6 +117,18 @@ class FancyBot : OneBotListener {
             .addText("下次再见吧~~~")
             .build()
         this.sendGroupMessage(groupId, msg)
+    }
+
+    override suspend fun onPoke(event: PokeEvent) {
+        event.groupId?.let {
+            if (event.targetId == configManager.selfId) {
+                val msg = MessageChain.Builder()
+                    .addAt(event.userId)
+                    .addText("你${event.action.first()}牛魔呢")
+                    .build()
+                this.sendGroupMessage(it, msg)
+            }
+        }
     }
 }
 

@@ -35,4 +35,5 @@ class ConfigManager : JsonFileHandler<Config>("config.json") {
     val llamaModel = config.llamaModel
     val qqMusicApiUrl = config.qqMusicApiUrl
     val startUpNoticeUser = config.startUpNoticeUser
+    val selfId = config.selfId
 }

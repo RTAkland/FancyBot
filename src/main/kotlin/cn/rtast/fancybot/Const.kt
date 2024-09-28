@@ -64,7 +64,8 @@ val DEFAULT_CONFIG = Config(
     llamaUrl = "http://127.0.0.1",
     llamaModel = "llama3.1",
     qqMusicApiUrl = "http://127.0.0.1:3200",
-    startUpNoticeUser = 114514L
+    startUpNoticeUser = 114514L,
+    selfId = 114514L
 )
 
 val configManager = ConfigManager()
