@@ -66,7 +66,7 @@ class AICommand : BaseCommand() {
         val msg = MessageChain.Builder()
             .addText(response.choices.first().message.content)
             .build()
-        nodeMsg.addMessageChain(msg, message.sender.userId)
+        nodeMsg.addMessageChain(msg, configManager.selfId)
         listener.sendGroupForwardMsg(message.groupId, nodeMsg.build())
     }
 }
@@ -92,7 +92,7 @@ class LlamaCommand : BaseCommand() {
             .addNewLine()
             .addText(response.message.content)
             .build()
-        nodeMsg.addMessageChain(msg, message.sender.userId)
+        nodeMsg.addMessageChain(msg, configManager.selfId)
         listener.sendGroupForwardMsg(message.groupId, nodeMsg.build())
     }
 }

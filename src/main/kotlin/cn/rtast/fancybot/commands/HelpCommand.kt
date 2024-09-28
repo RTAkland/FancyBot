@@ -9,6 +9,7 @@ package cn.rtast.fancybot.commands
 
 import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.commands
+import cn.rtast.fancybot.configManager
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
@@ -34,7 +35,7 @@ class HelpCommand : BaseCommand() {
                     .addNewLine()
             }
             msg.addText("共计${commands.size}条命令")
-            node.addMessageChain(msg.build(), message.sender.userId)
+            node.addMessageChain(msg.build(), configManager.selfId)
             message.reply(node.build())
         } else {
             val commandName = args.first().replace("/", "")

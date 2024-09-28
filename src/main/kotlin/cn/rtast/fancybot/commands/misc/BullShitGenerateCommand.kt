@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.commands.misc
 
+import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.entity.bullshit.BullShit
 import cn.rtast.fancybot.util.Resources
 import cn.rtast.fancybot.util.str.fromJson
@@ -61,7 +62,7 @@ class BullShitGenerateCommand : BaseCommand() {
         }
         val finalText = output.toString().replace("x", topic)
         val node = NodeMessageChain.Builder()
-            .addMessageChain(MessageChain.Builder().addText(finalText).build(), message.sender.userId)
+            .addMessageChain(MessageChain.Builder().addText(finalText).build(), configManager.selfId)
             .build()
         message.reply(node)
         message.sender.groupPoke()

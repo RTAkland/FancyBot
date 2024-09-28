@@ -8,6 +8,7 @@
 package cn.rtast.fancybot.commands.lookup
 
 import cn.rtast.fancybot.annotations.CommandDescription
+import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.entity.pixiv.Ranking
 import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.str.encodeToBase64
@@ -51,11 +52,13 @@ class PixivCommand : BaseCommand() {
                             .addText("用户: ${it.userName}(${it.userId}) | 作品ID: ${it.illustId}")
                             .addNewLine()
                             .addText("日期: ${it.date}")
-                        node.addMessageChain(msg.build(), message.sender.userId)
+                        node.addMessageChain(msg.build(), configManager.selfId)
                     } catch (_: Exception) {
                     }
                 }
-                node.addMessageChain(MessageChain.Builder().addText("图片来源: Pixiv").build(), message.sender.userId)
+                node.addMessageChain(MessageChain.Builder()
+                    .addText("图片来源: Pixiv")
+                    .build(), configManager.selfId)
                 message.reply(node.build())
                 return
             }

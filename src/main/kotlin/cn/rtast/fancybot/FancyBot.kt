@@ -39,12 +39,16 @@ class FancyBot : OneBotListener {
         val messageId = message.messageId
         println("$sender($senderId: $groupId >>> $messageId): $msg")
 
-        ReverseGIFCommand.callback(message)
-        AsciiArtCommand.callback(message)
+        if (message.message.any { it.type == ArrayMessageType.face && it.data.id.toString() == "419" }) {
+            message.reply("你发牛魔的火车呢, 我直接就是打断")
+        }
 
         if (message.rawMessage.contains("原神")) {
             message.reply("你原神牛魔呢")
         }
+
+        ReverseGIFCommand.callback(message)
+        AsciiArtCommand.callback(message)
 
         if (message.rawMessage.toList().any { it in arrayListOf('*', '-', '/', '+', '=') }) {
             val calculateResult = CalculateCommand.parse(message.rawMessage)

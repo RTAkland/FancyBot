@@ -8,6 +8,7 @@
 package cn.rtast.fancybot.commands.lookup
 
 import cn.rtast.fancybot.annotations.CommandDescription
+import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.entity.bgm.BGMSearch
 import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.str.encodeToBase64
@@ -53,10 +54,10 @@ class DMSearchCommand : BaseCommand() {
                     .addNewLine()
                     .addText(it.url)
                     .build()
-                nodeMsg.addMessageChain(tempMsg, message.sender.userId)
+                nodeMsg.addMessageChain(tempMsg, configManager.selfId)
             }
             val footerNode = MessageChain.Builder().addText("数据来源: Bangumi").build()
-            nodeMsg.addMessageChain(footerNode, message.sender.userId)
+            nodeMsg.addMessageChain(footerNode, configManager.selfId)
             listener.sendGroupForwardMsg(message.groupId, nodeMsg.build())
         } catch (_: Exception) {
             message.reply("没有搜索到结果呢~")

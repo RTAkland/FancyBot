@@ -18,9 +18,13 @@ class BaisiItem : Item() {
     override val itemNames = listOf("baisi", "白丝", "bs")
     override val itemPrice = 5.0
 
-    override suspend fun redeemInGroup(listener: OneBotListener, message: GroupMessage, after: Double) {
+    override suspend fun redeemInGroup(
+        listener: OneBotListener,
+        message: GroupMessage,
+        after: Double
+    ): MessageChain.Builder {
         val url = Http.get<Baisi>("https://v2.api-m.com/api/baisi").data
-        val msg = MessageChain.Builder().addImage(url).build()
-        message.reply(msg)
+        val msg = MessageChain.Builder().addImage(url)
+        return msg
     }
 }

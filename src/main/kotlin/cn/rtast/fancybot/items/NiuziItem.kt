@@ -17,14 +17,17 @@ class NiuziItem : Item() {
     override val itemNames = listOf("牛子", "nz", "niuzi")
     override val itemPrice = 10.0
 
-    override suspend fun redeemInGroup(listener: OneBotListener, message: GroupMessage, after: Double) {
+    override suspend fun redeemInGroup(
+        listener: OneBotListener,
+        message: GroupMessage,
+        after: Double
+    ): MessageChain.Builder {
         val before = niuziManager.getUser(message.sender.userId)!!
         val afterNiuzi = niuziManager.updateLength(message.sender.userId, -2.0)!!
         val msg = MessageChain.Builder()
             .addText("你的牛子到账啦, 你的牛子现在有${afterNiuzi.length}cm长呢!")
             .addNewLine()
             .addText("(之前的长度是${before.length}cm!)")
-            .build()
-        message.reply(msg)
+        return msg
     }
 }

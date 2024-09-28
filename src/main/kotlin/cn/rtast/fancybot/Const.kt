@@ -76,8 +76,8 @@ val niuziBankManager = NiuziBankManager()
 val START_UP_TIME = Instant.now().epochSecond
 
 val items = listOf(
-    HeisiItem(), BaisiItem(), SetuItem(),
-    NiuziItem()
+    HeisiItem(), BaisiItem(),
+    SetuItem(), NiuziItem()
 )
 
 val commands = listOf(

@@ -40,7 +40,7 @@ class ShotOtherCommand : BaseCommand() {
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
-            message.reply("发送`骂 @某人`可以骂他~")
+            listener.sendGroupForwardMsg(message.groupId, generateNodeMessage(message.sender.userId.toString(), 20))
             return
         }
         var times = if (args.size == 1) 10 else if (args.last() == "") 10 else args.last().toInt()

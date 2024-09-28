@@ -44,11 +44,7 @@ class SendMailCommand : BaseCommand() {
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
-            val msg = MessageChain.Builder()
-                .addAt(message.sender.userId)
-                .addText("发送`/mail <收件人地址>`即可发送测试邮件~")
-                .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply("发送`/mail <收件人地址>`即可发送测试邮件~")
             return
         }
         if (message.sender.userId !in configManager.admins) {
@@ -61,10 +57,6 @@ class SendMailCommand : BaseCommand() {
         }
         val target = args.first()
         this.sendMail(target)
-        val msg = MessageChain.Builder()
-            .addAt(message.sender.userId)
-            .addText("正在发送邮件, 请查收~(可能会出现在垃圾桶中~)")
-            .build()
-        listener.sendGroupMessage(message.groupId, msg)
+        message.reply("正在发送邮件, 请查收~(可能会出现在垃圾桶中~)")
     }
 }

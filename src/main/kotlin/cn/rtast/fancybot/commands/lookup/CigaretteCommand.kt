@@ -8,6 +8,7 @@
 package cn.rtast.fancybot.commands.lookup
 
 import cn.rtast.fancybot.annotations.CommandDescription
+import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.entity.cigarette.Cigarette
 import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.str.encodeToBase64
@@ -53,12 +54,12 @@ class CigaretteCommand : BaseCommand() {
                 .addText("参考价: 单盒: ${it.packPrice}元 | 整条: ${it.barPrice}元")
                 .addNewLine()
                 .build()
-            nodeMsg.addMessageChain(tempMsg, message.sender.userId)
+            nodeMsg.addMessageChain(tempMsg, configManager.selfId)
         }
         val footerMsg = MessageChain.Builder()
             .addText("吸烟有害健康, 尽早戒烟有益健康。")
             .build()
-        nodeMsg.addMessageChain(footerMsg, message.sender.userId)
+        nodeMsg.addMessageChain(footerMsg, configManager.selfId)
         message.reply(nodeMsg.build())
         message.sender.groupPoke()
     }

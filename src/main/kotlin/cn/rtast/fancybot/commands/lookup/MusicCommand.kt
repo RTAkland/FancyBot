@@ -45,11 +45,7 @@ class MusicCommand : BaseCommand() {
 
     private suspend fun legacyMusicCommand(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
-            val msg = MessageChain.Builder()
-                .addAt(message.sender.userId)
-                .addText("发送`/点歌`或者`/music` <关键词> 来搜索音乐~")
-                .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply("发送`/点歌` <关键词> 来搜索音乐~")
             return
         }
         searchedResult.forEach { (key, results) ->
@@ -72,13 +68,9 @@ class MusicCommand : BaseCommand() {
                     val msg = MessageChain.Builder()
                         .addMusicShare(MusicShareType.Netease, finalResult.id.toString())
                         .build()
-                    listener.sendGroupMessage(message.groupId, msg)
+                    message.reply(msg)
                 } catch (_: Exception) {
-                    val msg = MessageChain.Builder()
-                        .addAt(message.sender.userId)
-                        .addText("输入有误请重新搜索本次搜索结果已清除")
-                        .build()
-                    listener.sendGroupMessage(message.groupId, msg)
+                    message.reply("输入有误请重新搜索本次搜索结果已清除")
                 }
                 searchedResult.remove(message.sender.userId)
             }
@@ -86,11 +78,7 @@ class MusicCommand : BaseCommand() {
             else -> {
                 if (searchedResult.containsKey(message.sender.userId)) {
                     searchedResult.remove(message.sender.userId)
-                    val msg = MessageChain.Builder()
-                        .addAt(message.sender.userId)
-                        .addText("你上次的搜索结果还没用呢, 已经帮你把上次的搜索结果清除掉啦~")
-                        .build()
-                    listener.sendGroupMessage(message.groupId, msg)
+                    message.reply("你上次的搜索结果还没用呢, 已经帮你把上次的搜索结果清除掉啦~")
                 }
                 val keyword = args.joinToString(" ")
                 val result = searchSong(keyword)
@@ -105,11 +93,7 @@ class MusicCommand : BaseCommand() {
                     stringResult.append("| $index | 《${searchedResult.name}》-- ${searchedResult.artists}\n")
                 }
                 stringResult.append("输入/music p <序号> 播放\n你有30秒的时间进行操作")
-                val msg = MessageChain.Builder()
-                    .addAt(message.sender.userId)
-                    .addText(stringResult.toString())
-                    .build()
-                listener.sendGroupMessage(message.groupId, msg)
+                message.reply(stringResult.toString())
             }
         }
     }
@@ -121,7 +105,7 @@ class MusicCommand : BaseCommand() {
         }
         if (args.isEmpty()) {
             val msg = MessageChain.Builder()
-                .addAt(message.sender.userId)
+                .addReply(message.messageId)
                 .addText("发送`点歌 <歌名>`即可点第一首搜索到的歌曲~")
                 .addNewLine()
                 .addText("发送`点歌 <歌名> [l|legacy]`即可使用旧版点歌系统")
@@ -243,7 +227,7 @@ class QQMusicCommand : BaseCommand() {
                                 .addNewLine()
                                 .addText("时长: ${it.interval.formatToMinutes()}")
                                 .build()
-                            nodeMsg.addMessageChain(msg, message.sender.userId)
+                            nodeMsg.addMessageChain(msg, configManager.selfId)
                         } catch (_: FileNotFoundException) {
                         }
                     }

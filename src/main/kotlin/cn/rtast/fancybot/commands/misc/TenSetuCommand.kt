@@ -8,6 +8,7 @@
 package cn.rtast.fancybot.commands.misc
 
 import cn.rtast.fancybot.annotations.CommandDescription
+import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.entity.Setu
 import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.str.encodeToBase64
@@ -30,7 +31,7 @@ class TenSetuCommand : BaseCommand() {
             try {
                 val imageBase64 = URI(it).toURL().readBytes().encodeToBase64()
                 val tempMsg = MessageChain.Builder().addImage(imageBase64, true).build()
-                nodeMsg.addMessageChain(tempMsg, message.sender.userId)
+                nodeMsg.addMessageChain(tempMsg, configManager.selfId)
             } catch (_: Exception) {
             }
         }
@@ -39,7 +40,7 @@ class TenSetuCommand : BaseCommand() {
             .addNewLine()
             .addText("因为过滤了R18的图片~")
             .build()
-        nodeMsg.addMessageChain(footerMsg, message.sender.userId)
+        nodeMsg.addMessageChain(footerMsg, configManager.selfId)
         listener.sendGroupForwardMsg(message.groupId, nodeMsg.build())
     }
 }

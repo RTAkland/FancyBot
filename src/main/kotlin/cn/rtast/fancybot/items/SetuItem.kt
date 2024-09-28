@@ -22,16 +22,19 @@ class SetuItem : Item() {
     override val itemNames = listOf("setu", "色图", "st")
     override val itemPrice = 10.0
 
-    override suspend fun redeemInGroup(listener: OneBotListener, message: GroupMessage, after: Double) {
+    override suspend fun redeemInGroup(
+        listener: OneBotListener,
+        message: GroupMessage,
+        after: Double
+    ): MessageChain.Builder {
         val response = Http.get("https://api.rtast.cn/api/setu")
             .fromArrayJson<List<Setu>>().first()
         if (response.r18) {
             niuziManager.updateLength(message.sender.userId, itemPrice)
-            message.reply("不好意思这张图片是R18所以不能发~, 牛子长度已经退还~")
-            return
+            return MessageChain.Builder().addText("不好意思这张图片是R18所以不能发~, 牛子长度已经退还~")
         }
         val imageBase64 = URI(response.urls.large).toURL().readBytes().encodeToBase64()
-        val msg = MessageChain.Builder().addImage(imageBase64, true).build()
-        message.reply(msg)
+        val msg = MessageChain.Builder().addImage(imageBase64, true)
+        return msg
     }
 }

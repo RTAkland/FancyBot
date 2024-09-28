@@ -34,18 +34,13 @@ class NiuziRedeemCommand : BaseCommand() {
         }
         val status = niuziManager.getUser(message.sender.userId)
         if (status == null) {
-            val msg = MessageChain.Builder()
-                .addReply(message.messageId)
-                .addText("你还没有签到过呢要签到一次才能兑换哦~")
-                .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply("你还没有签到过呢要签到一次才能兑换哦~")
             return
         }
         val item = args.first()
         if (item == "list" || item == "列表") {
-            val priceTable =
-                itemManager.items.joinToString("\n")
-                { "[${it.itemNames.joinToString("|")}]:${it.itemPrice}cm" }
+            val priceTable = itemManager.items.joinToString("\n")
+            { "[${it.itemNames.joinToString("|")}]:${it.itemPrice}cm" }
             message.reply(priceTable)
             return
         }
@@ -72,13 +67,15 @@ class NiuziRedeemCommand : BaseCommand() {
             return
         }
         val afterStatus = niuziManager.redeemItem(message.sender.userId, selectedItemPrice)?.length!!
+        val action = selectedItem.redeemInGroup(listener, message, afterStatus)
         val msg = MessageChain.Builder()
             .addReply(message.messageId)
-            .addText("兑换成功正在发送奖品中~")
+            .addText("兑换成功! 你花费了${selectedItemPrice}cm来兑换奖品, 还剩${afterStatus}cm")
             .addNewLine()
-            .addText("你花费了${selectedItemPrice}cm来兑换奖品, 还剩${afterStatus}cm")
+            .addText("-------------------")
+            .addNewLine()
+            .addMessageChain(action)
             .build()
-        listener.sendGroupMessage(message.groupId, msg)
-        selectedItem.redeemGroup(listener, message, afterStatus)
+        message.reply(msg)
     }
 }
