@@ -22,10 +22,7 @@ import cn.rtast.fancybot.commands.misc.ShortLinkCommand
 import cn.rtast.fancybot.entity.Config
 import cn.rtast.fancybot.entity.enums.ImageType
 import cn.rtast.fancybot.entity.enums.WSType
-import cn.rtast.fancybot.items.BaisiItem
-import cn.rtast.fancybot.items.HeisiItem
-import cn.rtast.fancybot.items.NiuziItem
-import cn.rtast.fancybot.items.SetuItem
+import cn.rtast.fancybot.items.*
 import cn.rtast.fancybot.util.file.ConfigManager
 import cn.rtast.fancybot.util.file.NiuziBankManager
 import cn.rtast.fancybot.util.file.NiuziManager
@@ -77,7 +74,8 @@ val START_UP_TIME = Instant.now().epochSecond
 
 val items = listOf(
     HeisiItem(), BaisiItem(),
-    SetuItem(), NiuziItem()
+    SetuItem(), NiuziItem(),
+    TenSetuItem()
 )
 
 val commands = listOf(
@@ -95,7 +93,6 @@ val commands = listOf(
     UnsetZiBiCommand(), WikipediaCommand(),
     AsciiArtCommand(), StatusCommand(),
     JueCommand(), ShortLinkCommand(),
-    TenSetuCommand(), ShotSelfCommand(),
     ShotOtherCommand(), ReverseGIFCommand(),
     HelpCommand(), MusicCommand(),
     LikeMeCommand(), NiuziTransferCommand(),
@@ -106,5 +103,6 @@ val commands = listOf(
     BankBalanceCommand(), DepositCommand(),
     DMSearchCommand(), LlamaCommand(),
     QQMusicCommand(), BullShitGenerateCommand(),
-    NiuziRankCommand(), NiuziBankRankCommand()
+    NiuziRankCommand(), NiuziBankRankCommand(),
+    ShotSelfCommand()
 )

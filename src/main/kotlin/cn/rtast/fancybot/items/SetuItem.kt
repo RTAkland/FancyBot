@@ -20,7 +20,7 @@ import java.net.URI
 
 class SetuItem : Item() {
     override val itemNames = listOf("setu", "色图", "st")
-    override val itemPrice = 10.0
+    override val itemPrice = 4.0
 
     override suspend fun redeemInGroup(
         listener: OneBotListener,

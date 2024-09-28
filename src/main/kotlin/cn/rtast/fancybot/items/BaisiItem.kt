@@ -16,7 +16,7 @@ import cn.rtast.rob.util.ob.OneBotListener
 
 class BaisiItem : Item() {
     override val itemNames = listOf("baisi", "白丝", "bs")
-    override val itemPrice = 5.0
+    override val itemPrice = 3.0
 
     override suspend fun redeemInGroup(
         listener: OneBotListener,
