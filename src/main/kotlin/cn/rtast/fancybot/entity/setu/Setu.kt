@@ -5,11 +5,15 @@
  */
 
 
-package cn.rtast.fancybot.entity
+package cn.rtast.fancybot.entity.setu
+
+import com.google.gson.annotations.SerializedName
 
 data class Setu(
     val urls: URLS,
-    val r18: Boolean
+    val r18: Boolean,
+    @SerializedName("author_id")
+    val authorId: Long,
 ) {
     data class URLS(
         val large: String

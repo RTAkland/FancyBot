@@ -75,7 +75,7 @@ val START_UP_TIME = Instant.now().epochSecond
 val items = listOf(
     HeisiItem(), BaisiItem(),
     SetuItem(), NiuziItem(),
-    TenSetuItem()
+    TenSetuItem(), TenSetuR18Item()
 )
 
 val commands = listOf(

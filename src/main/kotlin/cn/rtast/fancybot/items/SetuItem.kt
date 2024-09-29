@@ -7,7 +7,7 @@
 
 package cn.rtast.fancybot.items
 
-import cn.rtast.fancybot.entity.Setu
+import cn.rtast.fancybot.entity.setu.Setu
 import cn.rtast.fancybot.niuziManager
 import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.item.Item
