@@ -12,32 +12,27 @@ import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.entity.music.Search
 import cn.rtast.fancybot.entity.music.SearchedResult
 import cn.rtast.fancybot.entity.music.SongUrl
-import cn.rtast.fancybot.entity.music.qq.CoverImage
-import cn.rtast.fancybot.entity.music.qq.QMSearchResult
 import cn.rtast.fancybot.entity.music.qq.QQMSearch
 import cn.rtast.fancybot.util.Http
-import cn.rtast.fancybot.util.str.encodeToBase64
-import cn.rtast.fancybot.util.str.formatToMinutes
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.MusicShareType
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.NodeMessageChain
 import cn.rtast.rob.util.ob.OneBotListener
-import java.io.FileNotFoundException
-import java.net.URI
 import java.time.Instant
 
 @CommandDescription("网易云音乐点歌")
 class MusicCommand : BaseCommand() {
-    override val commandNames = listOf("点歌")
+    override val commandNames = listOf("点歌", "music")
 
     private val searchedResult = mutableMapOf<Long, List<SearchedResult>>()
 
     companion object {
+        private val MUSIC_API_URL = configManager.ncmAPI
+
         fun searchSong(keyword: String): Search {
             return Http.get<Search>(
-                "${configManager.ncmAPI}/search",
+                "$MUSIC_API_URL/search",
                 mapOf("keywords" to keyword),
             )
         }
@@ -68,7 +63,7 @@ class MusicCommand : BaseCommand() {
                     val msg = MessageChain.Builder()
                         .addMusicShare(MusicShareType.Netease, finalResult.id.toString())
                         .build()
-                    message.reply(msg)
+                    listener.sendGroupMessage(message.groupId, msg)
                 } catch (_: Exception) {
                     message.reply("输入有误请重新搜索本次搜索结果已清除")
                 }
@@ -127,8 +122,10 @@ class MusicCommand : BaseCommand() {
 class MusicPlayUrlCommand : BaseCommand() {
     override val commandNames = listOf("lj")
 
+    private val musicApiUrl = configManager.ncmAPI
+
     private fun getPlayUrl(id: String): String {
-        return Http.get<SongUrl>("${configManager.ncmAPI}/song/url", mapOf("id" to id)).data.first().url
+        return Http.get<SongUrl>("$musicApiUrl/song/url", mapOf("id" to id)).data.first().url
     }
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
@@ -154,87 +151,17 @@ class QQMusicCommand : BaseCommand() {
 
     private val qqMusicApiUrl = configManager.qqMusicApiUrl
 
-    private val recordMap = mutableMapOf<Long, List<QMSearchResult>>()
-
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             message.reply("发送`/qm <关键词>`即可搜索qq音乐的音乐哦")
             return
         }
-        this.recordMap.forEach { (key, results) ->
-            val validResults = results.filter { result ->
-                Instant.now().epochSecond - result.timestamp <= 30
-            }
-            if (validResults.isEmpty()) {
-                recordMap.remove(key)
-            } else {
-                recordMap[key] = validResults
-            }
-        }
-        val method = args.first()
-        when (method) {
-            "p" -> {
-                try {
-                    val index = args.last().toInt()
-                    val result = recordMap[message.sender.userId]!![index]
-                    val msg = MessageChain.Builder()
-                        .addMusicShare(MusicShareType.QQ, result.id.toString())
-                        .build()
-                    listener.sendGroupMessage(message.groupId, msg)
-                } catch (_: Exception) {
-                    message.reply("回复错误已清除本次搜索结果")
-                }
-                recordMap.remove(message.sender.userId)
-            }
-
-            else -> {
-                try {
-                    val keyword = args.joinToString(" ")
-                    val response = Http.get<QQMSearch>(
-                        "$qqMusicApiUrl/getSearchByKey",
-                        mapOf("key" to keyword)
-                    ).response.data.song.list
-                    val tempResultList = mutableListOf<QMSearchResult>()
-                    response.forEach {
-                        val coverUrl = Http.get<CoverImage>(
-                            "$qqMusicApiUrl/getImageUrl",
-                            mapOf("id" to it.albumMid)
-                        )
-                        val tempSearchResult = QMSearchResult(
-                            it.songId, it.songName, it.singer.joinToString(", ") { join -> join.name },
-                            it.interval, it.songMid, Instant.now().epochSecond, coverUrl.response.data.imageUrl
-                        )
-                        tempResultList.add(tempSearchResult)
-                    }
-                    recordMap[message.sender.userId] = tempResultList
-                    val nodeMsg = NodeMessageChain.Builder()
-                    val headerMsg = MessageChain.Builder()
-                        .addText("发送 `qm p <序号>`即可返回对应的歌曲")
-                        .addNewLine()
-                        .addText("你有30秒的时间进行操作")
-                        .build()
-                    nodeMsg.addMessageChain(headerMsg, message.sender.userId)
-                    tempResultList.forEachIndexed { index, it ->
-                        try {
-                            val imageBase64 = URI(it.albumUrl).toURL().readBytes().encodeToBase64()
-                            val msg = MessageChain.Builder()
-                                .addImage(imageBase64, true)
-                                .addText("序号: $index")
-                                .addNewLine()
-                                .addText("歌曲名: ${it.name}")
-                                .addNewLine()
-                                .addText("歌手: ${it.singers}")
-                                .addNewLine()
-                                .addText("时长: ${it.interval.formatToMinutes()}")
-                                .build()
-                            nodeMsg.addMessageChain(msg, configManager.selfId)
-                        } catch (_: FileNotFoundException) {
-                        }
-                    }
-                    message.reply(nodeMsg.build())
-                } catch (_: Exception) {
-                }
-            }
-        }
+        val keyword = args.joinToString(" ")
+        val response = Http.get<QQMSearch>(
+            "$qqMusicApiUrl/getSearchByKey",
+            mapOf("key" to keyword)
+        ).response.data.song.list.first().songId
+        val msg = MessageChain.Builder().addMusicShare(MusicShareType.QQ, response.toString()).build()
+        listener.sendGroupMessage(message.groupId, msg)
     }
 }
