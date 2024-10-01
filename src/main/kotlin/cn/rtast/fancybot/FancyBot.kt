@@ -15,6 +15,7 @@ import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.lagrange.FileEvent
 import cn.rtast.rob.entity.lagrange.PokeEvent
 import cn.rtast.rob.enums.ArrayMessageType
+import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 import kotlinx.coroutines.CoroutineScope
@@ -44,6 +45,9 @@ class FancyBot : OneBotListener {
         }
 
         if (message.rawMessage.contains("原神")) {
+            (0..30).forEach { _ ->
+                message.reaction(QQFace.entries.random())
+            }
             message.reply("你原神牛魔呢")
         }
 
