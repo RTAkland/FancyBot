@@ -45,7 +45,7 @@ class FancyBot : OneBotListener {
         }
 
         if (message.rawMessage.contains("原神")) {
-            (0..30).forEach { _ ->
+            (0..10).forEach { _ ->
                 message.reaction(QQFace.entries.random())
             }
             message.reply("你原神牛魔呢")
