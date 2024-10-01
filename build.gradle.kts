@@ -39,6 +39,7 @@ dependencies {
     implementation(libs.simple.java.mail)
     implementation(libs.jsoup)
     implementation(libs.nashorn.core)
+    implementation(libs.finnhub)
 }
 
 tasks.build {

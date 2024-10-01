@@ -104,5 +104,6 @@ val commands = listOf(
     DMSearchCommand(), LlamaCommand(),
     QQMusicCommand(), BullShitGenerateCommand(),
     NiuziRankCommand(), NiuziBankRankCommand(),
-    ShotSelfCommand(), TenSetuCommand()
+    ShotSelfCommand(), TenSetuCommand(),
+    StockDataCommand()
 )
