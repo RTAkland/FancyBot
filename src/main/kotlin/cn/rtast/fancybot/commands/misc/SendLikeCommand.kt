@@ -14,7 +14,7 @@ import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 
 @CommandDescription("资料卡点赞")
-class LikeMeCommand : BaseCommand() {
+class SendLikeCommand : BaseCommand() {
     override val commandNames = listOf("赞我")
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {

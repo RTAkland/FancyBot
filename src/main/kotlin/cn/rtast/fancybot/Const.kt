@@ -95,7 +95,7 @@ val commands = listOf(
     JueCommand(), ShortLinkCommand(),
     ShotOtherCommand(), ReverseGIFCommand(),
     HelpCommand(), MusicCommand(),
-    LikeMeCommand(), NiuziTransferCommand(),
+    SendLikeCommand(), NiuziTransferCommand(),
     NiuziSignCommand(), NiuziJiJianCommand(),
     NiuziQueryCommand(), MyNiuziCommand(),
     NiuziBankCommand(), WithdrawCommand(),
@@ -104,5 +104,6 @@ val commands = listOf(
     DMSearchCommand(), LlamaCommand(),
     QQMusicCommand(), BullShitGenerateCommand(),
     NiuziRankCommand(), NiuziBankRankCommand(),
-    ShotSelfCommand(), TenSetuCommand()
+    ShotSelfCommand(), TenSetuCommand(),
+    ReactionCommand()
 )
