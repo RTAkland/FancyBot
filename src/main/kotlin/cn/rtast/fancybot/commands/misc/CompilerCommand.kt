@@ -31,10 +31,10 @@ class CompilerCommand : BaseCommand() {
             message.reply("使用`/exec` <语言> <代码> 即可执行~")
             return
         }
-        var language = args.first()
+        var language = args.first().lowercase()
         val code = args.drop(1).joinToString(" ")
         val response = when (language) {
-            "kotlin", "Kotlin", "kt", "Kt", "KT" -> {
+            "kotlin", "kt" -> {
                 Http.post<KCSResponse>(
                     kotlinCompilerServer,
                     jsonBody = KCSPayload(listOf(KCSPayload.File(code))).toJson()

@@ -15,7 +15,7 @@
 
 # 概述
 
-> 这是一个使用了 `ROneBot` 框架的QQ机器人, 包含了20多种命令, 例如: 点歌, 今日人品, 签到...  
+> 这是一个使用了 `ROneBot` 框架的QQ机器人, 包含了超多命令, 例如: 点歌, 今日人品, 签到...  
 > 你可以在[这里](src/main/kotlin/cn/rtast/fancybot/commands/)来查看所有的命令
 
 > ROneBot项目地址: [Gitlab](https://repo.rtast.cn/RTAkland/ronebot) [Github](https://github.com/RTAkland/ROneBot)
