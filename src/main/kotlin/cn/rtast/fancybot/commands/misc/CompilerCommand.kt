@@ -19,9 +19,9 @@ import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 
-@CommandDescription("执行不同语言的代码片段")
+@CommandDescription("执行不同语言的代码")
 class CompilerCommand : BaseCommand() {
-    override val commandNames = listOf("/compiler", "/exec")
+    override val commandNames = listOf("/compiler", "/exec", "/e")
 
     private val kotlinCompilerServer = "https://api.kotlinlang.org/api/2.0.20/compiler/run"
     private val glotCompilerServer = "https://glot.io/run"
@@ -31,16 +31,22 @@ class CompilerCommand : BaseCommand() {
             message.reply("使用`/exec` <语言> <代码> 即可执行~")
             return
         }
-        val language = args.first()
+        var language = args.first()
         val code = args.drop(1).joinToString(" ")
         val response = when (language) {
             "kotlin", "Kotlin", "kt", "Kt", "KT" -> {
                 Http.post<KCSResponse>(
-                    kotlinCompilerServer, jsonBody = KCSPayload(listOf(KCSPayload.File(code))).toJson()
+                    kotlinCompilerServer,
+                    jsonBody = KCSPayload(listOf(KCSPayload.File(code))).toJson()
                 ).text
             }
 
             else -> {
+                if (language == "js") language = "javascript"
+                if (language == "cs") language = "csharp"
+                if (language == "sh") language = "bash"
+                if (language == "asm") language = "assembly"
+                if (language == "py") language = "python"
                 Http.post<GLOTResponse>(
                     "$glotCompilerServer/$language",
                     params = mapOf("version" to "latest"),
@@ -48,12 +54,16 @@ class CompilerCommand : BaseCommand() {
                 ).stdout
             }
         }
-        val msg = MessageChain.Builder()
-            .addReply(message.messageId)
-            .addText("执行结果如下:")
-            .addNewLine()
-            .addText(response.replace("<outStream>", "").replace("</outStream>", ""))
-            .build()
-        listener.sendGroupMessage(message.groupId, msg)
+        try {
+            val msg = MessageChain.Builder()
+                .addReply(message.messageId)
+                .addText("执行结果如下:")
+                .addNewLine()
+                .addText(response.replace("<outStream>", "").replace("</outStream>", ""))
+                .build()
+            listener.sendGroupMessage(message.groupId, msg)
+        } catch (e: Exception) {
+            message.reply("执行错误: ${e.message}")
+        }
     }
 }

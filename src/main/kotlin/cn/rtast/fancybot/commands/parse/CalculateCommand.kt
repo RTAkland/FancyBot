@@ -18,7 +18,6 @@ object CalculateCommand {
         return try {
             engine.eval(input)
         } catch (_: ScriptException) {
-            "Invalid expression"
             return null
         }.toString()
     }
