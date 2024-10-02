@@ -105,5 +105,5 @@ val commands = listOf(
     QQMusicCommand(), BullShitGenerateCommand(),
     NiuziRankCommand(), NiuziBankRankCommand(),
     ShotSelfCommand(), TenSetuCommand(),
-    ReactionCommand()
+    ReactionCommand(), MCSkinCommand()
 )

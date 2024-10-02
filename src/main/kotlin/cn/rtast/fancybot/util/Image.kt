@@ -59,7 +59,7 @@ fun Graphics2D.drawCircularImage(
     maxHeight: Double,
 ) {
     val (targetWidth, targetHeight) = image.getScaledWidth(maxWidth, maxHeight)
-    val circle = Ellipse2D.Double(x.toDouble(), y.toDouble(), targetWidth.toDouble(), targetHeight.toDouble());
+    val circle = Ellipse2D.Double(x.toDouble(), y.toDouble(), targetWidth.toDouble(), targetHeight.toDouble())
     this.clip = circle
     this.drawImage(image, x, y, targetWidth, targetHeight, null)
     this.clip = null
@@ -114,4 +114,18 @@ fun Graphics2D.drawString(text: String, x: Int, y: Int, maxWidth: Int) {
     if (line.isNotEmpty()) {
         this.drawString(line.toString(), x, curY)
     }
+}
+
+fun BufferedImage.isFullyTransparent(): Boolean {
+    val width = this.width
+    val height = this.height
+    for (y in 0 until height) {
+        for (x in 0 until width) {
+            val pixel = this.getRGB(x, y)
+            if ((pixel shr 24) != 0x00) {
+                return false
+            }
+        }
+    }
+    return true
 }
