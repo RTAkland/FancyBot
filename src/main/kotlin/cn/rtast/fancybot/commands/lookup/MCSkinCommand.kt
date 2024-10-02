@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.commands.lookup
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.entity.mc.DecodedSkin
 import cn.rtast.fancybot.entity.mc.Skin
 import cn.rtast.fancybot.entity.mc.Username
@@ -26,6 +27,7 @@ import java.awt.image.BufferedImage
 import java.net.URI
 import javax.imageio.ImageIO
 
+@CommandDescription("通过游戏名称或UUID来获取他的皮肤")
 class MCSkinCommand : BaseCommand() {
     override val commandNames = listOf("/skin")
 
