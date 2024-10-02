@@ -10,7 +10,9 @@ package cn.rtast.fancybot.commands.lookup
 import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.entity.wiki.PageInfoResponse
 import cn.rtast.fancybot.entity.wiki.WikipediaResponse
+import cn.rtast.fancybot.enums.CommandAction
 import cn.rtast.fancybot.util.Http
+import cn.rtast.fancybot.util.file.insertActionRecord
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
@@ -69,6 +71,8 @@ class WikipediaCommand : BaseCommand() {
                 .addText("没有查询到指定的wiki页面呢 >>> $title")
                 .build()
             message.reply(msg)
+        } finally {
+            insertActionRecord(CommandAction.Wiki, message.sender.userId, title)
         }
     }
 }

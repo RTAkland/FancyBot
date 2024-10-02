@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.fancybot.entity.enums
+package cn.rtast.fancybot.enums
 
 enum class GPTUserRole {
     user, system, assistant

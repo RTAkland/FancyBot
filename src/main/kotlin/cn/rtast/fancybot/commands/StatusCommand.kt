@@ -9,6 +9,8 @@ package cn.rtast.fancybot.commands
 
 import cn.rtast.fancybot.START_UP_TIME
 import cn.rtast.fancybot.annotations.CommandDescription
+import cn.rtast.fancybot.enums.CommandAction
+import cn.rtast.fancybot.util.file.insertActionRecord
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
@@ -44,5 +46,6 @@ class StatusCommand : BaseCommand() {
             .addText("Java版本: $javaVersion / Kotlin版本: $kotlinVersion")
             .build()
         message.reply(msg)
+        insertActionRecord(CommandAction.Status, message.sender.userId)
     }
 }

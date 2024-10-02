@@ -7,8 +7,8 @@
 
 package cn.rtast.fancybot.util.file
 
-import cn.rtast.fancybot.entity.db.JrrpRecord
-import cn.rtast.fancybot.entity.db.JrrpTable
+import cn.rtast.fancybot.db.JrrpRecord
+import cn.rtast.fancybot.db.JrrpTable
 import cn.rtast.fancybot.util.isSameDay
 import cn.rtast.fancybot.util.suspendedTransaction
 import org.jetbrains.exposed.sql.insert

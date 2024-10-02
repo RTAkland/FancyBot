@@ -7,14 +7,14 @@
 
 package cn.rtast.fancybot.util.file
 
-import cn.rtast.fancybot.entity.db.NiuziBankAccount
-import cn.rtast.fancybot.entity.db.NiuziBankTable
-import cn.rtast.fancybot.entity.db.NiuziBankTable.balance
-import cn.rtast.fancybot.entity.db.NiuziBankTable.interestRate
-import cn.rtast.fancybot.entity.db.NiuziBankTable.nickname
-import cn.rtast.fancybot.entity.db.NiuziBankTable.timestamp
-import cn.rtast.fancybot.entity.db.NiuziBankTable.userId
-import cn.rtast.fancybot.entity.db.NiuziTable
+import cn.rtast.fancybot.db.NiuziBankAccount
+import cn.rtast.fancybot.db.NiuziBankTable
+import cn.rtast.fancybot.db.NiuziBankTable.balance
+import cn.rtast.fancybot.db.NiuziBankTable.interestRate
+import cn.rtast.fancybot.db.NiuziBankTable.nickname
+import cn.rtast.fancybot.db.NiuziBankTable.timestamp
+import cn.rtast.fancybot.db.NiuziBankTable.userId
+import cn.rtast.fancybot.db.NiuziTable
 import cn.rtast.fancybot.util.suspendedTransaction
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll

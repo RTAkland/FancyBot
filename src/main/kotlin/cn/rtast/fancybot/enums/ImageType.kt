@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.fancybot.entity.enums
+package cn.rtast.fancybot.enums
 
 enum class ImageType(val typeName: String) {
     PNG("png"), JPG("jpg")

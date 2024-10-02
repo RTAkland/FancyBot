@@ -7,7 +7,7 @@
 
 package cn.rtast.fancybot.entity.gpt
 
-import cn.rtast.fancybot.entity.enums.GPTUserRole
+import cn.rtast.fancybot.enums.GPTUserRole
 
 data class ChatCompletionsResponse(
     val choices: List<Choice>

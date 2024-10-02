@@ -12,7 +12,9 @@ import cn.rtast.fancybot.entity.compiler.GLOTPayload
 import cn.rtast.fancybot.entity.compiler.GLOTResponse
 import cn.rtast.fancybot.entity.compiler.KCSPayload
 import cn.rtast.fancybot.entity.compiler.KCSResponse
+import cn.rtast.fancybot.enums.CommandAction
 import cn.rtast.fancybot.util.Http
+import cn.rtast.fancybot.util.file.insertActionRecord
 import cn.rtast.fancybot.util.str.toJson
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
@@ -64,6 +66,8 @@ class CompilerCommand : BaseCommand() {
             listener.sendGroupMessage(message.groupId, msg)
         } catch (e: Exception) {
             message.reply("执行错误: ${e.message}")
+        } finally {
+            insertActionRecord(CommandAction.Compiler, message.sender.userId)
         }
     }
 }

@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.fancybot.entity.db
+package cn.rtast.fancybot.db
 
 import org.jetbrains.exposed.sql.Table
 

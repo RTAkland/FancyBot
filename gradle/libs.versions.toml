@@ -10,6 +10,7 @@ animatedGifLibVersion = "1.4"
 simpleJavaMailVersion = "8.11.3"
 jsoupVersion = "1.18.1"
 nashornVersion = "15.4"
+zxingVersion = "3.5.3"
 
 [libraries]
 rOneBot = { group = "cn.rtast", name = "ROneBot", version.ref = "ronebotVersion" }
@@ -22,6 +23,8 @@ animated-gif-lib = { group = "com.madgag", name = "animated-gif-lib", version.re
 simple-java-mail = { group = "org.simplejavamail", name = "simple-java-mail", version.ref = "simpleJavaMailVersion" }
 jsoup = { group = "org.jsoup", name = "jsoup", version.ref = "jsoupVersion" }
 nashorn-core = { group = "org.openjdk.nashorn", name = "nashorn-core", version.ref = "nashornVersion" }
+zxing-core = { group = "com.google.zxing", name = "core", version.ref = "zxingVersion" }
+zxing-javase = { group = "com.google.zxing", name = "javase", version.ref = "zxingVersion" }
 
 [bundles]
 

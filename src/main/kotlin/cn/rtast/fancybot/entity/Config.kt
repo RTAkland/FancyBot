@@ -7,8 +7,8 @@
 
 package cn.rtast.fancybot.entity
 
-import cn.rtast.fancybot.entity.enums.ImageType
-import cn.rtast.fancybot.entity.enums.WSType
+import cn.rtast.fancybot.enums.ImageType
+import cn.rtast.fancybot.enums.WSType
 
 data class Config(
     val ncmAPI: String,

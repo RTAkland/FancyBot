@@ -39,6 +39,8 @@ dependencies {
     implementation(libs.simple.java.mail)
     implementation(libs.jsoup)
     implementation(libs.nashorn.core)
+    implementation(libs.zxing.core)
+    implementation(libs.zxing.javase)
 }
 
 tasks.build {

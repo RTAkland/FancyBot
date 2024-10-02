@@ -8,9 +8,10 @@
 package cn.rtast.fancybot.util
 
 import cn.rtast.fancybot.ROOT_PATH
-import cn.rtast.fancybot.entity.db.JrrpTable
-import cn.rtast.fancybot.entity.db.NiuziBankTable
-import cn.rtast.fancybot.entity.db.NiuziTable
+import cn.rtast.fancybot.db.ActionTable
+import cn.rtast.fancybot.db.JrrpTable
+import cn.rtast.fancybot.db.NiuziBankTable
+import cn.rtast.fancybot.db.NiuziTable
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
@@ -22,6 +23,7 @@ suspend fun initDatabase() {
         SchemaUtils.createMissingTablesAndColumns(JrrpTable)
         SchemaUtils.createMissingTablesAndColumns(NiuziBankTable)
         SchemaUtils.createMissingTablesAndColumns(NiuziTable)
+        SchemaUtils.createMissingTablesAndColumns(ActionTable)
     }
 }
 

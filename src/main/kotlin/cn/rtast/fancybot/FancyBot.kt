@@ -8,7 +8,7 @@
 package cn.rtast.fancybot
 
 import cn.rtast.fancybot.commands.parse.*
-import cn.rtast.fancybot.entity.enums.WSType
+import cn.rtast.fancybot.enums.WSType
 import cn.rtast.fancybot.util.initDatabase
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*

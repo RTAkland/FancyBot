@@ -8,7 +8,7 @@
 package cn.rtast.fancybot.commands.misc
 
 import cn.rtast.fancybot.annotations.CommandDescription
-import cn.rtast.fancybot.entity.enums.CountryList
+import cn.rtast.fancybot.enums.CountryList
 import cn.rtast.fancybot.util.randomBooleanWithProbability
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand

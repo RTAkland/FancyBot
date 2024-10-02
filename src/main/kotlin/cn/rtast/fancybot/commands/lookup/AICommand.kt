@@ -13,7 +13,9 @@ import cn.rtast.fancybot.entity.gpt.ChatCompletionsPayload
 import cn.rtast.fancybot.entity.gpt.ChatCompletionsResponse
 import cn.rtast.fancybot.entity.gpt.LlamaResponse
 import cn.rtast.fancybot.entity.gpt.ModelList
+import cn.rtast.fancybot.enums.CommandAction
 import cn.rtast.fancybot.util.Http
+import cn.rtast.fancybot.util.file.insertActionRecord
 import cn.rtast.fancybot.util.str.toJson
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
@@ -68,6 +70,7 @@ class AICommand : BaseCommand() {
             .build()
         nodeMsg.addMessageChain(msg, configManager.selfId)
         listener.sendGroupForwardMsg(message.groupId, nodeMsg.build())
+        insertActionRecord(CommandAction.AI, message.sender.userId, "$content-$model-GPT")
     }
 }
 
@@ -94,5 +97,6 @@ class LlamaCommand : BaseCommand() {
             .build()
         nodeMsg.addMessageChain(msg, configManager.selfId)
         listener.sendGroupForwardMsg(message.groupId, nodeMsg.build())
+        insertActionRecord(CommandAction.AI, message.sender.userId, "$prompt-LLAMA")
     }
 }

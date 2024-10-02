@@ -9,6 +9,8 @@ package cn.rtast.fancybot.commands.misc
 
 import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.configManager
+import cn.rtast.fancybot.enums.CommandAction
+import cn.rtast.fancybot.util.file.insertActionRecord
 import cn.rtast.rob.entity.ArrayMessage
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType
@@ -28,5 +30,7 @@ class AntiRevokeCommand : BaseCommand() {
         msgList.add(ArrayMessage(ArrayMessageType.text, ArrayMessage.Data(text = "\n被撤回的消息如下: \n")))
         msgList.addAll(getMsg.message)
         listener.sendGroupMessage(message.groupId, msgList)
+        insertActionRecord(CommandAction.AntiRevoke, message.sender.userId, getMsg.messageId.toString())
+
     }
 }

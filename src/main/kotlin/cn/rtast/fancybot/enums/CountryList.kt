@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.fancybot.entity.enums
+package cn.rtast.fancybot.enums
 
 enum class CountryList(val chineseName: String) {
     China("中国"), UnitedStates("美国"), Russia("俄罗斯"),

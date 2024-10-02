@@ -9,6 +9,8 @@ package cn.rtast.fancybot.commands.misc
 
 import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.configManager
+import cn.rtast.fancybot.enums.CommandAction
+import cn.rtast.fancybot.util.file.insertActionRecord
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
@@ -58,5 +60,6 @@ class SendMailCommand : BaseCommand() {
         val target = args.first()
         this.sendMail(target)
         message.reply("正在发送邮件, 请查收~(可能会出现在垃圾桶中~)")
+        insertActionRecord(CommandAction.SendMail, message.sender.userId, target)
     }
 }
