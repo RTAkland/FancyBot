@@ -4,6 +4,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlin)
     alias(libs.plugins.shadow)
+    id("application")
 }
 
 val fancyBotVersion: String by project
@@ -51,19 +52,15 @@ tasks.jar {
     enabled = false
 }
 
-tasks.shadowJar {
-    manifest {
-        attributes(
-            "Main-Class" to "cn.rtast.fancybot.FancyBotKt",
-            "Manifest-Version" to "1.0"
-        )
-    }
-}
-
 tasks.register("deployBot") {
     val apiKey = System.getenv("MCSM_API_KEY")
     val apiUrl = System.getenv("MCSM_API_URL")
     val daemonId = System.getenv("MCSM_DAEMON_ID")
     val instanceId = System.getenv("MCSM_INSTANCE_ID")
     MCSMDeploy(apiUrl, apiKey, daemonId, instanceId).deploy(file("build/libs/FancyBot-1.0.0-all.jar"))
+}
+
+application {
+    mainClass = "cn.rtast.fancybot.FancyBotKt"
+    applicationName = "FancyBot"
 }
