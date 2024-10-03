@@ -42,8 +42,9 @@ class MCSkinCommand : BaseCommand() {
     /**
      * 截取整张皮肤中的头部部分, 如果是单层皮肤则直接截取脸部
      * 如果是双层皮肤也就将脸部作为背景图层, 将头发绘制在脸部上
-     * 代码来自`YeeeesMOTD`
-     * `https://github.com/RTAkland/YeeeesMOTD/blob/main/core/src/main/kotlin/cn/rtast/yeeeesmotd/utils/ImageUtil.kt`
+     * 代码来自
+     * `[YeeeesMOTD]
+     * (https://github.com/RTAkland/YeeeesMOTD/blob/main/core/src/main/kotlin/cn/rtast/yeeeesmotd/utils/SkinHeadUtil.kt)`
      */
     private fun getSkinHead(skinUrl: String): String {
         val url = URI(skinUrl).toURL()
