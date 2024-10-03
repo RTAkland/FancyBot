@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.commands.misc
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.entity.bullshit.BullShit
 import cn.rtast.fancybot.util.Resources
@@ -18,6 +19,7 @@ import cn.rtast.rob.util.ob.NodeMessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 import kotlin.random.Random
 
+@CommandDescription("狗屁不通文章生成器")
 class BullShitGenerateCommand : BaseCommand() {
     override val commandNames = listOf("/gpbt", "狗屁不通")
 
