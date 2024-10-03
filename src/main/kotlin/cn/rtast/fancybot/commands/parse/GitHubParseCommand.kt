@@ -19,7 +19,6 @@ import cn.rtast.fancybot.util.str.setTruncate
 import cn.rtast.fancybot.util.toByteArray
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 import java.awt.Color
 import java.awt.Font
 import java.awt.RenderingHints
@@ -63,6 +62,8 @@ object GitHubParseCommand {
         "Shell" to Color(137, 224, 81),
         "CMake" to Color(218, 52, 52),
         "HTML" to Color(227, 76, 38),
+        "C#" to Color(23, 134, 0),
+        "F#" to Color(184, 69, 252),
         "Unknown" to Color(211, 211, 211)
     )
 
@@ -114,20 +115,12 @@ object GitHubParseCommand {
         return canvas.toByteArray().encodeToBase64()
     }
 
-    suspend fun parse(listener: OneBotListener, message: GroupMessage) {
-        val path = message.rawMessage
-            .replace(".git", "")
-            .replace("https://github.com/", "")
-            .replace("git@github.com:", "")
-            .split("/")
-        val user = path.first()
-        val repo = path.last()
+    suspend fun parse(message: GroupMessage, user: String, repo: String) {
         val repoStat = this.getRepoStat(user, repo)
         val image = this.createImage(repoStat)
         val msg = MessageChain.Builder()
-            .addReply(message.messageId)
             .addImage(image, true)
             .build()
-        listener.sendGroupMessage(message.groupId, msg)
+        message.reply(msg)
     }
 }

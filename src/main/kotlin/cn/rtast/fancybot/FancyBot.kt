@@ -27,6 +27,7 @@ import java.net.URI
 class FancyBot : OneBotListener {
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
+    private val githubRegex = Regex("""github\.com/([^/]+)/([^/]+)""")
 
     override suspend fun onWebsocketOpenEvent() {
         this.sendPrivateMessage(configManager.startUpNoticeUser, "FancyBot启动完成~")
@@ -68,17 +69,17 @@ class FancyBot : OneBotListener {
             }
         }
 
-        if (message.rawMessage.startsWith("https://github.com/") || message.rawMessage.startsWith("git@github.com:")) {
-            GitHubParseCommand.parse(this, message)
+        val matchedResult = githubRegex.find(message.rawMessage)
+        if (message.rawMessage.contains("github.com") && matchedResult != null) {
+            val (user, repo) = matchedResult.destructured
+            GitHubParseCommand.parse(message, user, repo)
         }
 
         if (message.rawMessage.startsWith("BV") ||
             message.rawMessage.startsWith("https://www.bilibili.com") ||
             message.rawMessage.contains("https://b23.tv/") ||
             message.message.find { it.type == ArrayMessageType.json } != null
-        ) {
-            BVParseCommand.parse(this, message)
-        }
+        ) BVParseCommand.parse(this, message)
 
         coroutineScope.launch {
             message.message.forEach {

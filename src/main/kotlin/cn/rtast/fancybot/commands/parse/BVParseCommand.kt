@@ -155,7 +155,7 @@ object BVParseCommand {
             message.rawMessage
         } else if (message.rawMessage.split(" ").last().startsWith("https://b23.tv/")) {
             val shortUrl = message.rawMessage.split(" ").last()
-            BVParseCommand.getShortUrlBVID(shortUrl)
+            getShortUrlBVID(shortUrl)
         } else if (message.message.find { it.type == ArrayMessageType.json } != null) {
             val card = message.message.find { it.type == ArrayMessageType.json }!!
                 .data.data!!.toString().fromJson<CardShare>()
@@ -166,7 +166,7 @@ object BVParseCommand {
                 if (!card.meta.detail.title.contains("哔哩哔哩")) return
                 card.meta.detail.qqDocUrl
             }
-            BVParseCommand.getShortUrlBVID(shortUrl)
+            getShortUrlBVID(shortUrl)
         } else {
             message.rawMessage.split("?").first()
                 .split("/")

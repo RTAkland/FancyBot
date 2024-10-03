@@ -1,6 +1,6 @@
 [versions]
 kotlinVersion = "2.0.10"
-ronebotVersion = "1.12.4"
+ronebotVersion = "1.12.6"
 shadowVersion = "8.3.0"
 okhttpVersion = "5.0.0-alpha.14"
 exposedVersion = "0.53.0"
@@ -14,11 +14,11 @@ zxingVersion = "3.5.3"
 
 [libraries]
 rOneBot = { group = "cn.rtast", name = "ROneBot", version.ref = "ronebotVersion" }
-motdPinger = { group = "cn.rtast", name = "MotdPinger", version.ref = "motdPingerVersion" }
+motd-pinger = { group = "cn.rtast", name = "MotdPinger", version.ref = "motdPingerVersion" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttpVersion" }
-exposedCore = { group = "org.jetbrains.exposed", name = "exposed-core", version.ref = "exposedVersion" }
-exposedJDBC = { group = "org.jetbrains.exposed", name = "exposed-jdbc", version.ref = "exposedVersion" }
-sqliteJDBC = { group = "org.xerial", name = "sqlite-jdbc", version.ref = "sqliteJDBCVersion" }
+exposed-core = { group = "org.jetbrains.exposed", name = "exposed-core", version.ref = "exposedVersion" }
+exposed-jdbc = { group = "org.jetbrains.exposed", name = "exposed-jdbc", version.ref = "exposedVersion" }
+sqlite-jdbc = { group = "org.xerial", name = "sqlite-jdbc", version.ref = "sqliteJDBCVersion" }
 animated-gif-lib = { group = "com.madgag", name = "animated-gif-lib", version.ref = "animatedGifLibVersion" }
 simple-java-mail = { group = "org.simplejavamail", name = "simple-java-mail", version.ref = "simpleJavaMailVersion" }
 jsoup = { group = "org.jsoup", name = "jsoup", version.ref = "jsoupVersion" }
