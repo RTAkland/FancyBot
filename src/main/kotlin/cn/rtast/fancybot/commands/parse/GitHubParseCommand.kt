@@ -111,6 +111,8 @@ object GitHubParseCommand {
         g2d.drawString(repoStat.description ?: "暂无描述~", 80, 400, 800)
         val avatarImage = ImageIO.read(URI(repoStat.owner.avatarUrl).toURL())
         g2d.drawCustomImage(avatarImage, 1200, 160, 300.0, 300.0, true)
+        g2d.color = this.getLanguageColor(repoStat.language)
+        g2d.drawString(repoStat.language, 30, CANVAS_HEIGHT - 50)
         g2d.dispose()
         return canvas.toByteArray().encodeToBase64()
     }
@@ -122,5 +124,11 @@ object GitHubParseCommand {
             .addImage(image, true)
             .build()
         message.reply(msg)
+    }
+
+    fun creatRepoImage(user: String, repo: String): String {
+        val repoStat = this.getRepoStat(user, repo)
+        val image = this.createImage(repoStat)
+        return image
     }
 }
