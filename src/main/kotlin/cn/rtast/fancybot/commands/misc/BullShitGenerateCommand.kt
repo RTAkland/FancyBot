@@ -67,6 +67,6 @@ class BullShitGenerateCommand : BaseCommand() {
             .addMessageChain(MessageChain.Builder().addText(finalText).build(), configManager.selfId)
             .build()
         message.reply(node)
-        message.sender.groupPoke()
+        message.sender.poke()
     }
 }

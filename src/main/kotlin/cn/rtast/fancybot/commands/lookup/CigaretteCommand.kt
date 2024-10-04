@@ -61,6 +61,6 @@ class CigaretteCommand : BaseCommand() {
             .build()
         nodeMsg.addMessageChain(footerMsg, configManager.selfId)
         message.reply(nodeMsg.build())
-        message.sender.groupPoke()
+        message.sender.poke()
     }
 }
