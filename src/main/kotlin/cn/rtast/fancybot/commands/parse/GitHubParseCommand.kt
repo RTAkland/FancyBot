@@ -64,6 +64,14 @@ object GitHubParseCommand {
         "HTML" to Color(227, 76, 38),
         "C#" to Color(23, 134, 0),
         "F#" to Color(184, 69, 252),
+        "Scala" to Color(194, 45, 64),
+        "CSS" to Color(86, 61, 124),
+        "XML" to Color(0, 96, 172),
+        "Dart" to Color(0, 180, 171),
+        "Objective-C" to Color(67, 142, 255),
+        "OCaml" to Color(239, 122, 8),
+        "Jupyter Notebook" to Color(94, 80, 134),
+        "Haskell" to Color(239, 122, 8),
         "Unknown" to Color(211, 211, 211)
     )
 
