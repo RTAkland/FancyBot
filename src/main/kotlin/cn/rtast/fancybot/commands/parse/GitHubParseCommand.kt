@@ -70,7 +70,7 @@ object GitHubParseCommand {
         "Dart" to Color(0, 180, 171),
         "Objective-C" to Color(67, 142, 255),
         "OCaml" to Color(239, 122, 8),
-        "Jupyter Notebook" to Color(94, 80, 134),
+        "Jupyter Notebook" to Color(218, 91, 11),
         "Haskell" to Color(239, 122, 8),
         "Unknown" to Color(211, 211, 211)
     )
