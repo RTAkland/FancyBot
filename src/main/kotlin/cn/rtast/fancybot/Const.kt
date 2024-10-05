@@ -4,6 +4,7 @@
  * Date: 2024/8/27
  */
 
+@file:Suppress("DEPRECATION")
 
 package cn.rtast.fancybot
 
