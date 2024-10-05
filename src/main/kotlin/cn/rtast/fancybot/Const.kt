@@ -107,5 +107,6 @@ val commands = listOf(
     NiuziRankCommand(), NiuziBankRankCommand(),
     ShotSelfCommand(), TenSetuCommand(),
     ReactionCommand(), MCSkinCommand(),
-    GithubLatestCommitCommand(), RandomMusicCommand()
+    GithubLatestCommitCommand(), RandomMusicCommand(),
+    ZDJDCommand()
 )

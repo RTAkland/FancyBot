@@ -10,7 +10,7 @@ package cn.rtast.fancybot.util.str
 import java.util.*
 
 fun String.encodeToBase64(): String {
-    return Base64.getEncoder().encodeToString(this.toByteArray())
+    return Base64.getEncoder().encodeToString(this.toByteArray(Charsets.UTF_8))
 }
 
 fun ByteArray.encodeToBase64(): String {
@@ -18,7 +18,7 @@ fun ByteArray.encodeToBase64(): String {
 }
 
 fun String.decodeToString(): String {
-    return String(Base64.getDecoder().decode(this))
+    return String(Base64.getDecoder().decode(this), Charsets.UTF_8)
 }
 
 fun String.decodeToByteArray(): ByteArray {
