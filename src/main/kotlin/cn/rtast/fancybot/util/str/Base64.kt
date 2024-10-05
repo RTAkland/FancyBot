@@ -20,3 +20,7 @@ fun ByteArray.encodeToBase64(): String {
 fun String.decodeToString(): String {
     return String(Base64.getDecoder().decode(this))
 }
+
+fun String.decodeToByteArray(): ByteArray {
+    return Base64.getDecoder().decode(this)
+}
