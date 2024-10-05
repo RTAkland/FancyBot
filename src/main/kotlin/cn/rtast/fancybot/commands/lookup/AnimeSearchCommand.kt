@@ -20,8 +20,8 @@ import cn.rtast.rob.util.ob.OneBotListener
 import okhttp3.OkHttpClient
 import okhttp3.Request
 
-@CommandDescription("搜索动漫")
-class DMSearchCommand : BaseCommand() {
+@CommandDescription("搜索动漫(Bangumi.tv)")
+class AnimeSearchCommand : BaseCommand() {
     override val commandNames = listOf("/dm", "动漫")
 
     private val client = OkHttpClient()
