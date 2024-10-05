@@ -163,4 +163,7 @@ suspend fun main() {
     val commandManager = rob.commandManager
     commands.forEach { commandManager.register(it) }
     items.forEach { itemManager.register(it) }
+    tasks.forEach {
+        rob.scheduler.scheduleTask(it.value, 1000L, it.key)
+    }
 }
