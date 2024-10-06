@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot
 
+import cn.rtast.fancybot.commands.misc.ScanQRCodeCommand
 import cn.rtast.fancybot.commands.parse.*
 import cn.rtast.fancybot.enums.WSType
 import cn.rtast.fancybot.util.initCommandAndItem
@@ -57,6 +58,7 @@ class FancyBot : OneBotListener {
 
         ReverseGIFCommand.callback(message)
         AsciiArtCommand.callback(message)
+        ScanQRCodeCommand.callback(message)
 
         if (message.rawMessage.toList().any { it in arrayListOf('*', '-', '/', '+', '=') }) {
             val calculateResult = CalculateCommand.parse(message.rawMessage)

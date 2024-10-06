@@ -92,7 +92,7 @@ val tasks = mapOf(
 val commands = listOf(
     EchoCommand(), JrrpCommand(),
     NiuziRedeemCommand(), HitokotoCommand(),
-    KFCCommand(), QRCodeCommand(),
+    KFCCommand(), GenerateQRCodeCommand(),
     AntiRevokeCommand(), MCPingCommand(),
     WeatherCommand(), CigaretteCommand(),
     RemakeCommand(), PixivCommand(),
@@ -118,5 +118,5 @@ val commands = listOf(
     ShotSelfCommand(), TenSetuCommand(),
     ReactionCommand(), MCSkinCommand(),
     GithubLatestCommitCommand(), RandomMusicCommand(),
-    ZDJDCommand()
+    ZDJDCommand(), ScanQRCodeCommand()
 )
