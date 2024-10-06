@@ -36,7 +36,7 @@ class GenerateQRCodeCommand : BaseCommand() {
     private fun generateQRCode(content: String): String {
         val qrCodeWriter = QRCodeWriter()
         val hints = mapOf(EncodeHintType.CHARACTER_SET to "UTF-8")
-        val bitMatrix = qrCodeWriter.encode(content, BarcodeFormat.QR_CODE, 300, 300    , hints)
+        val bitMatrix = qrCodeWriter.encode(content, BarcodeFormat.QR_CODE, 300, 300, hints)
         return MatrixToImageWriter.toBufferedImage(bitMatrix).toByteArray().encodeToBase64()
     }
 

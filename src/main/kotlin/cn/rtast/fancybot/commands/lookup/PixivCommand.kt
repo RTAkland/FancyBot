@@ -56,9 +56,11 @@ class PixivCommand : BaseCommand() {
                     } catch (_: Exception) {
                     }
                 }
-                node.addMessageChain(MessageChain.Builder()
-                    .addText("图片来源: Pixiv")
-                    .build(), configManager.selfId)
+                node.addMessageChain(
+                    MessageChain.Builder()
+                        .addText("图片来源: Pixiv")
+                        .build(), configManager.selfId
+                )
                 message.reply(node.build())
                 return
             }

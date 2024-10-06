@@ -9,7 +9,7 @@ package cn.rtast.fancybot.db
 
 import org.jetbrains.exposed.sql.Table
 
-object ActionTable: Table("action") {
+object ActionTable : Table("action") {
     val id = integer("id").autoIncrement().nullable()
     val action = varchar("action", 255).nullable()
     val timestamp = long("timestamp").nullable()

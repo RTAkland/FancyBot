@@ -11,7 +11,6 @@ import cn.rtast.fancybot.*
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.util.ob.OneBotListener
 import java.io.File
-import java.net.URI
 import kotlin.random.Random
 
 fun randomBooleanWithProbability(probability: Double): Boolean {
