@@ -116,7 +116,7 @@ class FancyBot : OneBotListener {
     }
 
     override suspend fun onGroupFileUpload(event: FileEvent) {
-        event.saveTo("./files")
+        event.saveTo("$ROOT_PATH/caches/")
     }
 
     override suspend fun onLeaveEvent(groupId: Long, userId: Long, operator: Long, time: Long) {

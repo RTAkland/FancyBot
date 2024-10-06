@@ -7,10 +7,7 @@
 
 package cn.rtast.fancybot.util
 
-import cn.rtast.fancybot.commands
-import cn.rtast.fancybot.itemManager
-import cn.rtast.fancybot.items
-import cn.rtast.fancybot.tasks
+import cn.rtast.fancybot.*
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.util.ob.OneBotListener
 import java.io.File
@@ -34,5 +31,5 @@ fun initCommandAndItem(rob: ROneBotFactory) {
 }
 
 fun initFilesDir() {
-    File("./files/images").also { it.mkdirs() }
+    File("./$ROOT_PATH/caches/images").also { it.mkdirs() }
 }
