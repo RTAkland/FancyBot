@@ -7,7 +7,13 @@
 
 package cn.rtast.fancybot.util
 
+import cn.rtast.fancybot.commands
+import cn.rtast.fancybot.itemManager
+import cn.rtast.fancybot.items
+import cn.rtast.fancybot.tasks
+import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.util.ob.OneBotListener
+import java.io.File
 import kotlin.random.Random
 
 fun randomBooleanWithProbability(probability: Double): Boolean {
@@ -18,4 +24,15 @@ fun randomBooleanWithProbability(probability: Double): Boolean {
 suspend fun OneBotListener.getUserName(groupId: Long, userId: Long): String {
     val info = this.getGroupMemberInfo(groupId, userId)
     return info.card ?: info.nickname
+}
+
+fun initCommandAndItem(rob: ROneBotFactory) {
+    val commandManager = rob.commandManager
+    commands.forEach { commandManager.register(it) }
+    items.forEach { itemManager.register(it) }
+    tasks.forEach { rob.scheduler.scheduleTask(it.value, 1000L, it.key) }
+}
+
+fun initFilesDir() {
+    File("./files/images").also { it.mkdirs() }
 }

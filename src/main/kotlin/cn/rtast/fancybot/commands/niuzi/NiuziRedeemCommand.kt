@@ -22,14 +22,13 @@ class NiuziRedeemCommand : BaseCommand() {
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             val msg = MessageChain.Builder()
-                .addReply(message.messageId)
                 .addText("发送 /rdm <物品名称> 即可兑换哦!")
                 .addNewLine()
                 .addText("发送 /rdm list 即可查看所有可兑换的物品~")
                 .addNewLine()
                 .addText("发送 `我的牛子` 可以查看自己的牛子长度~")
                 .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply(msg)
             return
         }
         val status = niuziManager.getUser(message.sender.userId)
@@ -47,29 +46,26 @@ class NiuziRedeemCommand : BaseCommand() {
         val selectedItem = itemManager.items.find { it.itemNames.any { any -> any == item } }
         if (selectedItem == null) {
             val msg = MessageChain.Builder()
-                .addReply(message.messageId)
                 .addText("没有找到你想兑换的东西呢")
                 .addNewLine()
                 .addText("你可以发送 /rdm list来查看所有可兑换的物品")
                 .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply(msg)
             return
         }
         val selectedItemPrice = selectedItem.itemPrice
         if (selectedItemPrice > status.length) {
             val msg = MessageChain.Builder()
-                .addReply(message.messageId)
                 .addText("你的牛子长度不够兑换这个物品呢~")
                 .addNewLine()
                 .addText("你有: ${status.length}cm, 兑换需要: $selectedItemPrice cm~\"")
                 .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply(msg)
             return
         }
         val afterStatus = niuziManager.redeemItem(message.sender.userId, selectedItemPrice)?.length!!
         val action = selectedItem.redeemInGroup(listener, message, afterStatus)
         val msg = MessageChain.Builder()
-            .addReply(message.messageId)
             .addText("兑换成功! 你花费了${selectedItemPrice}cm来兑换奖品, 还剩${afterStatus}cm")
             .addNewLine()
             .addText("-------------------")

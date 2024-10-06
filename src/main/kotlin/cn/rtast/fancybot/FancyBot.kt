@@ -9,7 +9,9 @@ package cn.rtast.fancybot
 
 import cn.rtast.fancybot.commands.parse.*
 import cn.rtast.fancybot.enums.WSType
+import cn.rtast.fancybot.util.initCommandAndItem
 import cn.rtast.fancybot.util.initDatabase
+import cn.rtast.fancybot.util.initFilesDir
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.lagrange.FileEvent
@@ -141,10 +143,6 @@ class FancyBot : OneBotListener {
     }
 }
 
-fun initFilesDir() {
-    File("./files/images").also { it.mkdirs() }
-}
-
 suspend fun main() {
     val fancyBot = FancyBot()
     val workType = configManager.wsType
@@ -160,10 +158,5 @@ suspend fun main() {
     }
     initDatabase()
     initFilesDir()
-    val commandManager = rob.commandManager
-    commands.forEach { commandManager.register(it) }
-    items.forEach { itemManager.register(it) }
-    tasks.forEach {
-        rob.scheduler.scheduleTask(it.value, 1000L, it.key)
-    }
+    initCommandAndItem(rob)
 }
