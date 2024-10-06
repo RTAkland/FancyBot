@@ -7,9 +7,10 @@
 
 package cn.rtast.fancybot.items
 
+import cn.rtast.fancybot.ROOT_PATH
 import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.entity.setu.Setu
-import cn.rtast.fancybot.entity.setu.SetuV2
+import cn.rtast.fancybot.entity.setu.SetuV3
 import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.item.Item
 import cn.rtast.fancybot.util.str.encodeToBase64
@@ -19,27 +20,28 @@ import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.NodeMessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 import cn.rtast.rob.util.ob.asNode
+import java.io.File
 import java.net.URI
 
+private val setuV3Index = File("$ROOT_PATH/caches/pixiv_index_v3.json")
+    .readText(Charsets.UTF_8)
+    .fromArrayJson<List<SetuV3>>()
 
 private fun getImages(r18: Boolean): NodeMessageChain {
     val msg = mutableListOf<MessageChain>()
     if (r18) {
-        val response = Http.get("https://api.rtast.cn/api/setu/v2?size=10")
-            .fromArrayJson<List<SetuV2>>()
+        val response = setuV3Index.shuffled().take(10)
         msg.add(MessageChain.Builder().addText("因为是R18所以你需要自行访问链接来查看图片~").build())
         response.forEach {
             try {
                 val tempMsg = MessageChain.Builder()
-                    .addText(it.urls.regular)
+                    .addText(it.url)
                     .addNewLine()
                     .addText("标题: ${it.title}")
                     .addNewLine()
                     .addText("作品ID: ${it.pid}")
                     .addNewLine()
                     .addText("作者: ${it.author}(${it.uid})")
-                    .addNewLine()
-                    .addText("标签: ${it.tags.joinToString(" | ")}")
                     .build()
                 msg.add(tempMsg)
             } catch (_: Exception) {

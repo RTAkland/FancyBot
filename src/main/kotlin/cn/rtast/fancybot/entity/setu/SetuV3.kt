@@ -1,22 +1,17 @@
 /*
  * Copyright © 2024 RTAkland
  * Author: RTAkland
- * Date: 2024/9/29
+ * Date: 2024/10/6
  */
 
 
 package cn.rtast.fancybot.entity.setu
 
-data class SetuV2(
+data class SetuV3(
     val pid: Long,
     val uid: Long,
     val title: String,
     val author: String,
-    val urls: URLS,
+    val url: String,
     val r18: Boolean,
-    val tags: List<String>
-) {
-    data class URLS(
-        val regular: String,
-    )
-}
+)

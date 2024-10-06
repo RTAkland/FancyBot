@@ -39,6 +39,7 @@ val gson: Gson = GsonBuilder()
     .create()
 
 const val ROOT_PATH = "./data"
+const val ASSETS_BASE_URL = "https://static.rtast.cn"
 
 val DEFAULT_CONFIG = Config(
     ncmAPI = "https://ncm.rtast.cn",

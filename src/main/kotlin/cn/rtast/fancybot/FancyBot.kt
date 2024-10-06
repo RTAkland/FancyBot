@@ -12,6 +12,7 @@ import cn.rtast.fancybot.enums.WSType
 import cn.rtast.fancybot.util.initCommandAndItem
 import cn.rtast.fancybot.util.initDatabase
 import cn.rtast.fancybot.util.initFilesDir
+import cn.rtast.fancybot.util.initSetuIndex
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.lagrange.FileEvent
@@ -159,4 +160,5 @@ suspend fun main() {
     initDatabase()
     initFilesDir()
     initCommandAndItem(rob)
+    initSetuIndex()
 }

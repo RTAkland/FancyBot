@@ -11,6 +11,7 @@ import cn.rtast.fancybot.*
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.util.ob.OneBotListener
 import java.io.File
+import java.net.URI
 import kotlin.random.Random
 
 fun randomBooleanWithProbability(probability: Double): Boolean {
@@ -32,4 +33,13 @@ fun initCommandAndItem(rob: ROneBotFactory) {
 
 fun initFilesDir() {
     File("./$ROOT_PATH/caches/images").also { it.mkdirs() }
+}
+
+fun initSetuIndex() {
+    val file = File("$ROOT_PATH/caches/pixiv_index_v3.json")
+    if (!file.exists()) {
+        file.createNewFile()
+        val fileContent = Http.get("$ASSETS_BASE_URL/files/pixiv_index_v3.json")
+        file.writeText(fileContent)
+    }
 }
