@@ -114,6 +114,7 @@ class AsciiArtCommand : BaseCommand() {
                         frames.forEach { asciiFrames.add(it.convertToAscii().saveAsciiArtToImage(width, height)) }
                         val gifBytes = decoder.makeGif(asciiFrames)
                         val gifBase64 = gifBytes.encodeToBase64()
+                        println(gifBase64)
                         message.reply(MessageChain.Builder().addImage(gifBase64, true).build())
                     }
                 } catch (_: Exception) {
@@ -127,7 +128,7 @@ class AsciiArtCommand : BaseCommand() {
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (message.sender.userId !in waitingList) {
-            message.reply("请继续发送一张图片，如果输入错误则取消本次操作")
+            message.reply("请继续发送一张图片, 如果输入错误则取消本次操作, 如果GIF帧数过多可能会需要很长时间(也可能处理失败)")
             waitingList.add(message.sender.userId)
             return
         } else {

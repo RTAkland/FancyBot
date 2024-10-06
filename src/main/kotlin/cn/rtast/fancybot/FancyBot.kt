@@ -89,7 +89,7 @@ class FancyBot : OneBotListener {
                 if (it.type == ArrayMessageType.image) {
                     val filename = it.data.file!!.split("=").last() + ".png"
                     URI(it.data.file!!).toURL().openConnection().inputStream.use { input ->
-                        File("./files/images/$filename").outputStream().use { output ->
+                        File("$ROOT_PATH/caches/images/$filename").outputStream().use { output ->
                             output.write(input.readBytes())
                         }
                     }
