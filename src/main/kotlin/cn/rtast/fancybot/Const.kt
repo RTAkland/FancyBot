@@ -118,5 +118,6 @@ val commands = listOf(
     ShotSelfCommand(), TenSetuCommand(),
     ReactionCommand(), MCSkinCommand(),
     GithubLatestCommitCommand(), RandomMusicCommand(),
-    ZDJDCommand(), ScanQRCodeCommand()
+    ZDJDCommand(), ScanQRCodeCommand(),
+    TTSCommand()
 )

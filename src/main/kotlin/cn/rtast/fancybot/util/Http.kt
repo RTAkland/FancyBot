@@ -48,7 +48,7 @@ object Http {
         return result.fromJson<T>()
     }
 
-    private fun executeRequest(request: Request): String {
+    fun executeRequest(request: Request): String {
         return okHttpClient.newCall(request).execute().body.string()
     }
 
@@ -122,5 +122,18 @@ object Http {
         this.addHeaders(request, jsonHeader)
         val headerRequest = addHeaders(request, headers)
         return this.executeRequest(headerRequest.build())
+    }
+
+    @JvmOverloads
+    inline fun <reified T> post(
+        url: String,
+        form: FormBody,
+        headers: Map<String, String>? = null
+    ): T {
+        val request = Request.Builder()
+            .post(form)
+            .url(buildParams(url, headers))
+        val headerRequest = addHeaders(request, headers)
+        return this.executeRequest(headerRequest.build()).fromJson<T>()
     }
 }
