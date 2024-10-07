@@ -18,7 +18,7 @@ import java.net.URI
 
 @CommandDescription("给我打钱!")
 class SupportMeCommand : BaseCommand() {
-    override val commandNames = listOf("打钱", "给我打钱")
+    override val commandNames = listOf("打钱", "给我打钱", "support", "sp")
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         val image = URI("$ASSETS_BASE_URL/images/048cc8af57f19850ca176f29e50b6215.png")
