@@ -55,8 +55,8 @@ object BVParseCommand {
     private const val CANVAS_HEIGHT = 600
     private const val BASE = 58
     private const val DATA = "FcwAPNKTMug3GV5Lj7EJnHpWsx4tb8haYeviqBz6rkCy12mUSDQX9RdoZf"
-    private val XOR_CODE: BigInteger = BigInteger.valueOf(23442827791579L)
-    private val MAX_AID: BigInteger = BigInteger.ONE.shiftLeft(51)
+    private val XOR_CODE = BigInteger.valueOf(23442827791579L)
+    private val MAX_AID = BigInteger.ONE.shiftLeft(51)
     private val tempOkHttpClient = OkHttpClient()
 
     private fun generateShortUrl(bvid: String, oid: Long): String {
