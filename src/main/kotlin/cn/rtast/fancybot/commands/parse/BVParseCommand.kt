@@ -188,6 +188,8 @@ object BVParseCommand {
         } else if (shortUrlRegex.containsMatchIn(message.rawMessage)) {
             val shortUrl = shortUrlRegex.find(message.rawMessage)!!.value
             getShortUrlBVID(shortUrl)
+        } else if (bvRegex.containsMatchIn(message.rawMessage)) {
+            bvRegex.find(message.rawMessage)!!.value
         } else if (message.message.find { it.type == ArrayMessageType.json } != null) {
             val card = message.message.find { it.type == ArrayMessageType.json }!!
                 .data.data!!.toString().fromJson<CardShare>()
@@ -200,9 +202,7 @@ object BVParseCommand {
             }
             getShortUrlBVID(shortUrl)
         } else {
-            message.rawMessage.split("?").first()
-                .split("/")
-                .last { it.isNotEmpty() && it.isNotBlank() }
+            return
         }
         val videoInfo = this.getVideoStat(bvid)
         val viewCount = this.getViewCount(bvid, videoInfo.data.cid)
