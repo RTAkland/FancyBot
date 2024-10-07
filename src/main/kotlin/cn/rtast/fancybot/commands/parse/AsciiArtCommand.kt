@@ -8,6 +8,7 @@
 package cn.rtast.fancybot.commands.parse
 
 import cn.rtast.fancybot.annotations.CommandDescription
+import cn.rtast.fancybot.util.Logger
 import cn.rtast.fancybot.util.makeGif
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.fancybot.util.toByteArray
@@ -33,6 +34,7 @@ class AsciiArtCommand : BaseCommand() {
     companion object {
         private const val FONT_SIZE = 12
         private val font = Font("Monospaced", Font.PLAIN, FONT_SIZE)
+        private val logger = Logger.getLogger<AsciiArtCommand>()
         val waitingList = mutableListOf<Long>()
 
         private fun BufferedImage.convertToAscii(): String {
@@ -106,7 +108,7 @@ class AsciiArtCommand : BaseCommand() {
                         val msg = MessageChain.Builder().addImage(imageBase64, true).build()
                         message.reply(msg)
                     } else {
-                        println("Making gif ascii art, frames: ${decoder.frameCount}")
+                        logger.info("制作GIF Ascii art中, 总帧数: ${decoder.frameCount}")
                         val frames = (0 until decoder.frameCount).map { decoder.getFrame(it) }
                         val asciiFrames = mutableListOf<BufferedImage>()
                         val width = frames.first().width
@@ -114,11 +116,12 @@ class AsciiArtCommand : BaseCommand() {
                         frames.forEach { asciiFrames.add(it.convertToAscii().saveAsciiArtToImage(width, height)) }
                         val gifBytes = decoder.makeGif(asciiFrames)
                         val gifBase64 = gifBytes.encodeToBase64()
-                        println(gifBase64)
+                        logger.info("处理后的图片大小: ${gifBytes.size}字节, base64大小: ${gifBase64.length * 2}字节")
                         message.reply(MessageChain.Builder().addImage(gifBase64, true).build())
                     }
                 } catch (_: Exception) {
                     message.reply("处理GIF失败")
+                    logger.info("gif处理失败")
                 }
             } else {
                 message.reply("回复错误已取消本次操作")

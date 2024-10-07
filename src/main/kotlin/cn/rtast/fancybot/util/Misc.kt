@@ -31,7 +31,8 @@ fun initCommandAndItem(rob: ROneBotFactory) {
 }
 
 fun initFilesDir() {
-    File("./$ROOT_PATH/caches/images").also { it.mkdirs() }
+    File("$ROOT_PATH/caches/images").also { it.mkdirs() }
+    File("$ROOT_PATH/logs").also { it.mkdirs() }
 }
 
 fun initSetuIndex() {

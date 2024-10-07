@@ -10,10 +10,7 @@ package cn.rtast.fancybot
 import cn.rtast.fancybot.commands.misc.ScanQRCodeCommand
 import cn.rtast.fancybot.commands.parse.*
 import cn.rtast.fancybot.enums.WSType
-import cn.rtast.fancybot.util.initCommandAndItem
-import cn.rtast.fancybot.util.initDatabase
-import cn.rtast.fancybot.util.initFilesDir
-import cn.rtast.fancybot.util.initSetuIndex
+import cn.rtast.fancybot.util.*
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.lagrange.FileEvent
@@ -30,6 +27,7 @@ import java.net.URI
 
 class FancyBot : OneBotListener {
 
+    private val logger = Logger.getLogger<FancyBot>()
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
     private val githubRegex = Regex("""github\.com/([^/]+)/([^/]+)""")
 
@@ -43,7 +41,8 @@ class FancyBot : OneBotListener {
         val msg = message.rawMessage
         val groupId = message.groupId
         val messageId = message.messageId
-        println("$sender($senderId: $groupId >>> $messageId): $msg")
+        logger.info("$sender($senderId: $groupId >>> $messageId): $msg")
+        logger.trace("$sender($senderId: $groupId >>> $messageId: $json")
 
         if (message.message.any { it.type == ArrayMessageType.face && it.data.id.toString() == "419" }) {
             message.reply("你发牛魔的火车呢, 我直接就是打断")

@@ -42,6 +42,8 @@ dependencies {
     implementation(libs.nashorn.core)
     implementation(libs.zxing.core)
     implementation(libs.zxing.javase)
+    implementation(libs.logback.classic)
+    implementation(libs.slf4j.api)
 }
 
 tasks.build {
