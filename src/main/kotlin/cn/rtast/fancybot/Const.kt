@@ -119,5 +119,5 @@ val commands = listOf(
     ReactionCommand(), MCSkinCommand(),
     GithubLatestCommitCommand(), RandomMusicCommand(),
     ZDJDCommand(), ScanQRCodeCommand(),
-    TTSCommand()
+    TTSCommand(), SlimeChunkHelperCommand()
 )

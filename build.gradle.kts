@@ -30,7 +30,7 @@ tasks.compileJava {
 
 
 dependencies {
-    implementation(libs.rOneBot)
+    implementation(libs.ronebot)
     implementation(libs.okhttp)
     implementation(libs.exposed.core)
     implementation(libs.exposed.jdbc)

@@ -13,7 +13,7 @@ nashornVersion = "15.4"
 zxingVersion = "3.5.3"
 
 [libraries]
-rOneBot = { group = "cn.rtast", name = "ROneBot", version.ref = "ronebotVersion" }
+ronebot = { group = "cn.rtast", name = "ROneBot", version.ref = "ronebotVersion" }
 motd-pinger = { group = "cn.rtast", name = "MotdPinger", version.ref = "motdPingerVersion" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttpVersion" }
 exposed-core = { group = "org.jetbrains.exposed", name = "exposed-core", version.ref = "exposedVersion" }
