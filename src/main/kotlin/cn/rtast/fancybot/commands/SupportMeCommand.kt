@@ -18,9 +18,18 @@ import java.net.URI
 
 @CommandDescription("给我打钱!")
 class SupportMeCommand : BaseCommand() {
-    override val commandNames = listOf("打钱", "给我打钱", "support", "sp")
+    override val commandNames = listOf("打钱", "给满子打钱")
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(
+        listener: OneBotListener,
+        message: GroupMessage,
+        args: List<String>,
+        matchedCommand: String
+    ) {
+        if (matchedCommand == "给满子打钱") {
+            message.reply("你打牛魔呢?")
+            return
+        }
         val image = URI("$ASSETS_BASE_URL/images/048cc8af57f19850ca176f29e50b6215.png")
             .toURL().readBytes().encodeToBase64()
         val msg = MessageChain.Builder()
