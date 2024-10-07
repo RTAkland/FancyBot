@@ -26,13 +26,12 @@ class HelpCommand : BaseCommand() {
         if (args.isEmpty()) {
             val node = NodeMessageChain.Builder()
             val msg = MessageChain.Builder()
-            commands.sortedBy { it::class.simpleName }.forEach {
+            commands.sortedBy { it::class.simpleName }.toMutableList().forEach {
                 val description = if (!it::class.hasAnnotation<CommandDescription>()) "暂无描述"
                 else it::class.findAnnotation<CommandDescription>()?.description!!
                 val commandName = it::class.simpleName?.replace("Command", "")!!
                 val commandNames = it.commandNames.joinToString(",")
-                msg.addText("[$commandName] [$description] 命令: $commandNames")
-                    .addNewLine()
+                msg.addText("[$commandName] [$description] 命令: $commandNames").addNewLine()
             }
             msg.addText("共计${commands.size}条命令")
             node.addMessageChain(msg.build(), configManager.selfId)

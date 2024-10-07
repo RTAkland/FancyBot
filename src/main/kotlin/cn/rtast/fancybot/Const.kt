@@ -12,6 +12,7 @@ import cn.rtast.fancybot.commands.AboutCommand
 import cn.rtast.fancybot.commands.EchoCommand
 import cn.rtast.fancybot.commands.HelpCommand
 import cn.rtast.fancybot.commands.StatusCommand
+import cn.rtast.fancybot.commands.SupportMeCommand
 import cn.rtast.fancybot.commands.lookup.*
 import cn.rtast.fancybot.commands.misc.*
 import cn.rtast.fancybot.commands.niuzi.*
@@ -119,5 +120,6 @@ val commands = listOf(
     ReactionCommand(), MCSkinCommand(),
     GithubLatestCommitCommand(), RandomMusicCommand(),
     ZDJDCommand(), ScanQRCodeCommand(),
-    TTSCommand(), SlimeChunkHelperCommand()
+    TTSCommand(), SlimeChunkHelperCommand(),
+    SupportMeCommand()
 )
