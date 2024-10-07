@@ -18,7 +18,7 @@ import java.net.URI
 
 @CommandDescription("给我打钱!")
 class SupportMeCommand : BaseCommand() {
-    override val commandNames = listOf("打钱", "给满子打钱")
+    override val commandNames = listOf("打钱", "给我打钱", "给满子打钱")
 
     override suspend fun executeGroup(
         listener: OneBotListener,
