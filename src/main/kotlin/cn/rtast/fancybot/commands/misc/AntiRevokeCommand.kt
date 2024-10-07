@@ -31,6 +31,5 @@ class AntiRevokeCommand : BaseCommand() {
         msgList.addAll(getMsg.message)
         listener.sendGroupMessage(message.groupId, msgList)
         insertActionRecord(CommandAction.AntiRevoke, message.sender.userId, getMsg.messageId.toString())
-
     }
 }
