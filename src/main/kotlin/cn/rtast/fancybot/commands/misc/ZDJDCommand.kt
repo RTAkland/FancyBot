@@ -14,7 +14,6 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.OneBotListener
-import java.net.URI
 
 @CommandDescription("将人类的语言翻译成尊嘟假嘟语还能将尊嘟假嘟语翻译成人类的语言!")
 class ZDJDCommand : BaseCommand() {
