@@ -59,6 +59,7 @@ class FancyBot : OneBotListener {
         ReverseGIFCommand.callback(message)
         AsciiArtCommand.callback(message)
         ScanQRCodeCommand.callback(message)
+        BVParseCommand.parse(this, message)
 
         if (message.rawMessage.toList().any { it in arrayListOf('*', '-', '/', '+', '=') }) {
             val calculateResult = CalculateCommand.parse(message.rawMessage)
@@ -79,12 +80,6 @@ class FancyBot : OneBotListener {
             val (user, repo) = matchedResult.destructured
             GitHubParseCommand.parse(message, user, repo)
         }
-
-        if (message.rawMessage.startsWith("BV") ||
-            message.rawMessage.startsWith("https://www.bilibili.com") ||
-            message.rawMessage.contains("https://b23.tv/") ||
-            message.message.find { it.type == ArrayMessageType.json } != null
-        ) BVParseCommand.parse(this, message)
 
         coroutineScope.launch {
             message.message.forEach {

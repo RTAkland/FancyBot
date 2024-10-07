@@ -26,17 +26,15 @@ import java.awt.Color
 import java.awt.Font
 import java.awt.RenderingHints
 import java.awt.image.BufferedImage
+import java.math.BigInteger
 import java.net.URI
 import javax.imageio.ImageIO
 
-object BVParseCommand {
 
-    private const val VIDEO_STAT_URL = "https://api.bilibili.com/x/web-interface/view"
-    private const val USER_STAT_URL = "https://api.bilibili.com/x/relation/stat"
-    private const val SHORT_URL_API_URL = "https://api.bilibili.com/x/share/click"
-    private const val VIEW_COUNT_URL = "https://api.bilibili.com/x/player/online/total"
-    private const val CANVAS_WIDTH = 1000
-    private const val CANVAS_HEIGHT = 600
+object BVParseCommand {
+    private val avRegex = Regex("av(\\d+)", RegexOption.IGNORE_CASE)
+    private val bvRegex = Regex("BV[\\dA-Za-z]{10}")
+    private val shortUrlRegex = Regex("https://b23\\.tv/\\w{6,8}")
     private val backgroundColor = Color(43, 43, 43)
     private val upBarColor = Color(102, 102, 102)
     private val textColor = Color.WHITE
@@ -49,7 +47,16 @@ object BVParseCommand {
     private val shareIcon = ImageIO.read(Resources.loadFromResources("bili/share.png"))
     private val favoriteIcon = ImageIO.read(Resources.loadFromResources("bili/favorite.png"))
     private val replyIcon = ImageIO.read(Resources.loadFromResources("bili/reply.png"))
-
+    private const val VIDEO_STAT_URL = "https://api.bilibili.com/x/web-interface/view"
+    private const val USER_STAT_URL = "https://api.bilibili.com/x/relation/stat"
+    private const val SHORT_URL_API_URL = "https://api.bilibili.com/x/share/click"
+    private const val VIEW_COUNT_URL = "https://api.bilibili.com/x/player/online/total"
+    private const val CANVAS_WIDTH = 1000
+    private const val CANVAS_HEIGHT = 600
+    private const val BASE = 58
+    private const val DATA = "FcwAPNKTMug3GV5Lj7EJnHpWsx4tb8haYeviqBz6rkCy12mUSDQX9RdoZf"
+    private val XOR_CODE: BigInteger = BigInteger.valueOf(23442827791579L)
+    private val MAX_AID: BigInteger = BigInteger.ONE.shiftLeft(51)
     private val tempOkHttpClient = OkHttpClient()
 
     private fun generateShortUrl(bvid: String, oid: Long): String {
@@ -141,7 +148,7 @@ object BVParseCommand {
         return canvas.toByteArray().encodeToBase64()
     }
 
-    fun getShortUrlBVID(shortUrl: String): String {
+    private fun getShortUrlBVID(shortUrl: String): String {
         val request = Request.Builder().url(shortUrl.split(" ").last()).build()
         val redirectedUrl = tempOkHttpClient.newCall(request).execute()
         redirectedUrl.use {
@@ -149,12 +156,37 @@ object BVParseCommand {
         }
     }
 
+    private fun String.extractAv(): Long = avRegex.find(this)!!.groupValues[1].toLong()
+    private fun String.extractBv(): String = bvRegex.find(this)!!.value
+
+    private fun swap(array: CharArray, i: Int, j: Int) {
+        val temp = array[i]
+        array[i] = array[j]
+        array[j] = temp
+    }
+
+    private fun Long.avToBv(): String {
+        val aid = BigInteger.valueOf(this)
+        val bytes = charArrayOf('B', 'V', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0')
+        var bvIndex = bytes.size - 1
+        var tmp = MAX_AID.or(aid).xor(XOR_CODE)
+        while (tmp > BigInteger.ZERO) {
+            bytes[bvIndex] = DATA[tmp.mod(BigInteger.valueOf(BASE.toLong())).toInt()]
+            tmp = tmp.divide(BigInteger.valueOf(BASE.toLong()))
+            bvIndex--
+        }
+        swap(bytes, 3, 9)
+        swap(bytes, 4, 7)
+        return String(bytes)
+    }
+
     suspend fun parse(listener: OneBotListener, message: GroupMessage) {
-        // parse bilibili video with a link, bvid or b23.tv link
-        val bvid = if (message.rawMessage.startsWith("BV")) {
-            message.rawMessage
-        } else if (message.rawMessage.split(" ").last().startsWith("https://b23.tv/")) {
-            val shortUrl = message.rawMessage.split(" ").last()
+        val bvid = if (bvRegex.containsMatchIn(message.rawMessage)) {
+            message.rawMessage.extractBv()
+        } else if (avRegex.containsMatchIn(message.rawMessage)) {
+            message.rawMessage.extractAv().avToBv()
+        } else if (shortUrlRegex.containsMatchIn(message.rawMessage)) {
+            val shortUrl = shortUrlRegex.find(message.rawMessage)!!.value
             getShortUrlBVID(shortUrl)
         } else if (message.message.find { it.type == ArrayMessageType.json } != null) {
             val card = message.message.find { it.type == ArrayMessageType.json }!!
