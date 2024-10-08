@@ -47,4 +47,4 @@ fun Int.formatToMinutes(): String {
     return "$minutes:${if (remainingSeconds < 10) "0" else ""}$remainingSeconds"
 }
 
-val String.proxy: String get() = this.replace("https://", "https://proxy.rtast.cn/https/")
+val String.proxy get() = this.replace("https://", "https://proxy.rtast.cn/https/")
