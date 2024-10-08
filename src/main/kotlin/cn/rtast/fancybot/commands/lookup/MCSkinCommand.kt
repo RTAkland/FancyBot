@@ -5,6 +5,8 @@
  */
 
 
+@file:Suppress("KDocUnresolvedReference")
+
 package cn.rtast.fancybot.commands.lookup
 
 import cn.rtast.fancybot.annotations.CommandDescription
