@@ -117,6 +117,7 @@ object GitHubParseCommand {
         "Cuda" to Color(0x3a4e3a),
         "SAS" to Color(0xb34936),
         "Visual Basic .NET" to Color(0x945db7),
+        "Less" to Color(0x1d365d),
         "Unknown" to Color(211, 211, 211)
     )
 
