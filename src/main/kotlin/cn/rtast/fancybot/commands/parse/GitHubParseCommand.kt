@@ -43,20 +43,79 @@ object GitHubParseCommand {
     private val textColor = Color(60, 60, 60)
 
     private val languageColors = mapOf(
-        "Kotlin" to Color(169, 123, 255), "Java" to Color(176, 114, 25), "Python" to Color(53, 114, 165),
-        "JavaScript" to Color(241, 224, 90), "C++" to Color(243, 75, 125), "Go" to Color(0, 173, 216),
-        "Ruby" to Color(112, 21, 22), "PHP" to Color(79, 93, 149), "TypeScript" to Color(43, 116, 137),
-        "Swift" to Color(240, 81, 56), "SCSS" to Color(198, 83, 140), "Visual Basic 6.0" to Color(44, 99, 83),
-        "Astro" to Color(255, 90, 3), "Rust" to Color(222, 165, 132), "PowerShell" to Color(1, 36, 86),
-        "MDX" to Color(252, 179, 44), "Shell" to Color(137, 224, 81), "CMake" to Color(218, 52, 52),
-        "HTML" to Color(227, 76, 38), "C#" to Color(23, 134, 0), "F#" to Color(184, 69, 252),
-        "Scala" to Color(194, 45, 64), "CSS" to Color(86, 61, 124), "XML" to Color(0, 96, 172),
-        "Dart" to Color(0, 180, 171), "Objective-C" to Color(67, 142, 255), "OCaml" to Color(239, 122, 8),
-        "Jupyter Notebook" to Color(218, 91, 11), "Haskell" to Color(239, 122, 8), "GDScript" to Color(0x355570),
-        "Elm" to Color(0x60b5cc), "Dockerfile" to Color(0x384d54), "C" to Color(0x555555),
-        "Batchfile" to Color(0xC1, 0xF7, 0x65), "AngelScript" to Color(0xC7d7dc), "Vue" to Color(0x41b883),
-        "SQF" to Color(0x3f3f3f), "R" to Color(0x198ce7), "Assembly" to Color(0x6e4c13),
-        "M" to Color(0x9a6700), "HCL" to Color(0x844fba), "Scilab" to Color(0xca0f21),
+        "Kotlin" to Color(169, 123, 255),
+        "Java" to Color(176, 114, 25),
+        "Python" to Color(53, 114, 165),
+        "JavaScript" to Color(241, 224, 90),
+        "C++" to Color(243, 75, 125),
+        "Go" to Color(0, 173, 216),
+        "Ruby" to Color(112, 21, 22),
+        "PHP" to Color(79, 93, 149),
+        "TypeScript" to Color(43, 116, 137),
+        "Swift" to Color(240, 81, 56),
+        "SCSS" to Color(198, 83, 140),
+        "Visual Basic 6.0" to Color(44, 99, 83),
+        "Astro" to Color(255, 90, 3),
+        "Rust" to Color(222, 165, 132),
+        "PowerShell" to Color(1, 36, 86),
+        "MDX" to Color(252, 179, 44),
+        "Shell" to Color(137, 224, 81),
+        "CMake" to Color(218, 52, 52),
+        "HTML" to Color(227, 76, 38),
+        "C#" to Color(23, 134, 0),
+        "F#" to Color(184, 69, 252),
+        "Scala" to Color(194, 45, 64),
+        "CSS" to Color(86, 61, 124),
+        "XML" to Color(0, 96, 172),
+        "Dart" to Color(0, 180, 171),
+        "Objective-C" to Color(67, 142, 255),
+        "OCaml" to Color(239, 122, 8),
+        "Jupyter Notebook" to Color(218, 91, 11),
+        "Haskell" to Color(239, 122, 8),
+        "GDScript" to Color(0x355570),
+        "Elm" to Color(0x60b5cc),
+        "Dockerfile" to Color(0x384d54),
+        "C" to Color(0x555555),
+        "Batchfile" to Color(0xC1, 0xF7, 0x65),
+        "AngelScript" to Color(0xC7d7dc),
+        "Vue" to Color(0x41b883),
+        "SQF" to Color(0x3f3f3f),
+        "R" to Color(0x198ce7),
+        "Assembly" to Color(0x6e4c13),
+        "M" to Color(0x9a6700),
+        "HCL" to Color(0x844fba),
+        "Scilab" to Color(0xca0f21),
+        "TeX" to Color(0x3d6117),
+        "Makefile" to Color(0x427819),
+        "Svelte" to Color(0xff3e00),
+        "Stylus" to Color(0xff6347),
+        "EJS" to Color(0xa91e50),
+        "PLpgSQL" to Color(0x336790),
+        "Markdown" to Color(0x083fa1),
+        "Lua" to Color(0x000080),
+        "JSON" to Color(0x292929),
+        "YAML" to Color(0xcb171e),
+        "HLSL" to Color(0xaace60),
+        "GLSL" to Color(0x5686a5),
+        "Jinja" to Color(0xa52a22),
+        "Zig" to Color(0xec915c),
+        "Perl" to Color(0x0298c3),
+        "Vim Script" to Color(0x199f4b),
+        "Tcl" to Color(0xe4cc98),
+        "Roff" to Color(0xecdebe),
+        "CoffeeScript" to Color(0x244776),
+        "Matlab" to Color(0xe16737),
+        "Pascal" to Color(0xE3F171),
+        "Fortran" to Color(0x4d41b1),
+        "Prolog" to Color(0x74283c),
+        "Erlang" to Color(0xB83998),
+        "D" to Color(0xba595e),
+        "ActionScript" to Color(0x882B0F),
+        "Mathematica" to Color(0xdd1100),
+        "Nim" to Color(0xffc200),
+        "COBOL" to Color(0x9a6700),
+        "Cuda" to Color(0x3a4e3a),
+        "SAS" to Color(0xb34936),
         "Unknown" to Color(211, 211, 211)
     )
 
@@ -66,8 +125,7 @@ object GitHubParseCommand {
 
     private fun getRepoStat(username: String, repo: String): RepoInfo {
         return Http.get<RepoInfo>(
-            "$REPO_INFO_API/$username/$repo",
-            headers = mapOf("Authorization" to "Bearer ${configManager.githubKey}")
+            "$REPO_INFO_API/$username/$repo", headers = mapOf("Authorization" to "Bearer ${configManager.githubKey}")
         )
     }
 
@@ -113,9 +171,7 @@ object GitHubParseCommand {
     suspend fun parse(message: GroupMessage, user: String, repo: String) {
         val repoStat = this.getRepoStat(user, repo)
         val image = this.createImage(repoStat)
-        val msg = MessageChain.Builder()
-            .addImage(image, true)
-            .build()
+        val msg = MessageChain.Builder().addImage(image, true).build()
         message.reply(msg)
     }
 
