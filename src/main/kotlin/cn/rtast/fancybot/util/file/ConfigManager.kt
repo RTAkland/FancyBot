@@ -36,4 +36,5 @@ class ConfigManager : JsonFileHandler<Config>("config.json") {
     val qqMusicApiUrl = config.qqMusicApiUrl
     val startUpNoticeUser = config.startUpNoticeUser
     val selfId = config.selfId
+    val tianXingApiKey = config.tianXingApiKey
 }

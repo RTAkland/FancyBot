@@ -34,5 +34,6 @@ data class Config(
     val llamaModel: String,
     val qqMusicApiUrl: String,
     val startUpNoticeUser: Long,
-    val selfId: Long
+    val selfId: Long,
+    val tianXingApiKey: String,
 )

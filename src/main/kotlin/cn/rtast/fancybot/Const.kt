@@ -66,7 +66,8 @@ val DEFAULT_CONFIG = Config(
     llamaModel = "llama3.1",
     qqMusicApiUrl = "http://127.0.0.1:3200",
     startUpNoticeUser = 114514L,
-    selfId = 114514L
+    selfId = 114514L,
+    tianXingApiKey = "1145141919810"
 )
 
 val configManager = ConfigManager()
@@ -122,4 +123,5 @@ val commands = listOf(
     ZDJDCommand(), ScanQRCodeCommand(),
     TTSCommand(), SlimeChunkHelperCommand(),
     SupportMeCommand(), TheCatCommand(),
+    TheHistoryOfTodayCommand()
 )
