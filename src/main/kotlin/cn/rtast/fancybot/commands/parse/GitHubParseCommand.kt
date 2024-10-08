@@ -85,11 +85,6 @@ object GitHubParseCommand {
         "M" to Color(0x9a6700),
         "HCL" to Color(0x844fba),
         "Scilab" to Color(0xca0f21),
-        "SQF" to Color(0x3f3f3f),
-        "SQF" to Color(0x3f3f3f),
-        "SQF" to Color(0x3f3f3f),
-        "SQF" to Color(0x3f3f3f),
-        "SQF" to Color(0x3f3f3f),
         "Unknown" to Color(211, 211, 211)
     )
 
