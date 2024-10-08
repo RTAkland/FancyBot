@@ -116,6 +116,7 @@ object GitHubParseCommand {
         "COBOL" to Color(0x9a6700),
         "Cuda" to Color(0x3a4e3a),
         "SAS" to Color(0xb34936),
+        "Visual Basic .NET" to Color(0x945db7),
         "Unknown" to Color(211, 211, 211)
     )
 
