@@ -37,4 +37,6 @@ class ConfigManager : JsonFileHandler<Config>("config.json") {
     val startUpNoticeUser = config.startUpNoticeUser
     val selfId = config.selfId
     val tianXingApiKey = config.tianXingApiKey
+    val githubUser = config.githubUser
+    val githubImageRepo = config.githubImageRepo
 }

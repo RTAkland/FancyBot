@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.items
 
+import cn.rtast.fancybot.API_RTAST_URL
 import cn.rtast.fancybot.ROOT_PATH
 import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.entity.setu.Setu
@@ -48,7 +49,7 @@ private fun getImages(r18: Boolean): NodeMessageChain {
             }
         }
     } else {
-        val response = Http.get("https://api.rtast.cn/api/setu?size=10").fromArrayJson<List<Setu>>()
+        val response = Http.get("$API_RTAST_URL/api/setu?size=10").fromArrayJson<List<Setu>>()
         response.filter { !it.r18 }.map { it.urls.large }.forEach {
             try {
                 val imageBase64 = URI(it).toURL().readBytes().encodeToBase64()

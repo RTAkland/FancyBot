@@ -113,15 +113,25 @@ class AsciiArtCommand : BaseCommand() {
                         val asciiFrames = mutableListOf<BufferedImage>()
                         val width = frames.first().width
                         val height = frames.first().height
-                        frames.forEach { asciiFrames.add(it.convertToAscii().saveAsciiArtToImage(width, height)) }
+                        frames.forEachIndexed { index, item ->
+                            asciiFrames.add(item.convertToAscii().saveAsciiArtToImage(width, height))
+                            logger.info("帧:${index}处理完成")
+                        }
+                        logger.info("合成GIF中...")
                         val gifBytes = decoder.makeGif(asciiFrames)
+                        logger.info("合并完成")
                         val gifBase64 = gifBytes.encodeToBase64()
-                        logger.info("处理后的图片大小: ${gifBytes.size}字节, base64大小: ${gifBase64.length * 2}字节")
-                        message.reply(MessageChain.Builder().addImage(gifBase64, true).build())
+                        logger.info("处理后的图片大小: ${gifBytes.size}字节")
+                        val msg = MessageChain.Builder()
+                            .addImage(gifBase64, true)
+                        message.reply(msg.build())
                     }
-                } catch (_: Exception) {
-                    message.reply("处理GIF失败")
-                    logger.info("gif处理失败")
+                } catch (_: OutOfMemoryError) {
+                    message.reply("GIF处理失败: 内存溢出")
+                    logger.info("GIF处理失败: 内存溢出")
+                } catch (e: Exception) {
+                    message.reply("处理GIF失败: ${e.message}")
+                    logger.info("gif处理失败: ${e.message}")
                 }
             } else {
                 message.reply("回复错误已取消本次操作")

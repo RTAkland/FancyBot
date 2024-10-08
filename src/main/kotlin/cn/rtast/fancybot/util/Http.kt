@@ -10,14 +10,15 @@ package cn.rtast.fancybot.util
 import cn.rtast.fancybot.util.str.fromJson
 import okhttp3.FormBody
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 
 object Http {
 
-    private val jsonMediaType = "application/json; charset=utf-8".toMediaType()
-    private val jsonHeader = mapOf(
+    val jsonMediaType = "application/json; charset=utf-8".toMediaType()
+    val jsonHeader = mapOf(
         "Content-Type" to "application/json; charset=utf-8",
         "Accept" to "application/json"
     )
@@ -135,5 +136,46 @@ object Http {
             .url(buildParams(url, headers))
         val headerRequest = addHeaders(request, headers)
         return this.executeRequest(headerRequest.build()).fromJson<T>()
+    }
+
+    @JvmOverloads
+    inline fun <reified T> post(
+        url: String,
+        form: MultipartBody,
+        headers: Map<String, String>? = null
+    ): T {
+        val request = Request.Builder()
+            .post(form)
+            .url(buildParams(url, headers))
+        val headerRequest = addHeaders(request, headers)
+        return this.executeRequest(headerRequest.build()).fromJson<T>()
+    }
+
+    inline fun <reified T> put(
+        url: String,
+        jsonBody: String,
+        headers: Map<String, String>? = null,
+        params: Map<String, Any>? = null
+    ): T {
+        val paramsUrl = buildParams(url, params)
+        val request = Request.Builder()
+            .url(paramsUrl)
+            .put(jsonBody.toRequestBody(jsonMediaType))
+        val headerRequest = addHeaders(request, headers)
+        return this.executeRequest(headerRequest.build()).fromJson<T>()
+    }
+
+    fun put(
+        url: String,
+        jsonBody: String,
+        headers: Map<String, String>? = null,
+        params: Map<String, Any>? = null
+    ): String {
+        val paramsUrl = buildParams(url, params)
+        val request = Request.Builder()
+            .url(paramsUrl)
+            .put(jsonBody.toRequestBody(jsonMediaType))
+        val headerRequest = addHeaders(request, headers)
+        return this.executeRequest(headerRequest.build())
     }
 }

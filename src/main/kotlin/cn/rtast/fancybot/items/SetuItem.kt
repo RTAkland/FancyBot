@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.items
 
+import cn.rtast.fancybot.API_RTAST_URL
 import cn.rtast.fancybot.entity.setu.Setu
 import cn.rtast.fancybot.niuziManager
 import cn.rtast.fancybot.util.Http
@@ -27,7 +28,7 @@ class SetuItem : Item() {
         message: GroupMessage,
         after: Double
     ): MessageChain.Builder {
-        val response = Http.get("https://api.rtast.cn/api/setu")
+        val response = Http.get("$API_RTAST_URL/api/setu")
             .fromArrayJson<List<Setu>>().first()
         if (response.r18) {
             niuziManager.updateLength(message.sender.userId, itemPrice)

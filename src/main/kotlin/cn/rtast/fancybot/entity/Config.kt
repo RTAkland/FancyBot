@@ -36,4 +36,6 @@ data class Config(
     val startUpNoticeUser: Long,
     val selfId: Long,
     val tianXingApiKey: String,
+    val githubUser: String,
+    val githubImageRepo: String,
 )

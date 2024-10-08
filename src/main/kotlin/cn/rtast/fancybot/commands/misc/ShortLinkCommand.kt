@@ -7,10 +7,13 @@
 
 package cn.rtast.fancybot.commands.misc
 
+import cn.rtast.fancybot.API_RTAST_URL
 import cn.rtast.fancybot.annotations.CommandDescription
-import cn.rtast.fancybot.entity.ShortLink
+import cn.rtast.fancybot.entity.shortlink.ShortLinkPayload
+import cn.rtast.fancybot.entity.shortlink.ShortLinkResponse
 import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.str.encodeToBase64
+import cn.rtast.fancybot.util.str.toJson
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.OneBotListener
@@ -19,7 +22,16 @@ import cn.rtast.rob.util.ob.OneBotListener
 class ShortLinkCommand : BaseCommand() {
     override val commandNames = listOf("/s")
 
-    private val shortLinkApi = "https://api.rtast.cn"
+
+    companion object {
+        fun String.makeShortLink(): String {
+            val shortLink = Http.post<ShortLinkResponse>(
+                "$API_RTAST_URL/short_link",
+                ShortLinkPayload(this).toJson()
+            )
+            return "$API_RTAST_URL/s?rnd_id=${shortLink.id}"
+        }
+    }
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
@@ -27,10 +39,7 @@ class ShortLinkCommand : BaseCommand() {
             return
         }
         val target = args.first().encodeToBase64()
-        val shortLink = Http.post<ShortLink>(
-            "$shortLinkApi/short_link",
-            params = mapOf("target" to target)
-        )
-        message.reply("$shortLinkApi/s?rnd_id=${shortLink.id}")
+        val shortLink = target.makeShortLink()
+        message.reply(shortLink)
     }
 }

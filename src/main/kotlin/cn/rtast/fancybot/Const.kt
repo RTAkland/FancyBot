@@ -41,6 +41,7 @@ val gson: Gson = GsonBuilder()
 
 const val ROOT_PATH = "./data"
 const val ASSETS_BASE_URL = "https://static.rtast.cn"
+const val API_RTAST_URL = "https://api.rtast.cn"
 
 val DEFAULT_CONFIG = Config(
     ncmAPI = "https://ncm.rtast.cn",
@@ -67,7 +68,9 @@ val DEFAULT_CONFIG = Config(
     qqMusicApiUrl = "http://127.0.0.1:3200",
     startUpNoticeUser = 114514L,
     selfId = 114514L,
-    tianXingApiKey = "1145141919810"
+    tianXingApiKey = "1145141919810",
+    githubUser = "RTAkland",
+    githubImageRepo = "Static-Images"
 )
 
 val configManager = ConfigManager()
