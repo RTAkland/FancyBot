@@ -121,7 +121,7 @@ class AsciiArtCommand : BaseCommand() {
                         val gifBytes = decoder.makeGif(asciiFrames)
                         logger.info("合并完成")
                         val gifBase64 = gifBytes.encodeToBase64()
-                        logger.info("处理后的图片大小: ${gifBytes.size}字节")
+                        logger.info("处理后的图片大小: ${(gifBytes.size / 1024 / 1024).toInt()}MB")
                         val msg = MessageChain.Builder()
                             .addImage(gifBase64, true)
                         message.reply(msg.build())
