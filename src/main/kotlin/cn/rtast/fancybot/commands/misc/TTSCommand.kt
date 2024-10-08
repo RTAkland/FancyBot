@@ -10,6 +10,7 @@ package cn.rtast.fancybot.commands.misc
 import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.entity.tts.TTSResponse
 import cn.rtast.fancybot.util.Http
+import cn.rtast.fancybot.util.str.proxy
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
@@ -35,7 +36,7 @@ class TTSCommand : BaseCommand() {
             .build()
         val response = Http.post<TTSResponse>(ttsApiUrl, form)
         val msg = MessageChain.Builder()
-            .addRecord(response.url.replace("https://", "https://proxy.rtast.cn/https/"))
+            .addRecord(response.url.proxy())
             .build()
         listener.sendGroupMessage(message.groupId, msg)
     }
