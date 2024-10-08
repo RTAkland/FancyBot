@@ -16,7 +16,7 @@ data class RepoInfo(
     val description: String?,
     @SerializedName("forks_count")
     val forksCount: Int,
-    val language: String,
+    val language: String?,
     @SerializedName("stargazers_count")
     val starsCount: Int,
     @SerializedName("open_issues_count")

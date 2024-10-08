@@ -119,7 +119,7 @@ object GitHubParseCommand {
         "Unknown" to Color(211, 211, 211)
     )
 
-    private fun getLanguageColor(language: String): Color {
+    private fun getLanguageColor(language: String?): Color {
         return languageColors[language] ?: languageColors["Unknown"]!!
     }
 
@@ -163,7 +163,7 @@ object GitHubParseCommand {
         val avatarImage = ImageIO.read(URI(repoStat.owner.avatarUrl).toURL())
         g2d.drawCustomImage(avatarImage, 1200, 160, 300.0, 300.0, true)
         g2d.color = this.getLanguageColor(repoStat.language)
-        g2d.drawString(repoStat.language, 30, CANVAS_HEIGHT - 50)
+        g2d.drawString(repoStat.language ?: "[无语言]", 30, CANVAS_HEIGHT - 50)
         g2d.dispose()
         return canvas.toByteArray().encodeToBase64()
     }
