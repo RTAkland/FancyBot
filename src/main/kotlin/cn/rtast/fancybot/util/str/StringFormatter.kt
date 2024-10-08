@@ -46,3 +46,7 @@ fun Int.formatToMinutes(): String {
     val remainingSeconds = this % 60
     return "$minutes:${if (remainingSeconds < 10) "0" else ""}$remainingSeconds"
 }
+
+fun String.proxy(): String {
+    return this.replace("https://", "https://proxy.rtast.cn/https/")
+}

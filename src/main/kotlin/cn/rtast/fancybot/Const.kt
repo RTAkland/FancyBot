@@ -121,5 +121,5 @@ val commands = listOf(
     GithubLatestCommitCommand(), RandomMusicCommand(),
     ZDJDCommand(), ScanQRCodeCommand(),
     TTSCommand(), SlimeChunkHelperCommand(),
-    SupportMeCommand()
+    SupportMeCommand(), TheCatCommand(),
 )
