@@ -26,7 +26,7 @@ class TheCatCommand : BaseCommand() {
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         val imageBase64= Http.get(theCatApiUrl)
             .fromArrayJson<List<Cat>>().first().url
-            .proxy().toURL().readBytes().encodeToBase64()
+            .proxy.toURL().readBytes().encodeToBase64()
         val msg = MessageChain.Builder().addImage(imageBase64, true).build()
         message.reply(msg)
     }

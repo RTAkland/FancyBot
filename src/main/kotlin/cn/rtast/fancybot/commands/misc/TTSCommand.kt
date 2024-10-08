@@ -36,7 +36,7 @@ class TTSCommand : BaseCommand() {
             .build()
         val response = Http.post<TTSResponse>(ttsApiUrl, form)
         val msg = MessageChain.Builder()
-            .addRecord(response.url.proxy())
+            .addRecord(response.url.proxy)
             .build()
         listener.sendGroupMessage(message.groupId, msg)
     }
