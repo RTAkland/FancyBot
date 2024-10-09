@@ -17,6 +17,7 @@ import cn.rtast.fancybot.util.misc.ImageBed
 import cn.rtast.fancybot.util.misc.initCommandAndItem
 import cn.rtast.fancybot.util.misc.initFilesDir
 import cn.rtast.fancybot.util.misc.initSetuIndex
+import cn.rtast.fancybot.util.misc.toURI
 import cn.rtast.fancybot.util.misc.toURL
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
@@ -26,6 +27,7 @@ import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
+import cn.rtast.rob.util.ob.asNode
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -82,22 +84,38 @@ class FancyBot : OneBotListener {
 
             if (command.contains("图床")) {
                 val getMsg = this.getMessage(replyId.toString().toLong())
-                val imageUrl = ImageURLCommand.getImageUrl(getMsg)
-                if (imageUrl == null) {
+                val imagesUrl = ImageURLCommand.getImageUrl(getMsg)
+                if (imagesUrl.isEmpty()) {
                     message.reply("这个消息里没有图片呢!")
                 } else {
                     try {
-                        val imageByteArray = imageUrl.toURL().readBytes()
-                        val imageFileType = imageByteArray.getFileType()
-                        val imageBedUrl = ImageBed.upload(imageByteArray, imageFileType)
-                        val msg = MessageChain.Builder()
-                            .addText(imageBedUrl.makeShortLink())
-                            .addNewLine(2)
-                            .addText(imageBedUrl)
-                            .build()
-                        message.reply(msg)
-                    } catch (_: Exception) {
-                        message.reply("上传失败~")
+                        if (imagesUrl.size == 1) {
+                            val imageByteArray = imagesUrl[0].toURL().readBytes()
+                            val imageFileType = imageByteArray.getFileType()
+                            val imageBedUrl = ImageBed.upload(imageByteArray, imageFileType)
+                            val msg = MessageChain.Builder()
+                                .addText(imageBedUrl.makeShortLink())
+                                .addNewLine(2)
+                                .addText(imageBedUrl)
+                                .build()
+                            message.reply(msg)
+                        } else {
+                            val messages = mutableListOf<MessageChain>()
+                            imagesUrl.forEach {
+                                val imageByteArray = it.toURL().readBytes()
+                                val imageFileType = imageByteArray.getFileType()
+                                val imageBedUrl = ImageBed.upload(imageByteArray, imageFileType)
+                                val msg = MessageChain.Builder()
+                                    .addText(imageBedUrl.makeShortLink())
+                                    .addNewLine(2)
+                                    .addText(imageBedUrl)
+                                    .build()
+                                messages.add(msg)
+                            }
+                            message.reply(messages.asNode(configManager.selfId))
+                        }
+                    } catch (e: Exception) {
+                        message.reply("上传失败: ${e.message}")
                     }
                 }
             }
