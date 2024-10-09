@@ -8,6 +8,7 @@
 package cn.rtast.fancybot
 
 import cn.rtast.fancybot.commands.misc.ScanQRCodeCommand
+import cn.rtast.fancybot.commands.misc.ShortLinkCommand.Companion.makeShortLink
 import cn.rtast.fancybot.commands.parse.*
 import cn.rtast.fancybot.enums.WSType
 import cn.rtast.fancybot.util.*
@@ -85,10 +86,14 @@ class FancyBot : OneBotListener {
                 if (imageUrl == null) {
                     message.reply("这个消息里没有图片呢!")
                 } else {
-                    val imageByteArray = imageUrl.toURL().readBytes()
-                    val imageFileType = imageByteArray.getFileType()
-                    val imageBedUrl = ImageBed.upload(imageByteArray, imageFileType)
-                    message.reply(imageBedUrl)
+                    try {
+                        val imageByteArray = imageUrl.toURL().readBytes()
+                        val imageFileType = imageByteArray.getFileType()
+                        val imageBedUrl = ImageBed.upload(imageByteArray, imageFileType).makeShortLink()
+                        message.reply(imageBedUrl)
+                    } catch (_: Exception) {
+                        message.reply("上传失败~")
+                    }
                 }
             }
         }
