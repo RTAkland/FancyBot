@@ -12,7 +12,6 @@ import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.entity.shortlink.ShortLinkPayload
 import cn.rtast.fancybot.entity.shortlink.ShortLinkResponse
 import cn.rtast.fancybot.util.Http
-import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.fancybot.util.str.toJson
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
@@ -26,10 +25,10 @@ class ShortLinkCommand : BaseCommand() {
     companion object {
         fun String.makeShortLink(): String {
             val shortLink = Http.post<ShortLinkResponse>(
-                "$API_RTAST_URL/short_link",
-                ShortLinkPayload(this.encodeToBase64()).toJson()
+                "$API_RTAST_URL/api/sl",
+                ShortLinkPayload(this).toJson()
             )
-            return "$API_RTAST_URL/s?rnd_id=${shortLink.id}"
+            return "$API_RTAST_URL/${shortLink.id}"
         }
     }
 
