@@ -8,6 +8,7 @@
 package cn.rtast.fancybot.util.str
 
 import java.awt.Graphics2D
+import java.net.URLEncoder
 
 fun setTruncate(origin: String, g2d: Graphics2D, maxWidth: Int = 500): String {
     val fontMetrics = g2d.fontMetrics
@@ -48,3 +49,5 @@ fun Int.formatToMinutes(): String {
 }
 
 val String.proxy get() = this.replace("https://", "https://proxy.rtast.cn/https/")
+
+val String.uriEncode get() = URLEncoder.encode(this, "UTF-8")

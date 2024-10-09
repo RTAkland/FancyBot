@@ -133,5 +133,6 @@ val commands = listOf(
     ZDJDCommand(), ScanQRCodeCommand(),
     TTSCommand(), SlimeChunkHelperCommand(),
     SupportMeCommand(), TheCatCommand(),
-    TheHistoryOfTodayCommand()
+    TheHistoryOfTodayCommand(), MCVersionCommand(),
+    MinecraftWikiCommand()
 )

@@ -17,7 +17,6 @@ import cn.rtast.fancybot.util.misc.ImageBed
 import cn.rtast.fancybot.util.misc.initCommandAndItem
 import cn.rtast.fancybot.util.misc.initFilesDir
 import cn.rtast.fancybot.util.misc.initSetuIndex
-import cn.rtast.fancybot.util.misc.toURI
 import cn.rtast.fancybot.util.misc.toURL
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*

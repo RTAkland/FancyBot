@@ -4,6 +4,7 @@
  * Date: 2024/9/15
  */
 
+@file:Suppress("unused", "EnumEntryName")
 
 package cn.rtast.fancybot.enums
 
