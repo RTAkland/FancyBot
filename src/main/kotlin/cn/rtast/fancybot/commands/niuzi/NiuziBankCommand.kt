@@ -11,7 +11,7 @@ import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.commands
 import cn.rtast.fancybot.niuziBankManager
 import cn.rtast.fancybot.niuziManager
-import cn.rtast.fancybot.util.getUserName
+import cn.rtast.fancybot.util.misc.getUserName
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.BaseCommand

@@ -10,7 +10,7 @@ package cn.rtast.fancybot.commands.misc
 import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.entity.bullshit.BullShit
-import cn.rtast.fancybot.util.Resources
+import cn.rtast.fancybot.util.misc.Resources
 import cn.rtast.fancybot.util.str.fromJson
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand

@@ -9,7 +9,7 @@ package cn.rtast.fancybot.commands.niuzi
 
 import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.niuziManager
-import cn.rtast.fancybot.util.getUserName
+import cn.rtast.fancybot.util.misc.getUserName
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain

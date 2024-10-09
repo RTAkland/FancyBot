@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.fancybot.util
+package cn.rtast.fancybot.util.misc
 
 import com.madgag.gif.fmsware.AnimatedGifEncoder
 import com.madgag.gif.fmsware.GifDecoder

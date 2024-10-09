@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.fancybot.util
+package cn.rtast.fancybot.util.misc
 
 import java.io.InputStream
 

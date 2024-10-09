@@ -14,12 +14,12 @@ import cn.rtast.fancybot.entity.mc.DecodedSkin
 import cn.rtast.fancybot.entity.mc.Skin
 import cn.rtast.fancybot.entity.mc.Username
 import cn.rtast.fancybot.util.Http
-import cn.rtast.fancybot.util.isFullyTransparent
-import cn.rtast.fancybot.util.scaleImage
+import cn.rtast.fancybot.util.misc.isFullyTransparent
+import cn.rtast.fancybot.util.misc.scaleImage
 import cn.rtast.fancybot.util.str.decodeToString
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.fancybot.util.str.fromJson
-import cn.rtast.fancybot.util.toByteArray
+import cn.rtast.fancybot.util.misc.toByteArray
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain

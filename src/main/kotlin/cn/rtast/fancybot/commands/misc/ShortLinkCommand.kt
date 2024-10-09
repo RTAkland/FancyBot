@@ -27,7 +27,7 @@ class ShortLinkCommand : BaseCommand() {
         fun String.makeShortLink(): String {
             val shortLink = Http.post<ShortLinkResponse>(
                 "$API_RTAST_URL/short_link",
-                ShortLinkPayload(this).toJson()
+                ShortLinkPayload(this.encodeToBase64()).toJson()
             )
             return "$API_RTAST_URL/s?rnd_id=${shortLink.id}"
         }
@@ -38,7 +38,7 @@ class ShortLinkCommand : BaseCommand() {
             message.reply("发送`/s <url>`来生成短链接`不要放入一些奇怪的链接哦~")
             return
         }
-        val target = args.first().encodeToBase64()
+        val target = args.first()
         val shortLink = target.makeShortLink()
         message.reply(shortLink)
     }

@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.fancybot.util
+package cn.rtast.fancybot.util.misc
 
 import cn.rtast.fancybot.configManager
 import java.awt.Graphics2D

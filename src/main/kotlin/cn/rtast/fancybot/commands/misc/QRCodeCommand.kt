@@ -11,8 +11,8 @@ import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.enums.CommandAction
 import cn.rtast.fancybot.util.file.insertActionRecord
 import cn.rtast.fancybot.util.str.encodeToBase64
-import cn.rtast.fancybot.util.toBufferedImage
-import cn.rtast.fancybot.util.toByteArray
+import cn.rtast.fancybot.util.misc.toBufferedImage
+import cn.rtast.fancybot.util.misc.toByteArray
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.BaseCommand

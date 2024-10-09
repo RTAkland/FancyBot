@@ -5,11 +5,12 @@
  */
 
 
-package cn.rtast.fancybot.util
+package cn.rtast.fancybot.util.misc
 
 import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.entity.github.UploadContentPayload
 import cn.rtast.fancybot.entity.github.UploadContentResponse
+import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.fancybot.util.str.proxy
 import cn.rtast.fancybot.util.str.toJson

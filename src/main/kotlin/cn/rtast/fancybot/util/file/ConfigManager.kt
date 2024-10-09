@@ -8,7 +8,7 @@
 package cn.rtast.fancybot.util.file
 
 import cn.rtast.fancybot.entity.Config
-import cn.rtast.fancybot.util.JsonFileHandler
+import cn.rtast.fancybot.util.str.JsonFileHandler
 
 class ConfigManager : JsonFileHandler<Config>("config.json") {
     private val config = this.read<Config>()

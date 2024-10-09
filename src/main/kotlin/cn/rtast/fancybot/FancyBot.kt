@@ -11,6 +11,12 @@ import cn.rtast.fancybot.commands.misc.ScanQRCodeCommand
 import cn.rtast.fancybot.commands.parse.*
 import cn.rtast.fancybot.enums.WSType
 import cn.rtast.fancybot.util.*
+import cn.rtast.fancybot.util.file.getFileType
+import cn.rtast.fancybot.util.misc.ImageBed
+import cn.rtast.fancybot.util.misc.initCommandAndItem
+import cn.rtast.fancybot.util.misc.initFilesDir
+import cn.rtast.fancybot.util.misc.initSetuIndex
+import cn.rtast.fancybot.util.misc.toURL
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.lagrange.FileEvent
@@ -71,6 +77,19 @@ class FancyBot : OneBotListener {
             if (command.contains("图来") || command.contains("图链")) {
                 val getMsg = this.getMessage(replyId.toString().toLong())
                 ImageURLCommand.callback(message, getMsg)
+            }
+
+            if (command.contains("图床")) {
+                val getMsg = this.getMessage(replyId.toString().toLong())
+                val imageUrl = ImageURLCommand.getImageUrl(getMsg)
+                if (imageUrl == null) {
+                    message.reply("这个消息里没有图片呢!")
+                } else {
+                    val imageByteArray = imageUrl.toURL().readBytes()
+                    val imageFileType = imageByteArray.getFileType()
+                    val imageBedUrl = ImageBed.upload(imageByteArray, imageFileType)
+                    message.reply(imageBedUrl)
+                }
             }
         }
 

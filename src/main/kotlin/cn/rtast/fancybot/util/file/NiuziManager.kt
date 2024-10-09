@@ -13,7 +13,7 @@ import cn.rtast.fancybot.db.NiuziTable.length
 import cn.rtast.fancybot.db.NiuziTable.nickname
 import cn.rtast.fancybot.db.NiuziTable.timestamp
 import cn.rtast.fancybot.db.NiuziTable.userId
-import cn.rtast.fancybot.util.isSameDay
+import cn.rtast.fancybot.util.misc.isSameDay
 import cn.rtast.fancybot.util.suspendedTransaction
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll

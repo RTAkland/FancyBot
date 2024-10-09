@@ -9,7 +9,7 @@ package cn.rtast.fancybot.commands.misc
 
 import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.util.str.encodeToBase64
-import cn.rtast.fancybot.util.toByteArray
+import cn.rtast.fancybot.util.misc.toByteArray
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain

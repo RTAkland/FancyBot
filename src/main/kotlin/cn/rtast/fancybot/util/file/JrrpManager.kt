@@ -9,7 +9,7 @@ package cn.rtast.fancybot.util.file
 
 import cn.rtast.fancybot.db.JrrpRecord
 import cn.rtast.fancybot.db.JrrpTable
-import cn.rtast.fancybot.util.isSameDay
+import cn.rtast.fancybot.util.misc.isSameDay
 import cn.rtast.fancybot.util.suspendedTransaction
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.selectAll
