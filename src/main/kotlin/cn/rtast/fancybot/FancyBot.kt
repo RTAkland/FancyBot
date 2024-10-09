@@ -89,8 +89,13 @@ class FancyBot : OneBotListener {
                     try {
                         val imageByteArray = imageUrl.toURL().readBytes()
                         val imageFileType = imageByteArray.getFileType()
-                        val imageBedUrl = ImageBed.upload(imageByteArray, imageFileType).makeShortLink()
-                        message.reply(imageBedUrl)
+                        val imageBedUrl = ImageBed.upload(imageByteArray, imageFileType)
+                        val msg = MessageChain.Builder()
+                            .addText(imageBedUrl.makeShortLink())
+                            .addNewLine(2)
+                            .addText(imageBedUrl)
+                            .build()
+                        message.reply(msg)
                     } catch (_: Exception) {
                         message.reply("上传失败~")
                     }
