@@ -30,5 +30,11 @@
   "selfId": 114514,
   "tianXingApiKey": "1145141919810",
   "githubUser": "RTAkland",
-  "githubImageRepo": "Static-Images"
+  "githubImageRepo": "Static-Images",
+  "imageBedType": "Github",
+  "cloudflareAccountId": "111",
+  "cloudflareR2AccessKeyId": "11111",
+  "cloudflareR2SecretKey": "222",
+  "cloudflareR2BucketName": "fancybot",
+  "cloudflareR2PublicUrl": "https://pub-2df243c8ff83452c9dcdd42c87b662a7.r2.dev"
 }

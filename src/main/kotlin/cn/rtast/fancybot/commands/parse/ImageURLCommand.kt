@@ -21,8 +21,8 @@ object ImageURLCommand {
         try {
             val images = mutableListOf<String>()
             message.message.forEach {
-                if (it.type == ArrayMessageType.image) images.add(it.data.url!!)
-                if (it.type == ArrayMessageType.mface) images.add(it.data.file!!)
+                if (it.type == ArrayMessageType.image) images.add(it.data.file!!)
+                if (it.type == ArrayMessageType.mface) images.add(it.data.url!!)
             }
             return images
         } catch (_: NullPointerException) {

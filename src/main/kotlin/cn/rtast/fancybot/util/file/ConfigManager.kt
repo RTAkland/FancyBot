@@ -8,6 +8,7 @@
 package cn.rtast.fancybot.util.file
 
 import cn.rtast.fancybot.entity.Config
+import cn.rtast.fancybot.enums.ImageBedType
 import cn.rtast.fancybot.util.str.JsonFileHandler
 
 class ConfigManager : JsonFileHandler<Config>("config.json") {
@@ -39,4 +40,10 @@ class ConfigManager : JsonFileHandler<Config>("config.json") {
     val tianXingApiKey = config.tianXingApiKey
     val githubUser = config.githubUser
     val githubImageRepo = config.githubImageRepo
+    val imageBedType = config.imageBedType
+    val cloudflareAccountId = config.cloudflareAccountId
+    val cloudflareR2AccessKey = config.cloudflareR2AccessKeyId
+    val cloudflareR2SecretKey = config.cloudflareR2SecretKey
+    val cloudflareR2BucketName = config.cloudflareR2BucketName
+    val cloudflareR2PublicUrl = config.cloudflareR2PublicUrl
 }

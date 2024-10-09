@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.entity
 
+import cn.rtast.fancybot.enums.ImageBedType
 import cn.rtast.fancybot.enums.ImageType
 import cn.rtast.fancybot.enums.WSType
 
@@ -38,4 +39,10 @@ data class Config(
     val tianXingApiKey: String,
     val githubUser: String,
     val githubImageRepo: String,
+    val imageBedType: ImageBedType,
+    val cloudflareAccountId: String,
+    val cloudflareR2AccessKeyId: String,
+    val cloudflareR2SecretKey: String,
+    val cloudflareR2BucketName: String,
+    val cloudflareR2PublicUrl: String
 )

@@ -22,6 +22,7 @@ import cn.rtast.fancybot.commands.misc.JrrpCommand
 import cn.rtast.fancybot.commands.niuzi.NiuziRedeemCommand
 import cn.rtast.fancybot.commands.misc.ShortLinkCommand
 import cn.rtast.fancybot.entity.Config
+import cn.rtast.fancybot.enums.ImageBedType
 import cn.rtast.fancybot.enums.ImageType
 import cn.rtast.fancybot.enums.WSType
 import cn.rtast.fancybot.items.*
@@ -70,7 +71,13 @@ val DEFAULT_CONFIG = Config(
     selfId = 114514L,
     tianXingApiKey = "1145141919810",
     githubUser = "RTAkland",
-    githubImageRepo = "Static-Images"
+    githubImageRepo = "Static-Images",
+    imageBedType = ImageBedType.Github,
+    cloudflareAccountId = "111",
+    cloudflareR2AccessKeyId = "11111",
+    cloudflareR2SecretKey = "222",
+    cloudflareR2BucketName = "fancybot",
+    cloudflareR2PublicUrl = "https://pub-2df243c8ff83452c9dcdd42c87b662a7.r2.dev"
 )
 
 val configManager = ConfigManager()

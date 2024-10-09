@@ -44,6 +44,7 @@ dependencies {
     implementation(libs.zxing.javase)
     implementation(libs.logback.classic)
     implementation(libs.slf4j.api)
+    implementation(libs.aws.s3.sdk)
 }
 
 tasks.build {
