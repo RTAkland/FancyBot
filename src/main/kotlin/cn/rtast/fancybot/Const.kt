@@ -77,7 +77,8 @@ val DEFAULT_CONFIG = Config(
     cloudflareR2AccessKeyId = "11111",
     cloudflareR2SecretKey = "222",
     cloudflareR2BucketName = "fancybot",
-    cloudflareR2PublicUrl = "https://114514.com"
+    cloudflareR2PublicUrl = "https://114514.com",
+    apiSpaceKey = "114514"
 )
 
 val configManager = ConfigManager()
@@ -118,5 +119,5 @@ val commands = listOf(
     ReactionCommand(), MCSkinCommand(), GithubLatestCommitCommand(), RandomMusicCommand(),
     ZDJDCommand(), ScanQRCodeCommand(), TTSCommand(), SlimeChunkHelperCommand(),
     SupportMeCommand(), TheCatCommand(), TheHistoryOfTodayCommand(), MCVersionCommand(),
-    MinecraftWikiCommand(), GaoKaoDaysRemainCommand()
+    MinecraftWikiCommand(), GaoKaoDaysRemainCommand(), IdiomExplainCommand()
 )

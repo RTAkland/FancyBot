@@ -31,7 +31,6 @@ import cn.rtast.fancybot.util.str.fromJson
 import cn.rtast.fancybot.util.str.uriEncode
 import cn.rtast.motdpinger.BedrockPing
 import cn.rtast.motdpinger.JavaPing
-import cn.rtast.motdpinger.removeColorCodes
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
@@ -310,6 +309,10 @@ class MCSkinCommand : BaseCommand() {
 class MCPingCommand : BaseCommand() {
     override val commandNames = listOf("/mcping")
 
+    private fun String.removeColorCodes(): String {
+        return this.replace(Regex("§."), "")
+    }
+
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             val msg = MessageChain.Builder()
@@ -324,11 +327,7 @@ class MCPingCommand : BaseCommand() {
         when (platform) {
             "java", "je", "Java", "JAVA" -> {
                 val parts = args.first().split(":")
-                val port = if (parts.size == 1) {
-                    25565
-                } else {
-                    parts.last().toInt()
-                }
+                val port = if (parts.size == 1) 25565 else parts.last().toInt()
                 val host = parts.first()
                 val response = JavaPing().ping(host, port, 10000)
                 if (response == null) {
@@ -336,10 +335,10 @@ class MCPingCommand : BaseCommand() {
                     return
                 }
                 val msg = MessageChain.Builder()
-                response.favicon?.let {
-                    msg.addImage(response.favicon!!.replace("data:image/png;base64,", ""), true)
-                }
-                msg.addText("服务器地址: $host:$port | 服务器类型: Java")
+                response.favicon?.let { msg.addImage(response.favicon!!.replace("data:image/png;base64,", ""), true) }
+                msg.addText("服务器地址: $host:$port")
+                    .addNewLine()
+                    .addText("服务器类型: Java | 延迟: ${response.latency}ms")
                     .addNewLine()
                     .addText("服务器版本: ${response.version.name}/${response.version.protocol}")
                     .addNewLine()
@@ -349,16 +348,14 @@ class MCPingCommand : BaseCommand() {
 
             "be", "bedrock", "BE", "Bedrock" -> {
                 val parts = args.first().split(":")
-                val port = if (parts.size == 1) {
-                    19132
-                } else {
-                    parts.last().toInt()
-                }
+                val port = if (parts.size == 1) 19132 else parts.last().toInt()
                 val host = parts.first()
                 try {
                     val response = BedrockPing().ping(host, port, 10000)
                     val msg = MessageChain.Builder()
-                        .addText("服务器地址: $host:$port | 服务器类型: Bedrock")
+                        .addText("服务器地址: $host:$port")
+                        .addNewLine()
+                        .addText("服务器类型: Bedrock(基岩版) | 延迟: ${response.latency}ms")
                         .addNewLine()
                         .addText("服务器版本: ${response.version}/${response.protocolVersion}")
                         .addNewLine()

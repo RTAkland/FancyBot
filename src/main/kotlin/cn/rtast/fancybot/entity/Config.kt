@@ -44,5 +44,6 @@ data class Config(
     val cloudflareR2AccessKeyId: String,
     val cloudflareR2SecretKey: String,
     val cloudflareR2BucketName: String,
-    val cloudflareR2PublicUrl: String
+    val cloudflareR2PublicUrl: String,
+    val apiSpaceKey: String,
 )

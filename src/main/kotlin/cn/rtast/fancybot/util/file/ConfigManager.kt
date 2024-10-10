@@ -46,4 +46,5 @@ class ConfigManager : JsonFileHandler<Config>("config.json") {
     val cloudflareR2SecretKey = config.cloudflareR2SecretKey
     val cloudflareR2BucketName = config.cloudflareR2BucketName
     val cloudflareR2PublicUrl = config.cloudflareR2PublicUrl
+    val apiSpaceKey = config.apiSpaceKey
 }
