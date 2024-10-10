@@ -46,13 +46,15 @@ object ImageBed {
     fun upload(file: ByteArray, fileType: String = ""): String {
         val randomUUID = UUID.randomUUID().toString()
         if (configManager.imageBedType == ImageBedType.CloudflareR2) {
-            val key = "$randomUUID${if (fileType.isNotBlank()) ".$fileType" else ""}"
+            val ft = if (fileType.isNotBlank()) ".$fileType" else ""
+            val key = "$randomUUID${ft}"
             val putObjectRequest = PutObjectRequest.builder()
                 .bucket(configManager.cloudflareR2BucketName)
+                .contentType("image/${ft.replace(".", "")}")
                 .key(key)
                 .build()
             s3Client.putObject(putObjectRequest, RequestBody.fromBytes(file))
-            return "${configManager.cloudflareR2PublicUrl}/$key"
+            return "${configManager.cloudflareR2PublicUrl}/$key".proxy
         } else {
             val body = UploadContentPayload("uploadImage", file.encodeToBase64()).toJson()
             val response = Http.put<UploadContentResponse>(

@@ -89,7 +89,7 @@ class FancyBot : OneBotListener {
                 } else {
                     try {
                         if (imagesUrl.size == 1) {
-                            val imageByteArray = imagesUrl[0].toURL().readBytes()
+                            val imageByteArray = imagesUrl.first().toURL().readBytes()
                             val imageFileType = imageByteArray.getFileType()
                             val imageBedUrl = ImageBed.upload(imageByteArray, imageFileType)
                             val msg = MessageChain.Builder()
