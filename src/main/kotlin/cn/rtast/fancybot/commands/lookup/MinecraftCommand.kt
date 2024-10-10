@@ -68,7 +68,7 @@ class MCVersionCommand : BaseCommand() {
 
 @CommandDescription("查询来自minecraft.wiki中的wiki页面")
 class MinecraftWikiCommand : BaseCommand() {
-    override val commandNames = listOf("mcwiki")
+    override val commandNames = listOf("/mcwiki")
 
     private val baseApiUrl = "https://zh.minecraft.wiki/rest.php/v1"
     private val logger = Logger.getLogger<MinecraftWikiCommand>()
