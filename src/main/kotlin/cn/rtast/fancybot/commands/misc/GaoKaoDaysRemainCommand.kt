@@ -21,9 +21,7 @@ class GaoKaoDaysRemainCommand : BaseCommand() {
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         val gaoKaoDate = LocalDate.of(LocalDate.now().year, 6, 7)
         val currentDate = LocalDate.now()
-        val adjustedGaoKaoDate = if (currentDate.isAfter(gaoKaoDate)) {
-            gaoKaoDate.plusYears(1)
-        } else gaoKaoDate
+        val adjustedGaoKaoDate = if (currentDate.isAfter(gaoKaoDate)) gaoKaoDate.plusYears(1) else gaoKaoDate
         val daysBetween = ChronoUnit.DAYS.between(currentDate, adjustedGaoKaoDate)
         message.reply("高考倒计时: ${daysBetween}天")
     }
