@@ -7,8 +7,16 @@
 
 package cn.rtast.fancybot.util.str
 
-import info.bliki.wiki.model.WikiModel
+import cn.rtast.fancybot.API_RTAST_URL
+import cn.rtast.fancybot.entity.wiki.WikipediaConvertPayload
+import cn.rtast.fancybot.entity.wiki.WikipediaConvertResponse
+import cn.rtast.fancybot.util.Http
 
 fun String.convertToHTML(): String {
-    return WikiModel.toHtml(this)
+    val payload = WikipediaConvertPayload(this)
+    val response = Http.post<WikipediaConvertResponse>(
+        "$API_RTAST_URL/api/wikitext",
+        payload.toJson()
+    )
+    return response.parsed
 }

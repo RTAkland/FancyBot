@@ -46,7 +46,6 @@ dependencies {
     implementation(libs.logback.classic)
     implementation(libs.slf4j.api)
     implementation(libs.aws.s3.sdk)
-    implementation(libs.bliki.core)
 }
 
 tasks.build {
