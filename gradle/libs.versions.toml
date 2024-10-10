@@ -14,6 +14,7 @@ zxingVersion = "3.5.3"
 logbackClassicVersion = "1.5.8"
 sl4jVersion = "2.0.16"
 awsS3SDKVersion = "2.28.18"
+blikiWikiVersion = "3.1.1-SNAPSHOT"
 
 [libraries]
 ronebot = { group = "cn.rtast", name = "ROneBot", version.ref = "ronebotVersion" }
@@ -31,6 +32,7 @@ zxing-javase = { group = "com.google.zxing", name = "javase", version.ref = "zxi
 logback-classic = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logbackClassicVersion" }
 slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "sl4jVersion" }
 aws-s3-sdk = { group = "software.amazon.awssdk", name = "s3", version.ref = "awsS3SDKVersion" }
+sweble-wikitext = { group = "info.bliki.wiki", name = "bliki-core", version.ref = "blikiWikiVersion" }
 
 [bundles]
 

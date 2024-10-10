@@ -9,18 +9,22 @@
 package cn.rtast.fancybot.commands.lookup
 
 import cn.rtast.fancybot.annotations.CommandDescription
+import cn.rtast.fancybot.commands.lookup.WikipediaCommand.Companion.extractPlainTextFromHtml
 import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.entity.mc.DecodedSkin
 import cn.rtast.fancybot.entity.mc.MCVersion
+import cn.rtast.fancybot.entity.mc.MCWikiPageResponse
 import cn.rtast.fancybot.entity.mc.MCWikiSearchResponse
 import cn.rtast.fancybot.entity.mc.Skin
 import cn.rtast.fancybot.entity.mc.Username
 import cn.rtast.fancybot.enums.mc.MCVersionType
 import cn.rtast.fancybot.util.Http
+import cn.rtast.fancybot.util.Logger
 import cn.rtast.fancybot.util.misc.isFullyTransparent
 import cn.rtast.fancybot.util.misc.scaleImage
 import cn.rtast.fancybot.util.misc.toByteArray
 import cn.rtast.fancybot.util.misc.toURL
+import cn.rtast.fancybot.util.str.convertToHTML
 import cn.rtast.fancybot.util.str.decodeToString
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.fancybot.util.str.fromJson
@@ -67,32 +71,64 @@ class MCVersionCommand : BaseCommand() {
 class MinecraftWikiCommand : BaseCommand() {
     override val commandNames = listOf("mcwiki")
 
-    private val searchApiUrl = "https://zh.minecraft.wiki"
+    private val baseApiUrl = "https://zh.minecraft.wiki/rest.php/v1"
+    private val logger = Logger.getLogger<MinecraftWikiCommand>()
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
-        val searchKeyword = args.joinToString(" ").trim()
-        val messages = mutableListOf<MessageChain>()
-        val headerMessage = listOf("结果如下:").asMessageChain()
-        messages.add(headerMessage)
-        Http.get<MCWikiSearchResponse>(
-            "$searchApiUrl/rest.php/v1/search/title",
-            mapOf("q" to searchKeyword, "limit" to 10)
-        ).pages.forEach {
-            val msg = MessageChain.Builder()
-            val imageUrl = it.thumbnail
-            if (imageUrl != null) {
-                val imageBase64 = imageUrl.url.toURL().readBytes().encodeToBase64()
-                msg.addImage(imageBase64, true)
+        val action = args.first()
+        when (action) {
+            "s", "搜索" -> {
+                val searchKeyword = args.drop(1).joinToString(" ").trim()
+                val messages = mutableListOf<MessageChain>()
+                val headerMessage = listOf("结果如下:").asMessageChain()
+                messages.add(headerMessage)
+                Http.get<MCWikiSearchResponse>(
+                    "$baseApiUrl/search/title",
+                    mapOf("q" to searchKeyword, "limit" to 10)
+                ).pages.forEach {
+                    val msg = MessageChain.Builder()
+                    val imageUrl = it.thumbnail
+                    if (imageUrl != null) {
+                        val imageBase64 = imageUrl.url.toURL().readBytes().encodeToBase64()
+                        msg.addImage(imageBase64, true)
+                    }
+                    msg.addText("标题: ${it.title}")
+                        .addNewLine()
+                        .addText("ID: ${it.id}")
+                        .addNewLine()
+                        .addText("https://zh.minecraft.wiki/w/${it.title.uriEncode}")
+                    messages.add(msg.build())
+                }
+                message.reply(messages.asNode(configManager.selfId))
             }
-            msg.addText("标题: ${it.title}")
-                .addNewLine()
-                .addText("ID: ${it.id}")
-                .addNewLine()
-                .addText("https://zh.minecraft.wiki/w/${it.title.uriEncode}")
-            messages.add(msg.build())
+
+            else -> {
+                val title = args.joinToString(" ").trim()
+                var response = Http.get<MCWikiPageResponse>("$baseApiUrl/page/$title")
+                if (response.httpCode != null) {
+                    logger.info("页面($title)不存在")
+                    message.reply("页面($title)不存在")
+                    return
+                }
+                if (response.redirectTarget != null) {
+                    logger.info("重定向Wiki页面到: ${response.redirectTarget}")
+                    response = Http.get<MCWikiPageResponse>(response.redirectTarget)
+                }
+                val messages = mutableListOf<MessageChain>()
+                val headerMsg = listOf("标题${response.title}的内容如下").asMessageChain()
+                val footerMsg = listOf(
+                    "数据来源: https://zh.minecraft.wiki",
+                    "协议: ${response.license.title}(${response.license.url})"
+                ).asMessageChain(true)
+                val bodyMsg = MessageChain.Builder()
+                    .addText(response.source.convertToHTML().extractPlainTextFromHtml())
+                    .build()
+                messages.add(headerMsg)
+                messages.add(bodyMsg)
+                messages.add(footerMsg)
+                message.reply(messages.asNode(configManager.selfId))
+            }
         }
-        message.reply(messages.asNode(configManager.selfId))
-        repeat(3) { message.sender.poke() }
     }
 }
 

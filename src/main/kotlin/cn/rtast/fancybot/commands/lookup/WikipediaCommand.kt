@@ -25,9 +25,11 @@ class WikipediaCommand : BaseCommand() {
 
     private val wikipediaAPI = "https://proxy.rtast.cn/https/zh.wikipedia.org/w/api.php"
 
-    private fun String.extractPlainTextFromHtml(): String {
-        val doc = Jsoup.parse(this)
-        return doc.text()
+    companion object {
+        fun String.extractPlainTextFromHtml(): String {
+            val doc = Jsoup.parse(this)
+            return doc.text()
+        }
     }
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
