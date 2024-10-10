@@ -21,6 +21,7 @@
 > ROneBot项目地址: [Gitlab](https://repo.rtast.cn/RTAkland/ronebot) [Github](https://github.com/RTAkland/ROneBot)
 
 # 构建
+
 由于项目使用的依赖过多项目构建出的产物在28Mb左右并且项目开启了
 Github Action来自动化部署机器人, github Action的作用仅用作判断
 构建是否成功以及自动部署机器人, 并不带有上传构建产物的功能(占用的空间太多)
@@ -33,10 +34,19 @@ $ ./gradlew build clean
 
 > 产物在`build/libs/`目录下你可以找到`-all`结尾的jar包
 
-# 一些想说的话
+# 部署
 
-OneBot协议本身并不是一个很好的协议, 在Kritor、Laana等新型协议完善后机器人会全面迁移到上述协议中
-并且将OneBot版本的分支放置到另外一个分支中不再更新, 后续将主要更新Kritor/Laana的分支
+> 部署并不是一件很难的事, 只是需要准备的前期工作有点多
+
+1. 申请一个Github Classic Token (需要`repo`的所有权限)(如果你想使用github作为图床)
+2. 申请一个Cloudflare Token (需要`R2`的编辑权限)(如果你想使用cf作为图床)
+3. 获取Cloudflare的Account Id以及R2的ID
+4. 一个天聚数行API(TianAPI),并开通历史上的今天API权限
+5. 一个openai平台的密钥和模型以及镜像地址
+6. 和风天气的API key(免费订阅)
+7. smtp服务器和端口
+8. 网易云音乐API
+9. QQ音乐API
 
 # 开源
 
