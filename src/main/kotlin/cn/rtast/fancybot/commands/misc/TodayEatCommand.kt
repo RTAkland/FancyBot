@@ -21,4 +21,8 @@ class TodayEatCommand : BaseCommand() {
 
 class TodayDrinkCommand : BaseCommand() {
     override val commandNames = listOf("今天喝什么")
+
+    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+        message.reply("你喝牛魔呢")
+    }
 }
