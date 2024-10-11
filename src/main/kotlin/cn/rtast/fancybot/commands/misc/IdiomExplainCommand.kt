@@ -39,7 +39,7 @@ class IdiomExplainCommand : BaseCommand() {
                 .addNewLine(2)
                 .addText("出处: ${response.provenance}")
                 .addNewLine(2)
-                .addText("发音: ${response.sound}")
+                .addText(response.sound)
                 .build()
             message.reply(msg)
         } catch (_: Exception) {
