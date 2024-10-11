@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot
 
+import cn.rtast.fancybot.commands.misc.ReactionCommand
 import cn.rtast.fancybot.commands.misc.ScanQRCodeCommand
 import cn.rtast.fancybot.commands.misc.ShortLinkCommand.Companion.makeShortLink
 import cn.rtast.fancybot.commands.parse.*
@@ -81,7 +82,7 @@ class FancyBot : OneBotListener {
                 val getMsg = this.getMessage(replyId.toString().toLong())
                 ImageURLCommand.callback(message, getMsg)
             }
-
+            if (command.contains("reaction")) ReactionCommand.reaction(message)
             if (command.contains("图床")) {
                 val getMsg = this.getMessage(replyId.toString().toLong())
                 val imagesUrl = ImageURLCommand.getImageUrl(getMsg)

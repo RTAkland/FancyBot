@@ -17,9 +17,14 @@ import cn.rtast.rob.util.ob.OneBotListener
 class ReactionCommand : BaseCommand() {
     override val commandNames = listOf("reaction", "回应")
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
-        (0..29).forEach { _ ->
-            message.reaction(QQFace.entries.random())
+    companion object {
+        suspend fun reaction(message: GroupMessage, limit: Int = 30) {
+            (0..limit - 1).forEach { _ ->
+                message.reaction(QQFace.entries.random())
+            }
         }
     }
+
+    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) =
+        reaction(message)
 }
