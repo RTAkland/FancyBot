@@ -22,14 +22,15 @@ import java.time.ZoneId
 class KFCCommand : BaseCommand() {
     override val commandNames = listOf("/fkxqs", "/kfc")
 
-    private fun isThursday(): Boolean {
-        val dateTime = LocalDateTime.ofInstant(
-            Instant.now(),
-            ZoneId.of("Asia/Shanghai")
-        )
-        return dateTime.dayOfWeek == DayOfWeek.THURSDAY
+    companion object {
+        fun isThursday(): Boolean {
+            val dateTime = LocalDateTime.ofInstant(
+                Instant.now(),
+                ZoneId.of("Asia/Shanghai")
+            )
+            return dateTime.dayOfWeek == DayOfWeek.THURSDAY
+        }
     }
-
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (!isThursday()) {
