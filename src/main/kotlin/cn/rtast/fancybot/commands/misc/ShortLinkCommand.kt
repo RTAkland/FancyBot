@@ -9,6 +9,7 @@ package cn.rtast.fancybot.commands.misc
 
 import cn.rtast.fancybot.API_RTAST_URL
 import cn.rtast.fancybot.annotations.CommandDescription
+import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.entity.shortlink.ShortLinkPayload
 import cn.rtast.fancybot.entity.shortlink.ShortLinkResponse
 import cn.rtast.fancybot.util.Http
@@ -26,7 +27,8 @@ class ShortLinkCommand : BaseCommand() {
         fun String.makeShortLink(): String {
             val shortLink = Http.post<ShortLinkResponse>(
                 "$API_RTAST_URL/api/sl",
-                ShortLinkPayload(this).toJson()
+                ShortLinkPayload(this).toJson(),
+                params = mapOf("key" to configManager.apiRtastKey)
             )
             return "$API_RTAST_URL/${shortLink.id}"
         }

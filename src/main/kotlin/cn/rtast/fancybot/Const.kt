@@ -78,7 +78,8 @@ val DEFAULT_CONFIG = Config(
     cloudflareR2SecretKey = "222",
     cloudflareR2BucketName = "fancybot",
     cloudflareR2PublicUrl = "https://114514.com",
-    apiSpaceKey = "114514"
+    apiSpaceKey = "114514",
+    apiRtastKey = "114514"
 )
 
 val configManager = ConfigManager()
