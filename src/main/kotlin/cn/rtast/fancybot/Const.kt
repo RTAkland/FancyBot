@@ -80,7 +80,8 @@ val DEFAULT_CONFIG = Config(
     cloudflareR2BucketName = "fancybot",
     cloudflareR2PublicUrl = "https://114514.com",
     apiSpaceKey = "114514",
-    apiRtastKey = "114514"
+    apiRtastKey = "114514",
+    azureAppClientId = "114514"
 )
 
 val configManager = ConfigManager()
@@ -123,5 +124,5 @@ val commands = listOf(
     ZDJDCommand(), ScanQRCodeCommand(), TTSCommand(), SlimeChunkHelperCommand(),
     SupportMeCommand(), TheCatCommand(), TheHistoryOfTodayCommand(), MCVersionCommand(),
     MinecraftWikiCommand(), GaoKaoDaysRemainCommand(), IdiomExplainCommand(), NiuziManagerCommand(),
-    TodayEatCommand(), TodayDrinkCommand()
+    TodayEatCommand(), TodayDrinkCommand(), MCLoginCommand()
 )

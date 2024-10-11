@@ -11,12 +11,21 @@ package cn.rtast.fancybot.commands.lookup
 import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.commands.lookup.WikipediaCommand.Companion.extractPlainTextFromHtml
 import cn.rtast.fancybot.configManager
+import cn.rtast.fancybot.db.deleteAccessTokenById
+import cn.rtast.fancybot.db.getAccessTokenById
+import cn.rtast.fancybot.db.insertNewAccessToken
 import cn.rtast.fancybot.entity.mc.DecodedSkin
 import cn.rtast.fancybot.entity.mc.MCVersion
 import cn.rtast.fancybot.entity.mc.MCWikiPageResponse
 import cn.rtast.fancybot.entity.mc.MCWikiSearchResponse
 import cn.rtast.fancybot.entity.mc.Skin
 import cn.rtast.fancybot.entity.mc.Username
+import cn.rtast.fancybot.entity.mc.oauth.DeviceCodeResponse
+import cn.rtast.fancybot.entity.mc.oauth.LoginXboxLivePayload
+import cn.rtast.fancybot.entity.mc.oauth.LoginXboxLiveResponse
+import cn.rtast.fancybot.entity.mc.oauth.ObtainXSTSPayload
+import cn.rtast.fancybot.entity.mc.oauth.ObtainXSTSResponse
+import cn.rtast.fancybot.entity.mc.oauth.RedeemCodeResponse
 import cn.rtast.fancybot.enums.mc.MCVersionType
 import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.Logger
@@ -28,15 +37,18 @@ import cn.rtast.fancybot.util.str.convertToHTML
 import cn.rtast.fancybot.util.str.decodeToString
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.fancybot.util.str.fromJson
+import cn.rtast.fancybot.util.str.toJson
 import cn.rtast.fancybot.util.str.uriEncode
 import cn.rtast.motdpinger.BedrockPing
 import cn.rtast.motdpinger.JavaPing
 import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 import cn.rtast.rob.util.ob.asMessageChain
 import cn.rtast.rob.util.ob.asNode
+import okhttp3.FormBody
 import java.awt.AlphaComposite
 import java.awt.Color
 import java.awt.image.BufferedImage
@@ -373,6 +385,121 @@ class MCPingCommand : BaseCommand() {
             else -> {
                 message.reply("输入错误请在 `java` 和 `be`中选择 >>> $platform")
             }
+        }
+    }
+}
+
+class MCLoginCommand : BaseCommand() {
+    override val commandNames = listOf("/mclogin")
+
+    private val deviceCodeUrl = "https://login.microsoftonline.com/consumers/oauth2/v2.0/devicecode"
+    private val redeemCodeUrl = "https://login.microsoftonline.com/consumers/oauth2/v2.0/token"
+    private val xboxLiveAuthUrl = "https://user.auth.xboxlive.com/user/authenticate"
+    private val obtainXSTSUrl = "https://xsts.auth.xboxlive.com/xsts/authorize"
+    private val clientId = configManager.azureAppClientId
+    private val waitingList = mutableListOf<Long>()
+    private val deviceCodeMap = mutableMapOf<Long, String>()
+
+    /**
+     * 获取user code 和device code 和验证url
+     */
+    private fun getDeviceCode(): Triple<String, String, String> {
+        val form = FormBody.Builder()
+            .add("client_id", clientId)
+            .add("scope", "XboxLive.signin")
+            .build()
+        val response = Http.post<DeviceCodeResponse>(deviceCodeUrl, form)
+        return Triple(response.userCode, response.deviceCode, response.verificationUri)
+    }
+
+    /**
+     * 将这个code兑换成一个access token
+     */
+    private fun redeemCode(deviceCode: String): String {
+        val form = FormBody.Builder()
+            .add("client_id", clientId)
+            .add("grant_type", "urn:ietf:params:oauth:grant-type:device_code")
+            .add("device_code", deviceCode)
+            .build()
+        val response = Http.post<RedeemCodeResponse>(redeemCodeUrl, form)
+        return response.accessToken
+    }
+
+    /**
+     * 登录Xbox
+     */
+    private fun loginXboxLive(accessToken: String): Pair<String, String> {
+        val payload = LoginXboxLivePayload(properties = LoginXboxLivePayload.Properties("d=$accessToken"))
+        val response = Http.post<LoginXboxLiveResponse>(xboxLiveAuthUrl, payload.toJson())
+        val token = response.token
+        val uhs = response.displayClaims.xui.first().uhs
+        return token to uhs
+    }
+
+    /**
+     * 获取最后的mc access token, 这个access token可以直接用于登录游戏
+     */
+    private fun obtainXSTSToken(token: String, uhs: String): String {
+        val payload = ObtainXSTSPayload(properties = ObtainXSTSPayload.Properties(listOf(token)))
+        val response = Http.post<ObtainXSTSResponse>(obtainXSTSUrl, payload.toJson())
+        return response.token
+    }
+
+    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+        if (args.isEmpty()) {
+            message.reply("这个命令可以获取你的MC登录Token发送 `/mclogin login`进行操作吧")
+            return
+        }
+        deleteAccessTokenById(message.sender.userId)
+        val action = args.first()
+        if (action == "确认" || action == "confirm") {
+            if (message.sender.userId !in waitingList) {
+                message.reply("你还没开始登陆呢")
+            } else {
+                waitingList.removeIf { it == message.sender.userId }
+                val deviceCode = deviceCodeMap[message.sender.userId]!!
+                deviceCodeMap.remove(message.sender.userId)
+                val accessToken = this.redeemCode(deviceCode)
+                val (token, uhs) = this.loginXboxLive(accessToken)
+                val minecraftAccessToken = this.obtainXSTSToken(token, uhs)
+                insertNewAccessToken(minecraftAccessToken, message.sender.userId)
+                message.reply("你的账号token已经被保存到了数据库中, 请加机器人好友然后发送`/mclogin`来获取这个Token, Token会在你获取之后从数据库中删除")
+            }
+        } else {
+            if (message.sender.userId !in waitingList) {
+                waitingList.add(message.sender.userId)
+                val deviceInfo = getDeviceCode()
+                val msg = MessageChain.Builder()
+                    .addText("你的用户代码是: ${deviceInfo.first}")
+                    .addNewLine()
+                    .addText("请前往: ${deviceInfo.third}进行验证")
+                    .addNewLine()
+                    .addText("登陆完成后发送`/mclogin confirm` 或 `/mclogin 确认`")
+                    .build()
+                deviceCodeMap[message.sender.userId] = deviceInfo.second
+                message.reply(msg)
+            } else {
+                waitingList.removeIf { it == message.sender.userId }
+                deviceCodeMap.remove(message.sender.userId)
+                message.reply("回复错误已结束本次登录流程")
+            }
+        }
+    }
+
+    override suspend fun executePrivate(listener: OneBotListener, message: PrivateMessage, args: List<String>) {
+        val token = getAccessTokenById(message.sender.userId)
+        if (token == null) {
+            message.reply("你还没登录呢!")
+        } else {
+            val msg = MessageChain.Builder()
+                .addText("你的AccessToken如下: ")
+                .addNewLine()
+                .addText(token.token)
+                .addNewLine()
+                .addText("这个Token是敏感信息请妥善保管")
+                .build()
+            deleteAccessTokenById(message.sender.userId)
+            message.reply(msg)
         }
     }
 }
