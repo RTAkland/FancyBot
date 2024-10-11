@@ -7,11 +7,13 @@
 
 package cn.rtast.fancybot.commands.misc
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.OneBotListener
 import kotlin.random.Random
 
+@CommandDescription("今天吃什么")
 class TodayEatCommand : BaseCommand() {
     override val commandNames = listOf("今天吃什么")
 
@@ -32,6 +34,7 @@ class TodayEatCommand : BaseCommand() {
     }
 }
 
+@CommandDescription("今天喝什么")
 class TodayDrinkCommand : BaseCommand() {
     override val commandNames = listOf("今天喝什么")
 

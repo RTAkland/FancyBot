@@ -5,8 +5,9 @@
  */
 
 
-package cn.rtast.fancybot.commands.misc
+package cn.rtast.fancybot.commands.lookup
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.entity.apispace.IdiomExplainResponse
 import cn.rtast.fancybot.util.Http
@@ -15,6 +16,7 @@ import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 
+@CommandDescription("解释一个成语")
 class IdiomExplainCommand : BaseCommand() {
     override val commandNames = listOf("成语解释")
 

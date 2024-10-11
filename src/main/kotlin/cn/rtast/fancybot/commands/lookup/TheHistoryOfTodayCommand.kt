@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.commands.lookup
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.entity.tianxing.HistoryOfToday
 import cn.rtast.fancybot.util.Http
@@ -19,6 +20,7 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
+@CommandDescription("历史上的今天~~~")
 class TheHistoryOfTodayCommand : BaseCommand() {
     override val commandNames = listOf("历史上的今天")
 
