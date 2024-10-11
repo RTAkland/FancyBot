@@ -389,6 +389,7 @@ class MCPingCommand : BaseCommand() {
     }
 }
 
+@CommandDescription("获取MC账号的AccessToken")
 class MCLoginCommand : BaseCommand() {
     override val commandNames = listOf("/mclogin")
 
