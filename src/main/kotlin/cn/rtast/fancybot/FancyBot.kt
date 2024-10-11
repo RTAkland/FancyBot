@@ -173,15 +173,13 @@ class FancyBot : OneBotListener {
         this.sendGroupMessage(groupId, msg)
     }
 
-    override suspend fun onPoke(event: PokeEvent) {
-        event.groupId?.let {
-            if (event.targetId == configManager.selfId) {
-                val msg = MessageChain.Builder()
-                    .addAt(event.userId)
-                    .addText("你${event.action.first()}牛魔呢")
-                    .build()
-                this.sendGroupMessage(it, msg)
-            }
+    override suspend fun onGroupPoke(event: PokeEvent) {
+        if (event.targetId == configManager.selfId) {
+            val msg = MessageChain.Builder()
+                .addAt(event.userId)
+                .addText("你${event.action.first()}牛魔呢")
+                .build()
+            this.sendGroupMessage(event.groupId!!, msg)
         }
     }
 }

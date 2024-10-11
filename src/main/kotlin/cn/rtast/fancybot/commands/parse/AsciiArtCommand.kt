@@ -8,7 +8,10 @@
 package cn.rtast.fancybot.commands.parse
 
 import cn.rtast.fancybot.annotations.CommandDescription
+import cn.rtast.fancybot.commands.misc.ShortLinkCommand.Companion.makeShortLink
 import cn.rtast.fancybot.util.Logger
+import cn.rtast.fancybot.util.file.getFileType
+import cn.rtast.fancybot.util.misc.ImageBed
 import cn.rtast.fancybot.util.misc.makeGif
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.fancybot.util.misc.toByteArray
@@ -102,10 +105,14 @@ class AsciiArtCommand : BaseCommand() {
                     decoder.read(gifStream)
                     if (decoder.frameCount == 0) {
                         val bufferedImage = withContext(Dispatchers.IO) { ImageIO.read(URI(url).toURL()) }
-                        val imageBase64 = bufferedImage.convertToAscii()
+                        val imageBytes = bufferedImage.convertToAscii()
                             .saveAsciiArtToImage(bufferedImage.width, bufferedImage.height)
-                            .toByteArray().encodeToBase64()
-                        val msg = MessageChain.Builder().addImage(imageBase64, true).build()
+                            .toByteArray()
+                        val imageBedUrl = ImageBed.upload(imageBytes, imageBytes.getFileType())
+                        val msg = MessageChain.Builder()
+                            .addImage(imageBytes.encodeToBase64(), true)
+                            .addText(imageBedUrl)
+                            .build()
                         message.reply(msg)
                     } else {
                         logger.info("制作GIF Ascii art中, 总帧数: ${decoder.frameCount}")
@@ -119,12 +126,15 @@ class AsciiArtCommand : BaseCommand() {
                         }
                         logger.info("合成GIF中...")
                         val gifBytes = decoder.makeGif(asciiFrames)
+                        val imageBedUrl  = ImageBed.upload(gifBytes, gifBytes.getFileType()).makeShortLink()
                         logger.info("合并完成")
                         val gifBase64 = gifBytes.encodeToBase64()
                         logger.info("处理后的图片大小: ${(gifBytes.size / 1024 / 1024).toInt()}MB")
                         val msg = MessageChain.Builder()
                             .addImage(gifBase64, true)
-                        message.reply(msg.build())
+                            .addText(imageBedUrl)
+                            .build()
+                        message.reply(msg)
                     }
                 } catch (_: OutOfMemoryError) {
                     message.reply("GIF处理失败: 内存溢出")
