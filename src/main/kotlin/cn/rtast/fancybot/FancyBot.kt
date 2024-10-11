@@ -82,7 +82,10 @@ class FancyBot : OneBotListener {
                 val getMsg = this.getMessage(replyId.toString().toLong())
                 ImageURLCommand.callback(message, getMsg)
             }
-            if (command.contains("reaction")) ReactionCommand.reaction(message)
+            if (command.contains("reaction")) {
+                val getMsg = this.getMessage(replyId.toString().toLong())
+                ReactionCommand.reaction(this, message, getMsg.messageId)
+            }
             if (command.contains("图床")) {
                 val getMsg = this.getMessage(replyId.toString().toLong())
                 val imagesUrl = ImageURLCommand.getImageUrl(getMsg)
