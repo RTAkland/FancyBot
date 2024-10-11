@@ -26,7 +26,7 @@
   "llamaUrl": "http://127.0.0.1",
   "llamaModel": "llama3.1",
   "qqMusicApiUrl": "http://127.0.0.1:3200",
-  "startUpNoticeUser": 114514,
+  "noticeUser": 114514,
   "selfId": 114514,
   "tianXingApiKey": "1145141919810",
   "githubUser": "RTAkland",

@@ -14,6 +14,7 @@ import cn.rtast.fancybot.enums.WSType
 import cn.rtast.fancybot.util.*
 import cn.rtast.fancybot.util.file.getFileType
 import cn.rtast.fancybot.util.misc.ImageBed
+import cn.rtast.fancybot.util.misc.convertToDate
 import cn.rtast.fancybot.util.misc.initCommandAndItem
 import cn.rtast.fancybot.util.misc.initFilesDir
 import cn.rtast.fancybot.util.misc.initSetuIndex
@@ -40,7 +41,7 @@ class FancyBot : OneBotListener {
     private val githubRegex = Regex("""github\.com/([^/]+)/([^/]+)""")
 
     override suspend fun onWebsocketOpenEvent() {
-        this.sendPrivateMessage(configManager.startUpNoticeUser, "FancyBot启动完成~")
+        this.sendPrivateMessage(configManager.noticeUser, "FancyBot启动完成~")
     }
 
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
@@ -181,6 +182,14 @@ class FancyBot : OneBotListener {
                 .build()
             this.sendGroupMessage(event.groupId!!, msg)
         }
+    }
+
+    override suspend fun onBeKicked(groupId: Long, operator: Long, time: Long) {
+        blackListManager.insertGroup(groupId, operator, time)
+        this.sendPrivateMessage(
+            configManager.noticeUser,
+            "被: ${groupId}踢出! 操作人: $operator 时间: ${time.convertToDate()} 已将其拉入黑名单!"
+        )
     }
 }
 

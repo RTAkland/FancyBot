@@ -8,7 +8,6 @@
 package cn.rtast.fancybot.util.file
 
 import cn.rtast.fancybot.entity.Config
-import cn.rtast.fancybot.enums.ImageBedType
 import cn.rtast.fancybot.util.str.JsonFileHandler
 
 class ConfigManager : JsonFileHandler<Config>("config.json") {
@@ -35,7 +34,7 @@ class ConfigManager : JsonFileHandler<Config>("config.json") {
     val llamaUrl = config.llamaUrl
     val llamaModel = config.llamaModel
     val qqMusicApiUrl = config.qqMusicApiUrl
-    val startUpNoticeUser = config.startUpNoticeUser
+    val noticeUser = config.noticeUser
     val selfId = config.selfId
     val tianXingApiKey = config.tianXingApiKey
     val githubUser = config.githubUser

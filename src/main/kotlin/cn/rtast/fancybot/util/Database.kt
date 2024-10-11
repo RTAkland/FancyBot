@@ -9,6 +9,7 @@ package cn.rtast.fancybot.util
 
 import cn.rtast.fancybot.ROOT_PATH
 import cn.rtast.fancybot.db.ActionTable
+import cn.rtast.fancybot.db.BlackListTable
 import cn.rtast.fancybot.db.JrrpTable
 import cn.rtast.fancybot.db.NiuziBankTable
 import cn.rtast.fancybot.db.NiuziTable
@@ -24,6 +25,7 @@ suspend fun initDatabase() {
         SchemaUtils.createMissingTablesAndColumns(NiuziBankTable)
         SchemaUtils.createMissingTablesAndColumns(NiuziTable)
         SchemaUtils.createMissingTablesAndColumns(ActionTable)
+        SchemaUtils.createMissingTablesAndColumns(BlackListTable)
     }
 }
 

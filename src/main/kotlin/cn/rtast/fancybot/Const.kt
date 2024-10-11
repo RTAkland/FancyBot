@@ -26,6 +26,7 @@ import cn.rtast.fancybot.enums.ImageBedType
 import cn.rtast.fancybot.enums.ImageType
 import cn.rtast.fancybot.enums.WSType
 import cn.rtast.fancybot.items.*
+import cn.rtast.fancybot.util.file.BlackListManager
 import cn.rtast.fancybot.util.file.ConfigManager
 import cn.rtast.fancybot.util.file.NiuziBankManager
 import cn.rtast.fancybot.util.file.NiuziManager
@@ -67,7 +68,7 @@ val DEFAULT_CONFIG = Config(
     llamaUrl = "http://127.0.0.1",
     llamaModel = "llama3.1",
     qqMusicApiUrl = "http://127.0.0.1:3200",
-    startUpNoticeUser = 114514L,
+    noticeUser = 114514L,
     selfId = 114514L,
     tianXingApiKey = "1145141919810",
     githubUser = "RTAkland",
@@ -86,6 +87,7 @@ val configManager = ConfigManager()
 val itemManager = ItemManager()
 val niuziManager = NiuziManager()
 val niuziBankManager = NiuziBankManager()
+val blackListManager = BlackListManager()
 
 val START_UP_TIME = Instant.now().epochSecond
 
@@ -120,5 +122,6 @@ val commands = listOf(
     ReactionCommand(), MCSkinCommand(), GithubLatestCommitCommand(), RandomMusicCommand(),
     ZDJDCommand(), ScanQRCodeCommand(), TTSCommand(), SlimeChunkHelperCommand(),
     SupportMeCommand(), TheCatCommand(), TheHistoryOfTodayCommand(), MCVersionCommand(),
-    MinecraftWikiCommand(), GaoKaoDaysRemainCommand(), IdiomExplainCommand(), NiuziManagerCommand()
+    MinecraftWikiCommand(), GaoKaoDaysRemainCommand(), IdiomExplainCommand(), NiuziManagerCommand(),
+    TodayEatCommand(), TodayDrinkCommand()
 )
