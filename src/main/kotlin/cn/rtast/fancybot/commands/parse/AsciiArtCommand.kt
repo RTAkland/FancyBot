@@ -15,11 +15,13 @@ import cn.rtast.fancybot.util.misc.ImageBed
 import cn.rtast.fancybot.util.misc.makeGif
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.fancybot.util.misc.toByteArray
+import cn.rtast.rob.entity.GetMessage
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
+import cn.rtast.rob.util.ob.asMessageChain
 import com.madgag.gif.fmsware.GifDecoder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -91,62 +93,89 @@ class AsciiArtCommand : BaseCommand() {
             return img
         }
 
+        suspend fun generateAsciiArt(url: String): MessageChain {
+            val gifStream = withContext(Dispatchers.IO) { URI(url).toURL().openStream() }
+            val decoder = GifDecoder()
+            try {
+                decoder.read(gifStream)
+                if (decoder.frameCount == 0) {
+                    val bufferedImage = withContext(Dispatchers.IO) { ImageIO.read(URI(url).toURL()) }
+                    val imageBytes = bufferedImage.convertToAscii()
+                        .saveAsciiArtToImage(bufferedImage.width, bufferedImage.height)
+                        .toByteArray()
+                    val imageBedUrl = ImageBed.upload(imageBytes, imageBytes.getFileType())
+                    val msg = MessageChain.Builder()
+                        .addImage(imageBytes.encodeToBase64(), true)
+                        .addText(imageBedUrl)
+                        .build()
+                    return msg
+                } else {
+                    logger.info("制作GIF Ascii art中, 总帧数: ${decoder.frameCount}")
+                    val frames = (0 until decoder.frameCount).map { decoder.getFrame(it) }
+                    val asciiFrames = mutableListOf<BufferedImage>()
+                    val width = frames.first().width
+                    val height = frames.first().height
+                    frames.forEachIndexed { index, item ->
+                        asciiFrames.add(item.convertToAscii().saveAsciiArtToImage(width, height))
+                        logger.info("帧:${index}处理完成")
+                    }
+                    logger.info("合成GIF中...")
+                    val gifBytes = decoder.makeGif(asciiFrames)
+                    val imageBedUrl = ImageBed.upload(gifBytes, gifBytes.getFileType()).makeShortLink()
+                    logger.info("合并完成")
+                    val gifBase64 = gifBytes.encodeToBase64()
+                    logger.info("处理后的图片大小: ${(gifBytes.size / 1024 / 1024).toInt()}MB")
+                    val msg = MessageChain.Builder()
+                        .addImage(gifBase64, true)
+                        .addText(imageBedUrl)
+                        .build()
+                    return msg
+                }
+            } catch (_: OutOfMemoryError) {
+                return listOf("GIF处理失败: 内存溢出").asMessageChain()
+                logger.info("GIF处理失败: 内存溢出")
+            } catch (e: Exception) {
+                return listOf("处理GIF失败: ${e.message}").asMessageChain()
+                logger.info("gif处理失败: ${e.message}")
+            }
+        }
+
         suspend fun callback(message: GroupMessage) {
             if (message.sender.userId !in waitingList) return
             waitingList.removeIf { it == message.sender.userId }
             if (message.message.any { it.type == ArrayMessageType.image }
                 || message.message.any { it.type == ArrayMessageType.mface }) {
-                val url = if (message.message.any { it.type == ArrayMessageType.image })
-                    message.message.find { it.type == ArrayMessageType.image }!!.data.file!!
-                else message.message.find { it.type == ArrayMessageType.mface }!!.data.url!!
-                val gifStream = withContext(Dispatchers.IO) { URI(url).toURL().openStream() }
-                val decoder = GifDecoder()
-                try {
-                    decoder.read(gifStream)
-                    if (decoder.frameCount == 0) {
-                        val bufferedImage = withContext(Dispatchers.IO) { ImageIO.read(URI(url).toURL()) }
-                        val imageBytes = bufferedImage.convertToAscii()
-                            .saveAsciiArtToImage(bufferedImage.width, bufferedImage.height)
-                            .toByteArray()
-                        val imageBedUrl = ImageBed.upload(imageBytes, imageBytes.getFileType())
-                        val msg = MessageChain.Builder()
-                            .addImage(imageBytes.encodeToBase64(), true)
-                            .addText(imageBedUrl)
-                            .build()
-                        message.reply(msg)
-                    } else {
-                        logger.info("制作GIF Ascii art中, 总帧数: ${decoder.frameCount}")
-                        val frames = (0 until decoder.frameCount).map { decoder.getFrame(it) }
-                        val asciiFrames = mutableListOf<BufferedImage>()
-                        val width = frames.first().width
-                        val height = frames.first().height
-                        frames.forEachIndexed { index, item ->
-                            asciiFrames.add(item.convertToAscii().saveAsciiArtToImage(width, height))
-                            logger.info("帧:${index}处理完成")
-                        }
-                        logger.info("合成GIF中...")
-                        val gifBytes = decoder.makeGif(asciiFrames)
-                        val imageBedUrl = ImageBed.upload(gifBytes, gifBytes.getFileType()).makeShortLink()
-                        logger.info("合并完成")
-                        val gifBase64 = gifBytes.encodeToBase64()
-                        logger.info("处理后的图片大小: ${(gifBytes.size / 1024 / 1024).toInt()}MB")
-                        val msg = MessageChain.Builder()
-                            .addImage(gifBase64, true)
-                            .addText(imageBedUrl)
-                            .build()
-                        message.reply(msg)
-                    }
-                } catch (_: OutOfMemoryError) {
-                    message.reply("GIF处理失败: 内存溢出")
-                    logger.info("GIF处理失败: 内存溢出")
-                } catch (e: Exception) {
-                    message.reply("处理GIF失败: ${e.message}")
-                    logger.info("gif处理失败: ${e.message}")
-                }
+                val url = this.getImageUrl(message)
+                val msg = this.generateAsciiArt(url)
+                message.reply(msg)
             } else {
                 message.reply("回复错误已取消本次操作")
             }
         }
+
+        fun getImageUrl(groupMessage: GroupMessage): String {
+            return getImageUrlFromUnified(toUnifiedMessage(groupMessage))
+        }
+
+        fun getImageUrl(getMessageData: GetMessage.Data): String {
+            return getImageUrlFromUnified(toUnifiedMessage(getMessageData))
+        }
+
+        private fun getImageUrlFromUnified(messages: List<UnifiedMessage>): String {
+            return if (messages.any { it.type == ArrayMessageType.image })
+                messages.find { it.type == ArrayMessageType.image }!!.file!!
+            else messages.find { it.type == ArrayMessageType.mface }!!.url!!
+        }
+
+        private fun toUnifiedMessage(groupMessage: GroupMessage): List<UnifiedMessage> {
+            return groupMessage.message.map { UnifiedMessage(it.type, it.data.file, it.data.url) }
+        }
+
+        private fun toUnifiedMessage(getMessageData: GetMessage.Data): List<UnifiedMessage> {
+            return getMessageData.message.map { UnifiedMessage(it.type, it.data.file, it.data.url) }
+        }
+
+        private data class UnifiedMessage(val type: ArrayMessageType, val file: String?, val url: String?)
     }
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {

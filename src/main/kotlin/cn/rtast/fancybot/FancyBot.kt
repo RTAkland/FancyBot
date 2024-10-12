@@ -76,19 +76,26 @@ class FancyBot : OneBotListener {
             calculateResult?.let { message.reply(calculateResult) }
         }
 
-        if (message.message.any { it.type == ArrayMessageType.reply }) {  // Image url parse
+        if (message.message.any { it.type == ArrayMessageType.reply }) {
             val command = message.message.reversed().find { it.type == ArrayMessageType.text }!!.data.text!!
             val replyId = message.message.find { it.type == ArrayMessageType.reply }!!.data.id!!
+            val getMsg = this.getMessage(replyId.toString().toLong())
+            if (command.contains("/ascii") || command.contains("/asc")) {
+                // 使用回复消息的方式直接对一个图片进行生成Ascii art的操作
+                val url = AsciiArtCommand.getImageUrl(getMsg)
+                val image = AsciiArtCommand.generateAsciiArt(url)
+                message.reply(image)
+            }
             if (command.contains("图来") || command.contains("图链")) {
-                val getMsg = this.getMessage(replyId.toString().toLong())
+                // 获取一个或多个图片的链接, 并且生成一个或多个短链接
                 ImageURLCommand.callback(message, getMsg)
             }
             if (command.contains("reaction")) {
-                val getMsg = this.getMessage(replyId.toString().toLong())
+                // 使用reaction刷屏回应一条消息
                 ReactionCommand.reaction(this, message, getMsg.messageId)
             }
             if (command.contains("图床")) {
-                val getMsg = this.getMessage(replyId.toString().toLong())
+                // 将一个图片上传到图床
                 val imagesUrl = ImageURLCommand.getImageUrl(getMsg)
                 if (imagesUrl.isEmpty()) {
                     message.reply("这个消息里没有图片呢!")
