@@ -241,6 +241,7 @@ object BiliUserParseCommand {
     private val idRegex = Regex("https://space\\.bilibili\\.com/(\\d+)")
     private const val USER_INFO_API_URL = "https://api.bilibili.com/x/web-interface/card"
     private val font = Font("Serif", Font.BOLD, 24)
+    private val signFont = Font("Serif", Font.BOLD, 18)
     private const val IMAGE_WIDTH = 500
     private const val IMAGE_HEIGHT = 300
 
@@ -263,7 +264,8 @@ object BiliUserParseCommand {
         g2d.drawString("用户名: ${userInfo.name}", 150, 50)
         g2d.drawString("粉丝数: ${userInfo.fans}", 150, 100)
         g2d.drawString("等级: ${userInfo.level}", 150, 150)
-        g2d.drawString("签名: ${userInfo.sign}", 150, 200, 200)
+        g2d.font = signFont
+        g2d.drawString(setTruncate("签名: ${userInfo.sign}", g2d), 40, 180, 100)
         val faceImage = getUserFace(userInfo.avatar)
         val resizedFaceImage = faceImage.getScaledInstance(100, 100, Image.SCALE_SMOOTH)
         g2d.drawImage(resizedFaceImage, 20, 20, null)
