@@ -7,5 +7,5 @@
 
 package cn.rtast.fancybot.entity.wiki
 
-data class WikipediaConvertPayload(val content: String, )
-data class WikipediaConvertResponse(val parsed: String, )
+data class WikipediaConvertPayload(val content: String)
+data class WikipediaConvertResponse(val parsed: String)

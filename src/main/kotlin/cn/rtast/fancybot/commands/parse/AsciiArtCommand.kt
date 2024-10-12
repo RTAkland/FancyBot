@@ -126,7 +126,7 @@ class AsciiArtCommand : BaseCommand() {
                         }
                         logger.info("合成GIF中...")
                         val gifBytes = decoder.makeGif(asciiFrames)
-                        val imageBedUrl  = ImageBed.upload(gifBytes, gifBytes.getFileType()).makeShortLink()
+                        val imageBedUrl = ImageBed.upload(gifBytes, gifBytes.getFileType()).makeShortLink()
                         logger.info("合并完成")
                         val gifBase64 = gifBytes.encodeToBase64()
                         logger.info("处理后的图片大小: ${(gifBytes.size / 1024 / 1024).toInt()}MB")

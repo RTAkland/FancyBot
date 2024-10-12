@@ -9,7 +9,7 @@ package cn.rtast.fancybot.db
 
 import org.jetbrains.exposed.sql.Table
 
-object BlackListTable: Table("blacklist") {
+object BlackListTable : Table("blacklist") {
     val id = integer("id").autoIncrement()
     val groupId = long("group_id")
     val operator = long("operator")
