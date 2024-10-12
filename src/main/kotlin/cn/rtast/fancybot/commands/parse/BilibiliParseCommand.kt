@@ -11,11 +11,14 @@ import cn.rtast.fancybot.entity.bili.*
 import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.misc.Resources
 import cn.rtast.fancybot.util.misc.drawCustomImage
+import cn.rtast.fancybot.util.misc.drawString
+import cn.rtast.fancybot.util.misc.toBufferedImage
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.fancybot.util.str.formatNumber
 import cn.rtast.fancybot.util.str.fromJson
 import cn.rtast.fancybot.util.str.setTruncate
 import cn.rtast.fancybot.util.misc.toByteArray
+import cn.rtast.fancybot.util.misc.toURL
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.ob.MessageChain
@@ -24,6 +27,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.awt.Color
 import java.awt.Font
+import java.awt.Image
 import java.awt.RenderingHints
 import java.awt.image.BufferedImage
 import java.math.BigInteger
@@ -31,7 +35,7 @@ import java.net.URI
 import javax.imageio.ImageIO
 
 
-object BVParseCommand {
+object BiliVideoParseCommand {
     private val avRegex = Regex("av(\\d+)", RegexOption.IGNORE_CASE)
     private val bvRegex = Regex("BV[\\dA-Za-z]{10}")
     private val shortUrlRegex = Regex("https://b23\\.tv/\\w{6,8}")
@@ -229,5 +233,54 @@ object BVParseCommand {
             .addText(shortUrl)
             .build()
         listener.sendGroupMessage(message.groupId, msg)
+    }
+}
+
+object BiliUserParseCommand {
+
+    private val idRegex = Regex("https://space\\.bilibili\\.com/(\\d+)")
+    private const val USER_INFO_API_URL = "https://api.bilibili.com/x/web-interface/card"
+    private val font = Font("Serif", Font.BOLD, 24)
+    private const val IMAGE_WIDTH = 500
+    private const val IMAGE_HEIGHT = 300
+
+
+    private fun getUserInfo(userId: String): BiliUserInfo {
+        val result = Http.get<UserInfo>(USER_INFO_API_URL, mapOf("mid" to userId)).data.card
+        return BiliUserInfo(result.name, result.levelInfo.currentLevel, result.face, result.fans, result.sign)
+    }
+
+    private fun getUserFace(url: String) = url.toURL().readBytes().toBufferedImage()
+
+    private fun createUserImage(userInfo: BiliUserInfo): String {
+        val image = BufferedImage(IMAGE_WIDTH, IMAGE_HEIGHT, BufferedImage.TYPE_INT_ARGB)
+        val g2d = image.createGraphics()
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
+        g2d.color = Color.WHITE
+        g2d.fillRect(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT)
+        g2d.font = font
+        g2d.color = Color.BLACK
+        g2d.drawString("用户名: ${userInfo.name}", 150, 50)
+        g2d.drawString("粉丝数: ${userInfo.fans}", 150, 100)
+        g2d.drawString("等级: ${userInfo.level}", 150, 150)
+        g2d.drawString("签名: ${userInfo.sign}", 150, 200, 200)
+        val faceImage = getUserFace(userInfo.avatar)
+        val resizedFaceImage = faceImage.getScaledInstance(100, 100, Image.SCALE_SMOOTH)
+        g2d.drawImage(resizedFaceImage, 20, 20, null)
+        g2d.dispose()
+        return image.toByteArray().encodeToBase64()
+    }
+
+    suspend fun parse(listener: OneBotListener, message: GroupMessage) {
+        val match = idRegex.find(message.rawMessage)
+        if (match != null) {
+            val userId = match.groupValues[1]
+            val userInfo = this.getUserInfo(userId)
+            val userCardImage = this.createUserImage(userInfo)
+            val msg = MessageChain.Builder()
+                .addImage(userCardImage, true)
+                .build()
+            listener.sendGroupMessage(message.groupId, msg)
+        }
     }
 }

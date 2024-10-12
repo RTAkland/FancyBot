@@ -68,7 +68,8 @@ class FancyBot : OneBotListener {
         ReverseGIFCommand.callback(message)
         AsciiArtCommand.callback(message)
         ScanQRCodeCommand.callback(message)
-        BVParseCommand.parse(this, message)
+        BiliVideoParseCommand.parse(this, message)
+        BiliUserParseCommand.parse(this, message)
 
         if (message.rawMessage.toList().any { it in arrayListOf('*', '-', '/', '+', '=') }) {
             val calculateResult = CalculateCommand.parse(message.rawMessage)
