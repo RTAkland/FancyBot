@@ -49,6 +49,8 @@ $ ./gradlew build clean
 9. QQ音乐API
 10. 一个Azure APP (用于获取MC AccessToken)
 11. 一个RTAST api token (用于生短链接, 你可以自行搭建但是源代码不公开)
+12. 一个APISpace key
+13. llama的api地址
 
 # 开源
 
