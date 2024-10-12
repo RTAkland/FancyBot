@@ -47,6 +47,8 @@ $ ./gradlew build clean
 7. smtp服务器和端口
 8. 网易云音乐API
 9. QQ音乐API
+10. 一个Azure APP (用于获取MC AccessToken)
+11. 一个RTAST api token (用于生短链接, 你可以自行搭建但是源代码不公开)
 
 # 开源
 
