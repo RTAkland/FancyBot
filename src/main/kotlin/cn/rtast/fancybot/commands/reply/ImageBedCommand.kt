@@ -17,6 +17,7 @@ import cn.rtast.rob.entity.GetMessage
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.asNode
+import okio.IOException
 
 object ImageBedCommand {
     suspend fun execute(getMsg: GetMessage.Data, message: GroupMessage) {
@@ -50,7 +51,10 @@ object ImageBedCommand {
                     }
                     message.reply(messages.asNode(configManager.selfId))
                 }
+            } catch (_: IOException) {
+                message.reply("上传失败: 图片已过期")
             } catch (e: Exception) {
+                e.printStackTrace()
                 message.reply("上传失败: ${e.message}")
             }
         }
