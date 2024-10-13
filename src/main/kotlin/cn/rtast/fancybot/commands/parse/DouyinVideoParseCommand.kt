@@ -28,10 +28,7 @@ import java.awt.image.BufferedImage
 
 object DouyinVideoParseCommand {
 
-    private val tempHttpClient = OkHttpClient.Builder()
-        .followRedirects(true)
-        .followSslRedirects(true)
-        .build()
+    private val tempHttpClient = OkHttpClient.Builder().followRedirects(true).followSslRedirects(true).build()
     private val shortLinkRegex = Regex("https://v\\.douyin\\.com/[a-zA-Z0-9]+/")
     private val singleVideoRegex = Regex("https://www\\.douyin\\.com/video/([0-9]+)")
     private val douyinApiUrl = "https://douyin.wtf/api/douyin/web/fetch_one_video".proxy
@@ -46,7 +43,16 @@ object DouyinVideoParseCommand {
         g2d.color = Color(245, 245, 245)
         g2d.fillRect(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT)
         g2d.color = Color(230, 230, 230)
-        g2d.fill(RoundRectangle2D.Float(20f, 20f, (IMAGE_WIDTH - 40).toFloat(), (IMAGE_HEIGHT - 40).toFloat(), 50f, 50f))
+        g2d.fill(
+            RoundRectangle2D.Float(
+                20f,
+                20f,
+                (IMAGE_WIDTH - 40).toFloat(),
+                (IMAGE_HEIGHT - 40).toFloat(),
+                50f,
+                50f
+            )
+        )
         g2d.color = Color.BLACK
         g2d.font = Font("Serif", Font.BOLD, 48)
         g2d.drawString(video.data.awemeDetail.author.nickname, 60, 100)
@@ -83,7 +89,7 @@ object DouyinVideoParseCommand {
                 .random().playAddr.urlList.random().makeShortLink()
             val shareUrlShortUrl = response.data.awemeDetail.shareUrl.makeShortLink()
             val image = this.createDouyinVideoCard(response)
-            val msg= MessageChain.Builder()
+            val msg = MessageChain.Builder()
                 .addImage(image, true)
                 .addText("视频地址: $shareUrlShortUrl")
                 .addNewLine()
