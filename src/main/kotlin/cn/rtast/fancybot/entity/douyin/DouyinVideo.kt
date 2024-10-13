@@ -20,7 +20,6 @@ data class DouyinVideo(
     data class AwemeDetail(
         val author: Author,
         val desc: String,
-        val music: Music,
         val statistics: Statistics,
         val video: Video,
         @SerializedName("share_url")
@@ -32,14 +31,11 @@ data class DouyinVideo(
         @SerializedName("follower_count")
         val followerCount: Int,
         val signature: String,
+        @SerializedName("avatar_thumb")
+        val avatarThumb: AvatarThumb,
     )
 
-    data class Music(
-        @SerializedName("avatar_large")
-        val avatarLarge: AvatarLarge,
-    )
-
-    data class AvatarLarge(
+    data class AvatarThumb(
         @SerializedName("url_list")
         val urlList: List<String>,
     )
@@ -63,7 +59,8 @@ data class DouyinVideo(
     )
 
     data class Video(
-        val cover: Cover,
+        @SerializedName("cover_original_scale")
+        val coverOriginalScale: CoverOriginalScale,
         @SerializedName("bit_rate")
         val bitRate: List<BitRate>
     )
@@ -75,11 +72,13 @@ data class DouyinVideo(
 
     data class PlayAddr(
         @SerializedName("url_list")
-        val urlList: List<String>
+        val urlList: List<String>,
     )
 
-    data class Cover(
+    data class CoverOriginalScale(
         @SerializedName("url_list")
         val urlList: List<String>,
+        val height: Int,
+        val width: Int
     )
 }
