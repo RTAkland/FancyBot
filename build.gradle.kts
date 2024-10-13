@@ -18,6 +18,7 @@ repositories {
     maven("https://oss.sonatype.org/content/repositories/snapshots")
     maven("https://repo.rtast.cn/api/v4/projects/33/packages/maven")
     maven("https://repo.rtast.cn/api/v4/projects/19/packages/maven")
+    maven("https://repo.rtast.cn/api/v4/projects/3/packages/maven")
 }
 
 tasks.compileKotlin {
@@ -46,6 +47,7 @@ dependencies {
     implementation(libs.logback.classic)
     implementation(libs.slf4j.api)
     implementation(libs.aws.s3.sdk)
+    implementation(libs.rconlib)
 }
 
 tasks.build {

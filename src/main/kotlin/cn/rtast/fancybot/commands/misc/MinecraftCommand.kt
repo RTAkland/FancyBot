@@ -6,7 +6,7 @@
 
 @file:Suppress("KDocUnresolvedReference")
 
-package cn.rtast.fancybot.commands.lookup
+package cn.rtast.fancybot.commands.misc
 
 import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.commands.lookup.WikipediaCommand.Companion.extractPlainTextFromHtml
@@ -27,6 +27,7 @@ import cn.rtast.fancybot.entity.mc.oauth.ObtainXSTSPayload
 import cn.rtast.fancybot.entity.mc.oauth.ObtainXSTSResponse
 import cn.rtast.fancybot.entity.mc.oauth.RedeemCodeResponse
 import cn.rtast.fancybot.enums.mc.MCVersionType
+import cn.rtast.fancybot.rconManager
 import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.Logger
 import cn.rtast.fancybot.util.misc.isFullyTransparent
@@ -41,6 +42,8 @@ import cn.rtast.fancybot.util.str.toJson
 import cn.rtast.fancybot.util.str.uriEncode
 import cn.rtast.motdpinger.BedrockPing
 import cn.rtast.motdpinger.JavaPing
+import cn.rtast.rcon.RCon
+import cn.rtast.rcon.exceptions.AuthFailedException
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.util.BaseCommand
@@ -501,6 +504,93 @@ class MCLoginCommand : BaseCommand() {
                 .build()
             deleteAccessTokenById(message.sender.userId)
             message.reply(msg)
+        }
+    }
+}
+
+@CommandDescription("通过RCON来控制MC服务器(仅限私聊执行)")
+class RCONCommand : BaseCommand() {
+    override val commandNames = listOf("/rcon", "/r")
+
+    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+        message.reply("请在私聊中使用此命令")
+    }
+
+    override suspend fun executePrivate(listener: OneBotListener, message: PrivateMessage, args: List<String>) {
+        if (args.isEmpty()) {
+            val msg = MessageChain.Builder()
+                .addText("这条指令用于在群内操作mc服务器")
+                .addNewLine()
+                .addText("使用`/r add <name> <host> <port> <password>` 可以创建一条配置")
+                .addNewLine()
+                .addText("使用`/r <name> <command>`可以执行命令")
+                .addNewLine()
+                .addText("使用`/r remove <name>`可以移除这条RCON配置")
+                .build()
+            message.reply(msg)
+            return
+        }
+        val action = args.first()
+        when (action) {
+            "get" -> {
+                val allRcons = rconManager.getAllRconsById(message.sender.userId)
+                if (allRcons.isEmpty()) {
+                    message.reply("你还没有RCON配置呢, 发送`/r add <name> <host> <port> <password>`来创建一个配置吧")
+                    return
+                }
+                val messages = mutableListOf<MessageChain>()
+                    .also { it.add(listOf("所有配置如下").asMessageChain()) }
+                allRcons.forEach {
+                    val msg = MessageChain.Builder()
+                        .addText("名称: ${it.name}")
+                        .addNewLine()
+                        .addText("地址: ${it.host}:${it.port}")
+                        .addNewLine()
+                        .addText("密码: *********")
+                        .build()
+                    messages.add(msg)
+                }
+                message.reply(messages.asNode(configManager.selfId))
+            }
+
+            "add" -> {
+                val name = args[1]
+                val host = args[2]
+                val port = args[3].toInt()
+                val password = args[4]
+                rconManager.insertConfig(message.sender.userId, name, host, port, password)
+                message.reply("成功增加一条记录: $name")
+            }
+
+            "remove" -> {
+                val name = args.last()
+                val count = rconManager.removeRRCON(message.sender.userId, name)
+                if (count == 0) {
+                    message.reply("RCON($name)不存在")
+                } else {
+                    message.reply("成功移除了$name")
+                }
+            }
+
+            else -> {
+                val name = args.first().trim()
+                val command = args.drop(1).joinToString(" ").trim()
+                val rconData = rconManager.getRcon(message.sender.userId, name)
+                if (rconData == null) {
+                    message.reply("RCON($name)配置不存在")
+                } else {
+                    try {
+                        val result = rconManager.executeCommand(message.sender.userId, name, command)
+                        val messages = mutableListOf<MessageChain>()
+                            .also { it.add(listOf("执行结果如下").asMessageChain()) }
+                            .also { it.add(listOf(result).asMessageChain()) }
+                            .asNode(configManager.selfId)
+                        message.reply(messages)
+                    } catch (_: AuthFailedException) {
+                        message.reply("执行失败, 密码不正确")
+                    }
+                }
+            }
         }
     }
 }

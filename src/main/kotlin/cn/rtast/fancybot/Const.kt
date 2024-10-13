@@ -30,6 +30,7 @@ import cn.rtast.fancybot.util.file.BlackListManager
 import cn.rtast.fancybot.util.file.ConfigManager
 import cn.rtast.fancybot.util.file.NiuziBankManager
 import cn.rtast.fancybot.util.file.NiuziManager
+import cn.rtast.fancybot.util.file.RCONManager
 import cn.rtast.fancybot.util.item.ItemManager
 import cn.rtast.rob.ROneBotFactory
 import com.google.gson.Gson
@@ -89,6 +90,7 @@ val itemManager = ItemManager()
 val niuziManager = NiuziManager()
 val niuziBankManager = NiuziBankManager()
 val blackListManager = BlackListManager()
+val rconManager = RCONManager()
 
 val START_UP_TIME = Instant.now().epochSecond
 
@@ -124,5 +126,5 @@ val commands = listOf(
     ZDJDCommand(), ScanQRCodeCommand(), TTSCommand(), SlimeChunkHelperCommand(),
     SupportMeCommand(), TheCatCommand(), TheHistoryOfTodayCommand(), MCVersionCommand(),
     MinecraftWikiCommand(), GaoKaoDaysRemainCommand(), IdiomExplainCommand(), NiuziManagerCommand(),
-    TodayEatCommand(), TodayDrinkCommand(), MCLoginCommand()
+    TodayEatCommand(), TodayDrinkCommand(), MCLoginCommand(), RCONCommand()
 )

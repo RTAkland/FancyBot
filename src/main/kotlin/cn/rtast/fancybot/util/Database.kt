@@ -14,6 +14,7 @@ import cn.rtast.fancybot.db.JrrpTable
 import cn.rtast.fancybot.db.MinecraftAccessTokenTable
 import cn.rtast.fancybot.db.NiuziBankTable
 import cn.rtast.fancybot.db.NiuziTable
+import cn.rtast.fancybot.db.RCONTable
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
@@ -28,6 +29,7 @@ suspend fun initDatabase() {
         SchemaUtils.createMissingTablesAndColumns(ActionTable)
         SchemaUtils.createMissingTablesAndColumns(BlackListTable)
         SchemaUtils.createMissingTablesAndColumns(MinecraftAccessTokenTable)
+        SchemaUtils.createMissingTablesAndColumns(RCONTable)
     }
 }
 
