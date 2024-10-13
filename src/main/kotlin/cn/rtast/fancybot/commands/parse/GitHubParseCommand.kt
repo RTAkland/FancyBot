@@ -41,6 +41,7 @@ object GitHubParseCommand {
     private val descriptionCustomFont = Font("Serif", Font.PLAIN, 40).deriveFont(Font.BOLD or Font.ITALIC)
     private val backgroundColor = Color.WHITE
     private val textColor = Color(60, 60, 60)
+    private val githubRegex = Regex("""github\.com/([^/]+)/([^/]+)""")
 
     private val languageColors = mapOf(
         "Kotlin" to Color(169, 123, 255),
@@ -170,11 +171,15 @@ object GitHubParseCommand {
         return canvas.toByteArray().encodeToBase64()
     }
 
-    suspend fun parse(message: GroupMessage, user: String, repo: String) {
-        val repoStat = this.getRepoStat(user, repo)
-        val image = this.createImage(repoStat)
-        val msg = MessageChain.Builder().addImage(image, true).build()
-        message.reply(msg)
+    suspend fun parse(message: GroupMessage) {
+        val matchedResult = githubRegex.find(message.rawMessage)
+        if (message.rawMessage.contains("github.com") && matchedResult != null) {
+            val (user, repo) = matchedResult.destructured
+            val repoStat = this.getRepoStat(user, repo)
+            val image = this.createImage(repoStat)
+            val msg = MessageChain.Builder().addImage(image, true).build()
+            message.reply(msg)
+        }
     }
 
     fun creatRepoImage(user: String, repo: String): String {

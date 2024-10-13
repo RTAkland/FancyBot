@@ -9,17 +9,14 @@ package cn.rtast.fancybot
 
 import cn.rtast.fancybot.commands.misc.ReactionCommand
 import cn.rtast.fancybot.commands.misc.ScanQRCodeCommand
-import cn.rtast.fancybot.commands.misc.ShortLinkCommand.Companion.makeShortLink
 import cn.rtast.fancybot.commands.parse.*
+import cn.rtast.fancybot.commands.reply.ImageBedCommand
 import cn.rtast.fancybot.enums.WSType
 import cn.rtast.fancybot.util.*
-import cn.rtast.fancybot.util.file.getFileType
-import cn.rtast.fancybot.util.misc.ImageBed
 import cn.rtast.fancybot.util.misc.convertToDate
 import cn.rtast.fancybot.util.misc.initCommandAndItem
 import cn.rtast.fancybot.util.misc.initFilesDir
 import cn.rtast.fancybot.util.misc.initSetuIndex
-import cn.rtast.fancybot.util.misc.toURL
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.lagrange.FileEvent
@@ -28,7 +25,6 @@ import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
-import cn.rtast.rob.util.ob.asNode
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,7 +35,6 @@ class FancyBot : OneBotListener {
 
     private val logger = Logger.getLogger<FancyBot>()
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
-    private val githubRegex = Regex("""github\.com/([^/]+)/([^/]+)""")
 
     override suspend fun onWebsocketOpenEvent() {
         this.sendPrivateMessage(configManager.noticeUser, "FancyBot启动完成~")
@@ -65,6 +60,7 @@ class FancyBot : OneBotListener {
             message.reply("你原神牛魔呢")
         }
 
+        GitHubParseCommand.parse(message)
         ReverseGIFCommand.callback(message)
         AsciiArtCommand.callback(message)
         ScanQRCodeCommand.callback(message)
@@ -96,47 +92,8 @@ class FancyBot : OneBotListener {
             }
             if (command.contains("图床")) {
                 // 将一个图片上传到图床
-                val imagesUrl = ImageURLCommand.getImageUrl(getMsg)
-                if (imagesUrl.isEmpty()) {
-                    message.reply("这个消息里没有图片呢!")
-                } else {
-                    try {
-                        if (imagesUrl.size == 1) {
-                            val imageByteArray = imagesUrl.first().toURL().readBytes()
-                            val imageFileType = imageByteArray.getFileType()
-                            val imageBedUrl = ImageBed.upload(imageByteArray, imageFileType)
-                            val msg = MessageChain.Builder()
-                                .addText(imageBedUrl.makeShortLink())
-                                .addNewLine(2)
-                                .addText(imageBedUrl)
-                                .build()
-                            message.reply(msg)
-                        } else {
-                            val messages = mutableListOf<MessageChain>()
-                            imagesUrl.forEach {
-                                val imageByteArray = it.toURL().readBytes()
-                                val imageFileType = imageByteArray.getFileType()
-                                val imageBedUrl = ImageBed.upload(imageByteArray, imageFileType)
-                                val msg = MessageChain.Builder()
-                                    .addText(imageBedUrl.makeShortLink())
-                                    .addNewLine(2)
-                                    .addText(imageBedUrl)
-                                    .build()
-                                messages.add(msg)
-                            }
-                            message.reply(messages.asNode(configManager.selfId))
-                        }
-                    } catch (e: Exception) {
-                        message.reply("上传失败: ${e.message}")
-                    }
-                }
+                ImageBedCommand.execute(getMsg, message)
             }
-        }
-
-        val matchedResult = githubRegex.find(message.rawMessage)
-        if (message.rawMessage.contains("github.com") && matchedResult != null) {
-            val (user, repo) = matchedResult.destructured
-            GitHubParseCommand.parse(message, user, repo)
         }
 
         coroutineScope.launch {
