@@ -13,7 +13,9 @@ import cn.rtast.fancybot.commands.misc.ShortLinkCommand.Companion.makeShortLink
 import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.entity.pastebin.PastebinPayload
 import cn.rtast.fancybot.entity.pastebin.PastebinResponse
+import cn.rtast.fancybot.enums.CommandAction
 import cn.rtast.fancybot.util.Http
+import cn.rtast.fancybot.util.file.insertActionRecord
 import cn.rtast.fancybot.util.str.toJson
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
@@ -31,5 +33,6 @@ class PastebinCommand : BaseCommand() {
             params = mapOf("key" to configManager.apiRtastKey)
         )
         message.reply("$API_RTAST_URL/api/pp/${response.id}?raw=true".makeShortLink())
+        insertActionRecord(CommandAction.Pastebin, message.sender.userId, content)
     }
 }
