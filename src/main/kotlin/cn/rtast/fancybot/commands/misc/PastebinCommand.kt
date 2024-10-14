@@ -25,14 +25,25 @@ import cn.rtast.rob.util.ob.OneBotListener
 class PastebinCommand : BaseCommand() {
     override val commandNames = listOf("/pastebin", "/pb")
 
+    companion object {
+        /**
+         * 创建一个pastebin返回一个pair 第一个是原始链接, 第二个是缩短url后的链接
+         */
+        fun createPastebin(content: String): Pair<String, String> {
+            val pastebinPayload = PastebinPayload(content)
+            val response = Http.post<PastebinResponse>(
+                "$API_RTAST_URL/api/pastebin", pastebinPayload.toJson(),
+                params = mapOf("key" to configManager.apiRtastKey)
+            )
+            val url = "$API_RTAST_URL/api/pp/${response.id}?raw=true"
+            return url to url.makeShortLink()
+        }
+    }
+
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         val content = args.joinToString(" ")
-        val pastebinPayload = PastebinPayload(content)
-        val response = Http.post<PastebinResponse>(
-            "$API_RTAST_URL/api/pastebin", pastebinPayload.toJson(),
-            params = mapOf("key" to configManager.apiRtastKey)
-        )
-        message.reply("$API_RTAST_URL/api/pp/${response.id}?raw=true".makeShortLink())
+        val shortUrl = createPastebin(content).second
+        message.reply(shortUrl)
         insertActionRecord(CommandAction.Pastebin, message.sender.userId, content)
     }
 }

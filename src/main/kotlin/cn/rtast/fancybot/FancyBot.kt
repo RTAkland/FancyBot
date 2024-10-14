@@ -7,8 +7,10 @@
 
 package cn.rtast.fancybot
 
+import cn.rtast.fancybot.commands.misc.PastebinCommand
 import cn.rtast.fancybot.commands.misc.ReactionCommand
 import cn.rtast.fancybot.commands.misc.ScanQRCodeCommand
+import cn.rtast.fancybot.commands.misc.ShortLinkCommand.Companion.makeShortLink
 import cn.rtast.fancybot.commands.parse.*
 import cn.rtast.fancybot.commands.reply.ImageBedCommand
 import cn.rtast.fancybot.enums.WSType
@@ -17,6 +19,7 @@ import cn.rtast.fancybot.util.misc.convertToDate
 import cn.rtast.fancybot.util.misc.initCommandAndItem
 import cn.rtast.fancybot.util.misc.initFilesDir
 import cn.rtast.fancybot.util.misc.initSetuIndex
+import cn.rtast.fancybot.util.misc.isValidUrl
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.lagrange.FileEvent
@@ -28,6 +31,7 @@ import cn.rtast.rob.util.ob.OneBotListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import sun.net.www.content.text.plain
 import java.io.File
 import java.net.URI
 
@@ -77,6 +81,18 @@ class FancyBot : OneBotListener {
             val command = message.message.reversed().find { it.type == ArrayMessageType.text }!!.data.text!!
             val replyId = message.message.find { it.type == ArrayMessageType.reply }!!.data.id!!
             val getMsg = this.getMessage(replyId.toString().toLong())
+            val plainTextContent = getMsg.message
+                .filter { it.type == ArrayMessageType.text }
+                .joinToString { it.data.text!! }
+            if (command.contains("/sl") || command.contains("/short")) {
+                // 使用回复消息的方式快速对一个url消息创建一个短链接
+                message.reply(plainTextContent.trim().makeShortLink())
+            }
+            if (command.contains("/pb") || command.contains("/pastebin")) {
+                // 使用回复消息的方式快速将创建一个pastebin
+                val shortUrl = PastebinCommand.createPastebin(plainTextContent).second
+                message.reply(shortUrl)
+            }
             if (command.contains("/ascii") || command.contains("/asc")) {
                 // 使用回复消息的方式直接对一个图片进行生成Ascii art的操作
                 val url = AsciiArtCommand.getImageUrl(getMsg)
