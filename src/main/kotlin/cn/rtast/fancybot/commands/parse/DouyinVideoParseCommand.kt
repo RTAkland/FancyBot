@@ -10,6 +10,7 @@ package cn.rtast.fancybot.commands.parse
 import cn.rtast.fancybot.commands.misc.ShortLinkCommand.Companion.makeShortLink
 import cn.rtast.fancybot.entity.douyin.DouyinVideo
 import cn.rtast.fancybot.util.Http
+import cn.rtast.fancybot.util.Logger
 import cn.rtast.fancybot.util.misc.drawCustomImage
 import cn.rtast.fancybot.util.misc.toBufferedImage
 import cn.rtast.fancybot.util.misc.toByteArray
@@ -33,6 +34,7 @@ object DouyinVideoParseCommand {
     private val shortLinkRegex = Regex("https://v\\.douyin\\.com/[a-zA-Z0-9]+/")
     private val singleVideoRegex = Regex("https://www\\.douyin\\.com/video/([0-9]+)")
     private val douyinApiUrl = "https://douyin.wtf/api/douyin/web/fetch_one_video".proxy
+    private val logger = Logger.getLogger<DouyinVideoParseCommand>()
     private const val IMAGE_WIDTH = 1200
     private const val IMAGE_HEIGHT = 800
 
@@ -74,28 +76,32 @@ object DouyinVideoParseCommand {
     }
 
     suspend fun parse(message: GroupMessage) {
-        val id = if (shortLinkRegex.find(message.rawMessage) != null) {
-            val shortUrl = shortLinkRegex.find(message.rawMessage)?.value ?: ""
-            val request = Request.Builder().url(shortUrl).build()
-            val finalUrl = tempHttpClient.newCall(request).execute().also { it.close() }
-            extractVideoId(finalUrl.request.url.toString())
-        } else if (singleVideoRegex.find(message.rawMessage) != null) extractVideoId(message.rawMessage) else ""
-        if (id.isNotBlank()) {
-            val response = Http.get<DouyinVideo>(
-                douyinApiUrl,
-                mapOf("aweme_id" to id)
-            )
-            val videoPlayUrlShortUrl = response.data.awemeDetail.video.bitRate
-                .first().playAddr.urlList.first().makeShortLink()
-            val shareUrlShortUrl = response.data.awemeDetail.shareUrl.makeShortLink()
-            val image = this.createDouyinVideoCard(response)
-            val msg = MessageChain.Builder()
-                .addImage(image, true)
-                .addText("视频地址: $shareUrlShortUrl")
-                .addNewLine()
-                .addText("下载地址: $videoPlayUrlShortUrl")
-                .build()
-            message.reply(msg)
+        try {
+            val id = if (shortLinkRegex.find(message.rawMessage) != null) {
+                val shortUrl = shortLinkRegex.find(message.rawMessage)?.value ?: ""
+                val request = Request.Builder().url(shortUrl).build()
+                val finalUrl = tempHttpClient.newCall(request).execute().also { it.close() }
+                extractVideoId(finalUrl.request.url.toString())
+            } else if (singleVideoRegex.find(message.rawMessage) != null) extractVideoId(message.rawMessage) else ""
+            if (id.isNotBlank()) {
+                val response = Http.get<DouyinVideo>(
+                    douyinApiUrl,
+                    mapOf("aweme_id" to id)
+                )
+                val videoPlayUrlShortUrl = response.data.awemeDetail.video.bitRate
+                    .first().playAddr.urlList.first().makeShortLink()
+                val shareUrlShortUrl = response.data.awemeDetail.shareUrl.makeShortLink()
+                val image = this.createDouyinVideoCard(response)
+                val msg = MessageChain.Builder()
+                    .addImage(image, true)
+                    .addText("视频地址: $shareUrlShortUrl")
+                    .addNewLine()
+                    .addText("下载地址: $videoPlayUrlShortUrl")
+                    .build()
+                message.reply(msg)
+            }
+        } catch (e: Exception) {
+            logger.warn("抖音视频解析失败: ${e.message}")
         }
     }
 }
