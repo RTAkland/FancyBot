@@ -127,5 +127,5 @@ val commands = listOf(
     SupportMeCommand(), TheCatCommand(), TheHistoryOfTodayCommand(), MCVersionCommand(),
     MinecraftWikiCommand(), GaoKaoDaysRemainCommand(), IdiomExplainCommand(), NiuziManagerCommand(),
     TodayEatCommand(), TodayDrinkCommand(), MCLoginCommand(), RCONCommand(),
-    GravatarCommand()
+    GravatarCommand(), PastebinCommand()
 )

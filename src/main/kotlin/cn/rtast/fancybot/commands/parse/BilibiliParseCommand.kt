@@ -185,54 +185,57 @@ object BiliVideoParseCommand {
     }
 
     suspend fun parse(listener: OneBotListener, message: GroupMessage) {
-        val bvid = if (bvRegex.containsMatchIn(message.rawMessage)) {
-            message.rawMessage.extractBv()
-        } else if (avRegex.containsMatchIn(message.rawMessage)) {
-            message.rawMessage.extractAv().avToBv()
-        } else if (shortUrlRegex.containsMatchIn(message.rawMessage)) {
-            val shortUrl = shortUrlRegex.find(message.rawMessage)!!.value
-            getShortUrlBVID(shortUrl)
-        } else if (bvRegex.containsMatchIn(message.rawMessage)) {
-            bvRegex.find(message.rawMessage)!!.value
-        } else if (message.message.find { it.type == ArrayMessageType.json } != null) {
-            val card = message.message.find { it.type == ArrayMessageType.json }!!
-                .data.data!!.toString().fromJson<CardShare>()
-            val shortUrl = if (card.meta.detail == null) {
-                if (!card.meta.news?.tag!!.contains("哔哩哔哩")) return
-                card.meta.news.jumpUrl
+        try {
+            val bvid = if (bvRegex.containsMatchIn(message.rawMessage)) {
+                message.rawMessage.extractBv()
+            } else if (avRegex.containsMatchIn(message.rawMessage)) {
+                message.rawMessage.extractAv().avToBv()
+            } else if (shortUrlRegex.containsMatchIn(message.rawMessage)) {
+                val shortUrl = shortUrlRegex.find(message.rawMessage)!!.value
+                getShortUrlBVID(shortUrl)
+            } else if (bvRegex.containsMatchIn(message.rawMessage)) {
+                bvRegex.find(message.rawMessage)!!.value
+            } else if (message.message.find { it.type == ArrayMessageType.json } != null) {
+                val card = message.message.find { it.type == ArrayMessageType.json }!!
+                    .data.data!!.toString().fromJson<CardShare>()
+                val shortUrl = if (card.meta.detail == null) {
+                    if (!card.meta.news?.tag!!.contains("哔哩哔哩")) return
+                    card.meta.news.jumpUrl
+                } else {
+                    if (!card.meta.detail.title.contains("哔哩哔哩")) return
+                    card.meta.detail.qqDocUrl
+                }
+                getShortUrlBVID(shortUrl)
             } else {
-                if (!card.meta.detail.title.contains("哔哩哔哩")) return
-                card.meta.detail.qqDocUrl
+                return
             }
-            getShortUrlBVID(shortUrl)
-        } else {
-            return
+            val videoInfo = this.getVideoStat(bvid)
+            val viewCount = this.getViewCount(bvid, videoInfo.data.cid)
+            val shortUrl = this.generateShortUrl(bvid, videoInfo.data.aid)
+            val fans = Http.get<UserStat>(USER_STAT_URL, mapOf("vmid" to videoInfo.data.owner.mid)).data.follower
+            val authorFace = videoInfo.data.owner.face
+            val title = videoInfo.data.title
+            val author = videoInfo.data.owner.name
+            val coverPicUrl = videoInfo.data.pic
+            val view = videoInfo.data.stat.view.formatNumber()
+            val share = videoInfo.data.stat.share.formatNumber()
+            val like = videoInfo.data.stat.like.formatNumber()
+            val favorite = videoInfo.data.stat.favorite.formatNumber()
+            val coin = videoInfo.data.stat.coin.formatNumber()
+            val reply = videoInfo.data.stat.reply.formatNumber()
+            val image = this.createResponseImage(
+                title, author, authorFace,
+                coverPicUrl, reply, view, coin,
+                share, like, favorite, fans, viewCount
+            )
+            val msg = MessageChain.Builder()
+                .addReply(message.messageId)
+                .addImage(image, true)
+                .addText(shortUrl)
+                .build()
+            listener.sendGroupMessage(message.groupId, msg)
+        } catch (_: Exception) {
         }
-        val videoInfo = this.getVideoStat(bvid)
-        val viewCount = this.getViewCount(bvid, videoInfo.data.cid)
-        val shortUrl = this.generateShortUrl(bvid, videoInfo.data.aid)
-        val fans = Http.get<UserStat>(USER_STAT_URL, mapOf("vmid" to videoInfo.data.owner.mid)).data.follower
-        val authorFace = videoInfo.data.owner.face
-        val title = videoInfo.data.title
-        val author = videoInfo.data.owner.name
-        val coverPicUrl = videoInfo.data.pic
-        val view = videoInfo.data.stat.view.formatNumber()
-        val share = videoInfo.data.stat.share.formatNumber()
-        val like = videoInfo.data.stat.like.formatNumber()
-        val favorite = videoInfo.data.stat.favorite.formatNumber()
-        val coin = videoInfo.data.stat.coin.formatNumber()
-        val reply = videoInfo.data.stat.reply.formatNumber()
-        val image = this.createResponseImage(
-            title, author, authorFace,
-            coverPicUrl, reply, view, coin,
-            share, like, favorite, fans, viewCount
-        )
-        val msg = MessageChain.Builder()
-            .addReply(message.messageId)
-            .addImage(image, true)
-            .addText(shortUrl)
-            .build()
-        listener.sendGroupMessage(message.groupId, msg)
     }
 }
 
