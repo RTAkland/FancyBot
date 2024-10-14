@@ -126,5 +126,6 @@ val commands = listOf(
     ZDJDCommand(), ScanQRCodeCommand(), TTSCommand(), SlimeChunkHelperCommand(),
     SupportMeCommand(), TheCatCommand(), TheHistoryOfTodayCommand(), MCVersionCommand(),
     MinecraftWikiCommand(), GaoKaoDaysRemainCommand(), IdiomExplainCommand(), NiuziManagerCommand(),
-    TodayEatCommand(), TodayDrinkCommand(), MCLoginCommand(), RCONCommand()
+    TodayEatCommand(), TodayDrinkCommand(), MCLoginCommand(), RCONCommand(),
+    GravatarCommand()
 )
