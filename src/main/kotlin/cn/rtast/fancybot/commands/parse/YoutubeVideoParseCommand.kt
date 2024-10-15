@@ -14,6 +14,7 @@ import cn.rtast.fancybot.util.misc.toBufferedImage
 import cn.rtast.fancybot.util.misc.toByteArray
 import cn.rtast.fancybot.util.misc.toURL
 import cn.rtast.fancybot.util.str.encodeToBase64
+import cn.rtast.fancybot.util.str.formatNumber
 import cn.rtast.fancybot.util.str.proxy
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.ob.MessageChain
@@ -51,10 +52,10 @@ object YoutubeVideoParseCommand {
         g2d.drawImage(thumbnailImage, 20, 100, scaledWidth, scaledHeight, null)
         g2d.color = Color(200, 200, 200)
         g2d.font = Font("Serif", Font.PLAIN, 16)
-        g2d.drawString("观看次数: ${videoInfo.items.first().statistics.viewCount}", 340, 120)
-        g2d.drawString("点赞次数: ${videoInfo.items.first().statistics.likeCount}", 340, 150)
-        g2d.drawString("收藏次数: ${videoInfo.items.first().statistics.favoriteCount}", 340, 180)
-        g2d.drawString("评论数: ${videoInfo.items.first().statistics.commentCount}", 340, 210)
+        g2d.drawString("观看次数: ${videoInfo.items.first().statistics.viewCount.toInt().formatNumber()}", 340, 120)
+        g2d.drawString("点赞次数: ${videoInfo.items.first().statistics.likeCount.toInt().formatNumber()}", 340, 150)
+        g2d.drawString("收藏次数: ${videoInfo.items.first().statistics.favoriteCount.toInt().formatNumber()}", 340, 180)
+        g2d.drawString("评论数: ${videoInfo.items.first().statistics.commentCount.toInt().formatNumber()}", 340, 210)
         g2d.dispose()
         return image.toByteArray().encodeToBase64()
     }
