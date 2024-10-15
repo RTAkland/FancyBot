@@ -44,7 +44,7 @@ object YoutubeVideoParseCommand {
         g2d.font = Font("Serif", Font.PLAIN, 18)
         val channelTitle = videoInfo.items.first().snippet.channelTitle
         g2d.drawString(channelTitle, 20, 70)
-        val thumbnailImage = videoInfo.items.first().snippet.thumbnails.maxRes.url
+        val thumbnailImage = videoInfo.items.first().snippet.thumbnails.standard.url
             .proxy.toURL().readBytes().toBufferedImage()
         val scaledWidth = 300
         val scaledHeight = (thumbnailImage.height * (scaledWidth / thumbnailImage.width.toDouble())).toInt()

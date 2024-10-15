@@ -7,7 +7,6 @@
 
 package cn.rtast.fancybot.entity.yt
 
-import com.google.gson.annotations.SerializedName
 
 
 data class YoutubeVideoResponse(
@@ -25,11 +24,10 @@ data class YoutubeVideoResponse(
     )
 
     data class Thumbnails(
-        @SerializedName("maxres")
-        val maxRes: MaxRes
+        val standard: Standard
     )
 
-    data class MaxRes(
+    data class Standard(
         val url: String,
     )
 
