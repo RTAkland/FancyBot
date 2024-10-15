@@ -26,6 +26,7 @@ import cn.rtast.fancybot.enums.ImageBedType
 import cn.rtast.fancybot.enums.ImageType
 import cn.rtast.fancybot.enums.WSType
 import cn.rtast.fancybot.items.*
+import cn.rtast.fancybot.util.Logger
 import cn.rtast.fancybot.util.file.BlackListManager
 import cn.rtast.fancybot.util.file.ConfigManager
 import cn.rtast.fancybot.util.file.NiuziBankManager

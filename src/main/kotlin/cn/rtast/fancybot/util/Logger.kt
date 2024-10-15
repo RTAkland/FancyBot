@@ -4,6 +4,7 @@
  * Date: 2024/10/7
  */
 
+@file:Suppress("unused")
 
 package cn.rtast.fancybot.util
 
@@ -14,5 +15,9 @@ import org.slf4j.event.Level
 object Logger {
     inline fun <reified T> getLogger(): Logger {
         return LoggerFactory.getLogger(T::class.simpleName).also { it.atLevel(Level.INFO) }
+    }
+
+    fun getLogger(name: String): Logger {
+        return LoggerFactory.getLogger(name)
     }
 }

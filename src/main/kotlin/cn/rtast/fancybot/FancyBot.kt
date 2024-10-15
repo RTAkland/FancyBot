@@ -16,8 +16,10 @@ import cn.rtast.fancybot.commands.reply.ImageBedCommand
 import cn.rtast.fancybot.enums.WSType
 import cn.rtast.fancybot.util.*
 import cn.rtast.fancybot.util.misc.convertToDate
-import cn.rtast.fancybot.util.misc.initCommandAndItem
+import cn.rtast.fancybot.util.misc.initBackgroundTasks
+import cn.rtast.fancybot.util.misc.initCommand
 import cn.rtast.fancybot.util.misc.initFilesDir
+import cn.rtast.fancybot.util.misc.initItems
 import cn.rtast.fancybot.util.misc.initSetuIndex
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
@@ -193,6 +195,8 @@ suspend fun main() {
     }
     initDatabase()
     initFilesDir()
-    initCommandAndItem(rob)
+    initCommand(rob)
     initSetuIndex()
+    initItems()
+    initBackgroundTasks(rob)
 }

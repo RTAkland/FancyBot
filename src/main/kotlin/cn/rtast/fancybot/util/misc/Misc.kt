@@ -24,11 +24,9 @@ suspend fun OneBotListener.getUserName(groupId: Long, userId: Long): String {
     return info.card ?: info.nickname
 }
 
-fun initCommandAndItem(rob: ROneBotFactory) {
+fun initCommand(rob: ROneBotFactory) {
     val commandManager = rob.commandManager
     commands.forEach { commandManager.register(it) }
-    items.forEach { itemManager.register(it) }
-    tasks.forEach { rob.scheduler.scheduleTask(it.value, 1000L, it.key) }
 }
 
 fun initFilesDir() {
@@ -43,4 +41,12 @@ fun initSetuIndex() {
         val fileContent = Http.get("$ASSETS_BASE_URL/files/pixiv_index_v3.json")
         file.writeText(fileContent)
     }
+}
+
+fun initItems() {
+    items.forEach { itemManager.register(it) }
+}
+
+fun initBackgroundTasks(rob: ROneBotFactory) {
+    tasks.forEach { rob.scheduler.scheduleTask(it.value, 1000L, it.key) }
 }
