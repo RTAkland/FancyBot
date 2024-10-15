@@ -11,6 +11,7 @@ package cn.rtast.fancybot
 import cn.rtast.fancybot.commands.AboutCommand
 import cn.rtast.fancybot.commands.EchoCommand
 import cn.rtast.fancybot.commands.HelpCommand
+import cn.rtast.fancybot.commands.ShuffleEchoCommand
 import cn.rtast.fancybot.commands.StatusCommand
 import cn.rtast.fancybot.commands.SupportMeCommand
 import cn.rtast.fancybot.commands.lookup.*
@@ -130,5 +131,5 @@ val commands = listOf(
     SupportMeCommand(), TheCatCommand(), TheHistoryOfTodayCommand(), MCVersionCommand(),
     MinecraftWikiCommand(), GaoKaoDaysRemainCommand(), IdiomExplainCommand(), NiuziManagerCommand(),
     TodayEatCommand(), TodayDrinkCommand(), MCLoginCommand(), RCONCommand(),
-    GravatarCommand(), PastebinCommand()
+    GravatarCommand(), PastebinCommand(), ShuffleEchoCommand()
 )
