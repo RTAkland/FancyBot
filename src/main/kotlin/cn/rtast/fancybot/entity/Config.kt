@@ -48,4 +48,5 @@ data class Config(
     val apiSpaceKey: String,
     val apiRtastKey: String,
     val azureAppClientId: String,
+    val youtubeDataApiKey: String,
 )

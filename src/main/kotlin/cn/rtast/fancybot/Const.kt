@@ -83,7 +83,8 @@ val DEFAULT_CONFIG = Config(
     cloudflareR2PublicUrl = "https://114514.com",
     apiSpaceKey = "114514",
     apiRtastKey = "114514",
-    azureAppClientId = "114514"
+    azureAppClientId = "114514",
+    youtubeDataApiKey = "114514"
 )
 
 val configManager = ConfigManager()

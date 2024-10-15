@@ -69,6 +69,7 @@ class FancyBot : OneBotListener {
         BiliVideoParseCommand.parse(this, message)
         BiliUserParseCommand.parse(this, message)
         DouyinVideoParseCommand.parse(message)
+        YoutubeVideoParseCommand.parse(message)
 
         if (message.rawMessage.toList().any { it in arrayListOf('*', '-', '/', '+', '=') }) {
             val calculateResult = CalculateCommand.parse(message.rawMessage)
