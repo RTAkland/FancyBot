@@ -45,6 +45,7 @@ val gson: Gson = GsonBuilder()
 const val ROOT_PATH = "./data"
 const val ASSETS_BASE_URL = "https://static.rtast.cn"
 const val API_RTAST_URL = "https://api.rtast.cn"
+const val PBI_API_URL = "https://pbi.us.kg"
 
 val DEFAULT_CONFIG = Config(
     ncmAPI = "https://ncm.rtast.cn",

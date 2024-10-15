@@ -8,8 +8,8 @@
 package cn.rtast.fancybot.commands.misc
 
 import cn.rtast.fancybot.API_RTAST_URL
+import cn.rtast.fancybot.PBI_API_URL
 import cn.rtast.fancybot.annotations.CommandDescription
-import cn.rtast.fancybot.commands.misc.ShortLinkCommand.Companion.makeShortLink
 import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.entity.pastebin.PastebinPayload
 import cn.rtast.fancybot.entity.pastebin.PastebinResponse
@@ -26,24 +26,19 @@ class PastebinCommand : BaseCommand() {
     override val commandNames = listOf("/pastebin", "/pb")
 
     companion object {
-        /**
-         * 创建一个pastebin返回一个pair 第一个是原始链接, 第二个是缩短url后的链接
-         */
-        fun createPastebin(content: String): Pair<String, String> {
+        fun createPastebin(content: String): String {
             val pastebinPayload = PastebinPayload(content)
             val response = Http.post<PastebinResponse>(
                 "$API_RTAST_URL/api/pastebin", pastebinPayload.toJson(),
                 params = mapOf("key" to configManager.apiRtastKey)
             )
-            val url = "$API_RTAST_URL/api/pp/${response.id}?raw=true"
-            return url to url.makeShortLink()
+            return "$PBI_API_URL/-/${response.id}"
         }
     }
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         val content = args.joinToString(" ")
-        val shortUrl = createPastebin(content).second
-        message.reply(shortUrl)
+        message.reply(createPastebin(content))
         insertActionRecord(CommandAction.Pastebin, message.sender.userId, content)
     }
 }

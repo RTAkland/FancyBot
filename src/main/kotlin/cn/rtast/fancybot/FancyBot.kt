@@ -19,7 +19,6 @@ import cn.rtast.fancybot.util.misc.convertToDate
 import cn.rtast.fancybot.util.misc.initCommandAndItem
 import cn.rtast.fancybot.util.misc.initFilesDir
 import cn.rtast.fancybot.util.misc.initSetuIndex
-import cn.rtast.fancybot.util.misc.isValidUrl
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.lagrange.FileEvent
@@ -31,7 +30,6 @@ import cn.rtast.rob.util.ob.OneBotListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import sun.net.www.content.text.plain
 import java.io.File
 import java.net.URI
 
@@ -94,8 +92,8 @@ class FancyBot : OneBotListener {
             }
             if (command.contains("/pb") || command.contains("/pastebin")) {
                 // 使用回复消息的方式快速将创建一个pastebin
-                val shortUrl = PastebinCommand.createPastebin(plainTextContent).second
-                message.reply(shortUrl)
+                val pastebinUrl = PastebinCommand.createPastebin(plainTextContent)
+                message.reply(pastebinUrl)
             }
             if (command.contains("/ascii") || command.contains("/asc")) {
                 // 使用回复消息的方式直接对一个图片进行生成Ascii art的操作
