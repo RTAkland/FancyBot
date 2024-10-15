@@ -37,6 +37,10 @@ class PastebinCommand : BaseCommand() {
     }
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+        if (args.isEmpty()) {
+            message.reply("使用`/pb <内容>`或者回复一个消息`/pb`可以快速创建一个pastebin")
+            return
+        }
         val content = args.joinToString(" ")
         message.reply(createPastebin(content))
         insertActionRecord(CommandAction.Pastebin, message.sender.userId, content)
