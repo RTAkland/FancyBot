@@ -51,10 +51,6 @@ class FancyBot : OneBotListener {
         logger.info("$sender($senderId: $groupId >>> $messageId): $msg")
         logger.trace("$sender($senderId: $groupId >>> $messageId: $json")
 
-        if (message.sender.userId in configManager.admins) {
-            message.reaction(QQFace.entries.random())
-        }
-
         if (message.message.any { it.type == ArrayMessageType.face && it.data.id.toString() == "419" }) {
             message.reply("你发牛魔的火车呢, 我直接就是打断")
         }
