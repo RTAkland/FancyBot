@@ -23,11 +23,11 @@ import cn.rtast.fancybot.commands.misc.JrrpCommand
 import cn.rtast.fancybot.commands.niuzi.NiuziRedeemCommand
 import cn.rtast.fancybot.commands.misc.ShortLinkCommand
 import cn.rtast.fancybot.entity.Config
+import cn.rtast.fancybot.enums.DatabaseType
 import cn.rtast.fancybot.enums.ImageBedType
 import cn.rtast.fancybot.enums.ImageType
 import cn.rtast.fancybot.enums.WSType
 import cn.rtast.fancybot.items.*
-import cn.rtast.fancybot.util.Logger
 import cn.rtast.fancybot.util.file.BlackListManager
 import cn.rtast.fancybot.util.file.ConfigManager
 import cn.rtast.fancybot.util.file.NiuziBankManager
@@ -50,6 +50,14 @@ const val API_RTAST_URL = "https://api.rtast.cn"
 const val PBI_API_URL = "https://pbi.us.kg"
 
 val DEFAULT_CONFIG = Config(
+    database = Config.Database(
+        DatabaseType.SQLite,
+        "127.0.0.1",
+        3306,
+        "root",
+        "114514",
+        "fancybot"
+    ),
     ncmAPI = "https://ncm.rtast.cn",
     wsAddress = "ws://127.0.0.1",
     wsType = WSType.Client,
