@@ -4,7 +4,7 @@
  * Date: 2024/10/9
  */
 
-@file:Suppress("KDocUnresolvedReference")
+@file:Suppress("KDocUnresolvedReference", "unused")
 
 package cn.rtast.fancybot.commands.misc
 
@@ -30,6 +30,8 @@ import cn.rtast.fancybot.enums.mc.MCVersionType
 import cn.rtast.fancybot.rconManager
 import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.Logger
+import cn.rtast.fancybot.util.mcbot.MCBot
+import cn.rtast.fancybot.util.mcbot.MCClient
 import cn.rtast.fancybot.util.misc.isFullyTransparent
 import cn.rtast.fancybot.util.misc.scaleImage
 import cn.rtast.fancybot.util.misc.toByteArray
@@ -38,11 +40,11 @@ import cn.rtast.fancybot.util.str.convertToHTML
 import cn.rtast.fancybot.util.str.decodeToString
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.fancybot.util.str.fromJson
+import cn.rtast.fancybot.util.str.generateRandomString
 import cn.rtast.fancybot.util.str.toJson
 import cn.rtast.fancybot.util.str.uriEncode
 import cn.rtast.motdpinger.BedrockPing
 import cn.rtast.motdpinger.JavaPing
-import cn.rtast.rcon.RCon
 import cn.rtast.rcon.exceptions.AuthFailedException
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
@@ -52,13 +54,15 @@ import cn.rtast.rob.util.ob.OneBotListener
 import cn.rtast.rob.util.ob.asMessageChain
 import cn.rtast.rob.util.ob.asNode
 import okhttp3.FormBody
+import org.geysermc.mcprotocollib.network.tcp.TcpClientSession
 import java.awt.AlphaComposite
 import java.awt.Color
 import java.awt.image.BufferedImage
 import java.net.SocketException
 import java.net.URI
-import java.util.Random
+import java.util.concurrent.Executors
 import javax.imageio.ImageIO
+import kotlin.random.Random
 
 @CommandDescription("获取MC最新的版本!")
 class MCVersionCommand : BaseCommand() {
@@ -589,6 +593,48 @@ class RCONCommand : BaseCommand() {
                     } catch (_: AuthFailedException) {
                         message.reply("执行失败, 密码不正确")
                     }
+                }
+            }
+        }
+    }
+}
+
+class MCBotCommand : BaseCommand() {
+    override val commandNames = listOf("/mcbot")
+
+    private val userClientMap = mutableMapOf<Long, MutableList<TcpClientSession>>()
+
+    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+        val clients = mutableListOf<TcpClientSession>()
+        val action = args.first()
+        when (action) {
+            "s" -> {
+                val executor = Executors.newFixedThreadPool(100)
+                val host = args[1]
+                val port = args[2].toInt()
+                val count = args[3].toInt()
+                val msgContent = args.drop(4).joinToString(" ").trim()
+                val delay = if (args.size == 5) 2000L else args[5].toLong()
+                val continueSendMessage = msgContent.contains("!!while!!")
+                (1..count).forEach {
+                    val botName = generateRandomString()
+                    val client = MCClient(host, port, botName).createClient()
+                    clients.add(client)
+                }
+                clients.forEach {
+                    executor.execute {
+                        val bot = MCBot(msgContent.replace("!!while!!", ""), continueSendMessage, delay, it)
+                        bot.run()
+                    }
+                }
+                userClientMap[message.sender.userId] = clients
+            }
+
+            "c" -> {
+                if (userClientMap.containsKey(message.sender.userId)) {
+                    userClientMap[message.sender.userId]!!.forEach { it.disconnect("Bye~") }
+                    userClientMap.remove(message.sender.userId)
+                    message.reply("成功取消任务")
                 }
             }
         }

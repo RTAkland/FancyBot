@@ -140,5 +140,5 @@ val commands = listOf(
     MinecraftWikiCommand(), GaoKaoDaysRemainCommand(), IdiomExplainCommand(), NiuziManagerCommand(),
     TodayEatCommand(), TodayDrinkCommand(), MCLoginCommand(), RCONCommand(),
     GravatarCommand(), PastebinCommand(), ShuffleEchoCommand(), TodayDontEatCommand(),
-    TodayDontDrinkCommand()
+    TodayDontDrinkCommand(), MCBotCommand()
 )
