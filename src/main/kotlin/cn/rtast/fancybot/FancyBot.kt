@@ -85,6 +85,10 @@ class FancyBot : OneBotListener {
             val plainTextContent = getMsg.message
                 .filter { it.type == ArrayMessageType.text }
                 .joinToString { it.data.text!! }
+            if (command.contains("倒放") || command.contains("/df")) {
+                // 使用回复消息的方式对一个gif倒放
+                ReverseGIFCommand.reverse(message, getMsg)
+            }
             if (command.contains("/sl") || command.contains("/short")) {
                 // 使用回复消息的方式快速对一个url消息创建一个短链接
                 message.reply(plainTextContent.trim().makeShortLink())
