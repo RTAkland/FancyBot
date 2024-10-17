@@ -10,10 +10,10 @@ package cn.rtast.fancybot.commands.lookup
 import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.entity.thecat.Cat
 import cn.rtast.fancybot.util.Http
+import cn.rtast.fancybot.util.misc.toURL
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.fancybot.util.str.fromArrayJson
 import cn.rtast.fancybot.util.str.proxy
-import cn.rtast.fancybot.util.misc.toURL
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain

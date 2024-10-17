@@ -13,8 +13,8 @@ import cn.rtast.fancybot.util.Logger
 import cn.rtast.fancybot.util.file.getFileType
 import cn.rtast.fancybot.util.misc.ImageBed
 import cn.rtast.fancybot.util.misc.makeGif
-import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.fancybot.util.misc.toByteArray
+import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.rob.entity.GetMessage
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType

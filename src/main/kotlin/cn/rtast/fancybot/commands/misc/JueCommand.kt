@@ -11,8 +11,8 @@ import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.util.misc.Resources
 import cn.rtast.fancybot.util.misc.drawCircularImage
 import cn.rtast.fancybot.util.misc.makeGif
-import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.fancybot.util.misc.toBufferedImage
+import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.BaseCommand

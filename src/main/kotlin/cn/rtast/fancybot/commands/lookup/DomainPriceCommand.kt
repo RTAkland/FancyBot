@@ -11,9 +11,9 @@ import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.entity.domain.PricePayload
 import cn.rtast.fancybot.entity.domain.PriceResponse
 import cn.rtast.fancybot.util.Http
+import cn.rtast.fancybot.util.misc.toByteArray
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.fancybot.util.str.toJson
-import cn.rtast.fancybot.util.misc.toByteArray
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain

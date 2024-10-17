@@ -10,8 +10,8 @@ package cn.rtast.fancybot.db
 import cn.rtast.fancybot.db.MinecraftAccessTokenTable.timestamp
 import cn.rtast.fancybot.db.MinecraftAccessTokenTable.token
 import cn.rtast.fancybot.db.MinecraftAccessTokenTable.userId
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import cn.rtast.fancybot.util.suspendedTransaction
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insert

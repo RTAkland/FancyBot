@@ -16,12 +16,12 @@ import cn.rtast.fancybot.commands.StatusCommand
 import cn.rtast.fancybot.commands.SupportMeCommand
 import cn.rtast.fancybot.commands.lookup.*
 import cn.rtast.fancybot.commands.misc.*
+import cn.rtast.fancybot.commands.misc.JrrpCommand
+import cn.rtast.fancybot.commands.misc.ShortLinkCommand
 import cn.rtast.fancybot.commands.niuzi.*
+import cn.rtast.fancybot.commands.niuzi.NiuziRedeemCommand
 import cn.rtast.fancybot.commands.parse.AsciiArtCommand
 import cn.rtast.fancybot.commands.parse.ReverseGIFCommand
-import cn.rtast.fancybot.commands.misc.JrrpCommand
-import cn.rtast.fancybot.commands.niuzi.NiuziRedeemCommand
-import cn.rtast.fancybot.commands.misc.ShortLinkCommand
 import cn.rtast.fancybot.entity.Config
 import cn.rtast.fancybot.enums.DatabaseType
 import cn.rtast.fancybot.enums.ImageBedType
