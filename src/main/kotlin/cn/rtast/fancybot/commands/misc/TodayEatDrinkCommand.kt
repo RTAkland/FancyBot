@@ -45,6 +45,7 @@ class TodayDrinkCommand : BaseCommand() {
         "气泡水", "奶盖茶", "冰可乐", "草莓汁", "芒果汁", "蓝莓汁", "热奶茶", "蜂蜜柚子茶"
     )
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) =
+    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         message.reply("今天喝${drinkList.random()}吧~")
+    }
 }
