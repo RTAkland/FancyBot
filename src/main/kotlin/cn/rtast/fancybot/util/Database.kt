@@ -31,7 +31,7 @@ suspend fun initDatabase() {
     if (configManager.dbConfig.type == DatabaseType.MySQL) {
         Database.connect("jdbc:mysql://${host}:${port}/$database", "com.mysql.cj.jdbc.Driver", user, password)
     } else if (configManager.dbConfig.type == DatabaseType.PostgreSQL) {
-        Database.connect("jdbc:postgresql://$host:$port/$database", driver = "org.postgresql.Driver", user, password)
+        Database.connect("jdbc:postgresql://$host:$port/$database", "org.postgresql.Driver", user, password)
     } else {
         Database.connect("jdbc:sqlite:file:$ROOT_PATH/data.sqlite", "org.sqlite.JDBC")
     }
