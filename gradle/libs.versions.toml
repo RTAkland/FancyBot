@@ -17,6 +17,7 @@ awsS3SDKVersion = "2.28.18"
 rconLibVersion = "1.1.0"
 mysqlConnectorVersion = "9.1.0"
 postgresqlVersion = "42.7.4"
+mcprotolobVersion = "1.21-SNAPSHOT"
 
 [libraries]
 ronebot = { group = "cn.rtast", name = "ROneBot", version.ref = "ronebotVersion" }
@@ -38,6 +39,7 @@ logback-classic = { group = "ch.qos.logback", name = "logback-classic", version.
 slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4jVersion" }
 aws-s3-sdk = { group = "software.amazon.awssdk", name = "s3", version.ref = "awsS3SDKVersion" }
 rconlib = { group = "cn.rtast", name = "RCONLib", version.ref = "rconLibVersion" }
+mcprotocollib = { group = "org.geysermc.mcprotocollib", name = "protocol", version.ref = "mcprotolobVersion" }
 
 [bundles]
 

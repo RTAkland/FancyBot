@@ -15,6 +15,7 @@ version = fancyBotVersion
 repositories {
     mavenCentral()
     mavenLocal()
+    maven("https://jitpack.io")
     maven("https://repo.opencollab.dev/main/")
     maven("https://oss.sonatype.org/content/repositories/snapshots")
     maven("https://repo.rtast.cn/api/v4/projects/33/packages/maven")
@@ -52,7 +53,7 @@ dependencies {
     implementation(libs.slf4j.api)
     implementation(libs.aws.s3.sdk)
     implementation(libs.rconlib)
-    implementation("org.geysermc.mcprotocollib:protocol:1.21-SNAPSHOT")
+    implementation(libs.mcprotocollib)
 }
 
 tasks.build {
