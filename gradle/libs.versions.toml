@@ -12,7 +12,7 @@ jsoupVersion = "1.18.1"
 nashornVersion = "15.4"
 zxingVersion = "3.5.3"
 logbackClassicVersion = "1.5.8"
-sl4jVersion = "2.0.16"
+slf4jVersion = "2.0.16"
 awsS3SDKVersion = "2.28.18"
 rconLibVersion = "1.1.0"
 mysqlConnectorVersion = "9.1.0"
@@ -35,7 +35,7 @@ nashorn-core = { group = "org.openjdk.nashorn", name = "nashorn-core", version.r
 zxing-core = { group = "com.google.zxing", name = "core", version.ref = "zxingVersion" }
 zxing-javase = { group = "com.google.zxing", name = "javase", version.ref = "zxingVersion" }
 logback-classic = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logbackClassicVersion" }
-slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "sl4jVersion" }
+slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4jVersion" }
 aws-s3-sdk = { group = "software.amazon.awssdk", name = "s3", version.ref = "awsS3SDKVersion" }
 rconlib = { group = "cn.rtast", name = "RCONLib", version.ref = "rconLibVersion" }
 
