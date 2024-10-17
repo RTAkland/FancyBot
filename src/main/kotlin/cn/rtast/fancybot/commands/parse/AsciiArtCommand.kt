@@ -103,7 +103,7 @@ class AsciiArtCommand : BaseCommand() {
                     val imageBytes = bufferedImage.convertToAscii()
                         .saveAsciiArtToImage(bufferedImage.width, bufferedImage.height)
                         .toByteArray()
-                    val imageBedUrl = ImageBed.upload(imageBytes, imageBytes.getFileType())
+                    val imageBedUrl = ImageBed.upload(imageBytes, imageBytes.getFileType()).makeShortLink()
                     val msg = MessageChain.Builder()
                         .addImage(imageBytes.encodeToBase64(), true)
                         .addText(imageBedUrl)
