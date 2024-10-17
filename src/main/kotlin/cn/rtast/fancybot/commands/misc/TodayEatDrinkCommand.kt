@@ -34,6 +34,15 @@ class TodayEatCommand : BaseCommand() {
     }
 }
 
+@CommandDescription("今天不吃什么")
+class TodayDontEatCommand : BaseCommand() {
+    override val commandNames = listOf("今天不吃什么")
+
+    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+        message.reply("你吃个结巴, 是吧")
+    }
+}
+
 @CommandDescription("今天喝什么")
 class TodayDrinkCommand : BaseCommand() {
     override val commandNames = listOf("今天喝什么")
@@ -47,5 +56,14 @@ class TodayDrinkCommand : BaseCommand() {
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         message.reply("今天喝${drinkList.random()}吧~")
+    }
+}
+
+@CommandDescription("今天不吃什么")
+class TodayDontDrinkCommand : BaseCommand() {
+    override val commandNames = listOf("今天不喝什么")
+
+    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+        message.reply("你喝个结巴, 是吧")
     }
 }
