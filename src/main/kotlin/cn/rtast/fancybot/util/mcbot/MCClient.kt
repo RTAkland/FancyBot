@@ -14,6 +14,9 @@ import org.geysermc.mcprotocollib.network.packet.Packet
 import org.geysermc.mcprotocollib.network.tcp.TcpClientSession
 import org.geysermc.mcprotocollib.protocol.MinecraftProtocol
 import org.geysermc.mcprotocollib.protocol.data.game.ClientCommand
+import org.geysermc.mcprotocollib.protocol.data.game.ResourcePackStatus
+import org.geysermc.mcprotocollib.protocol.packet.common.clientbound.ClientboundResourcePackPushPacket
+import org.geysermc.mcprotocollib.protocol.packet.common.serverbound.ServerboundResourcePackPacket
 import org.geysermc.mcprotocollib.protocol.packet.ingame.clientbound.ClientboundPlayerChatPacket
 import org.geysermc.mcprotocollib.protocol.packet.ingame.clientbound.ClientboundSystemChatPacket
 import org.geysermc.mcprotocollib.protocol.packet.ingame.clientbound.entity.player.ClientboundPlayerCombatKillPacket
@@ -33,16 +36,21 @@ class MCClient(
     private lateinit var client: TcpClientSession
     private val logger = Logger.getLogger<MCClient>()
 
-    fun createClient() {
+    fun createClient(): TcpClientSession {
         val protocol = MinecraftProtocol(botName)
         client = TcpClientSession(serverHost, serverPort, protocol)
+        return client
     }
 
     fun runBot(): MCClient {
         client.addListener(object : SessionAdapter() {
             override fun packetReceived(session: Session, packet: Packet) {
+                if (packet is ClientboundResourcePackPushPacket) {
+                    val loadedPacket = ServerboundResourcePackPacket(packet.id, ResourcePackStatus.SUCCESSFULLY_LOADED)
+                    session.send(loadedPacket)
+                }
                 if (packet is ClientboundPlayerPositionPacket) {
-                    client.send(ServerboundAcceptTeleportationPacket(packet.teleportId));
+                    session.send(ServerboundAcceptTeleportationPacket(packet.teleportId));
                 }
                 if (packet is ClientboundSystemChatPacket) {
                     logger.trace("系统 >>> {}", packet.content)
@@ -52,7 +60,7 @@ class MCClient(
                 }
                 if (packet is ClientboundPlayerCombatKillPacket) {
                     logger.info("Bot已死亡自动复活中")
-                    client.send(ServerboundClientCommandPacket(ClientCommand.RESPAWN))
+                    session.send(ServerboundClientCommandPacket(ClientCommand.RESPAWN))
                 }
             }
         })

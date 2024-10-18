@@ -602,16 +602,29 @@ class MCBotCommand : BaseCommand() {
 
     private val userClientMap = mutableMapOf<Long, MutableList<MCClient>>()
 
+    private fun getPlayerList(host: String, port: Int): Pair<Int, Int> {
+        val response = JavaPing().ping(host, port, 8000)!!
+        return response.players.max to response.players.online
+    }
+
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         val clients = mutableListOf<MCClient>()
         val action = args.first()
         when (action) {
             "start" -> {
-                val executor = Executors.newFixedThreadPool(100)
                 val address = args[1]
                 val host = address.split(":").first()
                 val port = address.split(":").last().toInt()
-                val count = args[2].toInt()
+                val count = if (args[2].toInt() <= 200) {
+                    message.replyAsync("最多只能开启200个客户端!!!")
+                    args[2].toInt()
+                } else 200
+                val executor = Executors.newFixedThreadPool(count)
+                val (maxPlayer, onlinePlayer) = this.getPlayerList(host, port)
+                val availableSit = maxPlayer - onlinePlayer
+                if (count > availableSit) {
+                    message.replyAsync("当前服务器仅剩余${availableSit}个玩家可进入!!")
+                }
                 (1..count).forEach {
                     val client = MCClient(host, port, generateRandomString())
                         .also { it.createClient() }
