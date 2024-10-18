@@ -597,6 +597,7 @@ class RCONCommand : BaseCommand() {
     }
 }
 
+@CommandDescription("Java版服务器假人压测")
 class MCBotCommand : BaseCommand() {
     override val commandNames = listOf("/mcbot")
 
@@ -615,10 +616,7 @@ class MCBotCommand : BaseCommand() {
                 val address = args[1]
                 val host = address.split(":").first()
                 val port = address.split(":").last().toInt()
-                val count = if (args[2].toInt() <= 200) {
-                    message.replyAsync("最多只能开启200个客户端!!!")
-                    args[2].toInt()
-                } else 200
+                val count = args[2].toInt()
                 val executor = Executors.newFixedThreadPool(count)
                 val (maxPlayer, onlinePlayer) = this.getPlayerList(host, port)
                 val availableSit = maxPlayer - onlinePlayer
