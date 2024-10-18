@@ -30,9 +30,9 @@ import cn.rtast.fancybot.enums.mc.MCVersionType
 import cn.rtast.fancybot.rconManager
 import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.Logger
-import cn.rtast.fancybot.util.mcbot.MCBot
 import cn.rtast.fancybot.util.mcbot.MCClient
 import cn.rtast.fancybot.util.misc.isFullyTransparent
+import cn.rtast.fancybot.util.misc.resolveMinecraftSrv
 import cn.rtast.fancybot.util.misc.scaleImage
 import cn.rtast.fancybot.util.misc.toByteArray
 import cn.rtast.fancybot.util.misc.toURL
@@ -54,7 +54,6 @@ import cn.rtast.rob.util.ob.OneBotListener
 import cn.rtast.rob.util.ob.asMessageChain
 import cn.rtast.rob.util.ob.asNode
 import okhttp3.FormBody
-import org.geysermc.mcprotocollib.network.tcp.TcpClientSession
 import java.awt.AlphaComposite
 import java.awt.Color
 import java.awt.image.BufferedImage
@@ -602,40 +601,44 @@ class RCONCommand : BaseCommand() {
 class MCBotCommand : BaseCommand() {
     override val commandNames = listOf("/mcbot")
 
-    private val userClientMap = mutableMapOf<Long, MutableList<TcpClientSession>>()
+    private val userClientMap = mutableMapOf<Long, MutableList<MCClient>>()
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
-        val clients = mutableListOf<TcpClientSession>()
+        val clients = mutableListOf<MCClient>()
         val action = args.first()
         when (action) {
-            "s" -> {
+            "start" -> {
                 val executor = Executors.newFixedThreadPool(100)
-                val host = args[1]
-                val port = args[2].toInt()
-                val count = args[3].toInt()
-                val msgContent = args.drop(4).joinToString(" ").trim()
-                val delay = if (args.size == 5) 2000L else args[5].toLong()
-                val continueSendMessage = msgContent.contains("!!while!!")
+                val address = args[1]
+                val host = address.split(":").first()
+                val (newAddress, newPort) = host.resolveMinecraftSrv()
+                val count = args[2].toInt()
                 (1..count).forEach {
-                    val botName = generateRandomString()
-                    val client = MCClient(host, port, botName).createClient()
-                    clients.add(client)
-                }
-                clients.forEach {
-                    executor.execute {
-                        val bot = MCBot(msgContent.replace("!!while!!", ""), continueSendMessage, delay, it)
-                        bot.run()
-                    }
+                    val client = MCClient(newAddress, newPort, generateRandomString())
+                        .also { it.createClient() }
+                    executor.execute { clients.add(client.runBot()) }
                 }
                 userClientMap[message.sender.userId] = clients
+                message.reply("成功开启任务: $address, $count")
             }
 
-            "c" -> {
+            "cancel" -> {
                 if (userClientMap.containsKey(message.sender.userId)) {
-                    userClientMap[message.sender.userId]!!.forEach { it.disconnect("Bye~") }
-                    userClientMap.remove(message.sender.userId)
+                    userClientMap.entries.forEach {
+                        if (it.key == message.sender.userId) {
+                            it.value.forEach { it.disconnect() }
+                            userClientMap.remove(it.key)
+                        }
+                    }
                     message.reply("成功取消任务")
+                } else {
+                    message.reply("你还没开启任务呢")
                 }
+            }
+
+            "message" -> {
+                val content = args.drop(1).joinToString(" ").trim()
+                userClientMap[message.sender.userId]!!.forEach { it.sendChat(content) }
             }
         }
     }
