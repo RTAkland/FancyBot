@@ -54,7 +54,6 @@ dependencies {
     implementation(libs.aws.s3.sdk)
     implementation(libs.rconlib)
     implementation(libs.mcprotocollib)
-    implementation(libs.dnsjava)
 }
 
 tasks.build {

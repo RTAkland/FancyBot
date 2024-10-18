@@ -32,7 +32,6 @@ import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.Logger
 import cn.rtast.fancybot.util.mcbot.MCClient
 import cn.rtast.fancybot.util.misc.isFullyTransparent
-import cn.rtast.fancybot.util.misc.resolveMinecraftSrv
 import cn.rtast.fancybot.util.misc.scaleImage
 import cn.rtast.fancybot.util.misc.toByteArray
 import cn.rtast.fancybot.util.misc.toURL
@@ -611,10 +610,10 @@ class MCBotCommand : BaseCommand() {
                 val executor = Executors.newFixedThreadPool(100)
                 val address = args[1]
                 val host = address.split(":").first()
-                val (newAddress, newPort) = host.resolveMinecraftSrv()
+                val port = address.split(":").last().toInt()
                 val count = args[2].toInt()
                 (1..count).forEach {
-                    val client = MCClient(newAddress, newPort, generateRandomString())
+                    val client = MCClient(host, port, generateRandomString())
                         .also { it.createClient() }
                     executor.execute { clients.add(client.runBot()) }
                 }
