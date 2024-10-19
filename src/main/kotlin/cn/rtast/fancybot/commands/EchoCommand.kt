@@ -8,6 +8,7 @@
 package cn.rtast.fancybot.commands
 
 import cn.rtast.fancybot.annotations.CommandDescription
+import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.enums.CommandAction
 import cn.rtast.fancybot.util.file.insertActionRecord
 import cn.rtast.rob.entity.GroupMessage
