@@ -49,17 +49,13 @@ class SendMailCommand : BaseCommand() {
             message.reply("发送`/mail <收件人地址>`即可发送测试邮件~")
             return
         }
-        if (message.sender.userId !in configManager.admins) {
-            val msg = MessageChain.Builder()
-                .addReply(message.messageId)
-                .addText("你不许发邮件")
-                .build()
-            listener.sendGroupMessage(message.groupId, msg)
-            return
+        if (message.sender.isAdmin || message.sender.isOwner) {
+            val target = args.first()
+            this.sendMail(target)
+            message.reply("正在发送邮件, 请查收~(可能会出现在垃圾桶中~)")
+            insertActionRecord(CommandAction.SendMail, message.sender.userId, target)
+        } else {
+            message.reply("你不许发邮件")
         }
-        val target = args.first()
-        this.sendMail(target)
-        message.reply("正在发送邮件, 请查收~(可能会出现在垃圾桶中~)")
-        insertActionRecord(CommandAction.SendMail, message.sender.userId, target)
     }
 }
