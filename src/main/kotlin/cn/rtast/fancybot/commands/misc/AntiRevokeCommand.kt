@@ -26,7 +26,7 @@ class AntiRevokeCommand : BaseCommand() {
         val messageId = args.first().toLong()
         val getMsg = listener.getMessage(messageId)
         val msgList = mutableListOf<ArrayMessage>()
-        msgList.add(ArrayMessage(ArrayMessageType.at, ArrayMessage.Data(qq = getMsg.sender.userId.toString())))
+        msgList.add(ArrayMessage(ArrayMessageType.at, ArrayMessage.Data(qq = message.sender.userId.toString())))
         msgList.add(ArrayMessage(ArrayMessageType.text, ArrayMessage.Data(text = "\n被撤回的消息如下: \n")))
         msgList.addAll(getMsg.message)
         listener.sendGroupMessage(message.groupId, msgList)
