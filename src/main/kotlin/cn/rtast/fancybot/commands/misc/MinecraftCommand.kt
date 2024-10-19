@@ -613,6 +613,10 @@ class MCBotCommand : BaseCommand() {
         val action = args.first()
         when (action) {
             "start" -> {
+                if (userClientMap.containsKey(message.sender.userId)) {
+                    message.reply("你有一个正在进行的任务不能开启另外一个任务请先使用`/mcbot cancel`取消任务")
+                    return
+                }
                 val address = args[1]
                 val host = address.split(":").first()
                 val port = address.split(":").last().toInt()
