@@ -52,7 +52,7 @@ object GitHubParseCommand {
         "Go" to Color(0, 173, 216),
         "Ruby" to Color(112, 21, 22),
         "PHP" to Color(79, 93, 149),
-        "TypeScript" to Color(43, 116, 137),
+        "TypeScript" to Color(0x3178c6),
         "Swift" to Color(240, 81, 56),
         "SCSS" to Color(198, 83, 140),
         "Visual Basic 6.0" to Color(44, 99, 83),
