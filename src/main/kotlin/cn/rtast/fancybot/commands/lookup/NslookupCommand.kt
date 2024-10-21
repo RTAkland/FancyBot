@@ -35,8 +35,8 @@ class NslookupCommand : BaseCommand() {
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         val host = args.first()
-        val nsType = args[1]
-        val srvType = args.last()
+        val nsType = if (args.size == 3) args[1] else "common"
+        val srvType = if (args.size == 3) args.last() else "mc"
         try {
             if (nsType == "srv") {
                 when (srvType) {
