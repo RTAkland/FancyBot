@@ -4,6 +4,7 @@
  * Date: 2024/9/8
  */
 
+@file:Suppress("unused")
 
 package cn.rtast.fancybot.util.str
 

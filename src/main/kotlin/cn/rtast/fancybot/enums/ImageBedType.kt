@@ -8,5 +8,5 @@
 package cn.rtast.fancybot.enums
 
 enum class ImageBedType {
-    Github, CloudflareR2
+    Github, CloudflareR2, QQ
 }

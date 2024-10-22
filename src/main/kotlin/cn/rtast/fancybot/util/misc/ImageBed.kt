@@ -15,6 +15,7 @@ import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.fancybot.util.str.proxy
 import cn.rtast.fancybot.util.str.toJson
+import cn.rtast.rob.ROneBotFactory
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider
 import software.amazon.awssdk.core.sync.RequestBody
@@ -43,25 +44,31 @@ object ImageBed {
             .build()
     }
 
-    fun upload(file: ByteArray, fileType: String = ""): String {
+    suspend fun upload(file: ByteArray, fileType: String = ""): String {
         val randomUUID = UUID.randomUUID().toString()
-        if (configManager.imageBedType == ImageBedType.CloudflareR2) {
-            val ft = if (fileType.isNotBlank()) ".$fileType" else ""
-            val key = "$randomUUID${ft}"
-            val putObjectRequest = PutObjectRequest.builder()
-                .bucket(configManager.cloudflareR2BucketName)
-                .contentType("image/${ft.replace(".", "")}")
-                .key(key)
-                .build()
-            s3Client.putObject(putObjectRequest, RequestBody.fromBytes(file))
-            return "${configManager.cloudflareR2PublicUrl}/$key".proxy
-        } else {
-            val body = UploadContentPayload("uploadImage", file.encodeToBase64()).toJson()
-            val response = Http.put<UploadContentResponse>(
-                "$imageBedUrl/${randomUUID}${if (fileType.isNotBlank()) ".$fileType" else ""}", body,
-                mapOf("Authorization" to "Bearer ${configManager.githubKey}")
-            ).content.name
-            return "https://raw.githubusercontent.com/${configManager.githubUser}/${configManager.githubImageRepo}/refs/heads/main/$response".proxy
+        return when (configManager.imageBedType) {
+            ImageBedType.Github -> {
+                val body = UploadContentPayload("uploadImage", file.encodeToBase64()).toJson()
+                val response = Http.put<UploadContentResponse>(
+                    "$imageBedUrl/${randomUUID}${if (fileType.isNotBlank()) ".$fileType" else ""}", body,
+                    mapOf("Authorization" to "Bearer ${configManager.githubKey}")
+                ).content.name
+                return "https://raw.githubusercontent.com/${configManager.githubUser}/${configManager.githubImageRepo}/refs/heads/main/$response".proxy
+            }
+
+            ImageBedType.CloudflareR2 -> {
+                val ft = if (fileType.isNotBlank()) ".$fileType" else ""
+                val key = "$randomUUID${ft}"
+                val putObjectRequest = PutObjectRequest.builder()
+                    .bucket(configManager.cloudflareR2BucketName)
+                    .contentType("image/${ft.replace(".", "")}")
+                    .key(key)
+                    .build()
+                s3Client.putObject(putObjectRequest, RequestBody.fromBytes(file))
+                return "${configManager.cloudflareR2PublicUrl}/$key".proxy
+            }
+
+            ImageBedType.QQ -> ROneBotFactory.action.uploadImage(file.encodeToBase64(), true)
         }
     }
 }
