@@ -9,6 +9,8 @@ package cn.rtast.fancybot.commands.lookup
 
 import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.configManager
+import cn.rtast.fancybot.entity.IPGeo
+import cn.rtast.fancybot.util.Http
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
@@ -27,11 +29,28 @@ class NslookupCommand : BaseCommand() {
 
     companion object {
         private const val MC_SRV_PREFIX = "_minecraft._tcp"
+        private const val IP_INFO_API = "https://ipinfo.io/###/json"
         private val env = Hashtable<String, String>().also {
             it["java.naming.factory.initial"] = "com.sun.jndi.dns.DnsContextFactory"
         }
         private val dirContext = InitialDirContext(env)
+
+        private fun srv(host: String): MutableList<String> {
+            val srvDomain = "$MC_SRV_PREFIX.$host"
+            val attrs = dirContext.getAttributes(srvDomain, arrayOf("SRV"))
+            val srvRecords = mutableListOf<String>()
+            val srvAttr = attrs.get("SRV")
+            if (srvAttr != null) {
+                for (i in 0 until srvAttr.size()) {
+                    val srvRecord = srvAttr.get(i) as String
+                    srvRecords.add(srvRecord)
+                }
+            }
+            return srvRecords
+        }
     }
+
+    private fun geo(ip: String) = Http.get<IPGeo>(IP_INFO_API.replace("###", ip))
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         val host = args.first()
@@ -41,16 +60,7 @@ class NslookupCommand : BaseCommand() {
             if (nsType == "srv") {
                 when (srvType) {
                     "mc" -> {
-                        val srvDomain = "$MC_SRV_PREFIX.$host"
-                        val attrs = dirContext.getAttributes(srvDomain, arrayOf("SRV"))
-                        val srvRecords = mutableListOf<String>()
-                        val srvAttr = attrs.get("SRV")
-                        if (srvAttr != null) {
-                            for (i in 0 until srvAttr.size()) {
-                                val srvRecord = srvAttr.get(i) as String
-                                srvRecords.add(srvRecord)
-                            }
-                        }
+                        val srvRecords = srv(host)
                         val messages = mutableListOf<MessageChain>()
                         srvRecords.forEach {
                             val srv = it.split(" ")
@@ -58,10 +68,16 @@ class NslookupCommand : BaseCommand() {
                             val weight = srv[1].toInt()
                             val port = srv[2].toInt()
                             val host = srv.last()
+                            val ip = InetAddress.getByName(host).hostAddress
+                            val geo = this.geo(ip)
                             val msg = MessageChain.Builder()
                                 .addText("解析后的地址: $host:$port")
                                 .addNewLine()
                                 .addText("权重: $weight | 优先级: $priority")
+                                .addNewLine()
+                                .addText("$host -> $ip")
+                                .addNewLine()
+                                .addText("国家: ${geo.country} 地区: ${geo.region} 城市: ${geo.city} | 所属组织: ${geo.org}")
                                 .build()
                             messages.add(msg)
                         }
@@ -69,9 +85,12 @@ class NslookupCommand : BaseCommand() {
                     }
                 }
             } else {
+                val ip = withContext(Dispatchers.IO) { InetAddress.getByName(host) }.hostAddress
+                val geo = this.geo(ip)
                 val msg = MessageChain.Builder()
-                    .addText("${host}解析后的IP地址为: ")
-                    .addText(withContext(Dispatchers.IO) { InetAddress.getByName(host) }.hostAddress)
+                    .addText("$host -> $ip")
+                    .addNewLine()
+                    .addText("国家: ${geo.country} 地区: ${geo.region} 城市: ${geo.city} | 所属组织: ${geo.org}")
                     .build()
                 message.reply(msg)
             }
