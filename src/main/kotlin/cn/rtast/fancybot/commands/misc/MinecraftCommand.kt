@@ -9,6 +9,7 @@
 package cn.rtast.fancybot.commands.misc
 
 import cn.rtast.fancybot.annotations.CommandDescription
+import cn.rtast.fancybot.commands.lookup.NslookupCommand
 import cn.rtast.fancybot.commands.lookup.WikipediaCommand.Companion.extractPlainTextFromHtml
 import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.db.deleteAccessTokenById
@@ -56,11 +57,13 @@ import okhttp3.FormBody
 import java.awt.AlphaComposite
 import java.awt.Color
 import java.awt.image.BufferedImage
+import java.net.InetAddress
 import java.net.SocketException
 import java.net.URI
 import java.util.concurrent.Executors
 import javax.imageio.ImageIO
 import kotlin.random.Random
+import kotlin.text.split
 
 @CommandDescription("获取MC最新的版本!")
 class MCVersionCommand : BaseCommand() {
@@ -344,8 +347,14 @@ class MCPingCommand : BaseCommand() {
         when (platform) {
             "java", "je", "Java", "JAVA" -> {
                 val parts = args.first().split(":")
-                val port = if (parts.size == 1) 25565 else parts.last().toInt()
-                val host = parts.first()
+                var port = if (parts.size == 1) 25565 else parts.last().toInt()
+                var host = parts.first()
+                val srv = NslookupCommand.srv(host)
+                if (srv.isNotEmpty()) {
+                    val srv = srv.first().split(" ")
+                    port = srv[2].toInt()
+                    host = srv.last()
+                }
                 val response = JavaPing().ping(host, port, 10000)
                 if (response == null) {
                     message.reply("无法获取服务器的消息请检查输入是否正确 >>> $host:$port")

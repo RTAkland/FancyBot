@@ -35,7 +35,7 @@ class NslookupCommand : BaseCommand() {
         }
         private val dirContext = InitialDirContext(env)
 
-        private fun srv(host: String): MutableList<String> {
+        fun srv(host: String): MutableList<String> {
             val srvDomain = "$MC_SRV_PREFIX.$host"
             val attrs = dirContext.getAttributes(srvDomain, arrayOf("SRV"))
             val srvRecords = mutableListOf<String>()
