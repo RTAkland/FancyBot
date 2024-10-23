@@ -9,6 +9,7 @@ package cn.rtast.fancybot.commands.lookup
 
 import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.enums.HttpStatusCode
+import cn.rtast.fancybot.util.misc.Resources
 import cn.rtast.fancybot.util.misc.toURL
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.rob.entity.GroupMessage
@@ -22,11 +23,16 @@ class HTTPCatCommand : BaseCommand() {
 
     companion object {
         private const val HTTP_CAT_API = "https://http.cat/###.jpg"
+        private val notFoundCatBase64 = Resources.loadFromResourcesAsBytes("httpcat/404.png")!!.encodeToBase64()
     }
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
-        val randomStatusCode = HttpStatusCode.entries.random().code.toString()
-        val image = HTTP_CAT_API.replace("###", randomStatusCode).toURL().readBytes().encodeToBase64()
+        val image = try {
+            val statusCode = if (args.isEmpty()) HttpStatusCode.entries.random().code.toString() else args.first()
+            HTTP_CAT_API.replace("###", statusCode).toURL().readBytes().encodeToBase64()
+        } catch (_: Exception) {
+            notFoundCatBase64
+        }
         val msg = MessageChain.Builder().addImage(image, true).build()
         message.reply(msg)
     }
