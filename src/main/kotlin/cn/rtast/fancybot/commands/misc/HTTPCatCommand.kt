@@ -5,7 +5,7 @@
  */
 
 
-package cn.rtast.fancybot.commands.lookup
+package cn.rtast.fancybot.commands.misc
 
 import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.enums.HttpStatusCode
