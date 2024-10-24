@@ -23,6 +23,8 @@ import cn.rtast.fancybot.util.misc.initItems
 import cn.rtast.fancybot.util.misc.initSetuIndex
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
+import cn.rtast.rob.entity.custom.BeKickEvent
+import cn.rtast.rob.entity.custom.MemberLeaveEvent
 import cn.rtast.rob.entity.lagrange.FileEvent
 import cn.rtast.rob.entity.lagrange.PokeEvent
 import cn.rtast.rob.enums.ArrayMessageType
@@ -82,7 +84,7 @@ class FancyBot : OneBotListener {
         if (message.message.any { it.type == ArrayMessageType.reply }) {
             val command = message.message.reversed().find { it.type == ArrayMessageType.text }!!.data.text!!
             val replyId = message.message.find { it.type == ArrayMessageType.reply }!!.data.id!!
-            val getMsg = instance.action.getMessage(replyId.toString().toLong())
+            val getMsg = message.action.getMessage(replyId.toString().toLong())
             val plainTextContent = getMsg.message
                 .filter { it.type == ArrayMessageType.text }
                 .joinToString { it.data.text!! }
@@ -147,7 +149,7 @@ class FancyBot : OneBotListener {
         ex.printStackTrace()
     }
 
-    override suspend fun onAddFriendRequest(event: AddFriendRequest) {
+    override suspend fun onAddFriendRequest(event: AddFriendRequestEvent) {
         event.approve()
     }
 
@@ -155,15 +157,15 @@ class FancyBot : OneBotListener {
         event.saveTo("$ROOT_PATH/caches/")
     }
 
-    override suspend fun onLeaveEvent(groupId: Long, userId: Long, operator: Long, time: Long) {
+    override suspend fun onLeaveEvent(event: MemberLeaveEvent) {
         val msg = MessageChain.Builder()
             .addText("有人坐飞船离开了本星系~")
             .addNewLine()
-            .addText("QQ: $userId | 操作者: ${if (operator == 0L) "主动退出" else operator}")
+            .addText("QQ: ${event.userId} | 操作者: ${if (event.operator == 0L) "主动退出" else event.operator}")
             .addNewLine()
             .addText("下次再见吧~~~")
             .build()
-        instance.action.sendGroupMessage(groupId, msg)
+        event.action.sendGroupMessage(event.groupId, msg)
     }
 
     override suspend fun onGroupPoke(event: PokeEvent) {
@@ -176,11 +178,11 @@ class FancyBot : OneBotListener {
         }
     }
 
-    override suspend fun onBeKicked(groupId: Long, operator: Long, time: Long) {
-        blackListManager.insertGroup(groupId, operator, time)
+    override suspend fun onBeKicked(event: BeKickEvent) {
+        blackListManager.insertGroup(event.groupId, event.operator, event.time)
         instance.action.sendPrivateMessage(
             configManager.noticeUser,
-            "被: ${groupId}踢出! 操作人: $operator 时间: ${time.convertToDate()} 已将其拉入黑名单!"
+            "被: ${event.groupId}踢出! 操作人: ${event.operator} 时间: ${event.time.convertToDate()} 已将其拉入黑名单!"
         )
     }
 }
