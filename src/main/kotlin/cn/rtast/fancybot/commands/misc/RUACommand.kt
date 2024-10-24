@@ -25,7 +25,7 @@ class RUACommand : BaseCommand() {
                 .addText("使用rua @xxxx")
                 .addText("即可rua某人啦~")
                 .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply(msg)
             return
         }
         try {
@@ -38,13 +38,13 @@ class RUACommand : BaseCommand() {
                 .addText(" ")
                 .addText("rua了你~")
                 .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply(msg)
         } catch (_: NullPointerException) {
             val msg = MessageChain.Builder()
                 .addAt(message.sender.userId)
                 .addText("要@才有用哦~")
                 .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply(msg)
         }
     }
 }

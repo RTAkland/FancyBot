@@ -31,6 +31,7 @@ import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.File
 import java.net.URI
@@ -41,7 +42,7 @@ class FancyBot : OneBotListener {
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
     override suspend fun onWebsocketOpenEvent() {
-        this.sendPrivateMessage(configManager.noticeUser, "FancyBot启动完成~")
+        instance.action.sendPrivateMessage(configManager.noticeUser, "FancyBot启动完成~")
     }
 
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
@@ -57,11 +58,11 @@ class FancyBot : OneBotListener {
             message.reply("你发牛魔的火车呢, 我直接就是打断")
         }
 
-        if (message.rawMessage.contains("原神")) {
-            (0..10).forEach { _ ->
-                message.reaction(QQFace.entries.random())
-            }
+        if (message.text.contains("原神")) {
+            (0..10).forEach { _ -> message.reaction(QQFace.entries.random()) }
             message.reply("你原神牛魔呢")
+            delay(1500L)
+            message.reply("但是话又说回来.....启动！！")
         }
 
         GitHubParseCommand.parse(message)
@@ -73,7 +74,7 @@ class FancyBot : OneBotListener {
         DouyinVideoParseCommand.parse(message)
         YoutubeVideoParseCommand.parse(message)
 
-        if (message.rawMessage.toList().any { it in arrayListOf('*', '-', '/', '+', '=') }) {
+        if (message.text.toList().any { it in arrayListOf('*', '-', '/', '+', '=') }) {
             val calculateResult = CalculateCommand.parse(message.rawMessage)
             calculateResult?.let { message.reply(calculateResult) }
         }
@@ -81,7 +82,7 @@ class FancyBot : OneBotListener {
         if (message.message.any { it.type == ArrayMessageType.reply }) {
             val command = message.message.reversed().find { it.type == ArrayMessageType.text }!!.data.text!!
             val replyId = message.message.find { it.type == ArrayMessageType.reply }!!.data.id!!
-            val getMsg = this.getMessage(replyId.toString().toLong())
+            val getMsg = instance.action.getMessage(replyId.toString().toLong())
             val plainTextContent = getMsg.message
                 .filter { it.type == ArrayMessageType.text }
                 .joinToString { it.data.text!! }
@@ -110,7 +111,7 @@ class FancyBot : OneBotListener {
             }
             if (command.contains("reaction")) {
                 // 使用reaction刷屏回应一条消息
-                ReactionCommand.reaction(this, message, getMsg.messageId)
+                ReactionCommand.reaction(message)
             }
             if (command.contains("图床")) {
                 // 将一个图片上传到图床
@@ -139,7 +140,7 @@ class FancyBot : OneBotListener {
             .addNewLine()
             .addText("使用/revoke ${message.messageId} 来获取被撤回的消息")
             .build()
-        this.sendGroupMessage(message.groupId, msg)
+        instance.action.sendGroupMessage(message.groupId, msg)
     }
 
     override suspend fun onWebsocketErrorEvent(ex: Exception) {
@@ -162,7 +163,7 @@ class FancyBot : OneBotListener {
             .addNewLine()
             .addText("下次再见吧~~~")
             .build()
-        this.sendGroupMessage(groupId, msg)
+        instance.action.sendGroupMessage(groupId, msg)
     }
 
     override suspend fun onGroupPoke(event: PokeEvent) {
@@ -171,36 +172,37 @@ class FancyBot : OneBotListener {
                 .addAt(event.userId)
                 .addText("你${event.action.first()}牛魔呢")
                 .build()
-            this.sendGroupMessage(event.groupId!!, msg)
+            instance.action.sendGroupMessage(event.groupId!!, msg)
         }
     }
 
     override suspend fun onBeKicked(groupId: Long, operator: Long, time: Long) {
         blackListManager.insertGroup(groupId, operator, time)
-        this.sendPrivateMessage(
+        instance.action.sendPrivateMessage(
             configManager.noticeUser,
             "被: ${groupId}踢出! 操作人: $operator 时间: ${time.convertToDate()} 已将其拉入黑名单!"
         )
     }
 }
 
+val fancyBot = FancyBot()
+val workType = configManager.wsType
+val accessToken = configManager.accessToken
+val instance = if (workType == WSType.Client) {
+    val address = configManager.wsAddress
+    ROneBotFactory.createClient(address, accessToken, fancyBot)
+        .also { it.addListeningGroups(*configManager.listeningGroups.toLongArray()) }
+} else {
+    val port = configManager.wsPort
+    ROneBotFactory.createServer(port, accessToken, fancyBot)
+        .also { it.addListeningGroups(*configManager.listeningGroups.toLongArray()) }
+}
+
 suspend fun main() {
-    val fancyBot = FancyBot()
-    val workType = configManager.wsType
-    val accessToken = configManager.accessToken
-    val rob = if (workType == WSType.Client) {
-        val address = configManager.wsAddress
-        ROneBotFactory.createClient(address, accessToken, fancyBot)
-            .also { it.addListeningGroups(*configManager.listeningGroups.toLongArray()) }
-    } else {
-        val port = configManager.wsPort
-        ROneBotFactory.createServer(port, accessToken, fancyBot)
-            .also { it.addListeningGroups(*configManager.listeningGroups.toLongArray()) }
-    }
     initDatabase()
     initFilesDir()
-    initCommand(rob)
+    initCommand()
     initSetuIndex()
     initItems()
-    initBackgroundTasks(rob)
+    initBackgroundTasks(instance)
 }

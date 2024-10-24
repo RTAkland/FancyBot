@@ -8,6 +8,7 @@
 package cn.rtast.fancybot.commands.misc
 
 import cn.rtast.fancybot.annotations.CommandDescription
+import cn.rtast.fancybot.instance
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.util.BaseCommand
@@ -55,7 +56,7 @@ class UnsetZiBiCommand : BaseCommand() {
             message.reply(msg)
             return
         }
-        listener.setGroupBan(users.getValue(message.sender.userId), message.sender.userId, 0)
+        instance.action.setGroupBan(users.getValue(message.sender.userId), message.sender.userId, 0)
         val msg = MessageChain.Builder()
             .addText("祝你天天开心不要自闭~~")
             .build()

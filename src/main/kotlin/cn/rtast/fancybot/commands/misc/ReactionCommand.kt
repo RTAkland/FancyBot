@@ -18,17 +18,11 @@ class ReactionCommand : BaseCommand() {
     override val commandNames = listOf("reaction", "回应")
 
     companion object {
-        suspend fun reaction(listener: OneBotListener, message: GroupMessage, messageId: Long, limit: Int = 30) {
-            (0..limit - 1).forEach {
-                listener.reaction(
-                    message.groupId,
-                    messageId,
-                    QQFace.entries.random().id.toString()
-                )
-            }
+        suspend fun reaction(message: GroupMessage, limit: Int = 30) {
+            (0..limit - 1).forEach { message.reaction(QQFace.entries.random()) }
         }
     }
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) =
-        reaction(listener, message, message.messageId)
+        reaction(message)
 }

@@ -32,6 +32,6 @@ class NiuziSignCommand : BaseCommand() {
             .addNewLine()
             .addText("你的牛子增加了${afterStatus.first}cm~ 总长度为: ${afterStatus.second?.length}")
             .build()
-        listener.sendGroupMessage(message.groupId, msg)
+        message.reply(msg)
     }
 }

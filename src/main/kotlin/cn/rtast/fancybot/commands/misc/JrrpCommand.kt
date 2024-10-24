@@ -26,7 +26,7 @@ class JrrpCommand : BaseCommand() {
                 .addAt(message.sender.userId)
                 .addText("你今天已经今日人品过啦, 明天再来吧~")
                 .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply(msg)
             return
         }
         val randomPoint = jrrpManager.jrrp(message.sender.userId)
@@ -41,6 +41,6 @@ class JrrpCommand : BaseCommand() {
             .addAt(message.sender.userId)
             .addText("$scoreDesc($randomPoint)")
             .build()
-        listener.sendGroupMessage(message.groupId, msg)
+        message.reply(msg)
     }
 }

@@ -62,6 +62,6 @@ class JueCommand : BaseCommand() {
         val source = message.sender.userId.toString()
         val gif = this.createJueGIF(source, target)
         val msg = MessageChain.Builder().addImage(gif, true).build()
-        listener.sendGroupMessage(message.groupId, msg)
+        message.reply(msg)
     }
 }

@@ -11,11 +11,11 @@ import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.entity.github.UploadContentPayload
 import cn.rtast.fancybot.entity.github.UploadContentResponse
 import cn.rtast.fancybot.enums.ImageBedType
+import cn.rtast.fancybot.instance
 import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.fancybot.util.str.proxy
 import cn.rtast.fancybot.util.str.toJson
-import cn.rtast.rob.ROneBotFactory
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider
 import software.amazon.awssdk.core.sync.RequestBody
@@ -68,7 +68,7 @@ object ImageBed {
                 return "${configManager.cloudflareR2PublicUrl}/$key".proxy
             }
 
-            ImageBedType.QQ -> ROneBotFactory.action.uploadImage(file.encodeToBase64(), true)
+            ImageBedType.QQ -> instance.action.uploadImage(file.encodeToBase64(), true)
         }
     }
 }

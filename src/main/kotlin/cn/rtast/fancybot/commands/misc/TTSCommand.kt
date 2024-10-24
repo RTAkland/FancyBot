@@ -38,6 +38,6 @@ class TTSCommand : BaseCommand() {
         val msg = MessageChain.Builder()
             .addRecord(response.url.proxy)
             .build()
-        listener.sendGroupMessage(message.groupId, msg)
+        message.reply(msg)
     }
 }

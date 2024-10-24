@@ -9,6 +9,7 @@ package cn.rtast.fancybot.util.misc
 
 import cn.rtast.fancybot.*
 import cn.rtast.fancybot.util.Http
+import cn.rtast.rob.BotInstance
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.util.ob.OneBotListener
 import java.io.File
@@ -20,13 +21,12 @@ fun randomBooleanWithProbability(probability: Double): Boolean {
 }
 
 suspend fun OneBotListener.getUserName(groupId: Long, userId: Long): String {
-    val info = this.getGroupMemberInfo(groupId, userId)
+    val info = instance.action.getGroupMemberInfo(groupId, userId)
     return info.card ?: info.nickname
 }
 
-fun initCommand(rob: ROneBotFactory) {
-    val commandManager = rob.commandManager
-    commands.forEach { commandManager.register(it) }
+fun initCommand() {
+    commands.forEach { ROneBotFactory.commandManager.register(it) }
 }
 
 fun initFilesDir() {
@@ -47,6 +47,6 @@ fun initItems() {
     items.forEach { itemManager.register(it) }
 }
 
-fun initBackgroundTasks(rob: ROneBotFactory) {
-    tasks.forEach { rob.scheduler.scheduleTask(it.value, 1000L, it.key) }
+fun initBackgroundTasks(instance: BotInstance) {
+    tasks.forEach { instance.scheduler.scheduleTask(it.value, 1000L, it.key) }
 }

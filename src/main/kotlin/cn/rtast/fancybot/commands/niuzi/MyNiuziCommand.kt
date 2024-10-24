@@ -37,6 +37,6 @@ class MyNiuziCommand : BaseCommand() {
             else -> "牛子也太长啦把天捅穿啦！！！！！！"
         }
         msg.addText(niuziString)
-        listener.sendGroupMessage(message.groupId, msg.build())
+        message.reply(msg.build())
     }
 }

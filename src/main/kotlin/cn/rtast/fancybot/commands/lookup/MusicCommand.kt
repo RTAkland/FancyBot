@@ -63,7 +63,7 @@ class MusicCommand : BaseCommand() {
                     val msg = MessageChain.Builder()
                         .addMusicShare(MusicShareType.Netease, finalResult.id.toString())
                         .build()
-                    listener.sendGroupMessage(message.groupId, msg)
+                    message.reply(msg)
                 } catch (_: Exception) {
                     message.reply("输入有误请重新搜索本次搜索结果已清除")
                 }
@@ -105,7 +105,7 @@ class MusicCommand : BaseCommand() {
                 .addNewLine()
                 .addText("发送`点歌 <歌名> [l|legacy]`即可使用旧版点歌系统")
                 .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply(msg)
             return
         }
 
@@ -114,7 +114,7 @@ class MusicCommand : BaseCommand() {
         val msg = MessageChain.Builder()
             .addMusicShare(MusicShareType.Netease, result.toString())
             .build()
-        listener.sendGroupMessage(message.groupId, msg)
+        message.reply(msg)
     }
 }
 
@@ -141,7 +141,7 @@ class MusicPlayUrlCommand : BaseCommand() {
             .addReply(message.messageId)
             .addText(url)
             .build()
-        listener.sendGroupMessage(message.groupId, msg)
+        message.reply(msg)
     }
 }
 
@@ -162,6 +162,6 @@ class QQMusicCommand : BaseCommand() {
             mapOf("key" to keyword)
         ).response.data.song.list.first().songId
         val msg = MessageChain.Builder().addMusicShare(MusicShareType.QQ, response.toString()).build()
-        listener.sendGroupMessage(message.groupId, msg)
+        message.reply(msg)
     }
 }

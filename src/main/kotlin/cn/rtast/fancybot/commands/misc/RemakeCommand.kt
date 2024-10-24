@@ -40,6 +40,6 @@ class RemakeCommand : BaseCommand() {
             msg.addText("重开成功! 你转生在${country.chineseName}的$location, 是一个$role")
         } else
             msg.addText("转生失败~")
-        listener.sendGroupMessage(message.groupId, msg.build())
+        message.reply(msg.build())
     }
 }

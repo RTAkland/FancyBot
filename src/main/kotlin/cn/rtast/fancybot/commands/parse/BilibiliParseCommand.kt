@@ -233,7 +233,7 @@ object BiliVideoParseCommand {
                 .addImage(image, true)
                 .addText(shortUrl)
                 .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply(msg)
         } catch (_: Exception) {
         }
     }
@@ -285,7 +285,7 @@ object BiliUserParseCommand {
             val msg = MessageChain.Builder()
                 .addImage(userCardImage, true)
                 .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply(msg)
         }
     }
 }

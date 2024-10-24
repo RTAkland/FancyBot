@@ -64,7 +64,7 @@ class WeatherCommand : BaseCommand() {
                 .addAt(message.sender.userId)
                 .addText("发送/weather <地区名>即可查看实时天气哦~")
                 .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply(msg)
             return
         }
         try {
@@ -81,13 +81,13 @@ class WeatherCommand : BaseCommand() {
                 .addReply(message.messageId)
                 .addImage(this.createWeatherCard(weather, lookupLocation), true)
                 .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply(msg)
         } catch (_: NullPointerException) {
             val msg = MessageChain.Builder()
                 .addAt(message.sender.userId)
                 .addText("没有查询到该城市的天气信息哦~")
                 .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply(msg)
         }
     }
 }

@@ -63,7 +63,7 @@ class CompilerCommand : BaseCommand() {
                 .addNewLine()
                 .addText(response.replace("<outStream>", "").replace("</outStream>", ""))
                 .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply(msg)
         } catch (e: Exception) {
             message.reply("执行错误: ${e.message}")
         } finally {

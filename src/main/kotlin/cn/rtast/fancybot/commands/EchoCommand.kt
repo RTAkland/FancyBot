@@ -8,7 +8,6 @@
 package cn.rtast.fancybot.commands
 
 import cn.rtast.fancybot.annotations.CommandDescription
-import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.enums.CommandAction
 import cn.rtast.fancybot.util.file.insertActionRecord
 import cn.rtast.rob.entity.GroupMessage
@@ -21,7 +20,7 @@ class EchoCommand : BaseCommand() {
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (message.sender.isAdmin || message.sender.isOwner) {
-            listener.sendGroupMessage(message.groupId, args.joinToString(" "))
+            message.reply(args.joinToString(" "))
             insertActionRecord(CommandAction.Echo, message.sender.userId)
         } else {
             message.reply("你不许用echo")
@@ -37,7 +36,7 @@ class ShuffleEchoCommand : BaseCommand() {
         if (message.sender.isAdmin || message.sender.isOwner) {
             message.reply(message.rawMessage.toList().shuffled().joinToString(""))
             insertActionRecord(CommandAction.Echo, message.sender.userId)
-        } else{
+        } else {
             message.reply("你不许用echo")
         }
     }

@@ -9,6 +9,7 @@ package cn.rtast.fancybot.commands.niuzi
 
 import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.commands
+import cn.rtast.fancybot.instance
 import cn.rtast.fancybot.niuziBankManager
 import cn.rtast.fancybot.niuziManager
 import cn.rtast.fancybot.util.misc.getUserName
@@ -68,7 +69,7 @@ class CreateBankAccountCommand : BaseCommand() {
             message.reply("你已经有账户了!")
             return
         }
-        val userInfo = listener.getGroupMemberInfo(message.groupId, message.sender.userId)
+        val userInfo = instance.action.getGroupMemberInfo(message.groupId, message.sender.userId)
         niuziBankManager.createBlankAccount(message.sender.userId, userInfo.card ?: userInfo.nickname)
         message.reply("成功创建了一个账户!")
     }

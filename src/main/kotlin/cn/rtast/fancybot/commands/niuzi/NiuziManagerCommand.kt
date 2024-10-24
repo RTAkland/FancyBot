@@ -8,7 +8,6 @@
 package cn.rtast.fancybot.commands.niuzi
 
 import cn.rtast.fancybot.annotations.CommandDescription
-import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.niuziBankManager
 import cn.rtast.fancybot.niuziManager
 import cn.rtast.fancybot.util.misc.getUserName

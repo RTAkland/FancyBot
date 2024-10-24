@@ -8,6 +8,7 @@
 package cn.rtast.fancybot.commands.lookup
 
 import cn.rtast.fancybot.annotations.CommandDescription
+import cn.rtast.fancybot.instance
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.BaseCommand
@@ -30,7 +31,7 @@ class ShotSelfCommand : BaseCommand() {
     override val commandNames = listOf("骂我")
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
-        listener.sendGroupForwardMsg(message.groupId, generateNodeMessage(message.sender.userId.toString()))
+        instance.action.sendGroupForwardMsg(message.groupId, generateNodeMessage(message.sender.userId.toString()))
     }
 }
 
@@ -40,12 +41,14 @@ class ShotOtherCommand : BaseCommand() {
 
     override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
-            listener.sendGroupForwardMsg(message.groupId, generateNodeMessage(message.sender.userId.toString(), 20))
+            instance.action.sendGroupForwardMsg(
+                message.groupId, generateNodeMessage(message.sender.userId.toString(), 20)
+            )
             return
         }
         var times = if (args.size == 1) 10 else if (args.last() == "") 10 else args.last().toInt()
         if (times >= 200) times = 10
         val target = message.message.find { it.type == ArrayMessageType.at }?.data!!
-        listener.sendGroupForwardMsg(message.groupId, generateNodeMessage(target.qq!!, times))
+        instance.action.sendGroupForwardMsg(message.groupId, generateNodeMessage(target.qq!!, times))
     }
 }

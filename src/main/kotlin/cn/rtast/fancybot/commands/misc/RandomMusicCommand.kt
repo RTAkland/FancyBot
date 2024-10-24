@@ -28,6 +28,6 @@ class RandomMusicCommand : BaseCommand() {
         val msg = MessageChain.Builder()
             .addMusicShare(MusicShareType.Netease, id.toString())
             .build()
-        listener.sendGroupMessage(message.groupId, msg)
+        message.reply(msg)
     }
 }

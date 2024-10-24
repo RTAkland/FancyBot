@@ -34,7 +34,7 @@ class NiuziJiJianCommand : BaseCommand() {
                 .addNewLine()
                 .addText("所以你不能和他们击剑~")
                 .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply(msg)
             return
         }
         if (message.sender.userId == targetId) {
@@ -69,7 +69,7 @@ class NiuziJiJianCommand : BaseCommand() {
                 .addNewLine()
                 .addText("对方的牛子增加了${result.second}cm~")
                 .build()
-            listener.sendGroupMessage(message.groupId, msg)
+            message.reply(msg)
         }
     }
 }
