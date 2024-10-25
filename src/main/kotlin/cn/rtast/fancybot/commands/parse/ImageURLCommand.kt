@@ -17,7 +17,7 @@ import cn.rtast.rob.util.ob.asNode
 
 object ImageURLCommand {
 
-    fun getImageUrl(message: GetMessage.Data): List<String> {
+    fun getImageUrl(message: GetMessage.Message): List<String> {
         try {
             val images = mutableListOf<String>()
             message.message.forEach {
@@ -30,7 +30,7 @@ object ImageURLCommand {
         }
     }
 
-    suspend fun callback(groupMessage: GroupMessage, message: GetMessage.Data) {
+    suspend fun callback(groupMessage: GroupMessage, message: GetMessage.Message) {
         val images = getImageUrl(message)
         if (images.isEmpty()) {
             groupMessage.reply("这个消息里没有图片呢!")

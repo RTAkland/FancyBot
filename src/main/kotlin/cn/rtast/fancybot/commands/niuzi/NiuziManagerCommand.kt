@@ -36,7 +36,9 @@ class NiuziManagerCommand : BaseCommand() {
                     when (type) {
                         "yh", "银行" -> {
                             val before = niuziBankManager.getUser(target)
-                            niuziBankManager.deposit(target, amount, listener.getUserName(message.groupId, target))
+                            niuziBankManager.deposit(
+                                target, amount, listener.getUserName(message.action, message.groupId, target)
+                            )
                             val after = niuziBankManager.getUser(target)
                             val msg = MessageChain.Builder()
                                 .addText("设置成功! 金额: $amount")

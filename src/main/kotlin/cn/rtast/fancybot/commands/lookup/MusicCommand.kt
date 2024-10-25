@@ -114,7 +114,7 @@ class MusicCommand : BaseCommand() {
         val msg = MessageChain.Builder()
             .addMusicShare(MusicShareType.Netease, result.toString())
             .build()
-        message.reply(msg)
+        message.action.sendGroupMessage(message.groupId, msg)
     }
 }
 
@@ -162,6 +162,6 @@ class QQMusicCommand : BaseCommand() {
             mapOf("key" to keyword)
         ).response.data.song.list.first().songId
         val msg = MessageChain.Builder().addMusicShare(MusicShareType.QQ, response.toString()).build()
-        message.reply(msg)
+        message.action.sendGroupMessage(message.groupId, msg)
     }
 }

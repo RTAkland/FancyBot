@@ -35,7 +35,7 @@ class ReverseGIFCommand : BaseCommand() {
             return gifBytes.encodeToBase64()
         }
 
-        suspend fun reverse(message: GroupMessage, getMsg: GetMessage.Data) {
+        suspend fun reverse(message: GroupMessage, getMsg: GetMessage.Message) {
             val imageObject = getMsg.message.find { it.type == ArrayMessageType.image }
             if (imageObject == null) {
                 message.reply("这个消息中没有图片呢")

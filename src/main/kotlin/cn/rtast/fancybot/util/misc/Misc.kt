@@ -11,6 +11,7 @@ import cn.rtast.fancybot.*
 import cn.rtast.fancybot.util.Http
 import cn.rtast.rob.BotInstance
 import cn.rtast.rob.ROneBotFactory
+import cn.rtast.rob.util.ob.OneBotAction
 import cn.rtast.rob.util.ob.OneBotListener
 import java.io.File
 import kotlin.random.Random
@@ -20,8 +21,8 @@ fun randomBooleanWithProbability(probability: Double): Boolean {
     return randomValue <= (probability * 100)
 }
 
-suspend fun OneBotListener.getUserName(groupId: Long, userId: Long): String {
-    val info = instance.action.getGroupMemberInfo(groupId, userId)
+suspend fun OneBotListener.getUserName(action: OneBotAction, groupId: Long, userId: Long): String {
+    val info = action.getGroupMemberInfo(groupId, userId)
     return info.card ?: info.nickname
 }
 
@@ -48,5 +49,9 @@ fun initItems() {
 }
 
 fun initBackgroundTasks(instance: BotInstance) {
-    tasks.forEach { instance.scheduler.scheduleTask(it.value, 1000L, it.key) }
+    instance.scheduler.scheduleTask({ instance ->
+        configManager.admins.forEach {
+            instance.action.sendLike(it, 1)
+        }
+    }, 1000L, 10000000L)
 }

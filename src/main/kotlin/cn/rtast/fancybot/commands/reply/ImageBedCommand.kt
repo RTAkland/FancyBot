@@ -20,7 +20,7 @@ import cn.rtast.rob.util.ob.asNode
 import okio.IOException
 
 object ImageBedCommand {
-    suspend fun execute(getMsg: GetMessage.Data, message: GroupMessage) {
+    suspend fun execute(getMsg: GetMessage.Message, message: GroupMessage) {
         val imagesUrl = ImageURLCommand.getImageUrl(getMsg)
         if (imagesUrl.isEmpty()) {
             message.reply("这个消息里没有图片呢!")

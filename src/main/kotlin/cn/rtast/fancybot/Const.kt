@@ -34,6 +34,7 @@ import cn.rtast.fancybot.util.file.NiuziBankManager
 import cn.rtast.fancybot.util.file.NiuziManager
 import cn.rtast.fancybot.util.file.RCONManager
 import cn.rtast.fancybot.util.item.ItemManager
+import cn.rtast.rob.util.ob.OneBotAction
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import java.time.Instant
@@ -109,14 +110,6 @@ val items = listOf(
     HeisiItem(), BaisiItem(),
     SetuItem(), NiuziItem(),
     TenSetuItem(), TenSetuR18Item()
-)
-
-val tasks = mapOf(
-    10000000L to suspend {
-        configManager.admins.forEach {
-            instance.action.sendLike(it, 1)
-        }
-    }
 )
 
 val commands = listOf(

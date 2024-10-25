@@ -41,6 +41,7 @@ class AsciiArtCommand : BaseCommand() {
         private val font = Font("Monospaced", Font.PLAIN, FONT_SIZE)
         private val logger = Logger.getLogger<AsciiArtCommand>()
         val waitingList = mutableListOf<Long>()
+        private lateinit var imageBed: ImageBed
 
         private fun BufferedImage.convertToAscii(): String {
             val width = this.width
@@ -157,7 +158,7 @@ class AsciiArtCommand : BaseCommand() {
             return getImageUrlFromUnified(toUnifiedMessage(groupMessage))
         }
 
-        fun getImageUrl(getMessageData: GetMessage.Data): String {
+        fun getImageUrl(getMessageData: GetMessage.Message): String {
             return getImageUrlFromUnified(toUnifiedMessage(getMessageData))
         }
 
@@ -171,7 +172,7 @@ class AsciiArtCommand : BaseCommand() {
             return groupMessage.message.map { UnifiedMessage(it.type, it.data.file, it.data.url) }
         }
 
-        private fun toUnifiedMessage(getMessageData: GetMessage.Data): List<UnifiedMessage> {
+        private fun toUnifiedMessage(getMessageData: GetMessage.Message): List<UnifiedMessage> {
             return getMessageData.message.map { UnifiedMessage(it.type, it.data.file, it.data.url) }
         }
 

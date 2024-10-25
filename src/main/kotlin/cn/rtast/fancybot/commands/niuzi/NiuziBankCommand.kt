@@ -9,7 +9,6 @@ package cn.rtast.fancybot.commands.niuzi
 
 import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.commands
-import cn.rtast.fancybot.instance
 import cn.rtast.fancybot.niuziBankManager
 import cn.rtast.fancybot.niuziManager
 import cn.rtast.fancybot.util.misc.getUserName
@@ -69,7 +68,7 @@ class CreateBankAccountCommand : BaseCommand() {
             message.reply("你已经有账户了!")
             return
         }
-        val userInfo = instance.action.getGroupMemberInfo(message.groupId, message.sender.userId)
+        val userInfo = message.action.getGroupMemberInfo(message.groupId, message.sender.userId)
         niuziBankManager.createBlankAccount(message.sender.userId, userInfo.card ?: userInfo.nickname)
         message.reply("成功创建了一个账户!")
     }
@@ -95,7 +94,7 @@ class BankTransferCommand : BaseCommand() {
             message.reply("你的牛子长度不够转账!")
             return
         }
-        val username = listener.getUserName(message.groupId, message.sender.userId)
+        val username = listener.getUserName(message.action, message.groupId, message.sender.userId)
         val result = niuziBankManager.transfer(message.sender.userId, target, amount, username)
         message.reply("转账成功! 你在银行内剩余的牛子长度为: ${result?.balance}")
     }
@@ -125,7 +124,7 @@ class WithdrawCommand : BaseCommand() {
             message.reply("取出的长度必须大于0!")
             return
         }
-        val username = listener.getUserName(message.groupId, message.sender.userId)
+        val username = listener.getUserName(message.action, message.groupId, message.sender.userId)
         val result = niuziBankManager.withdraw(message.sender.userId, amount, username)
         niuziManager.updateLength(message.sender.userId, amount + amount * INTEREST_RATE)
         message.reply("取牛子成功, 你现在还剩${result.balance}cm的牛子在银行内")
@@ -156,7 +155,7 @@ class DepositCommand : BaseCommand() {
             message.reply("你身上的牛子不够用啦, 没办法存进银行! >>> ${niuzi.length}")
             return
         }
-        val username = listener.getUserName(message.groupId, message.sender.userId)
+        val username = listener.getUserName(message.action, message.groupId, message.sender.userId)
         val self = niuziManager.updateLength(message.sender.userId, -amount)
         val result = niuziBankManager.deposit(message.sender.userId, amount, username)
         message.reply("存入成功你身上的牛子还有${self?.length}cm 银行账户内还有: ${result.balance}cm")

@@ -24,7 +24,7 @@ class NiuziSignCommand : BaseCommand() {
             message.reply("你今天已经对你的牛子使用了签到啦,明天再来吧~")
             return
         }
-        val username = listener.getUserName(message.groupId, message.sender.userId)
+        val username = listener.getUserName(message.action, message.groupId, message.sender.userId)
         val afterStatus = niuziManager.sign(message.sender.userId, username)
         val msg = MessageChain.Builder()
             .addReply(message.messageId)

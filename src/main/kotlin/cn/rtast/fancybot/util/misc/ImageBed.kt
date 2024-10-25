@@ -11,11 +11,11 @@ import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.entity.github.UploadContentPayload
 import cn.rtast.fancybot.entity.github.UploadContentResponse
 import cn.rtast.fancybot.enums.ImageBedType
-import cn.rtast.fancybot.instance
 import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.fancybot.util.str.proxy
 import cn.rtast.fancybot.util.str.toJson
+import cn.rtast.rob.util.ob.OneBotAction
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider
 import software.amazon.awssdk.core.sync.RequestBody
@@ -44,7 +44,7 @@ object ImageBed {
             .build()
     }
 
-    suspend fun upload(file: ByteArray, fileType: String = ""): String {
+    fun upload(file: ByteArray, fileType: String = ""): String {
         val randomUUID = UUID.randomUUID().toString()
         return when (configManager.imageBedType) {
             ImageBedType.Github -> {
@@ -67,8 +67,6 @@ object ImageBed {
                 s3Client.putObject(putObjectRequest, RequestBody.fromBytes(file))
                 return "${configManager.cloudflareR2PublicUrl}/$key".proxy
             }
-
-            ImageBedType.QQ -> instance.action.uploadImage(file.encodeToBase64(), true)
         }
     }
 }

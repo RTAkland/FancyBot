@@ -30,6 +30,7 @@ import cn.rtast.rob.entity.lagrange.PokeEvent
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.util.ob.MessageChain
+import cn.rtast.rob.util.ob.OneBotAction
 import cn.rtast.rob.util.ob.OneBotListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -43,8 +44,8 @@ class FancyBot : OneBotListener {
     private val logger = Logger.getLogger<FancyBot>()
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
 
-    override suspend fun onWebsocketOpenEvent() {
-        instance.action.sendPrivateMessage(configManager.noticeUser, "FancyBot启动完成~")
+    override suspend fun onWebsocketOpenEvent(action: OneBotAction) {
+        action.sendPrivateMessage(configManager.noticeUser, "FancyBot启动完成~")
     }
 
     override suspend fun onGroupMessage(message: GroupMessage, json: String) {
@@ -142,10 +143,10 @@ class FancyBot : OneBotListener {
             .addNewLine()
             .addText("使用/revoke ${message.messageId} 来获取被撤回的消息")
             .build()
-        instance.action.sendGroupMessage(message.groupId, msg)
+        message.action.sendGroupMessage(message.groupId, msg)
     }
 
-    override suspend fun onWebsocketErrorEvent(ex: Exception) {
+    override suspend fun onWebsocketErrorEvent(action: OneBotAction, ex: Exception) {
         ex.printStackTrace()
     }
 
@@ -174,33 +175,33 @@ class FancyBot : OneBotListener {
                 .addAt(event.userId)
                 .addText("你${event.action.first()}牛魔呢")
                 .build()
-            instance.action.sendGroupMessage(event.groupId!!, msg)
+            event.onebotAction.sendGroupMessage(event.groupId!!, msg)
         }
     }
 
     override suspend fun onBeKicked(event: BeKickEvent) {
         blackListManager.insertGroup(event.groupId, event.operator, event.time)
-        instance.action.sendPrivateMessage(
+        event.action.sendPrivateMessage(
             configManager.noticeUser,
             "被: ${event.groupId}踢出! 操作人: ${event.operator} 时间: ${event.time.convertToDate()} 已将其拉入黑名单!"
         )
     }
 }
 
-val fancyBot = FancyBot()
-val workType = configManager.wsType
-val accessToken = configManager.accessToken
-val instance = if (workType == WSType.Client) {
-    val address = configManager.wsAddress
-    ROneBotFactory.createClient(address, accessToken, fancyBot)
-        .also { it.addListeningGroups(*configManager.listeningGroups.toLongArray()) }
-} else {
-    val port = configManager.wsPort
-    ROneBotFactory.createServer(port, accessToken, fancyBot)
-        .also { it.addListeningGroups(*configManager.listeningGroups.toLongArray()) }
-}
-
 suspend fun main() {
+    val fancyBot = FancyBot()
+    val workType = configManager.wsType
+    val accessToken = configManager.accessToken
+    val instance = if (workType == WSType.Client) {
+        val address = configManager.wsAddress
+        ROneBotFactory.createClient(address, accessToken, fancyBot)
+            .also { it.addListeningGroups(*configManager.listeningGroups.toLongArray()) }
+    } else {
+        val port = configManager.wsPort
+        ROneBotFactory.createServer(port, accessToken, fancyBot)
+            .also { it.addListeningGroups(*configManager.listeningGroups.toLongArray()) }
+    }
+
     initDatabase()
     initFilesDir()
     initCommand()
