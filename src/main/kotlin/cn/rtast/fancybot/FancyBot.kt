@@ -24,6 +24,7 @@ import cn.rtast.fancybot.util.misc.initSetuIndex
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.custom.BeKickEvent
+import cn.rtast.rob.entity.custom.MemberKickEvent
 import cn.rtast.rob.entity.custom.MemberLeaveEvent
 import cn.rtast.rob.entity.lagrange.FileEvent
 import cn.rtast.rob.entity.lagrange.PokeEvent
@@ -159,10 +160,23 @@ class FancyBot : OneBotListener {
     }
 
     override suspend fun onLeaveEvent(event: MemberLeaveEvent) {
+        val nickname = event.action.getGroupMemberInfo(event.groupId, event.userId).nickname
         val msg = MessageChain.Builder()
-            .addText("有人坐飞船离开了本星系~")
+            .addText("有人坐飞船离开了本星系~(主动退出)")
             .addNewLine()
-            .addText("QQ: ${event.userId} | 操作者: ${if (event.operator == 0L) "主动退出" else event.operator}")
+            .addText("QQ: $nickname(${event.userId})")
+            .addNewLine()
+            .addText("下次再见吧~~~")
+            .build()
+        event.action.sendGroupMessage(event.groupId, msg)
+    }
+
+    override suspend fun onMemberKick(event: MemberKickEvent) {
+        val nickname = event.action.getGroupMemberInfo(event.groupId, event.userId).nickname
+        val msg = MessageChain.Builder()
+            .addText("有人坐飞船离开了本星系~(管理员踢出)")
+            .addNewLine()
+            .addText("QQ: $nickname(${event.userId})")
             .addNewLine()
             .addText("下次再见吧~~~")
             .build()
@@ -192,15 +206,11 @@ suspend fun main() {
     val fancyBot = FancyBot()
     val workType = configManager.wsType
     val accessToken = configManager.accessToken
-    val instance = if (workType == WSType.Client) {
-        val address = configManager.wsAddress
-        ROneBotFactory.createClient(address, accessToken, fancyBot)
-            .also { it.addListeningGroups(*configManager.listeningGroups.toLongArray()) }
-    } else {
-        val port = configManager.wsPort
-        ROneBotFactory.createServer(port, accessToken, fancyBot)
-            .also { it.addListeningGroups(*configManager.listeningGroups.toLongArray()) }
+    val instance = when (workType) {
+        WSType.Client -> ROneBotFactory.createClient(configManager.wsAddress, accessToken, fancyBot)
+        WSType.Server -> ROneBotFactory.createServer(configManager.wsPort, accessToken, fancyBot)
     }
+    instance.addListeningGroups(*configManager.listeningGroups.toLongArray())
 
     initDatabase()
     initFilesDir()

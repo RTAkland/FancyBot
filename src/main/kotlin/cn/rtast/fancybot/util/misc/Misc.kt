@@ -15,6 +15,8 @@ import cn.rtast.rob.util.ob.OneBotAction
 import cn.rtast.rob.util.ob.OneBotListener
 import java.io.File
 import kotlin.random.Random
+import kotlin.time.Duration.Companion.hours
+import kotlin.time.Duration.Companion.seconds
 
 fun randomBooleanWithProbability(probability: Double): Boolean {
     val randomValue = Random.nextInt(100)
@@ -53,5 +55,5 @@ fun initBackgroundTasks(instance: BotInstance) {
         configManager.admins.forEach {
             instance.action.sendLike(it, 1)
         }
-    }, 1000L, 10000000L)
+    }, 1.seconds, 3.hours)
 }
