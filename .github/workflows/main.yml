@@ -22,9 +22,7 @@ jobs:
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
       - name: Build
-        run: ./gradlew build
-      - name: Deploy Bot to MCSM
-        run: ./gradlew deployBot
+        run: ./gradlew build deployBot clean
         env:
           MCSM_API_KEY: ${{ secrets.MCSM_API_KEY }}
           MCSM_API_URL: ${{ secrets.MCSM_API_URL }}
