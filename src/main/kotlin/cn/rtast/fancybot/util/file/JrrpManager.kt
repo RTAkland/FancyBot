@@ -33,7 +33,7 @@ class JrrpManager {
 
     suspend fun isJrrped(id: Long): Boolean {
         val record = getRecord(id)
-        return record?.timestamp?.isSameDay(Instant.now().epochSecond) ?: false
+        return record?.timestamp?.isSameDay(Instant.now().epochSecond) == true
     }
 
     suspend fun jrrp(id: Long): Long {

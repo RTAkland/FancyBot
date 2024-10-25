@@ -52,7 +52,7 @@ class NiuziManager {
 
     suspend fun isSigned(id: Long): Boolean {
         val record = getUser(id)
-        return record?.timestamp?.isSameDay(Instant.now().epochSecond) ?: false
+        return record?.timestamp?.isSameDay(Instant.now().epochSecond) == true
     }
 
     suspend fun sign(id: Long, username: String): Pair<Double, Niuzi?> {

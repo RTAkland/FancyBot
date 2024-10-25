@@ -66,7 +66,7 @@ class MCClient(
                     }
 
                     is ClientboundPlayerPositionPacket -> {
-                        session.send(ServerboundAcceptTeleportationPacket(packet.teleportId));
+                        session.send(ServerboundAcceptTeleportationPacket(packet.teleportId))
                     }
 
                     is ClientboundSystemChatPacket -> {

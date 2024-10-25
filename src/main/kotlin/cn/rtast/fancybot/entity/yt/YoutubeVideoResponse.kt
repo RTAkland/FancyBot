@@ -8,7 +8,6 @@
 package cn.rtast.fancybot.entity.yt
 
 
-
 data class YoutubeVideoResponse(
     val items: List<Item>
 ) {

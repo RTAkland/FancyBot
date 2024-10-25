@@ -15,7 +15,6 @@ import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.fancybot.util.str.proxy
 import cn.rtast.fancybot.util.str.toJson
-import cn.rtast.rob.util.ob.OneBotAction
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider
 import software.amazon.awssdk.core.sync.RequestBody
