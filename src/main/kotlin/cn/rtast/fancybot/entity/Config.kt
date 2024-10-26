@@ -51,6 +51,7 @@ data class Config(
     val apiRtastKey: String,
     val azureAppClientId: String,
     val youtubeDataApiKey: String,
+    val naiLongApiUrl: String,
 ) {
     data class Database(
         val type: DatabaseType,

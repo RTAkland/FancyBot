@@ -93,7 +93,8 @@ val DEFAULT_CONFIG = Config(
     apiSpaceKey = "114514",
     apiRtastKey = "114514",
     azureAppClientId = "114514",
-    youtubeDataApiKey = "114514"
+    youtubeDataApiKey = "114514",
+    naiLongApiUrl = "http://127.0.0.1:5000/nailong"
 )
 
 val configManager = ConfigManager()

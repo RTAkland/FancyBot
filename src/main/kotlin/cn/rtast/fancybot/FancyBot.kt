@@ -13,6 +13,8 @@ import cn.rtast.fancybot.commands.misc.ScanQRCodeCommand
 import cn.rtast.fancybot.commands.misc.ShortLinkCommand.Companion.makeShortLink
 import cn.rtast.fancybot.commands.parse.*
 import cn.rtast.fancybot.commands.reply.ImageBedCommand
+import cn.rtast.fancybot.entity.nailong.NaiLongDetectPayload
+import cn.rtast.fancybot.entity.nailong.NaiLongDetectResponse
 import cn.rtast.fancybot.enums.WSType
 import cn.rtast.fancybot.util.*
 import cn.rtast.fancybot.util.misc.convertToDate
@@ -21,6 +23,7 @@ import cn.rtast.fancybot.util.misc.initCommand
 import cn.rtast.fancybot.util.misc.initFilesDir
 import cn.rtast.fancybot.util.misc.initItems
 import cn.rtast.fancybot.util.misc.initSetuIndex
+import cn.rtast.fancybot.util.str.toJson
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.custom.BeKickEvent
@@ -57,6 +60,17 @@ class FancyBot : OneBotListener {
         val messageId = message.messageId
         logger.info("$sender($senderId: $groupId >>> $messageId): $msg")
         logger.trace("$sender($senderId: $groupId >>> $messageId: $json")
+
+        if (message.images.isNotEmpty()) {
+            message.images.forEach {
+                val payload = NaiLongDetectPayload(it.file).toJson()
+                val result = Http.post<NaiLongDetectResponse>(configManager.naiLongApiUrl, payload)
+                logger.info("奶龙识别结果: ${result.result}")
+                if (result.result) {
+                    message.reply("本群禁止发奶龙!")
+                }
+            }
+        }
 
         if (message.message.any { it.type == ArrayMessageType.face && it.data.id.toString() == "419" }) {
             message.reply("你发牛魔的火车呢, 我直接就是打断")
