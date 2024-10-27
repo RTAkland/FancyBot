@@ -143,6 +143,17 @@ class FancyBot : OneBotListener {
                 val multiply = command.split("加速").last().toFloat()
                 SpeedUpGIFCommand.speedUp(message, getMsg, multiply)
             }
+            if (command.contains("/黑白")) {
+                val msg = MessageChain.Builder()
+                getMsg.message.filter { it.type == ArrayMessageType.image || it.type == ArrayMessageType.mface }
+                    .forEach {
+                        val base64 = it.data.file!!.toURL()
+                            .readBytes().toBufferedImage()
+                            .toGrayscale().toByteArray().encodeToBase64()
+                        msg.addImage(base64, true)
+                    }
+                message.reply(msg.build())
+            }
         }
 
         coroutineScope.launch {
