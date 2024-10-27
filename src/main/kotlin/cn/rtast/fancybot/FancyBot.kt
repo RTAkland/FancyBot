@@ -201,9 +201,9 @@ class FancyBot : OneBotListener {
         if (event.targetId == configManager.selfId) {
             val msg = MessageChain.Builder()
                 .addAt(event.userId)
-                .addText("你${event.action.first()}牛魔呢")
+                .addText("你${event.pokeAction.first()}牛魔呢")
                 .build()
-            event.onebotAction.sendGroupMessage(event.groupId!!, msg)
+            event.action.sendGroupMessage(event.groupId!!, msg)
         }
     }
 
