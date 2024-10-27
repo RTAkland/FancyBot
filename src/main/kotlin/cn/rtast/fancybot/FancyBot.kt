@@ -13,6 +13,7 @@ import cn.rtast.fancybot.commands.misc.ScanQRCodeCommand
 import cn.rtast.fancybot.commands.misc.ShortLinkCommand.Companion.makeShortLink
 import cn.rtast.fancybot.commands.parse.*
 import cn.rtast.fancybot.commands.reply.ImageBedCommand
+import cn.rtast.fancybot.commands.reply.SpeedUpGIFCommand
 import cn.rtast.fancybot.entity.nailong.NaiLongDetectPayload
 import cn.rtast.fancybot.entity.nailong.NaiLongDetectResponse
 import cn.rtast.fancybot.enums.WSType
@@ -61,17 +62,6 @@ class FancyBot : OneBotListener {
         logger.info("$sender($senderId: $groupId >>> $messageId): $msg")
         logger.trace("$sender($senderId: $groupId >>> $messageId: $json")
 
-        if (message.images.isNotEmpty()) {
-            message.images.forEach {
-                val payload = NaiLongDetectPayload(it.file).toJson()
-                val result = Http.post<NaiLongDetectResponse>(configManager.naiLongApiUrl, payload)
-                logger.info("奶龙识别结果: ${result.result}")
-                if (result.result) {
-                    message.reply("本群禁止发奶龙!")
-                }
-            }
-        }
-
         if (message.message.any { it.type == ArrayMessageType.face && it.data.id.toString() == "419" }) {
             message.reply("你发牛魔的火车呢, 我直接就是打断")
         }
@@ -104,6 +94,10 @@ class FancyBot : OneBotListener {
             val plainTextContent = getMsg.message
                 .filter { it.type == ArrayMessageType.text }
                 .joinToString { it.data.text!! }
+            if (command.contains("加速")) {
+                val multiply = command.split("加速").last().toFloat()
+                SpeedUpGIFCommand.speedUp(message, getMsg, multiply)
+            }
             if (command.contains("倒放") || command.contains("/df")) {
                 // 使用回复消息的方式对一个gif倒放
                 ReverseGIFCommand.reverse(message, getMsg)
@@ -138,6 +132,16 @@ class FancyBot : OneBotListener {
         }
 
         coroutineScope.launch {
+            if (message.images.isNotEmpty()) {
+                message.images.forEach {
+                    val payload = NaiLongDetectPayload(it.file).toJson()
+                    val result = Http.post<NaiLongDetectResponse>(configManager.naiLongApiUrl, payload)
+                    logger.info("奶龙识别结果: ${result.result}")
+                    if (result.result) {
+                        message.reply("本群禁止发奶龙!")
+                    }
+                }
+            }
             message.message.forEach {
                 if (it.type == ArrayMessageType.image) {
                     val filename = it.data.file!!.split("=").last() + ".png"
