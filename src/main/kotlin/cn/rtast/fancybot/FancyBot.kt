@@ -94,10 +94,10 @@ class FancyBot : OneBotListener {
             val plainTextContent = getMsg.message
                 .filter { it.type == ArrayMessageType.text }
                 .joinToString { it.data.text!! }
-            if (command.contains("倒放") || command.contains("/df")) ReverseGIFCommand.reverse(message, getMsg)
-            if (command.contains("图来") || command.contains("图链")) ImageURLCommand.callback(message, getMsg)
-            if (command.contains("reaction")) ReactionCommand.reaction(message)
-            if (command.contains("图床")) ImageBedCommand.execute(getMsg, message)
+            if (command.contains("/倒放") || command.contains("/df")) ReverseGIFCommand.reverse(message, getMsg)
+            if (command.contains("/图来") || command.contains("/图链")) ImageURLCommand.callback(message, getMsg)
+            if (command.contains("/reaction")) ReactionCommand.reaction(message)
+            if (command.contains("/图床")) ImageBedCommand.execute(getMsg, message)
             if (command.contains("/sl") || command.contains("/short")) message.reply(
                 plainTextContent.trim().makeShortLink()
             )
@@ -112,7 +112,7 @@ class FancyBot : OneBotListener {
                 val pastebinUrl = PastebinCommand.createPastebin(plainTextContent)
                 message.reply(pastebinUrl)
             }
-            if (command.contains("加速")) {
+            if (command.contains("/加速")) {
                 val multiply = command.split("加速").last().toFloat()
                 SpeedUpGIFCommand.speedUp(message, getMsg, multiply)
             }
