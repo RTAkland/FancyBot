@@ -8,6 +8,7 @@
 package cn.rtast.fancybot.util.misc
 
 import cn.rtast.fancybot.configManager
+import java.awt.Color
 import java.awt.Graphics2D
 import java.awt.geom.Ellipse2D
 import java.awt.geom.RoundRectangle2D
@@ -128,4 +129,20 @@ fun BufferedImage.isFullyTransparent(): Boolean {
         }
     }
     return true
+}
+
+fun BufferedImage.toGrayscale(): BufferedImage {
+    val width = this.width
+    val height = this.height
+    val grayscaleImage = BufferedImage(width, height, BufferedImage.TYPE_BYTE_GRAY)
+
+    for (y in 0 until height) {
+        for (x in 0 until width) {
+            val color = Color(this.getRGB(x, y))
+            val gray = (color.red * 0.299 + color.green * 0.587 + color.blue * 0.114).toInt()
+            val grayColor = Color(gray, gray, gray)
+            grayscaleImage.setRGB(x, y, grayColor.rgb)
+        }
+    }
+    return grayscaleImage
 }

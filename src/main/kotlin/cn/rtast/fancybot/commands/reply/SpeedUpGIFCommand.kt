@@ -23,7 +23,7 @@ object SpeedUpGIFCommand {
         val gifStream = gifUrl.toURL().openStream()
         val decoder = GifDecoder()
         decoder.read(gifStream)
-        val frames = (0 until decoder.frameCount).map { decoder.getFrame(it) }.reversed()
+        val frames = (0 until decoder.frameCount).map { decoder.getFrame(it) }
         val gifBase64 = decoder.makeGif(frames, multiply)
         val imgBedUrl = ImageBed.upload(gifBase64)
         val shortLink = imgBedUrl.makeShortLink()

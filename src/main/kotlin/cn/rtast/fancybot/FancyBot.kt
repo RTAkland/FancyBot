@@ -94,40 +94,27 @@ class FancyBot : OneBotListener {
             val plainTextContent = getMsg.message
                 .filter { it.type == ArrayMessageType.text }
                 .joinToString { it.data.text!! }
-            if (command.contains("加速")) {
-                val multiply = command.split("加速").last().toFloat()
-                SpeedUpGIFCommand.speedUp(message, getMsg, multiply)
-            }
-            if (command.contains("倒放") || command.contains("/df")) {
-                // 使用回复消息的方式对一个gif倒放
-                ReverseGIFCommand.reverse(message, getMsg)
-            }
-            if (command.contains("/sl") || command.contains("/short")) {
-                // 使用回复消息的方式快速对一个url消息创建一个短链接
-                message.reply(plainTextContent.trim().makeShortLink())
-            }
-            if (command.contains("/pb") || command.contains("/pastebin")) {
-                // 使用回复消息的方式快速将创建一个pastebin
-                val pastebinUrl = PastebinCommand.createPastebin(plainTextContent)
-                message.reply(pastebinUrl)
-            }
+            if (command.contains("倒放") || command.contains("/df")) ReverseGIFCommand.reverse(message, getMsg)
+            if (command.contains("图来") || command.contains("图链")) ImageURLCommand.callback(message, getMsg)
+            if (command.contains("reaction")) ReactionCommand.reaction(message)
+            if (command.contains("图床")) ImageBedCommand.execute(getMsg, message)
+            if (command.contains("/sl") || command.contains("/short")) message.reply(
+                plainTextContent.trim().makeShortLink()
+            )
             if (command.contains("/ascii") || command.contains("/asc")) {
                 // 使用回复消息的方式直接对一个图片进行生成Ascii art的操作
                 val url = AsciiArtCommand.getImageUrl(getMsg)
                 val image = AsciiArtCommand.generateAsciiArt(url)
                 message.reply(image)
             }
-            if (command.contains("图来") || command.contains("图链")) {
-                // 获取一个或多个图片的链接, 并且生成一个或多个短链接
-                ImageURLCommand.callback(message, getMsg)
+            if (command.contains("/pb") || command.contains("/pastebin")) {
+                // 使用回复消息的方式快速将创建一个pastebin
+                val pastebinUrl = PastebinCommand.createPastebin(plainTextContent)
+                message.reply(pastebinUrl)
             }
-            if (command.contains("reaction")) {
-                // 使用reaction刷屏回应一条消息
-                ReactionCommand.reaction(message)
-            }
-            if (command.contains("图床")) {
-                // 将一个图片上传到图床
-                ImageBedCommand.execute(getMsg, message)
+            if (command.contains("加速")) {
+                val multiply = command.split("加速").last().toFloat()
+                SpeedUpGIFCommand.speedUp(message, getMsg, multiply)
             }
         }
 
