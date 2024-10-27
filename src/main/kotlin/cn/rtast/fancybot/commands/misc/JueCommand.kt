@@ -26,12 +26,14 @@ import java.net.URI
 class JueCommand : BaseCommand() {
     override val commandNames = listOf("撅")
 
-    private val avatarUrl = "https://q1.qlogo.cn/g?b=qq&nk=#{}&s=640"
+    companion object {
+        const val AVATAR_REPLACE_URL = "https://q1.qlogo.cn/g?b=qq&nk=#{}&s=640"
+    }
 
     private fun createJueGIF(source: String, target: String): String {
         val baseGIF = Resources.loadFromResources("misc/jue.gif")
-        val sourceAvatar = URI(avatarUrl.replace("#{}", source)).toURL().readBytes().toBufferedImage()
-        val targetAvatar = URI(avatarUrl.replace("#{}", target)).toURL().readBytes().toBufferedImage()
+        val sourceAvatar = URI(AVATAR_REPLACE_URL.replace("#{}", source)).toURL().readBytes().toBufferedImage()
+        val targetAvatar = URI(AVATAR_REPLACE_URL.replace("#{}", target)).toURL().readBytes().toBufferedImage()
         val decoder = GifDecoder()
         decoder.read(baseGIF)
         val frames = mutableListOf<BufferedImage>()

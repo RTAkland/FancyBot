@@ -12,6 +12,7 @@ import cn.rtast.fancybot.commands.parse.AsciiArtCommand
 import cn.rtast.fancybot.util.misc.ImageBed
 import cn.rtast.fancybot.util.misc.makeGif
 import cn.rtast.fancybot.util.misc.toURL
+import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.rob.entity.GetMessage
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.ob.MessageChain
@@ -27,7 +28,10 @@ object SpeedUpGIFCommand {
         val gifBase64 = decoder.makeGif(frames, multiply)
         val imgBedUrl = ImageBed.upload(gifBase64)
         val shortLink = imgBedUrl.makeShortLink()
-        val msg = MessageChain.Builder().addImage(imgBedUrl).addText(shortLink).build()
+        val msg = MessageChain.Builder()
+            .addImage(gifBase64.encodeToBase64(), true)
+            .addText(shortLink)
+            .build()
         message.reply(msg)
     }
 }

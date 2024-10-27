@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot
 
+import cn.rtast.fancybot.commands.misc.JueCommand
 import cn.rtast.fancybot.commands.misc.PastebinCommand
 import cn.rtast.fancybot.commands.misc.ReactionCommand
 import cn.rtast.fancybot.commands.misc.ScanQRCodeCommand
@@ -18,12 +19,18 @@ import cn.rtast.fancybot.entity.nailong.NaiLongDetectPayload
 import cn.rtast.fancybot.entity.nailong.NaiLongDetectResponse
 import cn.rtast.fancybot.enums.WSType
 import cn.rtast.fancybot.util.*
+import cn.rtast.fancybot.util.misc.ImageBed
 import cn.rtast.fancybot.util.misc.convertToDate
 import cn.rtast.fancybot.util.misc.initBackgroundTasks
 import cn.rtast.fancybot.util.misc.initCommand
 import cn.rtast.fancybot.util.misc.initFilesDir
 import cn.rtast.fancybot.util.misc.initItems
 import cn.rtast.fancybot.util.misc.initSetuIndex
+import cn.rtast.fancybot.util.misc.toBufferedImage
+import cn.rtast.fancybot.util.misc.toByteArray
+import cn.rtast.fancybot.util.misc.toGrayscale
+import cn.rtast.fancybot.util.misc.toURL
+import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.fancybot.util.str.toJson
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
@@ -85,6 +92,26 @@ class FancyBot : OneBotListener {
         if (message.text.toList().any { it in arrayListOf('*', '-', '/', '+', '=') }) {
             val calculateResult = CalculateCommand.parse(message.rawMessage)
             calculateResult?.let { message.reply(calculateResult) }
+        }
+
+        if (message.message.any { it.type == ArrayMessageType.at }) {
+            if (message.text.contains("/取头像")) {
+                val target = message.message.find { it.type == ArrayMessageType.at }?.data?.qq!!
+                val avatar = JueCommand.AVATAR_REPLACE_URL.replace("#{}", target)
+                val msg = MessageChain.Builder()
+                if (message.text.contains("黑白")) {
+                    val greyscale = avatar.toURL()
+                        .readBytes().toBufferedImage()
+                        .toGrayscale().toByteArray()
+                    val greyscaleShortLink = ImageBed.upload(greyscale).makeShortLink()
+                    msg.addImage(greyscale.encodeToBase64(), true)
+                        .addText(greyscaleShortLink)
+                } else {
+                    val shortLink = avatar.makeShortLink()
+                    msg.addImage(avatar).addText(shortLink)
+                }
+                message.reply(msg.build())
+            }
         }
 
         if (message.message.any { it.type == ArrayMessageType.reply }) {
