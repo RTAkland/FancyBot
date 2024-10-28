@@ -229,7 +229,6 @@ object BiliVideoParseCommand {
                 share, like, favorite, fans, viewCount
             )
             val msg = MessageChain.Builder()
-                .addReply(message.messageId)
                 .addImage(image, true)
                 .addText(shortUrl)
                 .build()
