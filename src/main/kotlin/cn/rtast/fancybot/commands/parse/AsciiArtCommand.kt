@@ -100,7 +100,7 @@ class AsciiArtCommand : BaseCommand() {
             try {
                 decoder.read(gifStream)
                 if (decoder.frameCount == 0) {
-                    val bufferedImage = withContext(Dispatchers.IO) { ImageIO.read(URI(url).toURL()) }
+                    val bufferedImage = withContext(Dispatchers.IO) { ImageIO.read(gifStream) }
                     val imageBytes = bufferedImage.convertToAscii()
                         .saveAsciiArtToImage(bufferedImage.width, bufferedImage.height)
                         .toByteArray()

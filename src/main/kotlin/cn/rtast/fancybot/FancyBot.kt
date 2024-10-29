@@ -26,6 +26,7 @@ import cn.rtast.fancybot.util.misc.initCommand
 import cn.rtast.fancybot.util.misc.initFilesDir
 import cn.rtast.fancybot.util.misc.initItems
 import cn.rtast.fancybot.util.misc.initSetuIndex
+import cn.rtast.fancybot.util.misc.makeGif
 import cn.rtast.fancybot.util.misc.toBufferedImage
 import cn.rtast.fancybot.util.misc.toByteArray
 import cn.rtast.fancybot.util.misc.toGrayscale
@@ -44,10 +45,12 @@ import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.OneBotAction
 import cn.rtast.rob.util.ob.OneBotListener
+import com.madgag.gif.fmsware.GifDecoder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.net.URI
 
@@ -133,13 +136,11 @@ class FancyBot : OneBotListener {
                 plainTextContent.trim().makeShortLink()
             )
             if (command.contains("/ascii") || command.contains("/asc")) {
-                // 使用回复消息的方式直接对一个图片进行生成Ascii art的操作
                 val url = AsciiArtCommand.getImageUrl(getMsg)
                 val image = AsciiArtCommand.generateAsciiArt(url)
                 message.reply(image)
             }
             if (command.contains("/pb") || command.contains("/pastebin")) {
-                // 使用回复消息的方式快速将创建一个pastebin
                 val pastebinUrl = PastebinCommand.createPastebin(plainTextContent)
                 message.reply(pastebinUrl)
             }
@@ -151,10 +152,17 @@ class FancyBot : OneBotListener {
                 val msg = MessageChain.Builder()
                 getMsg.message.filter { it.type == ArrayMessageType.image || it.type == ArrayMessageType.mface }
                     .forEach {
-                        val base64 = it.data.file!!.toURL()
-                            .readBytes().toBufferedImage()
-                            .toGrayscale().toByteArray().encodeToBase64()
-                        msg.addImage(base64, true)
+                        val imgUrl = it.data.file!!
+                        val decoder = GifDecoder()
+                        val imageStream = withContext(Dispatchers.IO) { imgUrl.toURL().openStream() }
+                        decoder.read(imageStream)
+                        if (decoder.frameCount == 0) {
+                            msg.addImage(imageStream.readBytes().toBufferedImage().toByteArray().encodeToBase64(), true)
+                        } else {
+                            val frames = (0 until decoder.frameCount).map { decoder.getFrame(it).toGrayscale() }
+                            val base64 = decoder.makeGif(frames).encodeToBase64()
+                            msg.addImage(base64, true)
+                        }
                     }
                 message.reply(msg.build())
             }
