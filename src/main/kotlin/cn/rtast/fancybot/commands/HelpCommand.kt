@@ -34,6 +34,10 @@ class HelpCommand : BaseCommand() {
                 msg.addText("[$commandName] [$description] 命令: $commandNames").addNewLine()
             }
             msg.addText("共计${commands.size}条命令")
+            node.addMessageChain(
+                MessageChain.Builder().addText("你可以使用`/help <指令>`来获取这个指令的帮助信息").build(),
+                configManager.selfId
+            )
             node.addMessageChain(msg.build(), configManager.selfId)
             message.reply(node.build())
         } else {
