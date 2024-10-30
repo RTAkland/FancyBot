@@ -34,6 +34,7 @@ import cn.rtast.fancybot.util.file.NiuziBankManager
 import cn.rtast.fancybot.util.file.NiuziManager
 import cn.rtast.fancybot.util.file.RCONManager
 import cn.rtast.fancybot.util.item.ItemManager
+import cn.rtast.rob.util.PermissionCommand
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import java.time.Instant
@@ -134,3 +135,5 @@ val commands = listOf(
     GravatarCommand(), PastebinCommand(), ShuffleEchoCommand(), TodayDontEatCommand(),
     TodayDontDrinkCommand(), MCBotCommand(), HTTPCatCommand(), HTTPDogCommand()
 )
+
+val permissionCommands = listOf<PermissionCommand>()

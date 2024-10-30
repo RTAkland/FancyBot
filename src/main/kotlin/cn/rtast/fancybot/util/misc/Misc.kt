@@ -28,8 +28,9 @@ suspend fun OneBotListener.getUserName(action: OneBotAction, groupId: Long, user
     return info.card ?: info.nickname
 }
 
-fun initCommand() {
+suspend fun initCommand() {
     commands.forEach { ROneBotFactory.commandManager.register(it) }
+    permissionCommands.forEach { ROneBotFactory.commandManager.register(it) }
 }
 
 fun initFilesDir() {
