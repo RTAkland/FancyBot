@@ -14,6 +14,8 @@ import cn.rtast.fancybot.commands.misc.ScanQRCodeCommand
 import cn.rtast.fancybot.commands.misc.ShortLinkCommand.Companion.makeShortLink
 import cn.rtast.fancybot.commands.parse.*
 import cn.rtast.fancybot.commands.reply.ImageBedCommand
+import cn.rtast.fancybot.commands.reply.InvertImageCommand
+import cn.rtast.fancybot.commands.reply.RandomRGBCommand
 import cn.rtast.fancybot.commands.reply.SpeedUpGIFCommand
 import cn.rtast.fancybot.entity.nailong.NaiLongDetectPayload
 import cn.rtast.fancybot.entity.nailong.NaiLongDetectResponse
@@ -119,53 +121,54 @@ class FancyBot : OneBotListener {
         }
 
         if (message.message.any { it.type == ArrayMessageType.reply }) {
-            val command = message.message.reversed().find { it.type == ArrayMessageType.text }!!.data.text!!
+            val command = message.text.trim()
             val replyId = message.message.find { it.type == ArrayMessageType.reply }!!.data.id!!
             val getMsg = message.action.getMessage(replyId.toString().toLong())
-            val plainTextContent = getMsg.message
-                .filter { it.type == ArrayMessageType.text }
-                .joinToString { it.data.text!! }
-            if (command.contains("/倒放") || command.contains("/df")) ReverseGIFCommand.reverse(message, getMsg)
-            if (command.contains("/图来") || command.contains("/图链")) ImageURLCommand.callback(message, getMsg)
-            if (command.contains("/图床")) ImageBedCommand.execute(getMsg, message)
-            if (command.contains("/reaction")) ReactionCommand.reaction(
-                message.action,
-                message.groupId,
-                getMsg.messageId
-            )
-            if (command.contains("/sl") || command.contains("/short")) message.reply(
-                plainTextContent.trim().makeShortLink()
-            )
-            if (command.contains("/ascii") || command.contains("/asc")) {
-                val url = AsciiArtCommand.getImageUrl(getMsg)
-                val image = AsciiArtCommand.generateAsciiArt(url)
-                message.reply(image)
-            }
-            if (command.contains("/pb") || command.contains("/pastebin")) {
-                val pastebinUrl = PastebinCommand.createPastebin(plainTextContent)
-                message.reply(pastebinUrl)
-            }
-            if (command.contains("/加速")) {
-                val multiply = command.split("加速").last().toFloat()
-                SpeedUpGIFCommand.speedUp(message, getMsg, multiply)
-            }
-            if (command.contains("/黑白")) {
-                val msg = MessageChain.Builder()
-                getMsg.message.filter { it.type == ArrayMessageType.image || it.type == ArrayMessageType.mface }
-                    .forEach {
-                        val imgUrl = it.data.file!!
-                        val decoder = GifDecoder()
-                        val imageStream = withContext(Dispatchers.IO) { imgUrl.toURL().openStream() }
-                        decoder.read(imageStream)
-                        if (decoder.frameCount == 0) {
-                            msg.addImage(imageStream.readBytes().toBufferedImage().toByteArray().encodeToBase64(), true)
-                        } else {
-                            val frames = (0 until decoder.frameCount).map { decoder.getFrame(it).toGrayscale() }
-                            val base64 = decoder.makeGif(frames).encodeToBase64()
-                            msg.addImage(base64, true)
+            val plainTextContent = getMsg.text
+            when (command) {
+                "/倒放", "/df" -> ReverseGIFCommand.reverse(message, getMsg)
+                "/图来", "/图链" -> ImageURLCommand.callback(message, getMsg)
+                "/图床" -> ImageBedCommand.execute(getMsg, message)
+                "/reaction" -> ReactionCommand.reaction(message.action, message.groupId, getMsg.messageId)
+                "/sl", "/short" -> message.reply(plainTextContent.trim().makeShortLink())
+                "/rc", "/随机颜色" -> RandomRGBCommand.random(message, getMsg)
+                "/颜色反转", "/iv" -> InvertImageCommand.invert(message, getMsg)
+                "/ascii", "/asc" -> {
+                    val url = AsciiArtCommand.getImageUrl(getMsg)
+                    val image = AsciiArtCommand.generateAsciiArt(url)
+                    message.reply(image)
+                }
+
+                "/pb", "/pastebin" -> {
+                    val pastebinUrl = PastebinCommand.createPastebin(plainTextContent)
+                    message.reply(pastebinUrl)
+                }
+
+                "/加速" -> {
+                    val multiply = command.split("加速").last().toFloat()
+                    SpeedUpGIFCommand.speedUp(message, getMsg, multiply)
+                }
+
+                "/黑白", "/灰度" -> {
+                    val msg = MessageChain.Builder()
+                    getMsg.message.filter { it.type == ArrayMessageType.image || it.type == ArrayMessageType.mface }
+                        .forEach {
+                            val imgUrl = it.data.file!!
+                            val decoder = GifDecoder()
+                            val imageStream = withContext(Dispatchers.IO) { imgUrl.toURL().openStream() }
+                            decoder.read(imageStream)
+                            if (decoder.frameCount == 0) {
+                                msg.addImage(
+                                    imageStream.readBytes().toBufferedImage().toByteArray().encodeToBase64(), true
+                                )
+                            } else {
+                                val frames = (0 until decoder.frameCount).map { decoder.getFrame(it).toGrayscale() }
+                                val base64 = decoder.makeGif(frames).encodeToBase64()
+                                msg.addImage(base64, true)
+                            }
                         }
-                    }
-                message.reply(msg.build())
+                    message.reply(msg.build())
+                }
             }
         }
 

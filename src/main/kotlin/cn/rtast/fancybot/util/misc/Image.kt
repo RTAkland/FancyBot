@@ -16,6 +16,7 @@ import java.awt.image.BufferedImage
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import javax.imageio.ImageIO
+import kotlin.random.Random
 
 
 private fun BufferedImage.getScaledWidth(maxWidth: Double, maxHeight: Double): Pair<Int, Int> {
@@ -145,4 +146,44 @@ fun BufferedImage.toGrayscale(): BufferedImage {
         }
     }
     return grayscaleImage
+}
+
+fun BufferedImage.invertColor(): BufferedImage {
+    val width = this.width
+    val height = this.height
+    for (x in 0 until width) {
+        for (y in 0 until height) {
+            val rgba = this.getRGB(x, y)
+            val a = rgba shr 24 and 0xff
+            val r = 255 - (rgba shr 16 and 0xff)
+            val g = 255 - (rgba shr 8 and 0xff)
+            val b = 255 - (rgba and 0xff)
+            val invertedColor = (a shl 24) or (r shl 16) or (g shl 8) or b
+            this.setRGB(x, y, invertedColor)
+        }
+    }
+    return this
+}
+
+fun BufferedImage.randomColor(): BufferedImage {
+    val width = this.width
+    val height = this.height
+    for (x in 0 until width) {
+        for (y in 0 until height) {
+            val rgba = this.getRGB(x, y)
+            val a = (rgba shr 24) and 0xff
+            val r = (rgba shr 16) and 0xff
+            val g = (rgba shr 8) and 0xff
+            val b = rgba and 0xff
+            if (a < 255 || (r == 255 && g == 255 && b == 255) || (r == 0 && g == 0 && b == 0)) {
+                continue
+            }
+            val newR = Random.nextInt(256)
+            val newG = Random.nextInt(256)
+            val newB = Random.nextInt(256)
+            val randomColor = (a shl 24) or (newR shl 16) or (newG shl 8) or newB
+            this.setRGB(x, y, randomColor)
+        }
+    }
+    return this
 }
