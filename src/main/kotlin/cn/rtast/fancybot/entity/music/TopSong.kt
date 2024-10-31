@@ -8,13 +8,13 @@
 package cn.rtast.fancybot.entity.music
 
 data class TopSong(
-    val data: List<Data>
+    val data: List<Data>,
 ) {
     data class Data(
-        val privilege: Privilege
+        val privilege: Privilege,
     )
 
     data class Privilege(
-        val id: Long
+        val id: Long,
     )
 }

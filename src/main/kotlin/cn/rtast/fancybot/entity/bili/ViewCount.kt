@@ -8,9 +8,9 @@
 package cn.rtast.fancybot.entity.bili
 
 data class ViewCount(
-    val data: Data
+    val data: Data,
 ) {
     data class Data(
-        val total: String
+        val total: String,
     )
 }

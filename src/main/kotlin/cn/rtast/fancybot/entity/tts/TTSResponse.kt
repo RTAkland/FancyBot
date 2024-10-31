@@ -11,5 +11,5 @@ import com.google.gson.annotations.SerializedName
 
 data class TTSResponse(
     @SerializedName("URL")
-    val url: String
+    val url: String,
 )

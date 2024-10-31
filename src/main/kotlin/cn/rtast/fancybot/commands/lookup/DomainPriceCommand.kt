@@ -17,7 +17,6 @@ import cn.rtast.fancybot.util.str.toJson
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 import java.awt.Color
 import java.awt.Font
 import java.awt.image.BufferedImage
@@ -61,7 +60,7 @@ class DomainPriceCommand : BaseCommand() {
         domain: String,
         available: Boolean,
         premium: Boolean,
-        domainPrice: Pair<Int, Int>
+        domainPrice: Pair<Int, Int>,
     ): String {
         val canvas = this.createCommonCanvas()
         val g2d = canvas.createGraphics()
@@ -77,7 +76,7 @@ class DomainPriceCommand : BaseCommand() {
     }
 
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             val msg = MessageChain.Builder()
                 .addText("发送`/domain <域名>`即可查询对应的注册和续费价格~")

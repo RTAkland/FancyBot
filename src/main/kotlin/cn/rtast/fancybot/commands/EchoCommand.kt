@@ -12,13 +12,12 @@ import cn.rtast.fancybot.enums.CommandAction
 import cn.rtast.fancybot.util.file.insertActionRecord
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ob.OneBotListener
 
 @CommandDescription("Echo")
 class EchoCommand : BaseCommand() {
     override val commandNames = listOf("/echo")
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (message.sender.isAdmin || message.sender.isOwner) {
             message.reply(args.joinToString(" "))
             insertActionRecord(CommandAction.Echo, message.sender.userId)
@@ -32,7 +31,7 @@ class EchoCommand : BaseCommand() {
 class ShuffleEchoCommand : BaseCommand() {
     override val commandNames = listOf("/secho", "/se")
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (message.sender.isAdmin || message.sender.isOwner) {
             message.reply(message.rawMessage.toList().shuffled().joinToString(""))
             insertActionRecord(CommandAction.Echo, message.sender.userId)

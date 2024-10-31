@@ -8,9 +8,9 @@
 package cn.rtast.fancybot.entity.bili
 
 data class UserStat(
-    val data: Data
+    val data: Data,
 ) {
     data class Data(
-        val follower: Int
+        val follower: Int,
     )
 }

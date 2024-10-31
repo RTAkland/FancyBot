@@ -19,7 +19,6 @@ import cn.rtast.fancybot.util.file.insertActionRecord
 import cn.rtast.fancybot.util.str.toJson
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ob.OneBotListener
 
 @CommandDescription("Pastebin!")
 class PastebinCommand : BaseCommand() {
@@ -36,7 +35,7 @@ class PastebinCommand : BaseCommand() {
         }
     }
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             message.reply("使用`/pb <内容>`或者回复一个消息`/pb`可以快速创建一个pastebin")
             return

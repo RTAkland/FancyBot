@@ -22,7 +22,7 @@ data class RepoInfo(
     @SerializedName("open_issues_count")
     val openIssueCount: Int,
     val fork: Boolean,
-    val parent: Parent?
+    val parent: Parent?,
 ) {
     data class Owner(
         @SerializedName("avatar_url")

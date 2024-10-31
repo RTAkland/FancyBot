@@ -15,5 +15,5 @@ data class DeviceCodeResponse(
     @SerializedName("device_code")
     val deviceCode: String,
     @SerializedName("verification_uri")
-    val verificationUri: String
+    val verificationUri: String,
 )

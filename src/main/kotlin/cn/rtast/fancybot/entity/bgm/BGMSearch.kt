@@ -10,7 +10,7 @@ package cn.rtast.fancybot.entity.bgm
 import com.google.gson.annotations.SerializedName
 
 data class BGMSearch(
-    val list: List<Result>
+    val list: List<Result>,
 ) {
     data class Result(
         val url: String,
@@ -21,6 +21,6 @@ data class BGMSearch(
     )
 
     data class Images(
-        val large: String
+        val large: String,
     )
 }

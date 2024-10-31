@@ -10,11 +10,11 @@ package cn.rtast.fancybot.entity.compiler
 data class KCSPayload(
     val files: List<File>,
     val args: String = "",
-    val confType: String = "java"
+    val confType: String = "java",
 ) {
     data class File(
         val text: String,
         val name: String = "File.kt",
-        val publicId: String = ""
+        val publicId: String = "",
     )
 }

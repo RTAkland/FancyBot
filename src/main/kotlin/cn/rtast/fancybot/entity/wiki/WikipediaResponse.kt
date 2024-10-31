@@ -10,10 +10,10 @@ package cn.rtast.fancybot.entity.wiki
 import com.google.gson.annotations.SerializedName
 
 data class WikipediaResponse(
-    val query: Query
+    val query: Query,
 ) {
     data class Query(
-        val search: List<Search>
+        val search: List<Search>,
     )
 
     data class Search(

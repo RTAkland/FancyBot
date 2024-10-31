@@ -13,10 +13,10 @@ data class KCSResponse(
     val errors: Errors,
     val exception: Any,
     val jvmByteCode: Any,
-    val text: String
+    val text: String,
 ) {
     data class Errors(
         @SerializedName("File.kt")
-        val file: List<Any>
+        val file: List<Any>,
     )
 }

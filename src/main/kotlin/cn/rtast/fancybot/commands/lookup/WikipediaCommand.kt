@@ -16,7 +16,6 @@ import cn.rtast.fancybot.util.file.insertActionRecord
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 import org.jsoup.Jsoup
 
 @CommandDescription("查询wiki百科")
@@ -32,7 +31,7 @@ class WikipediaCommand : BaseCommand() {
         }
     }
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             val msg = MessageChain.Builder()
                 .addText("发送`/wiki <关键字>`即可查询出最匹配的wiki页面~")

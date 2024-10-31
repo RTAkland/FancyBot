@@ -24,5 +24,5 @@ data class PricePayload(
     @SerializedName("Version")
     val version: String = "2018-08-08",
     @SerializedName("Action")
-    val action: String = "BatchCheckDomain"
+    val action: String = "BatchCheckDomain",
 )

@@ -12,7 +12,6 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 
 val users = mutableMapOf<Long, Long>()
 
@@ -20,7 +19,7 @@ val users = mutableMapOf<Long, Long>()
 class ZiBiCommand : BaseCommand() {
     override val commandNames = listOf("/自闭", "自闭")
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         try {
             users.remove(message.sender.userId)
             val duration = if (args.isEmpty()) 1 else args.first().toInt()
@@ -47,7 +46,7 @@ class ZiBiCommand : BaseCommand() {
 class UnsetZiBiCommand : BaseCommand() {
     override val commandNames = listOf("我想开了")
 
-    override suspend fun executePrivate(listener: OneBotListener, message: PrivateMessage, args: List<String>) {
+    override suspend fun executePrivate(message: PrivateMessage, args: List<String>) {
         if (!users.any { it.key == message.sender.userId }) {
             val msg = MessageChain.Builder()
                 .addText("你没有在自闭列表中~")

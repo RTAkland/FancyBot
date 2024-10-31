@@ -15,13 +15,12 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 
 @CommandDescription("在群内设置某个成员的牛子银行余额或者现金牛子长度")
 class NiuziManagerCommand : BaseCommand() {
     override val commandNames = listOf("管理牛子")
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             message.reply("此命令可以管理成员的牛子或者银行账户")
             return
@@ -37,7 +36,7 @@ class NiuziManagerCommand : BaseCommand() {
                         "yh", "银行" -> {
                             val before = niuziBankManager.getUser(target)
                             niuziBankManager.deposit(
-                                target, amount, listener.getUserName(message.action, message.groupId, target)
+                                target, amount, message.action.getUserName(message.groupId, target)
                             )
                             val after = niuziBankManager.getUser(target)
                             val msg = MessageChain.Builder()

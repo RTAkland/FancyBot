@@ -13,7 +13,7 @@ data class Cigarette(
     @SerializedName("totalnum")
     val totalCount: Int,
     @SerializedName("productlist")
-    val productList: List<Product>
+    val productList: List<Product>,
 ) {
     data class Product(
         @SerializedName("productname")
@@ -26,11 +26,11 @@ data class Cigarette(
         @SerializedName("packprice")
         val packPrice: Float,
         @SerializedName("barprice")
-        val barPrice: Float
+        val barPrice: Float,
     )
 
     data class CigaretteType(
         @SerializedName("typename")
-        val typeName: String
+        val typeName: String,
     )
 }

@@ -12,13 +12,12 @@ import cn.rtast.fancybot.niuziManager
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ob.OneBotListener
 
 @CommandDescription("查询别人的牛子长度")
 class NiuziQueryCommand : BaseCommand() {
     override val commandNames = listOf("牛子查询")
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             message.reply("输入`牛子查询 @某人`即可查询他的牛子长度")
             return

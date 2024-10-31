@@ -10,7 +10,7 @@ package cn.rtast.fancybot.entity.pixiv
 import com.google.gson.annotations.SerializedName
 
 data class Ranking(
-    val contents: List<Content>
+    val contents: List<Content>,
 ) {
     data class Content(
         val title: String,

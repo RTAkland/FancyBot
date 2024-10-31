@@ -10,14 +10,14 @@ package cn.rtast.fancybot.entity.wiki
 import com.google.gson.annotations.SerializedName
 
 data class PageInfoResponse(
-    val query: Query
+    val query: Query,
 ) {
     data class Query(
-        val pages: Map<String, PageInfo>
+        val pages: Map<String, PageInfo>,
     )
 
     data class PageInfo(
         @SerializedName("fullurl")
-        val fullUrl: String
+        val fullUrl: String,
     )
 }

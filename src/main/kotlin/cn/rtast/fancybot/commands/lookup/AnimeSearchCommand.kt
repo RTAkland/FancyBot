@@ -16,7 +16,6 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.NodeMessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 import okhttp3.OkHttpClient
 import okhttp3.Request
 
@@ -37,7 +36,7 @@ class AnimeSearchCommand : BaseCommand() {
         }
     }
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             message.reply("发送`/dm <关键词>`即可搜索番剧啦~")
             return

@@ -19,7 +19,6 @@ import cn.rtast.fancybot.util.str.fromArrayJson
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.NodeMessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 import cn.rtast.rob.util.ob.asNode
 import java.io.File
 import java.net.URI
@@ -66,11 +65,7 @@ class TenSetuItem : Item() {
     override val itemNames = listOf("十张色图")
     override val itemPrice = 20.0
 
-    override suspend fun redeemInGroup(
-        listener: OneBotListener,
-        message: GroupMessage,
-        after: Double
-    ): MessageChain.Builder {
+    override suspend fun redeemInGroup(message: GroupMessage, after: Double): MessageChain.Builder {
         val msg = getImages(false)
         message.reply(msg)
         return MessageChain.Builder()
@@ -81,11 +76,7 @@ class TenSetuR18Item : Item() {
     override val itemNames = listOf("十张色图r")
     override val itemPrice = 50.0
 
-    override suspend fun redeemInGroup(
-        listener: OneBotListener,
-        message: GroupMessage,
-        after: Double
-    ): MessageChain.Builder {
+    override suspend fun redeemInGroup(message: GroupMessage, after: Double): MessageChain.Builder {
         message.reply(getImages(true))
         return MessageChain.Builder()
     }

@@ -10,10 +10,10 @@ package cn.rtast.fancybot.entity.gpt
 import cn.rtast.fancybot.enums.GPTUserRole
 
 data class ChatCompletionsResponse(
-    val choices: List<Choice>
+    val choices: List<Choice>,
 ) {
     data class Choice(
-        val message: Message
+        val message: Message,
     )
 
     data class Message(

@@ -13,7 +13,6 @@ import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ob.OneBotListener
 
 @CommandDescription("将人类的语言翻译成尊嘟假嘟语还能将尊嘟假嘟语翻译成人类的语言!")
 class ZDJDCommand : BaseCommand() {
@@ -78,7 +77,7 @@ class ZDJDCommand : BaseCommand() {
         }
     }
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         val text = if (message.message.any { it.type == ArrayMessageType.image }) {
             message.message.find { it.type == ArrayMessageType.image }!!.data.file!!
         } else args.joinToString(" ")

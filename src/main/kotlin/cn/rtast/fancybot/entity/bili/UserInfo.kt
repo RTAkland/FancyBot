@@ -10,7 +10,7 @@ package cn.rtast.fancybot.entity.bili
 import com.google.gson.annotations.SerializedName
 
 data class UserInfo(
-    val data: Data
+    val data: Data,
 ) {
     data class Data(
         val card: Card,
@@ -22,7 +22,7 @@ data class UserInfo(
         val fans: Int,
         val sign: String,
         @SerializedName("level_info")
-        val levelInfo: LevelInfo
+        val levelInfo: LevelInfo,
     )
 
     data class LevelInfo(

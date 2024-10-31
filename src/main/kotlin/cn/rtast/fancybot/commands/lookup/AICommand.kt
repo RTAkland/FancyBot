@@ -21,7 +21,6 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.NodeMessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 
 @CommandDescription("问AI(GPT)")
 class AICommand : BaseCommand() {
@@ -29,7 +28,7 @@ class AICommand : BaseCommand() {
 
     private val openAIModel = configManager.openAIModel
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             val msg = MessageChain.Builder()
                 .addText("发送`/ai [模型] <问题>`即可询问AI哦~")
@@ -81,7 +80,7 @@ class LlamaCommand : BaseCommand() {
     private val llamaURL = configManager.llamaUrl
     private val llamaModel = configManager.llamaModel
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             message.reply("发送`/llama <问题>`即可使用llama模型来回复")
             return

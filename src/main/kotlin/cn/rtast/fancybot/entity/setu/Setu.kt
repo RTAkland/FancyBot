@@ -16,6 +16,6 @@ data class Setu(
     val authorId: Long,
 ) {
     data class URLS(
-        val large: String
+        val large: String,
     )
 }

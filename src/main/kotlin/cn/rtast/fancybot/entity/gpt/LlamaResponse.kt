@@ -8,7 +8,7 @@
 package cn.rtast.fancybot.entity.gpt
 
 data class LlamaResponse(
-    val message: Message
+    val message: Message,
 ) {
     data class Message(
         val content: String,

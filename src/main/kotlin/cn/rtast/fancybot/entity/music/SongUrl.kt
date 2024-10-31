@@ -8,9 +8,9 @@
 package cn.rtast.fancybot.entity.music
 
 data class SongUrl(
-    val data: List<Data>
+    val data: List<Data>,
 ) {
     data class Data(
-        val url: String
+        val url: String,
     )
 }

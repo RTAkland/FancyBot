@@ -10,7 +10,6 @@ package cn.rtast.fancybot.commands.misc
 import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ob.OneBotListener
 import kotlin.random.Random
 
 @CommandDescription("今天吃什么")
@@ -25,7 +24,7 @@ class TodayEatCommand : BaseCommand() {
         "酸辣粉", "煲仔饭", "⑩", "史"
     )
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (KFCCommand.isThursday() && Random.nextBoolean()) {
             message.reply("今天是疯! 狂! 星! 期! 四!, 所以吃肯德基!")
             return
@@ -38,7 +37,7 @@ class TodayEatCommand : BaseCommand() {
 class TodayDontEatCommand : BaseCommand() {
     override val commandNames = listOf("今天不吃什么")
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         message.reply("你吃个结巴, 是吧")
     }
 }
@@ -54,7 +53,7 @@ class TodayDrinkCommand : BaseCommand() {
         "气泡水", "奶盖茶", "冰可乐", "草莓汁", "芒果汁", "蓝莓汁", "热奶茶", "蜂蜜柚子茶"
     )
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         message.reply("今天喝${drinkList.random()}吧~")
     }
 }
@@ -63,7 +62,7 @@ class TodayDrinkCommand : BaseCommand() {
 class TodayDontDrinkCommand : BaseCommand() {
     override val commandNames = listOf("今天不喝什么")
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         message.reply("你喝个结巴, 是吧")
     }
 }

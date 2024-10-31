@@ -14,7 +14,6 @@ import cn.rtast.fancybot.util.Http
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 import cn.rtast.rob.util.ob.asNode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -52,7 +51,7 @@ class NslookupCommand : BaseCommand() {
 
     private fun geo(ip: String) = Http.get<IPGeo>(IP_INFO_API.replace("###", ip))
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         val host = args.first()
         val nsType = if (args.size == 3) args[1] else "common"
         val srvType = if (args.size == 3) args.last() else "mc"

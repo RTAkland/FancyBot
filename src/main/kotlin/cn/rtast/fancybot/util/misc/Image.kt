@@ -35,7 +35,7 @@ fun Graphics2D.drawCustomImage(
     y: Int,
     maxWidth: Double,
     maxHeight: Double,
-    clip: Boolean = false
+    clip: Boolean = false,
 ) {
     val (targetWidth, targetHeight) = image.getScaledWidth(maxWidth, maxHeight)
     if (clip) {

@@ -17,7 +17,6 @@ import cn.rtast.fancybot.util.str.proxy
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 
 @CommandDescription("随机猫猫图")
 class TheCatCommand : BaseCommand() {
@@ -25,7 +24,7 @@ class TheCatCommand : BaseCommand() {
 
     private val theCatApiUrl = "https://api.thecatapi.com/v1/images/search"
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         val imageBase64 = Http.get(theCatApiUrl)
             .fromArrayJson<List<Cat>>().first().url
             .proxy.toURL().readBytes().encodeToBase64()

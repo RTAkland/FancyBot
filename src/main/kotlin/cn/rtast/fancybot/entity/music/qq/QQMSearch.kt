@@ -13,15 +13,15 @@ data class QQMSearch(
     val response: Response,
 ) {
     data class Response(
-        val data: Data
+        val data: Data,
     )
 
     data class Data(
-        val song: Songs
+        val song: Songs,
     )
 
     data class Songs(
-        val list: List<Song>
+        val list: List<Song>,
     )
 
     data class Song(

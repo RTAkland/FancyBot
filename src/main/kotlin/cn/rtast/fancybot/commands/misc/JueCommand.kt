@@ -17,7 +17,6 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 import com.madgag.gif.fmsware.GifDecoder
 import java.awt.image.BufferedImage
 import java.net.URI
@@ -59,7 +58,7 @@ class JueCommand : BaseCommand() {
         return gif
     }
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         val target = message.message.find { it.type == ArrayMessageType.at }?.data?.qq.toString()
         val source = message.sender.userId.toString()
         val gif = this.createJueGIF(source, target)

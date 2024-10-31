@@ -14,7 +14,6 @@ import cn.rtast.fancybot.util.Http
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 import cn.rtast.rob.util.ob.asNode
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -27,7 +26,7 @@ class TheHistoryOfTodayCommand : BaseCommand() {
     private val tianXingApiUrl = "https://apis.tianapi.com/lishi/index"
     private val tianXingApiKey = configManager.tianXingApiKey
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         val currentDateTime = LocalDateTime.now(ZoneId.of("Asia/Shanghai"))
         val formatter = DateTimeFormatter.ofPattern("MMdd")
         val currentDate = currentDateTime.format(formatter)

@@ -21,7 +21,6 @@ import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 import java.awt.Color
 import java.awt.Font
 import java.awt.image.BufferedImage
@@ -58,7 +57,7 @@ class WeatherCommand : BaseCommand() {
         return emptyImage.toByteArray().encodeToBase64()
     }
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             val msg = MessageChain.Builder()
                 .addAt(message.sender.userId)

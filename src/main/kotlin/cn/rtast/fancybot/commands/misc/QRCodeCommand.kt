@@ -17,7 +17,6 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.BinaryBitmap
 import com.google.zxing.EncodeHintType
@@ -40,7 +39,7 @@ class GenerateQRCodeCommand : BaseCommand() {
         return MatrixToImageWriter.toBufferedImage(bitMatrix).toByteArray().encodeToBase64()
     }
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             message.reply("发送`/qr <内容>`即可生成一张二维码的图片")
             return
@@ -85,7 +84,7 @@ class ScanQRCodeCommand : BaseCommand() {
         }
     }
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (message.sender() !in waitingList) {
             waitingList.add(message.sender())
             message.reply("继续发送一张二维码图片")

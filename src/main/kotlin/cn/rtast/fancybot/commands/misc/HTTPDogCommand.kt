@@ -14,7 +14,6 @@ import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 
 @CommandDescription("随机HTTP狗狗")
 class HTTPDogCommand : BaseCommand() {
@@ -26,7 +25,7 @@ class HTTPDogCommand : BaseCommand() {
         return Resources.loadFromResourcesAsBytes("httpdog/${code}.jpg")?.encodeToBase64() ?: notFoundCatBase64
     }
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         val statusCode = if (args.isEmpty()) HttpStatusCode.entries.random().code.toString() else args.first()
         val image = loadHTTPDog(statusCode)
         val msg = MessageChain.Builder().addImage(image, true).build()

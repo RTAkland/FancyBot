@@ -9,10 +9,10 @@ package cn.rtast.fancybot.entity.github
 
 data class LatestCommit(
     val sha: String,
-    val commit: Commit
+    val commit: Commit,
 ) {
     data class Commit(
-        val committer: Committer
+        val committer: Committer,
     )
 
     data class Committer(

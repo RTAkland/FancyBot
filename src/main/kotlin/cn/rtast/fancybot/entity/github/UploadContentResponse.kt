@@ -8,7 +8,7 @@
 package cn.rtast.fancybot.entity.github
 
 data class UploadContentResponse(
-    val content: Content
+    val content: Content,
 ) {
     data class Content(
         val name: String,

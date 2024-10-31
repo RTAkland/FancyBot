@@ -16,10 +16,10 @@ data class LoginXboxLiveResponse(
     val displayClaims: DisplayClaims,
 ) {
     data class DisplayClaims(
-        val xui: List<XUI>
+        val xui: List<XUI>,
     )
 
     data class XUI(
-        val uhs: String
+        val uhs: String,
     )
 }

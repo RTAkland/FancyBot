@@ -11,5 +11,5 @@ data class SearchedResult(
     val id: Long,
     val name: String,
     val artists: String,
-    val timestamp: Long
+    val timestamp: Long,
 )

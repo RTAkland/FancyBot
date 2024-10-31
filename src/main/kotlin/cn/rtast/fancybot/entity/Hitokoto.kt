@@ -13,5 +13,5 @@ data class Hitokoto(
     val uuid: String,
     @SerializedName("hitokoto")
     val sentence: String,
-    val from: String
+    val from: String,
 )

@@ -57,7 +57,7 @@ object Http {
     fun get(
         url: String,
         params: Map<String, Any>? = null,
-        headers: Map<String, String>? = null
+        headers: Map<String, String>? = null,
     ): String {
         val paramsUrl = buildParams(url, params)
         val request = Request.Builder()
@@ -71,7 +71,7 @@ object Http {
     inline fun <reified T> get(
         url: String,
         params: Map<String, Any>? = null,
-        headers: Map<String, String>? = null
+        headers: Map<String, String>? = null,
     ): T {
         return get(url, params, headers).fromJson<T>()
     }
@@ -81,7 +81,7 @@ object Http {
         url: String,
         formBody: Map<String, Any>? = null,
         headers: Map<String, String>? = null,
-        params: Map<String, Any>? = null
+        params: Map<String, Any>? = null,
     ): T {
         val body = FormBody.Builder()
         val paramsUrl = buildParams(url, params)
@@ -102,7 +102,7 @@ object Http {
         url: String,
         jsonBody: String,
         headers: Map<String, String>? = null,
-        params: Map<String, Any>? = null
+        params: Map<String, Any>? = null,
     ): T {
         val result = post(url, jsonBody, headers, params)
         return result.fromJson<T>()
@@ -113,7 +113,7 @@ object Http {
         url: String,
         jsonBody: String,
         headers: Map<String, String>? = null,
-        params: Map<String, Any>? = null
+        params: Map<String, Any>? = null,
     ): String {
         val body = jsonBody.toRequestBody(jsonMediaType)
         val paramsUrl = buildParams(url, params)
@@ -129,7 +129,7 @@ object Http {
     inline fun <reified T> post(
         url: String,
         form: FormBody,
-        headers: Map<String, String>? = null
+        headers: Map<String, String>? = null,
     ): T {
         val request = Request.Builder()
             .post(form)
@@ -142,7 +142,7 @@ object Http {
     inline fun <reified T> post(
         url: String,
         form: MultipartBody,
-        headers: Map<String, String>? = null
+        headers: Map<String, String>? = null,
     ): T {
         val request = Request.Builder()
             .post(form)
@@ -155,7 +155,7 @@ object Http {
         url: String,
         jsonBody: String,
         headers: Map<String, String>? = null,
-        params: Map<String, Any>? = null
+        params: Map<String, Any>? = null,
     ): T {
         val paramsUrl = buildParams(url, params)
         val request = Request.Builder()
@@ -169,7 +169,7 @@ object Http {
         url: String,
         jsonBody: String,
         headers: Map<String, String>? = null,
-        params: Map<String, Any>? = null
+        params: Map<String, Any>? = null,
     ): String {
         val paramsUrl = buildParams(url, params)
         val request = Request.Builder()

@@ -8,7 +8,7 @@
 package cn.rtast.fancybot.entity.apispace
 
 data class IdiomExplainResponse(
-    val data: List<Data>
+    val data: List<Data>,
 ) {
     data class Data(
         val name: String,

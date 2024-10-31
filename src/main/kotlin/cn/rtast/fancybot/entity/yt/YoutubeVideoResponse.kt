@@ -9,11 +9,11 @@ package cn.rtast.fancybot.entity.yt
 
 
 data class YoutubeVideoResponse(
-    val items: List<Item>
+    val items: List<Item>,
 ) {
     data class Item(
         val snippet: Snippet,
-        val statistics: Statistics
+        val statistics: Statistics,
     )
 
     data class Snippet(
@@ -23,7 +23,7 @@ data class YoutubeVideoResponse(
     )
 
     data class Thumbnails(
-        val standard: Standard
+        val standard: Standard,
     )
 
     data class Standard(

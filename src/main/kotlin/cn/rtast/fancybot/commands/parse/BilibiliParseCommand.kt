@@ -22,7 +22,6 @@ import cn.rtast.fancybot.util.str.setTruncate
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.awt.Color
@@ -184,7 +183,7 @@ object BiliVideoParseCommand {
         return String(bytes)
     }
 
-    suspend fun parse(listener: OneBotListener, message: GroupMessage) {
+    suspend fun parse(message: GroupMessage) {
         try {
             val bvid = if (bvRegex.containsMatchIn(message.rawMessage)) {
                 message.rawMessage.extractBv()
@@ -275,7 +274,7 @@ object BiliUserParseCommand {
         return image.toByteArray().encodeToBase64()
     }
 
-    suspend fun parse(listener: OneBotListener, message: GroupMessage) {
+    suspend fun parse(message: GroupMessage) {
         val match = idRegex.find(message.rawMessage)
         if (match != null) {
             val userId = match.groupValues[1]

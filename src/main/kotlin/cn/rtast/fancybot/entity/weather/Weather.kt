@@ -9,7 +9,7 @@ package cn.rtast.fancybot.entity.weather
 
 data class Weather(
     val now: Now,
-    val refer: Refer
+    val refer: Refer,
 ) {
     data class Now(
         val temp: String,
@@ -19,6 +19,6 @@ data class Weather(
     )
 
     data class Refer(
-        val sources: List<String>
+        val sources: List<String>,
     )
 }

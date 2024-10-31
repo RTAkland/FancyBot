@@ -14,7 +14,6 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.NodeMessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.full.hasAnnotation
 
@@ -22,7 +21,7 @@ import kotlin.reflect.full.hasAnnotation
 class HelpCommand : BaseCommand() {
     override val commandNames = listOf("/help", "/帮助")
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             val node = NodeMessageChain.Builder()
             val msg = MessageChain.Builder()

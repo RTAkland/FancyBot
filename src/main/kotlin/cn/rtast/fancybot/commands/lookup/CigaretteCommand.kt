@@ -16,7 +16,6 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.NodeMessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 import java.net.URI
 
 @CommandDescription("查询香烟价格")
@@ -25,7 +24,7 @@ class CigaretteCommand : BaseCommand() {
 
     private val apiUrl = "https://www.yanyue.cn/api/rc/product/yanlist"
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             val msg = MessageChain.Builder()
                 .addText("发送/tobacco <名称> [数量] 来搜索结果哦~")

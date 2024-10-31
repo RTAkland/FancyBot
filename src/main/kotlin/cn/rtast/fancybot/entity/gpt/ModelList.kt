@@ -8,7 +8,7 @@
 package cn.rtast.fancybot.entity.gpt
 
 data class ModelList(
-    val data: List<Data>
+    val data: List<Data>,
 ) {
     data class Data(
         val id: String,

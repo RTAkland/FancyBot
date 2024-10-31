@@ -13,13 +13,12 @@ import cn.rtast.fancybot.util.Http
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 
 @CommandDescription("一言")
 class HitokotoCommand : BaseCommand() {
     override val commandNames = listOf("/1")
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         val response = Http.get<Hitokoto>("https://v1.hitokoto.cn/?c=b")
         val msg = MessageChain.Builder()
             .addText("⌊${response.sentence}⌉   ---《${response.from}》")

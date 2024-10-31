@@ -14,7 +14,6 @@ import cn.rtast.fancybot.util.str.proxy
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 import okhttp3.FormBody
 
 @CommandDescription("将文字转换成语音(TTS)!")
@@ -23,7 +22,7 @@ class TTSCommand : BaseCommand() {
 
     private val ttsApiUrl = "https://ttsmp3.com/makemp3_new.php"
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             message.reply("发送`/tts <文字>`就可以生成语音啦~")
             return

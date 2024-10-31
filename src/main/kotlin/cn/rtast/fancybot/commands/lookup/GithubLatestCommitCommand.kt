@@ -16,7 +16,6 @@ import cn.rtast.fancybot.util.str.fromArrayJson
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 
 @CommandDescription("查询Github上的仓库的最新一次的提交信息")
 class GithubLatestCommitCommand : BaseCommand() {
@@ -24,7 +23,7 @@ class GithubLatestCommitCommand : BaseCommand() {
 
     private val userInfoUrl = "https://api.github.com/repos"
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             message.reply("发送`.commit <用户名/仓库名>`即可查询仓库最新一次的提交信息")
         }

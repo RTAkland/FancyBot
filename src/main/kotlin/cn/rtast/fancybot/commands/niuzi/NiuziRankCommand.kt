@@ -13,13 +13,12 @@ import cn.rtast.fancybot.niuziManager
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 
 @CommandDescription("查询所有人的牛子的排行榜")
 class NiuziRankCommand : BaseCommand() {
     override val commandNames = listOf("牛子排行榜", "牛子排行")
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         val allNiuzi = niuziManager.getAllNiuzi().sortedBy { it.length }.reversed()
         val msg = MessageChain.Builder().addText("牛子长度排行榜如下").addNewLine()
         allNiuzi.forEach {
@@ -33,7 +32,7 @@ class NiuziRankCommand : BaseCommand() {
 class NiuziBankRankCommand : BaseCommand() {
     override val commandNames = listOf("牛子富豪榜", "富豪榜")
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         val allNiuziBankAccounts = niuziBankManager.getAllAccount()
             .sortedBy { it.balance }.reversed()
         val msg = MessageChain.Builder().addText("牛子银行富豪榜排行如下").addNewLine()

@@ -13,7 +13,6 @@ import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.NodeMessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 
 
 private fun generateNodeMessage(targetId: String, times: Int = 10): NodeMessageChain {
@@ -29,7 +28,7 @@ private fun generateNodeMessage(targetId: String, times: Int = 10): NodeMessageC
 class ShotSelfCommand : BaseCommand() {
     override val commandNames = listOf("骂我")
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         message.action.sendGroupForwardMsg(message.groupId, generateNodeMessage(message.sender.userId.toString()))
     }
 }
@@ -38,7 +37,7 @@ class ShotSelfCommand : BaseCommand() {
 class ShotOtherCommand : BaseCommand() {
     override val commandNames = listOf("骂")
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             message.action.sendGroupForwardMsg(
                 message.groupId, generateNodeMessage(message.sender.userId.toString(), 20)

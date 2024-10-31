@@ -15,7 +15,6 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.MusicShareType
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 
 @CommandDescription("获取随机热榜音乐(网易云)")
 class RandomMusicCommand : BaseCommand() {
@@ -23,7 +22,7 @@ class RandomMusicCommand : BaseCommand() {
 
     private val ncmApiUrl = "${configManager.ncmAPI}/top/song"
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         val id = Http.get<TopSong>(ncmApiUrl).data.random().privilege.id
         val msg = MessageChain.Builder()
             .addMusicShare(MusicShareType.Netease, id.toString())

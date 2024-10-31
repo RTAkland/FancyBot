@@ -16,7 +16,6 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.NodeMessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 import java.net.URI
 
 @CommandDescription("获取Pixiv上的图片")
@@ -26,7 +25,7 @@ class PixivCommand : BaseCommand() {
     private val pixivRankingURL = "https://proxy.rtast.cn/https/www.pixiv.net/ranking.php?format=json&mode=daily&p=1"
     private val imageProxyURL = "https://pixiv.re"
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             val msg = MessageChain.Builder()
                 .addText("发送`/pixiv <id> | rank` 来进行操作哦~")

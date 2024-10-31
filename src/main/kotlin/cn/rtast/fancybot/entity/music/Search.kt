@@ -11,16 +11,16 @@ data class Search(
     val result: Result,
 ) {
     data class Result(
-        val songs: List<Song>
+        val songs: List<Song>,
     )
 
     data class Song(
         val id: Long,
         val name: String,
-        val artists: List<Artist>
+        val artists: List<Artist>,
     )
 
     data class Artist(
-        val name: String
+        val name: String,
     )
 }

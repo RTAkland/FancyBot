@@ -18,7 +18,6 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.MusicShareType
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 import java.time.Instant
 
 @CommandDescription("网易云音乐点歌")
@@ -38,7 +37,7 @@ class MusicCommand : BaseCommand() {
         }
     }
 
-    private suspend fun legacyMusicCommand(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    private suspend fun legacyMusicCommand(message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             message.reply("发送`/点歌` <关键词> 来搜索音乐~")
             return
@@ -93,9 +92,9 @@ class MusicCommand : BaseCommand() {
         }
     }
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (args.last() == "legacy" || args.last() == "l" || args.last() in "0".."4") {
-            this.legacyMusicCommand(listener, message, args)
+            this.legacyMusicCommand(message, args)
             return
         }
         if (args.isEmpty()) {
@@ -128,7 +127,7 @@ class MusicPlayUrlCommand : BaseCommand() {
         return Http.get<SongUrl>("$musicApiUrl/song/url", mapOf("id" to id)).data.first().url
     }
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         val url = if (args.last() == "id" || args.last() == "i") {
             val id = args.first()
             this.getPlayUrl(id)
@@ -151,7 +150,7 @@ class QQMusicCommand : BaseCommand() {
 
     private val qqMusicApiUrl = configManager.qqMusicApiUrl
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             message.reply("发送`/qm <关键词>`即可搜索qq音乐的音乐哦")
             return

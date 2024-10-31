@@ -8,9 +8,9 @@
 package cn.rtast.fancybot.entity.bili
 
 data class ShortUrl(
-    val data: Data
+    val data: Data,
 ) {
     data class Data(
-        val content: String
+        val content: String,
     )
 }

@@ -17,7 +17,7 @@ data class MCWikiPageResponse(
     val title: String,
     val latest: Latest,
     val source: String,
-    val license: License
+    val license: License,
 ) {
     data class Latest(
         val id: Int,

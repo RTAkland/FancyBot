@@ -24,5 +24,5 @@ data class NiuziBankAccount(
     val balance: Double,
     val interestRate: Double,
     val timestamp: Long,
-    val nickname: String
+    val nickname: String,
 )

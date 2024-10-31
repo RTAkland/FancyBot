@@ -8,5 +8,5 @@
 package cn.rtast.fancybot.entity.shortlink
 
 data class ShortLinkPayload(
-    val target: String
+    val target: String,
 )

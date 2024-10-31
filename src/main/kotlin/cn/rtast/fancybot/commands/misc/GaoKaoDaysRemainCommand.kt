@@ -10,7 +10,6 @@ package cn.rtast.fancybot.commands.misc
 import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ob.OneBotListener
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 
@@ -18,7 +17,7 @@ import java.time.temporal.ChronoUnit
 class GaoKaoDaysRemainCommand : BaseCommand() {
     override val commandNames = listOf("高考倒计时")
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         val gaoKaoDate = LocalDate.of(LocalDate.now().year, 6, 7)
         val currentDate = LocalDate.now()
         val adjustedGaoKaoDate = if (currentDate.isAfter(gaoKaoDate)) gaoKaoDate.plusYears(1) else gaoKaoDate

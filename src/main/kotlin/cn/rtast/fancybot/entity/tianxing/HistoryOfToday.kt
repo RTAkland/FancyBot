@@ -10,15 +10,15 @@ package cn.rtast.fancybot.entity.tianxing
 import com.google.gson.annotations.SerializedName
 
 data class HistoryOfToday(
-    val result: Result
+    val result: Result,
 ) {
     data class Result(
-        val list: List<Element>
+        val list: List<Element>,
     )
 
     data class Element(
         val title: String,
         @SerializedName("lsdate")
-        val lsDate: String
+        val lsDate: String,
     )
 }

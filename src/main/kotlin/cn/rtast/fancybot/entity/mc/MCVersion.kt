@@ -11,16 +11,16 @@ import cn.rtast.fancybot.enums.mc.MCVersionType
 
 data class MCVersion(
     val latest: Latest,
-    val versions: List<Version>
+    val versions: List<Version>,
 ) {
     data class Latest(
         val release: String,
-        val snapshot: String
+        val snapshot: String,
     )
 
     data class Version(
         val id: String,
         val type: MCVersionType,
-        val releaseTime: String
+        val releaseTime: String,
     )
 }

@@ -13,18 +13,17 @@ import cn.rtast.fancybot.util.misc.getUserName
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 
 @CommandDescription("牛子签到~")
 class NiuziSignCommand : BaseCommand() {
     override val commandNames = listOf("牛子签到", "签到")
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (niuziManager.isSigned(message.sender.userId)) {
             message.reply("你今天已经对你的牛子使用了签到啦,明天再来吧~")
             return
         }
-        val username = listener.getUserName(message.action, message.groupId, message.sender.userId)
+        val username = message.action.getUserName(message.groupId, message.sender.userId)
         val afterStatus = niuziManager.sign(message.sender.userId, username)
         val msg = MessageChain.Builder()
             .addReply(message.messageId)

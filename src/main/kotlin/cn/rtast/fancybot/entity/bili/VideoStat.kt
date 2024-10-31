@@ -8,7 +8,7 @@
 package cn.rtast.fancybot.entity.bili
 
 data class VideoStat(
-    val data: Data
+    val data: Data,
 ) {
     data class Data(
         val aid: Long,

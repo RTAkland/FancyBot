@@ -12,7 +12,6 @@ import cn.rtast.fancybot.entity.KFC
 import cn.rtast.fancybot.util.Http
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ob.OneBotListener
 import java.time.DayOfWeek
 import java.time.Instant
 import java.time.LocalDateTime
@@ -32,7 +31,7 @@ class KFCCommand : BaseCommand() {
         }
     }
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (!isThursday()) {
             message.reply("很可惜今天并不是星期四~")
             return

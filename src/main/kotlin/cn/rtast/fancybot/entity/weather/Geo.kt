@@ -8,7 +8,7 @@
 package cn.rtast.fancybot.entity.weather
 
 data class Geo(
-    val location: List<Location>
+    val location: List<Location>,
 ) {
     data class Location(
         val name: String,

@@ -12,7 +12,6 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.OneBotAction
-import cn.rtast.rob.util.ob.OneBotListener
 
 @CommandDescription("让你的消息得到回应(reaction)!")
 class ReactionCommand : BaseCommand() {
@@ -24,6 +23,6 @@ class ReactionCommand : BaseCommand() {
         }
     }
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) =
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) =
         reaction(message.action, message.groupId, message.messageId)
 }

@@ -14,7 +14,6 @@ import cn.rtast.fancybot.util.Http
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 
 @CommandDescription("解释一个成语")
 class IdiomExplainCommand : BaseCommand() {
@@ -22,7 +21,7 @@ class IdiomExplainCommand : BaseCommand() {
 
     private val apiSpaceUrl = "https://eolink.o.apispace.com/cyudac/api/v1/idioms/SearchIdiomsByPinyin/search"
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             message.reply("发送`成语解释 <成语>`就能解释这个成语的意思了")
             return

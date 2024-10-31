@@ -13,7 +13,6 @@ import cn.rtast.fancybot.enums.CommandAction
 import cn.rtast.fancybot.util.file.insertActionRecord
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ob.OneBotListener
 import org.simplejavamail.api.mailer.config.TransportStrategy
 import org.simplejavamail.email.EmailBuilder
 import org.simplejavamail.mailer.MailerBuilder
@@ -43,7 +42,7 @@ class SendMailCommand : BaseCommand() {
         this.mailer.sendMail(email)
     }
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             message.reply("发送`/mail <收件人地址>`即可发送测试邮件~")
             return

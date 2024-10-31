@@ -15,7 +15,6 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 import com.madgag.gif.fmsware.GifDecoder
 import java.net.URI
 
@@ -63,7 +62,7 @@ class ReverseGIFCommand : BaseCommand() {
         }
     }
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (message.sender.userId !in waitingList) {
             message.reply("发送一张动图来继续操作")
             waitingList.add(message.sender.userId)

@@ -12,14 +12,13 @@ import cn.rtast.fancybot.niuziManager
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 
 
 @CommandDescription("查询自己牛子的长度")
 class MyNiuziCommand : BaseCommand() {
     override val commandNames = listOf("我的牛子", "mp")
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         val niuzi = niuziManager.getUser(message.sender.userId)
         if (niuzi == null) {
             message.reply("你还没有牛子呢, 发送`牛子签到`来领取一根专属于你的牛子吧~")

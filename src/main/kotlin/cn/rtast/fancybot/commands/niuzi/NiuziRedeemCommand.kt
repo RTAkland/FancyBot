@@ -13,13 +13,12 @@ import cn.rtast.fancybot.niuziManager
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 
 @CommandDescription("使用牛子长度兑换物品")
 class NiuziRedeemCommand : BaseCommand() {
     override val commandNames = listOf("/rdm")
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             val msg = MessageChain.Builder()
                 .addText("发送 /rdm <物品名称> 即可兑换哦!")
@@ -64,7 +63,7 @@ class NiuziRedeemCommand : BaseCommand() {
             return
         }
         val afterStatus = niuziManager.redeemItem(message.sender.userId, selectedItemPrice)?.length!!
-        val action = selectedItem.redeemInGroup(listener, message, afterStatus)
+        val action = selectedItem.redeemInGroup(message, afterStatus)
         val msg = MessageChain.Builder()
             .addText("兑换成功! 你花费了${selectedItemPrice}cm来兑换奖品, 还剩${afterStatus}cm")
             .addNewLine()

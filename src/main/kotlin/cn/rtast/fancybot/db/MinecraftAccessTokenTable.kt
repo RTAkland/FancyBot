@@ -29,7 +29,7 @@ object MinecraftAccessTokenTable : Table("mc_access_token") {
 data class MCAccessTokenEntity(
     val token: String,
     val userId: Long,
-    val timestamp: Long
+    val timestamp: Long,
 )
 
 suspend fun insertNewAccessToken(accessToken: String, id: Long) {

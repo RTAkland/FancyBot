@@ -50,7 +50,6 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 import cn.rtast.rob.util.ob.asMessageChain
 import cn.rtast.rob.util.ob.asNode
 import okhttp3.FormBody
@@ -70,7 +69,7 @@ class MCVersionCommand : BaseCommand() {
 
     private val javaEditionAPI = "https://launchermeta.mojang.com/mc/game/version_manifest.json"
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         val mcVersion = Http.get<MCVersion>(javaEditionAPI)
         val msg = MessageChain.Builder()
             .addText("最新正式版: ${mcVersion.latest.release}")
@@ -92,7 +91,7 @@ class MinecraftWikiCommand : BaseCommand() {
     private val baseApiUrl = "https://zh.minecraft.wiki/rest.php/v1"
     private val logger = Logger.getLogger<MinecraftWikiCommand>()
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         val action = args.first()
         when (action) {
             "s", "搜索" -> {
@@ -178,7 +177,7 @@ class SlimeChunkHelperCommand : BaseCommand() {
     private fun findMaxSlimeChunks(
         worldSeed: Long,
         searchRange: Int,
-        chunkSize: Int
+        chunkSize: Int,
     ): Pair<Pair<Pair<Int, Int>, Pair<Int, Int>>, Int> {
         var maxCount = 0
         var bestStartLocation = Pair(0, 0)
@@ -221,7 +220,7 @@ class SlimeChunkHelperCommand : BaseCommand() {
         return image.toByteArray().encodeToBase64()
     }
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             val msg = MessageChain.Builder()
                 .addText("此指令可以借助一个种子来帮助查找最适合史莱姆农场的位置")
@@ -299,7 +298,7 @@ class MCSkinCommand : BaseCommand() {
         return zoom.toByteArray().encodeToBase64()
     }
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             message.reply("发送`/skin <uuid/游戏名称>`即可查询他的皮肤~ (仅限Java版)")
             return
@@ -332,7 +331,7 @@ class MCPingCommand : BaseCommand() {
         return this.replace(Regex("§."), "")
     }
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             val msg = MessageChain.Builder()
                 .addText("使用方法: /mcping <host>:[port] [java|be]")
@@ -459,7 +458,7 @@ class MCLoginCommand : BaseCommand() {
         return response.token
     }
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             message.reply("这个命令可以获取你的MC登录Token发送 `/mclogin login`进行操作吧")
             return
@@ -500,7 +499,7 @@ class MCLoginCommand : BaseCommand() {
         }
     }
 
-    override suspend fun executePrivate(listener: OneBotListener, message: PrivateMessage, args: List<String>) {
+    override suspend fun executePrivate(message: PrivateMessage, args: List<String>) {
         val token = getAccessTokenById(message.sender.userId)
         if (token == null) {
             message.reply("你还没登录呢!")
@@ -522,11 +521,11 @@ class MCLoginCommand : BaseCommand() {
 class RCONCommand : BaseCommand() {
     override val commandNames = listOf("/rcon", "/r")
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         message.reply("请在私聊中使用此命令")
     }
 
-    override suspend fun executePrivate(listener: OneBotListener, message: PrivateMessage, args: List<String>) {
+    override suspend fun executePrivate(message: PrivateMessage, args: List<String>) {
         if (args.isEmpty()) {
             val msg = MessageChain.Builder()
                 .addText("这条指令用于在群内操作mc服务器")
@@ -616,7 +615,7 @@ class MCBotCommand : BaseCommand() {
         return response.players.max to response.players.online
     }
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         val clients = mutableListOf<MCClient>()
         val action = args.first()
         when (action) {

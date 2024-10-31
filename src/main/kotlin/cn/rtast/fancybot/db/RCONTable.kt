@@ -24,6 +24,6 @@ data class RCONEntity(
     val port: Int,
     val userId: Long,
     val name: String,
-    val password: String
+    val password: String,
 )
 

@@ -20,7 +20,6 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 import cn.rtast.rob.util.ob.asMessageChain
 import com.madgag.gif.fmsware.GifDecoder
 import kotlinx.coroutines.Dispatchers
@@ -179,7 +178,7 @@ class AsciiArtCommand : BaseCommand() {
         private data class UnifiedMessage(val type: ArrayMessageType, val file: String?, val url: String?)
     }
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (message.sender.userId !in waitingList) {
             message.reply("请继续发送一张图片, 如果输入错误则取消本次操作, 如果GIF帧数过多可能会需要很长时间(也可能处理失败)")
             waitingList.add(message.sender.userId)

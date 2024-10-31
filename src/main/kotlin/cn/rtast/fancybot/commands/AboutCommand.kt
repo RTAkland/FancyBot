@@ -11,13 +11,12 @@ import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 
 @CommandDescription("关于")
 class AboutCommand : BaseCommand() {
     override val commandNames = listOf("/about", "/关于")
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         val msg = MessageChain.Builder()
             .addText("Bot名称: FancyBot")
             .addNewLine()

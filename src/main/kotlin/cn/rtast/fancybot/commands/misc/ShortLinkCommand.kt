@@ -16,7 +16,6 @@ import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.str.toJson
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ob.OneBotListener
 
 @CommandDescription("生成短链接")
 class ShortLinkCommand : BaseCommand() {
@@ -34,7 +33,7 @@ class ShortLinkCommand : BaseCommand() {
         }
     }
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             message.reply("发送`/s <url>`来生成短链接`不要放入一些奇怪的链接哦~")
             return

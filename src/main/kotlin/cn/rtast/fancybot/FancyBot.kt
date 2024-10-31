@@ -36,6 +36,7 @@ import cn.rtast.fancybot.util.str.toJson
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.custom.BeKickEvent
+import cn.rtast.rob.entity.custom.ErrorEvent
 import cn.rtast.rob.entity.custom.MemberKickEvent
 import cn.rtast.rob.entity.custom.MemberLeaveEvent
 import cn.rtast.rob.entity.lagrange.FileEvent
@@ -87,8 +88,8 @@ class FancyBot : OneBotListener {
         ReverseGIFCommand.callback(message)
         AsciiArtCommand.callback(message)
         ScanQRCodeCommand.callback(message)
-        BiliVideoParseCommand.parse(this, message)
-        BiliUserParseCommand.parse(this, message)
+        BiliVideoParseCommand.parse(message)
+        BiliUserParseCommand.parse(message)
         DouyinVideoParseCommand.parse(message)
         YoutubeVideoParseCommand.parse(message)
 
@@ -202,8 +203,8 @@ class FancyBot : OneBotListener {
         message.action.sendGroupMessage(message.groupId, msg)
     }
 
-    override suspend fun onWebsocketErrorEvent(action: OneBotAction, ex: Exception) {
-        ex.printStackTrace()
+    override suspend fun onWebsocketErrorEvent(event: ErrorEvent) {
+        event.exception.printStackTrace()
     }
 
     override suspend fun onAddFriendRequest(event: AddFriendRequestEvent) {

@@ -16,7 +16,6 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.NodeMessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 import kotlin.random.Random
 
 @CommandDescription("狗屁不通文章生成器")
@@ -47,7 +46,7 @@ class BullShitGenerateCommand : BaseCommand() {
         return ".\n\n    "
     }
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         val topic = args.joinToString(" ")
         val nextFamousQuote = shuffleList(bullShitData.famous)
         val nextBosh = shuffleList(bullShitData.bosh)

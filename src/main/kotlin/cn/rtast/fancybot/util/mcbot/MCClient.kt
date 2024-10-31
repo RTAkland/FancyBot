@@ -42,7 +42,7 @@ import kotlin.random.Random
 class MCClient(
     private val serverHost: String,
     private val serverPort: Int,
-    private val botName: String
+    private val botName: String,
 ) {
     private lateinit var client: TcpClientSession
     private val logger = Logger.getLogger<MCClient>()

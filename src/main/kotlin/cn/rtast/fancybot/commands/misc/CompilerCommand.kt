@@ -19,7 +19,6 @@ import cn.rtast.fancybot.util.str.toJson
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OneBotListener
 
 @CommandDescription("执行不同语言的代码")
 class CompilerCommand : BaseCommand() {
@@ -28,7 +27,7 @@ class CompilerCommand : BaseCommand() {
     private val kotlinCompilerServer = "https://api.kotlinlang.org/api/2.0.20/compiler/run"
     private val glotCompilerServer = "https://glot.io/run"
 
-    override suspend fun executeGroup(listener: OneBotListener, message: GroupMessage, args: List<String>) {
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         if (args.isEmpty()) {
             message.reply("使用`/exec` <语言> <代码> 即可执行~")
             return

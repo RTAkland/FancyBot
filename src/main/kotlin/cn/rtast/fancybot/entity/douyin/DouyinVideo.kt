@@ -10,11 +10,11 @@ package cn.rtast.fancybot.entity.douyin
 import com.google.gson.annotations.SerializedName
 
 data class DouyinVideo(
-    val data: Data
+    val data: Data,
 ) {
     data class Data(
         @SerializedName("aweme_detail")
-        val awemeDetail: AwemeDetail
+        val awemeDetail: AwemeDetail,
     )
 
     data class AwemeDetail(
@@ -62,12 +62,12 @@ data class DouyinVideo(
         @SerializedName("cover_original_scale")
         val coverOriginalScale: CoverOriginalScale,
         @SerializedName("bit_rate")
-        val bitRate: List<BitRate>
+        val bitRate: List<BitRate>,
     )
 
     data class BitRate(
         @SerializedName("play_addr")
-        val playAddr: PlayAddr
+        val playAddr: PlayAddr,
     )
 
     data class PlayAddr(
@@ -79,6 +79,6 @@ data class DouyinVideo(
         @SerializedName("url_list")
         val urlList: List<String>,
         val height: Int,
-        val width: Int
+        val width: Int,
     )
 }
