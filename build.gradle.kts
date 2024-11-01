@@ -15,7 +15,6 @@ version = fancyBotVersion
 repositories {
     mavenCentral()
     mavenLocal()
-    maven("https://jitpack.io")
     maven("https://repo.opencollab.dev/main/")
     maven("https://oss.sonatype.org/content/repositories/snapshots")
     maven("https://repo.rtast.cn/api/v4/projects/33/packages/maven")
