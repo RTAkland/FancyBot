@@ -61,8 +61,6 @@ class FancyBot : OneBotListener {
 
     private val logger = Logger.getLogger<FancyBot>()
     private val coroutineScope = CoroutineScope(Dispatchers.IO)
-    private var lastText = ""
-    private var repeatCount = 0
 
     override suspend fun onWebsocketOpenEvent(action: OneBotAction) {
         action.sendPrivateMessage(configManager.noticeUser, "FancyBot启动完成~")
@@ -76,17 +74,6 @@ class FancyBot : OneBotListener {
         val messageId = message.messageId
         logger.info("$sender($senderId: $groupId >>> $messageId): $msg")
         logger.trace("$sender($senderId: $groupId >>> $messageId: $json")
-
-        if (message.rawMessage == lastText) {
-            repeatCount++
-            if (repeatCount >= 1) {
-                lastText = ""
-                message.action.sendGroupMessage(message.groupId, message.message)
-            }
-        } else {
-            repeatCount = 0
-        }
-        lastText = message.rawMessage
 
         if (message.message.any { it.type == ArrayMessageType.face && it.data.id.toString() == "419" }) {
             message.reply("你发牛魔的火车呢, 我直接就是打断")
