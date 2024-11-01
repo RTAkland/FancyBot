@@ -80,6 +80,7 @@ class FancyBot : OneBotListener {
         if (message.rawMessage == lastText) {
             repeatCount++
             if (repeatCount >= 1) {
+                lastText = ""
                 message.action.sendGroupMessage(message.groupId, message.message)
             }
         } else {
