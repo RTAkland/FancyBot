@@ -77,7 +77,7 @@ class FancyBot : OneBotListener {
         logger.info("$sender($senderId: $groupId >>> $messageId): $msg")
         logger.trace("$sender($senderId: $groupId >>> $messageId: $json")
 
-        if (message.text == lastText) {
+        if (message.rawMessage == lastText) {
             repeatCount++
             if (repeatCount >= 1) {
                 message.action.sendGroupMessage(message.groupId, message.message)
@@ -85,7 +85,7 @@ class FancyBot : OneBotListener {
         } else {
             repeatCount = 0
         }
-        lastText = message.text
+        lastText = message.rawMessage
 
         if (message.message.any { it.type == ArrayMessageType.face && it.data.id.toString() == "419" }) {
             message.reply("你发牛魔的火车呢, 我直接就是打断")
