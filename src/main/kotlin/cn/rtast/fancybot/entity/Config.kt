@@ -7,13 +7,11 @@
 
 package cn.rtast.fancybot.entity
 
-import cn.rtast.fancybot.enums.DatabaseType
 import cn.rtast.fancybot.enums.ImageBedType
 import cn.rtast.fancybot.enums.ImageType
 import cn.rtast.fancybot.enums.WSType
 
 data class Config(
-    val database: Database,
     val ncmAPI: String,
     val wsType: WSType,
     val wsAddress: String,
@@ -52,13 +50,4 @@ data class Config(
     val azureAppClientId: String,
     val youtubeDataApiKey: String,
     val naiLongApiUrl: String,
-) {
-    data class Database(
-        val type: DatabaseType,
-        val host: String,
-        val port: Int,
-        val user: String,
-        val password: String,
-        val database: String,
-    )
-}
+)
