@@ -12,6 +12,7 @@ import cn.rtast.fancybot.entity.tts.TTSResponse
 import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.str.proxy
 import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.enums.AIRecordCharacterType
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import okhttp3.FormBody
@@ -38,5 +39,16 @@ class TTSCommand : BaseCommand() {
             .addRecord(response.url.proxy)
             .build()
         message.reply(msg)
+    }
+}
+
+class AITTSCommand : BaseCommand() {
+    override val commandNames = listOf("/aitts")
+
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
+        val content = args.joinToString(" ").trim()
+        val character = if (args.size == 1) AIRecordCharacterType.XiaoXin
+        else AIRecordCharacterType.forName(args.last()) ?: AIRecordCharacterType.XiaoXin
+        message.action.sendGroupAIRecord(message.groupId, character, content)
     }
 }

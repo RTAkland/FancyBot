@@ -124,7 +124,8 @@ val commands = listOf(
     MinecraftWikiCommand(), GaoKaoDaysRemainCommand(), IdiomExplainCommand(), NiuziManagerCommand(),
     TodayEatCommand(), TodayDrinkCommand(), MCLoginCommand(), RCONCommand(),
     GravatarCommand(), PastebinCommand(), ShuffleEchoCommand(), TodayDontEatCommand(),
-    TodayDontDrinkCommand(), MCBotCommand(), HTTPCatCommand(), HTTPDogCommand()
+    TodayDontDrinkCommand(), MCBotCommand(), HTTPCatCommand(), HTTPDogCommand(),
+    AITTSCommand()
 )
 
 val permissionCommands = listOf<PermissionCommand>()
