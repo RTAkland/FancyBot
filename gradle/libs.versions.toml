@@ -1,6 +1,6 @@
 [versions]
 kotlinVersion = "2.0.20"
-ronebotVersion = "2.3.2"
+ronebotVersion = "2.3.4"
 shadowVersion = "8.3.0"
 okhttpVersion = "5.0.0-alpha.14"
 exposedVersion = "0.53.0"
@@ -10,8 +10,6 @@ simpleJavaMailVersion = "8.12.2"
 jsoupVersion = "1.18.1"
 nashornVersion = "15.4"
 zxingVersion = "3.5.3"
-logbackClassicVersion = "1.5.8"
-slf4jVersion = "2.0.16"
 awsS3SDKVersion = "2.28.18"
 rconLibVersion = "1.1.0"
 mcprotolobVersion = "1.21-SNAPSHOT"
@@ -30,8 +28,6 @@ jsoup = { group = "org.jsoup", name = "jsoup", version.ref = "jsoupVersion" }
 nashorn-core = { group = "org.openjdk.nashorn", name = "nashorn-core", version.ref = "nashornVersion" }
 zxing-core = { group = "com.google.zxing", name = "core", version.ref = "zxingVersion" }
 zxing-javase = { group = "com.google.zxing", name = "javase", version.ref = "zxingVersion" }
-logback-classic = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logbackClassicVersion" }
-slf4j-api = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4jVersion" }
 aws-s3-sdk = { group = "software.amazon.awssdk", name = "s3", version.ref = "awsS3SDKVersion" }
 rconlib = { group = "cn.rtast", name = "RCONLib", version.ref = "rconLibVersion" }
 mcprotocollib = { group = "org.geysermc.mcprotocollib", name = "protocol", version.ref = "mcprotolobVersion" }

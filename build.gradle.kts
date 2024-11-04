@@ -46,8 +46,6 @@ dependencies {
     implementation(libs.nashorn.core)
     implementation(libs.zxing.core)
     implementation(libs.zxing.javase)
-    implementation(libs.logback.classic)
-    implementation(libs.slf4j.api)
     implementation(libs.aws.s3.sdk)
     implementation(libs.rconlib)
     implementation(libs.mcprotocollib)
