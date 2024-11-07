@@ -75,6 +75,10 @@ class FancyBot : OneBotListener {
         logger.info("$sender($senderId: $groupId >>> $messageId): $msg")
         logger.trace("$sender($senderId: $groupId >>> $messageId: $json")
 
+        if (SensitiveWord.containsSensitiveWords(message.text)) {
+            message.reply("你似乎说了一个不能说的词(?)")
+        }
+
         if (message.message.any { it.type == ArrayMessageType.face && it.data.id.toString() == "419" }) {
             message.reply("你发牛魔的火车呢, 我直接就是打断")
         }
@@ -276,4 +280,5 @@ suspend fun main() {
     initSetuIndex()
     initItems()
     initBackgroundTasks(instance)
+
 }
