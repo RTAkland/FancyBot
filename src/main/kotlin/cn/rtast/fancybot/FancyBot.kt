@@ -273,6 +273,7 @@ suspend fun main() {
         WSType.Client -> ROneBotFactory.createClient(configManager.wsAddress, accessToken, fancyBot)
         WSType.Server -> ROneBotFactory.createServer(configManager.wsPort, accessToken, fancyBot)
     }
+    ROneBotFactory.interceptor = CommandInterceptor()
     instance.addListeningGroups(*configManager.listeningGroups.toLongArray())
     initDatabase()
     initFilesDir()

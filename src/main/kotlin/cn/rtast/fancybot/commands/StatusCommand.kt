@@ -10,6 +10,7 @@ package cn.rtast.fancybot.commands
 import cn.rtast.fancybot.START_UP_TIME
 import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.enums.CommandAction
+import cn.rtast.fancybot.util.CommandInterceptor
 import cn.rtast.fancybot.util.file.insertActionRecord
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
@@ -43,6 +44,8 @@ class StatusCommand : BaseCommand() {
             .addText("操作系统: $osName / 系统架构: $osArch")
             .addNewLine()
             .addText("Java版本: $javaVersion / Kotlin版本: $kotlinVersion")
+            .addNewLine()
+            .addText("指令共执行: ${CommandInterceptor.file.readText()} 次")
             .build()
         message.reply(msg)
         insertActionRecord(CommandAction.Status, message.sender.userId)
