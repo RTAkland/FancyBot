@@ -14,7 +14,7 @@ import cn.rtast.fancybot.util.Http
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.asNode
+import cn.rtast.rob.util.ob.toNode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.InetAddress
@@ -80,7 +80,7 @@ class NslookupCommand : BaseCommand() {
                                 .build()
                             messages.add(msg)
                         }
-                        message.reply(messages.asNode(configManager.selfId))
+                        message.reply(messages.toNode(configManager.selfId))
                     }
                 }
             } else {

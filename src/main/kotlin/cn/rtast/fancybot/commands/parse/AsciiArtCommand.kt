@@ -20,7 +20,7 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.asMessageChain
+import cn.rtast.rob.util.ob.toMessageChain
 import com.madgag.gif.fmsware.GifDecoder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -40,7 +40,6 @@ class AsciiArtCommand : BaseCommand() {
         private val font = Font("Monospaced", Font.PLAIN, FONT_SIZE)
         private val logger = Logger.getLogger<AsciiArtCommand>()
         val waitingList = mutableListOf<Long>()
-        private lateinit var imageBed: ImageBed
 
         private fun BufferedImage.convertToAscii(): String {
             val width = this.width
@@ -132,10 +131,10 @@ class AsciiArtCommand : BaseCommand() {
                     return msg
                 }
             } catch (_: OutOfMemoryError) {
-                return listOf("GIF处理失败: 内存溢出").asMessageChain()
+                return listOf("GIF处理失败: 内存溢出").toMessageChain()
                 logger.info("GIF处理失败: 内存溢出")
             } catch (e: Exception) {
-                return listOf("处理GIF失败: ${e.message}").asMessageChain()
+                return listOf("处理GIF失败: ${e.message}").toMessageChain()
                 logger.info("gif处理失败: ${e.message}")
             }
         }

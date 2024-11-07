@@ -14,7 +14,7 @@ import cn.rtast.fancybot.util.Http
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.asNode
+import cn.rtast.rob.util.ob.toNode
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -46,6 +46,6 @@ class TheHistoryOfTodayCommand : BaseCommand() {
                     .build()
             )
         }
-        message.reply(messages.asNode(configManager.selfId))
+        message.reply(messages.toNode(configManager.selfId))
     }
 }

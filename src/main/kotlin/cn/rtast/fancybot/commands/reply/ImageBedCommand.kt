@@ -16,7 +16,7 @@ import cn.rtast.fancybot.util.misc.toURL
 import cn.rtast.rob.entity.GetMessage
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.asNode
+import cn.rtast.rob.util.ob.toNode
 import okio.IOException
 
 object ImageBedCommand {
@@ -49,7 +49,7 @@ object ImageBedCommand {
                             .build()
                         messages.add(msg)
                     }
-                    message.reply(messages.asNode(configManager.selfId))
+                    message.reply(messages.toNode(configManager.selfId))
                 }
             } catch (_: IOException) {
                 message.reply("上传失败: 图片已过期")

@@ -19,7 +19,7 @@ import cn.rtast.fancybot.util.str.fromArrayJson
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.NodeMessageChain
-import cn.rtast.rob.util.ob.asNode
+import cn.rtast.rob.util.ob.toNode
 import java.io.File
 import java.net.URI
 
@@ -58,7 +58,7 @@ private fun getImages(r18: Boolean): NodeMessageChain {
             }
         }
     }
-    return msg.asNode(configManager.selfId)
+    return msg.toNode(configManager.selfId)
 }
 
 class TenSetuItem : Item() {

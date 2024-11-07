@@ -50,8 +50,8 @@ import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.asMessageChain
-import cn.rtast.rob.util.ob.asNode
+import cn.rtast.rob.util.ob.toMessageChain
+import cn.rtast.rob.util.ob.toNode
 import okhttp3.FormBody
 import java.awt.AlphaComposite
 import java.awt.Color
@@ -97,7 +97,7 @@ class MinecraftWikiCommand : BaseCommand() {
             "s", "搜索" -> {
                 val searchKeyword = args.drop(1).joinToString(" ").trim()
                 val messages = mutableListOf<MessageChain>()
-                val headerMessage = listOf("结果如下:").asMessageChain()
+                val headerMessage = listOf("结果如下:").toMessageChain()
                 messages.add(headerMessage)
                 Http.get<MCWikiSearchResponse>(
                     "$baseApiUrl/search/title",
@@ -116,7 +116,7 @@ class MinecraftWikiCommand : BaseCommand() {
                         .addText("https://zh.minecraft.wiki/w/${it.title.uriEncode}")
                     messages.add(msg.build())
                 }
-                message.reply(messages.asNode(configManager.selfId))
+                message.reply(messages.toNode(configManager.selfId))
             }
 
             else -> {
@@ -132,18 +132,18 @@ class MinecraftWikiCommand : BaseCommand() {
                     response = Http.get<MCWikiPageResponse>(response.redirectTarget)
                 }
                 val messages = mutableListOf<MessageChain>()
-                val headerMsg = listOf("标题${response.title}的内容如下").asMessageChain()
+                val headerMsg = listOf("标题${response.title}的内容如下").toMessageChain()
                 val footerMsg = listOf(
                     "数据来源: https://zh.minecraft.wiki",
                     "协议: ${response.license.title}(${response.license.url})"
-                ).asMessageChain(true)
+                ).toMessageChain(true)
                 val bodyMsg = MessageChain.Builder()
                     .addText(response.source.convertToHTML().extractPlainTextFromHtml())
                     .build()
                 messages.add(headerMsg)
                 messages.add(bodyMsg)
                 messages.add(footerMsg)
-                message.reply(messages.asNode(configManager.selfId))
+                message.reply(messages.toNode(configManager.selfId))
             }
         }
     }
@@ -548,7 +548,7 @@ class RCONCommand : BaseCommand() {
                     return
                 }
                 val messages = mutableListOf<MessageChain>()
-                    .also { it.add(listOf("所有配置如下").asMessageChain()) }
+                    .also { it.add(listOf("所有配置如下").toMessageChain()) }
                 allRcons.forEach {
                     val msg = MessageChain.Builder()
                         .addText("名称: ${it.name}")
@@ -559,7 +559,7 @@ class RCONCommand : BaseCommand() {
                         .build()
                     messages.add(msg)
                 }
-                message.reply(messages.asNode(configManager.selfId))
+                message.reply(messages.toNode(configManager.selfId))
             }
 
             "add" -> {
@@ -591,9 +591,9 @@ class RCONCommand : BaseCommand() {
                     try {
                         val result = rconManager.executeCommand(message.sender.userId, name, command)
                         val messages = mutableListOf<MessageChain>()
-                            .also { it.add(listOf("执行结果如下").asMessageChain()) }
-                            .also { it.add(listOf(result).asMessageChain()) }
-                            .asNode(configManager.selfId)
+                            .also { it.add(listOf("执行结果如下").toMessageChain()) }
+                            .also { it.add(listOf(result).toMessageChain()) }
+                            .toNode(configManager.selfId)
                         message.reply(messages)
                     } catch (_: AuthFailedException) {
                         message.reply("执行失败, 密码不正确")

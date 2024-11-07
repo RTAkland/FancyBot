@@ -13,7 +13,7 @@ import cn.rtast.rob.entity.GetMessage
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.asNode
+import cn.rtast.rob.util.ob.toNode
 
 object ImageURLCommand {
 
@@ -51,7 +51,7 @@ object ImageURLCommand {
                         .build()
                     messages.add(msg)
                 }
-                groupMessage.reply(messages.asNode(configManager.selfId))
+                groupMessage.reply(messages.toNode(configManager.selfId))
             }
         }
     }
