@@ -270,7 +270,6 @@ suspend fun main() {
         WSType.Server -> ROneBotFactory.createServer(configManager.wsPort, accessToken, fancyBot)
     }
     instance.addListeningGroups(*configManager.listeningGroups.toLongArray())
-
     initDatabase()
     initFilesDir()
     initCommand()
