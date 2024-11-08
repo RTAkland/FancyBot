@@ -1,6 +1,6 @@
 [versions]
 kotlinVersion = "2.0.20"
-ronebotVersion = "2.4.4"
+ronebotVersion = "2.4.5"
 shadowVersion = "8.3.0"
 okhttpVersion = "5.0.0-alpha.14"
 exposedVersion = "0.53.0"

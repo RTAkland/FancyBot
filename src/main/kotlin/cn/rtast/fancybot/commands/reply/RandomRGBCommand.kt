@@ -15,7 +15,7 @@ import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.rob.entity.GetMessage
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.images
-import cn.rtast.rob.util.ob.MessageChain
+import cn.rtast.rob.onebot.MessageChain
 
 object RandomRGBCommand {
 

@@ -21,7 +21,7 @@ import cn.rtast.fancybot.util.str.fromJson
 import cn.rtast.fancybot.util.str.setTruncate
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType
-import cn.rtast.rob.util.ob.MessageChain
+import cn.rtast.rob.onebot.MessageChain
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.awt.Color

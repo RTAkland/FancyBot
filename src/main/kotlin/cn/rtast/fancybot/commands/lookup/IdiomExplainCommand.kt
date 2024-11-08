@@ -12,8 +12,8 @@ import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.entity.apispace.IdiomExplainResponse
 import cn.rtast.fancybot.util.Http
 import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.onebot.MessageChain
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ob.MessageChain
 
 @CommandDescription("解释一个成语")
 class IdiomExplainCommand : BaseCommand() {

@@ -11,8 +11,8 @@ import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.enums.CountryList
 import cn.rtast.fancybot.util.misc.randomBooleanWithProbability
 import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.onebot.MessageChain
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ob.MessageChain
 
 @CommandDescription("人生重开模拟器")
 class RemakeCommand : BaseCommand() {

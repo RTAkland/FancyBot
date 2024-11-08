@@ -10,9 +10,9 @@ package cn.rtast.fancybot.commands.lookup
 import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType
+import cn.rtast.rob.onebot.MessageChain
+import cn.rtast.rob.onebot.NodeMessageChain
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.NodeMessageChain
 
 
 private fun generateNodeMessage(targetId: String, times: Int = 10): NodeMessageChain {

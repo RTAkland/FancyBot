@@ -19,7 +19,7 @@ import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.fancybot.util.str.formatNumber
 import cn.rtast.fancybot.util.str.proxy
 import cn.rtast.rob.entity.GroupMessage
-import cn.rtast.rob.util.ob.MessageChain
+import cn.rtast.rob.onebot.MessageChain
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.awt.Color

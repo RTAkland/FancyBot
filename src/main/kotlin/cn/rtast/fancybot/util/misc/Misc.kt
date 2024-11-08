@@ -11,7 +11,7 @@ import cn.rtast.fancybot.*
 import cn.rtast.fancybot.util.Http
 import cn.rtast.rob.BotInstance
 import cn.rtast.rob.ROneBotFactory
-import cn.rtast.rob.util.ob.OneBotAction
+import cn.rtast.rob.onebot.OneBotAction
 import java.io.File
 import kotlin.random.Random
 import kotlin.time.Duration.Companion.hours

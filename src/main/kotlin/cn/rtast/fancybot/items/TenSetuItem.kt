@@ -17,9 +17,9 @@ import cn.rtast.fancybot.util.item.Item
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.fancybot.util.str.fromArrayJson
 import cn.rtast.rob.entity.GroupMessage
-import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.NodeMessageChain
-import cn.rtast.rob.util.ob.toNode
+import cn.rtast.rob.onebot.MessageChain
+import cn.rtast.rob.onebot.NodeMessageChain
+import cn.rtast.rob.onebot.toNode
 import java.io.File
 import java.net.URI
 

@@ -12,9 +12,9 @@ import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.entity.tianxing.HistoryOfToday
 import cn.rtast.fancybot.util.Http
 import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.onebot.MessageChain
+import cn.rtast.rob.onebot.toNode
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.toNode
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter

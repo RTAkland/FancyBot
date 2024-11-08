@@ -15,7 +15,7 @@ import cn.rtast.fancybot.util.item.Item
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.fancybot.util.str.fromArrayJson
 import cn.rtast.rob.entity.GroupMessage
-import cn.rtast.rob.util.ob.MessageChain
+import cn.rtast.rob.onebot.MessageChain
 import java.net.URI
 
 class SetuItem : Item() {

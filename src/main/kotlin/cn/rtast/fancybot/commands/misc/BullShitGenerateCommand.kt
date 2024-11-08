@@ -13,9 +13,9 @@ import cn.rtast.fancybot.entity.bullshit.BullShit
 import cn.rtast.fancybot.util.misc.Resources
 import cn.rtast.fancybot.util.str.fromJson
 import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.onebot.MessageChain
+import cn.rtast.rob.onebot.NodeMessageChain
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.NodeMessageChain
 import kotlin.random.Random
 
 @CommandDescription("狗屁不通文章生成器")

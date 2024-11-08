@@ -15,8 +15,8 @@ import cn.rtast.fancybot.util.misc.ImageBed
 import cn.rtast.fancybot.util.misc.toURL
 import cn.rtast.rob.entity.GetMessage
 import cn.rtast.rob.entity.GroupMessage
-import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.toNode
+import cn.rtast.rob.onebot.MessageChain
+import cn.rtast.rob.onebot.toNode
 import okio.IOException
 
 object ImageBedCommand {

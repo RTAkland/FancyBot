@@ -17,8 +17,6 @@ import cn.rtast.fancybot.commands.reply.ImageBedCommand
 import cn.rtast.fancybot.commands.reply.InvertImageCommand
 import cn.rtast.fancybot.commands.reply.RandomRGBCommand
 import cn.rtast.fancybot.commands.reply.SpeedUpGIFCommand
-import cn.rtast.fancybot.entity.nailong.NaiLongDetectPayload
-import cn.rtast.fancybot.entity.nailong.NaiLongDetectResponse
 import cn.rtast.fancybot.enums.WSType
 import cn.rtast.fancybot.util.*
 import cn.rtast.fancybot.util.misc.ImageBed
@@ -45,9 +43,9 @@ import cn.rtast.rob.entity.lagrange.FileEvent
 import cn.rtast.rob.entity.lagrange.PokeEvent
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.enums.QQFace
-import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.OneBotAction
-import cn.rtast.rob.util.ob.OneBotListener
+import cn.rtast.rob.onebot.MessageChain
+import cn.rtast.rob.onebot.OneBotAction
+import cn.rtast.rob.onebot.OneBotListener
 import com.madgag.gif.fmsware.GifDecoder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

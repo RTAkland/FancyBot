@@ -13,8 +13,8 @@ import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.str.proxy
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.AIRecordCharacter
+import cn.rtast.rob.onebot.MessageChain
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ob.MessageChain
 import okhttp3.FormBody
 
 @CommandDescription("将文字转换成语音(TTS)!")

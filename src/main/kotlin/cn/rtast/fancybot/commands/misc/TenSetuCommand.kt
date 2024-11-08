@@ -9,8 +9,8 @@ package cn.rtast.fancybot.commands.misc
 
 import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.onebot.MessageChain
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ob.MessageChain
 
 @Deprecated("已迁移到兑换列表中")
 @CommandDescription("获得十张色图!")

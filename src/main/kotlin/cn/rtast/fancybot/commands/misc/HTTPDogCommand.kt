@@ -12,8 +12,8 @@ import cn.rtast.fancybot.enums.HttpStatusCode
 import cn.rtast.fancybot.util.misc.Resources
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.onebot.MessageChain
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ob.MessageChain
 
 @CommandDescription("随机HTTP狗狗")
 class HTTPDogCommand : BaseCommand() {

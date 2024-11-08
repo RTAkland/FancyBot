@@ -14,8 +14,8 @@ import cn.rtast.fancybot.niuziManager
 import cn.rtast.fancybot.util.misc.getUserName
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType
+import cn.rtast.rob.onebot.MessageChain
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ob.MessageChain
 
 private suspend fun noAccount(message: GroupMessage) {
     message.reply("你还没有银行账户呢, 发送`创建账户`来创建一个账户吧~")

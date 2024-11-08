@@ -15,8 +15,8 @@ import cn.rtast.fancybot.util.misc.toBufferedImage
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType
+import cn.rtast.rob.onebot.MessageChain
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ob.MessageChain
 import com.madgag.gif.fmsware.GifDecoder
 import java.awt.image.BufferedImage
 import java.net.URI

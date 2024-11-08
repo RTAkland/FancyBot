@@ -11,8 +11,8 @@ import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.itemManager
 import cn.rtast.fancybot.niuziManager
 import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.onebot.MessageChain
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ob.MessageChain
 
 @CommandDescription("使用牛子长度兑换物品")
 class NiuziRedeemCommand : BaseCommand() {

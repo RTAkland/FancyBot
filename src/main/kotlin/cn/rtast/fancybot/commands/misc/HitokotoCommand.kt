@@ -11,8 +11,8 @@ import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.entity.Hitokoto
 import cn.rtast.fancybot.util.Http
 import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.onebot.MessageChain
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ob.MessageChain
 
 @CommandDescription("一言")
 class HitokotoCommand : BaseCommand() {

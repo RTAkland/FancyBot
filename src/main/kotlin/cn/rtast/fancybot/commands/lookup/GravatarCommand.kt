@@ -12,8 +12,8 @@ import cn.rtast.fancybot.util.misc.toURL
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.fancybot.util.str.getMD5
 import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.onebot.MessageChain
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ob.MessageChain
 
 @CommandDescription("查询用户的Gravatar头像")
 class GravatarCommand : BaseCommand() {

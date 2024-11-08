@@ -11,7 +11,7 @@ import cn.rtast.fancybot.entity.Baisi
 import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.item.Item
 import cn.rtast.rob.entity.GroupMessage
-import cn.rtast.rob.util.ob.MessageChain
+import cn.rtast.rob.onebot.MessageChain
 
 class BaisiItem : Item() {
     override val itemNames = listOf("baisi", "白丝", "bs")

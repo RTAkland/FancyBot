@@ -18,9 +18,9 @@ import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.rob.entity.GetMessage
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType
+import cn.rtast.rob.onebot.MessageChain
+import cn.rtast.rob.onebot.toMessageChain
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.toMessageChain
 import com.madgag.gif.fmsware.GifDecoder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

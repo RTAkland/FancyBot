@@ -11,9 +11,9 @@ import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.commands
 import cn.rtast.fancybot.configManager
 import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.onebot.MessageChain
+import cn.rtast.rob.onebot.NodeMessageChain
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.NodeMessageChain
 import kotlin.reflect.full.findAnnotation
 import kotlin.reflect.full.hasAnnotation
 

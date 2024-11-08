@@ -14,8 +14,8 @@ import cn.rtast.fancybot.enums.CommandAction
 import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.file.insertActionRecord
 import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.onebot.MessageChain
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ob.MessageChain
 import org.jsoup.Jsoup
 
 @CommandDescription("查询wiki百科")

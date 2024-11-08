@@ -12,9 +12,9 @@ import cn.rtast.fancybot.configManager
 import cn.rtast.fancybot.entity.IPGeo
 import cn.rtast.fancybot.util.Http
 import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.onebot.MessageChain
+import cn.rtast.rob.onebot.toNode
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.toNode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.InetAddress

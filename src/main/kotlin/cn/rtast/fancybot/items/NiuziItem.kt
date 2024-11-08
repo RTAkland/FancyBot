@@ -10,7 +10,7 @@ package cn.rtast.fancybot.items
 import cn.rtast.fancybot.niuziManager
 import cn.rtast.fancybot.util.item.Item
 import cn.rtast.rob.entity.GroupMessage
-import cn.rtast.rob.util.ob.MessageChain
+import cn.rtast.rob.onebot.MessageChain
 
 class NiuziItem : Item() {
     override val itemNames = listOf("牛子", "nz", "niuzi")

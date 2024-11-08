@@ -8,7 +8,7 @@
 package cn.rtast.fancybot.util.item
 
 import cn.rtast.rob.entity.GroupMessage
-import cn.rtast.rob.util.ob.MessageChain
+import cn.rtast.rob.onebot.MessageChain
 
 abstract class Item {
     abstract val itemNames: List<String>

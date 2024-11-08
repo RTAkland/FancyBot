@@ -13,8 +13,8 @@ import cn.rtast.fancybot.enums.CommandAction
 import cn.rtast.fancybot.util.CommandInterceptor
 import cn.rtast.fancybot.util.file.insertActionRecord
 import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.onebot.MessageChain
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ob.MessageChain
 import java.time.Instant
 
 @CommandDescription("状态")

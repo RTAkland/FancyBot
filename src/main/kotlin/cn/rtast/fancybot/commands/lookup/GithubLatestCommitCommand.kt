@@ -14,8 +14,8 @@ import cn.rtast.fancybot.entity.github.LatestCommit
 import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.str.fromArrayJson
 import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.onebot.MessageChain
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ob.MessageChain
 
 @CommandDescription("查询Github上的仓库的最新一次的提交信息")
 class GithubLatestCommitCommand : BaseCommand() {

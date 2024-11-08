@@ -48,12 +48,12 @@ import cn.rtast.motdpinger.JavaPing
 import cn.rtast.rcon.exceptions.AuthFailedException
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
+import cn.rtast.rob.onebot.MessageChain
+import cn.rtast.rob.onebot.toMessageChain
+import cn.rtast.rob.onebot.toNode
 import cn.rtast.rob.segment.NewLine
 import cn.rtast.rob.segment.Text
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ob.MessageChain
-import cn.rtast.rob.util.ob.toMessageChain
-import cn.rtast.rob.util.ob.toNode
 import okhttp3.FormBody
 import java.awt.AlphaComposite
 import java.awt.Color

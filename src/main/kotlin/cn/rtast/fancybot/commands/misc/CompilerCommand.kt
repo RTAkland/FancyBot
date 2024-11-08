@@ -17,8 +17,8 @@ import cn.rtast.fancybot.util.Http
 import cn.rtast.fancybot.util.file.insertActionRecord
 import cn.rtast.fancybot.util.str.toJson
 import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.onebot.MessageChain
 import cn.rtast.rob.util.BaseCommand
-import cn.rtast.rob.util.ob.MessageChain
 
 @CommandDescription("执行不同语言的代码")
 class CompilerCommand : BaseCommand() {
