@@ -48,6 +48,8 @@ import cn.rtast.motdpinger.JavaPing
 import cn.rtast.rcon.exceptions.AuthFailedException
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
+import cn.rtast.rob.segment.NewLine
+import cn.rtast.rob.segment.Text
 import cn.rtast.rob.util.BaseCommand
 import cn.rtast.rob.util.ob.MessageChain
 import cn.rtast.rob.util.ob.toMessageChain
@@ -134,9 +136,10 @@ class MinecraftWikiCommand : BaseCommand() {
                 val messages = mutableListOf<MessageChain>()
                 val headerMsg = listOf("标题${response.title}的内容如下").toMessageChain()
                 val footerMsg = listOf(
-                    "数据来源: https://zh.minecraft.wiki",
-                    "协议: ${response.license.title}(${response.license.url})"
-                ).toMessageChain(true)
+                    Text("数据来源: https://zh.minecraft.wiki"),
+                    NewLine(),
+                    Text("协议: ${response.license.title}(${response.license.url})")
+                ).toMessageChain()
                 val bodyMsg = MessageChain.Builder()
                     .addText(response.source.convertToHTML().extractPlainTextFromHtml())
                     .build()
