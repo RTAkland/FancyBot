@@ -173,16 +173,16 @@ class FancyBot : OneBotListener {
         }
 
         coroutineScope.launch {
-            if (message.images.isNotEmpty()) {
-                message.images.forEach {
-                    val payload = NaiLongDetectPayload(it.file).toJson()
-                    val result = Http.post<NaiLongDetectResponse>(configManager.naiLongApiUrl, payload)
-                    logger.info("奶龙识别结果: ${result.result}")
-                    if (result.result) {
-                        message.reply("本群禁止发奶龙!")
-                    }
-                }
-            }
+//            if (message.images.isNotEmpty()) {
+//                message.images.forEach {
+//                    val payload = NaiLongDetectPayload(it.file).toJson()
+//                    val result = Http.post<NaiLongDetectResponse>(configManager.naiLongApiUrl, payload)
+//                    logger.info("奶龙识别结果: ${result.result}")
+//                    if (result.result) {
+//                        message.reply("本群禁止发奶龙!")
+//                    }
+//                }
+//            }
             message.message.forEach {
                 if (it.type == ArrayMessageType.image) {
                     val filename = it.data.file!!.split("=").last() + ".png"
