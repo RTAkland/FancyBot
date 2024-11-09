@@ -32,7 +32,6 @@ import cn.rtast.fancybot.util.misc.toByteArray
 import cn.rtast.fancybot.util.misc.toGrayscale
 import cn.rtast.fancybot.util.misc.toURL
 import cn.rtast.fancybot.util.str.encodeToBase64
-import cn.rtast.fancybot.util.str.toJson
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
 import cn.rtast.rob.entity.custom.BeKickEvent
