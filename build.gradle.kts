@@ -31,7 +31,6 @@ tasks.compileJava {
     targetCompatibility = "17"
 }
 
-
 dependencies {
     implementation(libs.ronebot)
     implementation(libs.okhttp)
