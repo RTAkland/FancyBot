@@ -29,7 +29,6 @@ suspend fun OneBotAction.getUserName(groupId: Long, userId: Long): String {
 
 suspend fun initCommand() {
     commands.forEach { ROneBotFactory.commandManager.register(it) }
-    permissionCommands.forEach { ROneBotFactory.commandManager.register(it) }
 }
 
 fun initFilesDir() {
