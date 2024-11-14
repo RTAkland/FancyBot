@@ -18,19 +18,10 @@ import cn.rtast.fancybot.commands.reply.InvertImageCommand
 import cn.rtast.fancybot.commands.reply.RandomRGBCommand
 import cn.rtast.fancybot.commands.reply.SpeedUpGIFCommand
 import cn.rtast.fancybot.enums.WSType
-import cn.rtast.fancybot.util.*
-import cn.rtast.fancybot.util.misc.ImageBed
-import cn.rtast.fancybot.util.misc.convertToDate
-import cn.rtast.fancybot.util.misc.initBackgroundTasks
-import cn.rtast.fancybot.util.misc.initCommand
-import cn.rtast.fancybot.util.misc.initFilesDir
-import cn.rtast.fancybot.util.misc.initItems
-import cn.rtast.fancybot.util.misc.initSetuIndex
-import cn.rtast.fancybot.util.misc.makeGif
-import cn.rtast.fancybot.util.misc.toBufferedImage
-import cn.rtast.fancybot.util.misc.toByteArray
-import cn.rtast.fancybot.util.misc.toGrayscale
-import cn.rtast.fancybot.util.misc.toURL
+import cn.rtast.fancybot.util.CommandInterceptor
+import cn.rtast.fancybot.util.Logger
+import cn.rtast.fancybot.util.initDatabase
+import cn.rtast.fancybot.util.misc.*
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.*
@@ -45,14 +36,16 @@ import cn.rtast.rob.enums.QQFace
 import cn.rtast.rob.onebot.MessageChain
 import cn.rtast.rob.onebot.OneBotAction
 import cn.rtast.rob.onebot.OneBotListener
+import cn.rtast.rob.segment.NewLine
+import cn.rtast.rob.segment.Text
 import com.madgag.gif.fmsware.GifDecoder
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.net.URI
+import java.util.zip.ZipEntry
+import java.util.zip.ZipOutputStream
+import javax.imageio.ImageIO
 
 class FancyBot : OneBotListener {
 
@@ -165,6 +158,30 @@ class FancyBot : OneBotListener {
                             }
                         }
                     message.reply(msg.build())
+                }
+
+                "/拆帧", "/cj" -> {
+                    val gifStream = getMsg.images.first().file.toURL().openStream()
+                    val decoder = GifDecoder()
+                    decoder.read(gifStream)
+                    val frames = (0 until decoder.frameCount).map { decoder.getFrame(it) }
+                    val byteArrayOutputStream = ByteArrayOutputStream()
+                    ZipOutputStream(byteArrayOutputStream).use { zipOut ->
+                        for ((index, image) in frames.withIndex()) {
+                            val imageOutputStream = ByteArrayOutputStream()
+                            ImageIO.write(image, "png", imageOutputStream)
+                            val entry = ZipEntry("frame_$index.png")
+                            zipOut.putNextEntry(entry)
+                            zipOut.write(imageOutputStream.toByteArray())
+                            zipOut.closeEntry()
+                        }
+                    }
+                    val zipBytes = byteArrayOutputStream.toByteArray()
+                    logger.info("Split frame size: ${zipBytes.size / 1024 / 1024}MB")
+                    val imgBedUrl = ImageBed.upload(zipBytes, "zip")
+                    val shortLink = imgBedUrl.makeShortLink()
+                    val msg = Text(imgBedUrl) + NewLine() + Text(shortLink)
+                    message.reply(msg)
                 }
             }
         }

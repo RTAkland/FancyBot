@@ -19,7 +19,6 @@ import cn.rtast.rob.entity.GetMessage
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.onebot.MessageChain
-import cn.rtast.rob.onebot.toMessageChain
 import cn.rtast.rob.util.BaseCommand
 import com.madgag.gif.fmsware.GifDecoder
 import kotlinx.coroutines.Dispatchers
@@ -131,10 +130,10 @@ class AsciiArtCommand : BaseCommand() {
                     return msg
                 }
             } catch (_: OutOfMemoryError) {
-                return listOf("GIF处理失败: 内存溢出").toMessageChain()
+                return MessageChain.Builder().addText("GIF处理失败: 内存溢出").build()
                 logger.info("GIF处理失败: 内存溢出")
             } catch (e: Exception) {
-                return listOf("处理GIF失败: ${e.message}").toMessageChain()
+                return MessageChain.Builder().addText("处理GIF失败: ${e.message}").build()
                 logger.info("gif处理失败: ${e.message}")
             }
         }

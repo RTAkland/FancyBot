@@ -12,19 +12,20 @@ import cn.rtast.rob.ROneBotFactory
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.interceptor.ExecutionInterceptor
+import cn.rtast.rob.util.BaseCommand
 import java.io.File
 
-class CommandInterceptor : ExecutionInterceptor {
+class CommandInterceptor : ExecutionInterceptor() {
 
     companion object {
         val file = File(ROOT_PATH, "/caches/command_execution_count").apply { createNewFile() }
     }
 
-    override suspend fun afterGroupExecute(message: GroupMessage) {
+    override suspend fun afterGroupExecute(message: GroupMessage, command: BaseCommand) {
         file.writeText(ROneBotFactory.totalCommandExecutionTimes.toString())
     }
 
-    override suspend fun afterPrivateExecute(message: PrivateMessage) {
+    override suspend fun afterPrivateExecute(message: PrivateMessage, command: BaseCommand) {
         file.writeText(ROneBotFactory.totalCommandExecutionTimes.toString())
     }
 }

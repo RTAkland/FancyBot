@@ -49,10 +49,10 @@ import cn.rtast.rcon.exceptions.AuthFailedException
 import cn.rtast.rob.entity.GroupMessage
 import cn.rtast.rob.entity.PrivateMessage
 import cn.rtast.rob.onebot.MessageChain
-import cn.rtast.rob.onebot.toMessageChain
 import cn.rtast.rob.onebot.toNode
 import cn.rtast.rob.segment.NewLine
 import cn.rtast.rob.segment.Text
+import cn.rtast.rob.segment.toMessageChain
 import cn.rtast.rob.util.BaseCommand
 import okhttp3.FormBody
 import java.awt.AlphaComposite
@@ -99,7 +99,7 @@ class MinecraftWikiCommand : BaseCommand() {
             "s", "搜索" -> {
                 val searchKeyword = args.drop(1).joinToString(" ").trim()
                 val messages = mutableListOf<MessageChain>()
-                val headerMessage = listOf("结果如下:").toMessageChain()
+                val headerMessage = MessageChain.Builder().addText("结果如下:").build()
                 messages.add(headerMessage)
                 Http.get<MCWikiSearchResponse>(
                     "$baseApiUrl/search/title",
@@ -134,7 +134,7 @@ class MinecraftWikiCommand : BaseCommand() {
                     response = Http.get<MCWikiPageResponse>(response.redirectTarget)
                 }
                 val messages = mutableListOf<MessageChain>()
-                val headerMsg = listOf("标题${response.title}的内容如下").toMessageChain()
+                val headerMsg = MessageChain.Builder().addText("标题${response.title}的内容如下").build()
                 val footerMsg = listOf(
                     Text("数据来源: https://zh.minecraft.wiki"),
                     NewLine(),
@@ -551,7 +551,7 @@ class RCONCommand : BaseCommand() {
                     return
                 }
                 val messages = mutableListOf<MessageChain>()
-                    .also { it.add(listOf("所有配置如下").toMessageChain()) }
+                    .also { it.add(MessageChain.Builder().addText("所有配置如下").build()) }
                 allRcons.forEach {
                     val msg = MessageChain.Builder()
                         .addText("名称: ${it.name}")
@@ -594,8 +594,8 @@ class RCONCommand : BaseCommand() {
                     try {
                         val result = rconManager.executeCommand(message.sender.userId, name, command)
                         val messages = mutableListOf<MessageChain>()
-                            .also { it.add(listOf("执行结果如下").toMessageChain()) }
-                            .also { it.add(listOf(result).toMessageChain()) }
+                            .also { it.add(MessageChain.Builder().addText("执行结果如下").build()) }
+                            .also { it.add(MessageChain.Builder().addText(result).build()) }
                             .toNode(configManager.selfId)
                         message.reply(messages)
                     } catch (_: AuthFailedException) {
