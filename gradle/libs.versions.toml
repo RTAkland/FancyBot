@@ -11,7 +11,7 @@ jsoupVersion = "1.18.1"
 nashornVersion = "15.4"
 zxingVersion = "3.5.3"
 awsS3SDKVersion = "2.28.18"
-rconLibVersion = "1.1.0"
+rconLibVersion = "1.1.1"
 mcprotolobVersion = "1.21-SNAPSHOT"
 h2Version = "2.3.232"
 
