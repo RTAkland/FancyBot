@@ -1,6 +1,6 @@
 [versions]
 kotlinVersion = "2.0.20"
-ronebotVersion = "2.5.2"
+ronebotVersion = "2.6.2"
 shadowVersion = "8.3.0"
 okhttpVersion = "5.0.0-alpha.14"
 exposedVersion = "0.53.0"
@@ -17,7 +17,7 @@ h2Version = "2.3.232"
 
 [libraries]
 ronebot = { group = "cn.rtast", name = "ronebot-onebot-v11", version.ref = "ronebotVersion" }
-motd-pinger = { group = "cn.rtast", name = "MotdPinger", version.ref = "motdPingerVersion" }
+motd-pinger = { group = "cn.rtast", name = "motd-pinger", version.ref = "motdPingerVersion" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttpVersion" }
 exposed-core = { group = "org.jetbrains.exposed", name = "exposed-core", version.ref = "exposedVersion" }
 exposed-jdbc = { group = "org.jetbrains.exposed", name = "exposed-jdbc", version.ref = "exposedVersion" }
@@ -29,7 +29,7 @@ nashorn-core = { group = "org.openjdk.nashorn", name = "nashorn-core", version.r
 zxing-core = { group = "com.google.zxing", name = "core", version.ref = "zxingVersion" }
 zxing-javase = { group = "com.google.zxing", name = "javase", version.ref = "zxingVersion" }
 aws-s3-sdk = { group = "software.amazon.awssdk", name = "s3", version.ref = "awsS3SDKVersion" }
-rconlib = { group = "cn.rtast", name = "RCONLib", version.ref = "rconLibVersion" }
+rconlib = { group = "cn.rtast", name = "rconlib", version.ref = "rconLibVersion" }
 mcprotocollib = { group = "org.geysermc.mcprotocollib", name = "protocol", version.ref = "mcprotolobVersion" }
 h2-jdbc = { group = "com.h2database", name = "h2", version.ref = "h2Version" }
 
