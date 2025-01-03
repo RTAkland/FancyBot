@@ -69,12 +69,12 @@ class FancyBot : OneBotListener {
             message.reply("你发牛魔的火车呢, 我直接就是打断")
         }
 
-        if (message.text.contains("原神")) {
-            (0..10).forEach { _ -> message.reaction(QQFace.entries.random()) }
-            message.reply("你原神牛魔呢")
-            delay(1500L)
-            message.reply("但是话又说回来.....启动！！")
-        }
+//        if (message.text.contains("原神")) {
+//            (0..10).forEach { _ -> message.reaction(QQFace.entries.random()) }
+//            message.reply("你原神牛魔呢")
+//            delay(1500L)
+//            message.reply("但是话又说回来.....启动！！")
+//        }
 
         GitHubParseCommand.parse(message)
         ReverseGIFCommand.callback(message)

@@ -49,7 +49,7 @@ fun initItems() {
     items.forEach { itemManager.register(it) }
 }
 
-fun initBackgroundTasks(instance: BotInstance) {
+suspend fun initBackgroundTasks(instance: BotInstance) {
     instance.scheduler.scheduleTask({ instance ->
         configManager.admins.forEach {
             instance.action.sendLike(it, 1)
