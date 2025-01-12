@@ -17,8 +17,7 @@ repositories {
     mavenLocal()
     maven("https://repo.opencollab.dev/main/")
     maven("https://oss.sonatype.org/content/repositories/snapshots")
-    maven("https://maven.rtast.cn/releases/")
-    maven("https://libraries.minecraft.net")
+    maven("https://pkg.rtast.cn/releases/")
 }
 
 tasks.compileKotlin {
