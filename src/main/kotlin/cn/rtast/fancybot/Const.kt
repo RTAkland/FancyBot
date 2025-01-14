@@ -8,18 +8,10 @@
 
 package cn.rtast.fancybot
 
-import cn.rtast.fancybot.commands.AboutCommand
-import cn.rtast.fancybot.commands.EchoCommand
-import cn.rtast.fancybot.commands.HelpCommand
-import cn.rtast.fancybot.commands.ShuffleEchoCommand
-import cn.rtast.fancybot.commands.StatusCommand
-import cn.rtast.fancybot.commands.SupportMeCommand
+import cn.rtast.fancybot.commands.*
 import cn.rtast.fancybot.commands.lookup.*
 import cn.rtast.fancybot.commands.misc.*
-import cn.rtast.fancybot.commands.misc.JrrpCommand
-import cn.rtast.fancybot.commands.misc.ShortLinkCommand
 import cn.rtast.fancybot.commands.niuzi.*
-import cn.rtast.fancybot.commands.niuzi.NiuziRedeemCommand
 import cn.rtast.fancybot.commands.parse.AsciiArtCommand
 import cn.rtast.fancybot.commands.parse.ReverseGIFCommand
 import cn.rtast.fancybot.entity.Config
@@ -27,11 +19,7 @@ import cn.rtast.fancybot.enums.ImageBedType
 import cn.rtast.fancybot.enums.ImageType
 import cn.rtast.fancybot.enums.WSType
 import cn.rtast.fancybot.items.*
-import cn.rtast.fancybot.util.file.BlackListManager
-import cn.rtast.fancybot.util.file.ConfigManager
-import cn.rtast.fancybot.util.file.NiuziBankManager
-import cn.rtast.fancybot.util.file.NiuziManager
-import cn.rtast.fancybot.util.file.RCONManager
+import cn.rtast.fancybot.util.file.*
 import cn.rtast.fancybot.util.item.ItemManager
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -124,5 +112,5 @@ val commands = listOf(
     TodayEatCommand(), TodayDrinkCommand(), MCLoginCommand(), RCONCommand(),
     GravatarCommand(), PastebinCommand(), ShuffleEchoCommand(), TodayDontEatCommand(),
     TodayDontDrinkCommand(), MCBotCommand(), HTTPCatCommand(), HTTPDogCommand(),
-    AITTSCommand()
+    AITTSCommand(), NWWNCommand()
 )
