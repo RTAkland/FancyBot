@@ -21,13 +21,13 @@ import javax.imageio.ImageIO
 @CommandDescription("那我问你")
 class NWWNCommand : BaseCommand() {
     override val commandNames = listOf("nwwn", "那我问你")
-    private val originNWWNImage = Resources.loadFromResources("misc/nwwn.png")
-    private val img = ImageIO.read(originNWWNImage)
+    private val originNWWNImage = Resources.loadFromResourcesAsBytes("misc/nwwn.png")
     private val font = Font("Serif", Font.ITALIC, 55)
 
     override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         try {
             val keyword = args.first()
+            val img = ImageIO.read(originNWWNImage!!.inputStream())
             val g2d = img.createGraphics()
             g2d.color = Color.BLACK
             g2d.font = font
