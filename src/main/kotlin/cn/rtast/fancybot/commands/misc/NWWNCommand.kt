@@ -7,6 +7,7 @@
 
 package cn.rtast.fancybot.commands.misc
 
+import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.util.misc.Resources
 import cn.rtast.fancybot.util.misc.toByteArray
 import cn.rtast.fancybot.util.str.encodeToBase64
@@ -17,6 +18,7 @@ import java.awt.Color
 import java.awt.Font
 import javax.imageio.ImageIO
 
+@CommandDescription("那我问你")
 class NWWNCommand : BaseCommand() {
     override val commandNames = listOf("nwwn", "那我问你")
     private val originNWWNImage = Resources.loadFromResources("misc/nwwn.png")
