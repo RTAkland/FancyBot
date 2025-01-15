@@ -44,7 +44,7 @@ class NWWNCommand : BaseCommand() {
 }
 
 class TJBGXLCommand: BaseCommand() {
-    override val commandNames = listOf("太几把搞笑了", "tjbgxl")
+    override val commandNames = listOf("太几把搞笑了", "tjbgxl", "jb")
 
     private val originImage = Resources.loadFromResourcesAsBytes("misc/tjbgxl.png")
     private val font = Font("SimSun", Font.BOLD, 45)
