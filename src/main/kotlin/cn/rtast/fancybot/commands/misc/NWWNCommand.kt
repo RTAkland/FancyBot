@@ -43,6 +43,7 @@ class NWWNCommand : BaseCommand() {
     }
 }
 
+@CommandDescription("太几把搞笑了")
 class TJBGXLCommand: BaseCommand() {
     override val commandNames = listOf("太几把搞笑了", "tjbgxl", "jb")
 
@@ -57,6 +58,33 @@ class TJBGXLCommand: BaseCommand() {
             g2d.color = Color.BLACK
             g2d.font = font
             g2d.drawCenteredText(keyword, 380, 620)
+            g2d.dispose()
+            val imgBase64 = img.toByteArray().encodeToBase64()
+            val msg = Image(imgBase64, true)
+            message.reply(msg)
+        } catch (e: Exception) {
+            message.reply("生成失败: ${e.message}")
+        }
+    }
+}
+
+@CommandDescription("香奈美语句生成")
+class XNMCommand: BaseCommand() {
+    override val commandNames = listOf("xnm", "香奈美")
+
+    private val font = Font("SimSun", Font.BOLD, 55)
+    private val originImage = Resources.loadFromResourcesAsBytes("misc/xnm.png")
+
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
+        try {
+            val keyword = args.first()
+            val keyword2 = args.last()
+            val img = ImageIO.read(originImage!!.inputStream())
+            val g2d = img.createGraphics()
+            g2d.color = Color.BLACK
+            g2d.font = font
+            g2d.drawCenteredText(keyword, 510, 55)
+            g2d.drawCenteredText(keyword2, 510, 140)
             g2d.dispose()
             val imgBase64 = img.toByteArray().encodeToBase64()
             val msg = Image(imgBase64, true)

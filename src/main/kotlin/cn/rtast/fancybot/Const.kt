@@ -112,5 +112,5 @@ val commands = listOf(
     TodayEatCommand(), TodayDrinkCommand(), MCLoginCommand(), RCONCommand(),
     GravatarCommand(), PastebinCommand(), ShuffleEchoCommand(), TodayDontEatCommand(),
     TodayDontDrinkCommand(), MCBotCommand(), HTTPCatCommand(), HTTPDogCommand(),
-    AITTSCommand(), NWWNCommand(), TJBGXLCommand()
+    AITTSCommand(), NWWNCommand(), TJBGXLCommand(), XNMCommand()
 )
