@@ -47,7 +47,7 @@ class TJBGXLCommand: BaseCommand() {
     override val commandNames = listOf("太几把搞笑了", "tjbgxl")
 
     private val originImage = Resources.loadFromResourcesAsBytes("misc/tjbgxl.png")
-    private val font = Font("SimSun", Font.BOLD, 55)
+    private val font = Font("SimSun", Font.BOLD, 45)
 
     override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         try {
