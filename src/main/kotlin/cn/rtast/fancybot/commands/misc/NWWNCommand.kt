@@ -17,6 +17,7 @@ import cn.rtast.rob.segment.Image
 import cn.rtast.rob.util.BaseCommand
 import java.awt.Color
 import java.awt.Font
+import java.awt.RenderingHints
 import javax.imageio.ImageIO
 
 @CommandDescription("那我问你")
@@ -30,6 +31,7 @@ class NWWNCommand : BaseCommand() {
             val keyword = args.joinToString(" ")
             val img = ImageIO.read(originNWWNImage!!.inputStream())
             val g2d = img.createGraphics()
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
             g2d.color = Color.BLACK
             g2d.font = font
             g2d.drawString(keyword, 290, 70)
@@ -55,6 +57,7 @@ class TJBGXLCommand: BaseCommand() {
             val keyword = args.joinToString(" ")
             val img = ImageIO.read(originImage!!.inputStream())
             val g2d = img.createGraphics()
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
             g2d.color = Color.BLACK
             g2d.font = font
             g2d.drawCenteredText(keyword, 380, 620)
@@ -81,10 +84,36 @@ class XNMCommand: BaseCommand() {
             val keyword2 = args.last()
             val img = ImageIO.read(originImage!!.inputStream())
             val g2d = img.createGraphics()
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
             g2d.color = Color.BLACK
             g2d.font = font
             g2d.drawCenteredText(keyword, 510, 55)
             g2d.drawCenteredText(keyword2, 510, 140)
+            g2d.dispose()
+            val imgBase64 = img.toByteArray().encodeToBase64()
+            val msg = Image(imgBase64, true)
+            message.reply(msg)
+        } catch (e: Exception) {
+            message.reply("生成失败: ${e.message}")
+        }
+    }
+}
+
+class SJCommand: BaseCommand() {
+    override val commandNames = listOf("sj")
+
+    private val font = Font("SimSun", Font.BOLD, 20)
+    private val originImage = Resources.loadFromResourcesAsBytes("misc/sj.png")
+
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
+        try {
+            val keyword = args.joinToString(" ")
+            val img = ImageIO.read(originImage!!.inputStream())
+            val g2d = img.createGraphics()
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
+            g2d.color = Color.BLACK
+            g2d.font = font
+            g2d.drawCenteredText(keyword, 126, 230)
             g2d.dispose()
             val imgBase64 = img.toByteArray().encodeToBase64()
             val msg = Image(imgBase64, true)

@@ -8,6 +8,7 @@
 package cn.rtast.fancybot.util.misc
 
 import java.io.InputStream
+import kotlin.jvm.javaClass
 
 object Resources {
     fun loadFromResources(filename: String): InputStream? {
