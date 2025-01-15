@@ -9,6 +9,7 @@ package cn.rtast.fancybot.commands.misc
 
 import cn.rtast.fancybot.annotations.CommandDescription
 import cn.rtast.fancybot.util.misc.Resources
+import cn.rtast.fancybot.util.misc.drawCenteredText
 import cn.rtast.fancybot.util.misc.toByteArray
 import cn.rtast.fancybot.util.str.encodeToBase64
 import cn.rtast.rob.entity.GroupMessage
@@ -22,16 +23,40 @@ import javax.imageio.ImageIO
 class NWWNCommand : BaseCommand() {
     override val commandNames = listOf("nwwn", "那我问你")
     private val originNWWNImage = Resources.loadFromResourcesAsBytes("misc/nwwn.png")
-    private val font = Font("Serif", Font.ITALIC, 55)
+    private val font = Font("SimSun", Font.BOLD, 55)
 
     override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
         try {
-            val keyword = args.first()
+            val keyword = args.joinToString(" ")
             val img = ImageIO.read(originNWWNImage!!.inputStream())
             val g2d = img.createGraphics()
             g2d.color = Color.BLACK
             g2d.font = font
             g2d.drawString(keyword, 290, 70)
+            g2d.dispose()
+            val imgBase64 = img.toByteArray().encodeToBase64()
+            val msg = Image(imgBase64, true)
+            message.reply(msg)
+        } catch (e: Exception) {
+            message.reply("生成失败: ${e.message}")
+        }
+    }
+}
+
+class TJBGXLCommand: BaseCommand() {
+    override val commandNames = listOf("太几把搞笑了", "tjbgxl")
+
+    private val originImage = Resources.loadFromResourcesAsBytes("misc/tjbgxl.png")
+    private val font = Font("SimSun", Font.BOLD, 55)
+
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
+        try {
+            val keyword = args.joinToString(" ")
+            val img = ImageIO.read(originImage!!.inputStream())
+            val g2d = img.createGraphics()
+            g2d.color = Color.BLACK
+            g2d.font = font
+            g2d.drawCenteredText(keyword, 380, 620)
             g2d.dispose()
             val imgBase64 = img.toByteArray().encodeToBase64()
             val msg = Image(imgBase64, true)
