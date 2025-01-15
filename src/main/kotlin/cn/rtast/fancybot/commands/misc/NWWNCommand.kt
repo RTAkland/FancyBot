@@ -114,7 +114,7 @@ class SJCommand: BaseCommand() {
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON)
             g2d.color = Color.BLACK
             g2d.font = font
-            g2d.drawCenteredText(keyword, 126, 230)
+            g2d.drawCenteredText(keyword, 126, 210)
             g2d.dispose()
             val imgBase64 = img.toByteArray().encodeToBase64()
             val msg = Image(imgBase64, true)
