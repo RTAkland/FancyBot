@@ -99,6 +99,7 @@ class XNMCommand: BaseCommand() {
     }
 }
 
+@CommandDescription("设静")
 class SJCommand: BaseCommand() {
     override val commandNames = listOf("sj")
 
