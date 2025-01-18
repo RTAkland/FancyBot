@@ -20,6 +20,7 @@ import cn.rtast.fancybot.util.str.formatNumber
 import cn.rtast.fancybot.util.str.fromJson
 import cn.rtast.fancybot.util.str.setTruncate
 import cn.rtast.rob.entity.GroupMessage
+import cn.rtast.rob.entity.text
 import cn.rtast.rob.enums.ArrayMessageType
 import cn.rtast.rob.onebot.MessageChain
 import okhttp3.OkHttpClient
@@ -184,6 +185,7 @@ object BiliVideoParseCommand {
     }
 
     suspend fun parse(message: GroupMessage) {
+        if (!message.text.contains("bilibili.com") || !message.text.contains("b23.tv")) return
         try {
             val bvid = if (bvRegex.containsMatchIn(message.rawMessage)) {
                 message.rawMessage.extractBv()
