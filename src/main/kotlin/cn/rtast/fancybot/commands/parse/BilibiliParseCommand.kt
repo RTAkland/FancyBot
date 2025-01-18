@@ -185,7 +185,7 @@ object BiliVideoParseCommand {
     }
 
     suspend fun parse(message: GroupMessage) {
-        if (!message.text.contains("bilibili.com") || !message.text.contains("b23.tv")) return
+        if (!message.text.contains("bilibili.com") && !message.text.contains("b23.tv")) return
         try {
             val bvid = if (bvRegex.containsMatchIn(message.rawMessage)) {
                 message.rawMessage.extractBv()
