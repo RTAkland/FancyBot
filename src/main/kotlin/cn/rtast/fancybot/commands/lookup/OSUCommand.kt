@@ -49,7 +49,7 @@ class OSUCommand : BaseCommand() {
     private fun generateProgressBar(percent: Int, length: Int = 10): String {
         val completedLength = (percent * length) / 100
         val remainingLength = length - completedLength
-        val progressBar = "█".repeat(completedLength) + " ".repeat(remainingLength)
+        val progressBar = "█".repeat(completedLength) + "=".repeat(remainingLength)
         return "[$progressBar] $percent%"
     }
 
