@@ -50,4 +50,6 @@ class ConfigManager : JsonFileHandler<Config>("config.json") {
     val azureAppClientId = config.azureAppClientId
     val youtubeDataApiKey = config.youtubeDataApiKey
     val naiLongApiUrl = config.naiLongApiUrl
+    val osuClientId = config.osuClientId
+    val osuClientSecret = config.osuClientSecret
 }

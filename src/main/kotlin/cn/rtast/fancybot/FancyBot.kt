@@ -18,7 +18,6 @@ import cn.rtast.fancybot.commands.reply.InvertImageCommand
 import cn.rtast.fancybot.commands.reply.RandomRGBCommand
 import cn.rtast.fancybot.commands.reply.SpeedUpGIFCommand
 import cn.rtast.fancybot.enums.WSType
-import cn.rtast.fancybot.util.CommandInterceptor
 import cn.rtast.fancybot.util.Logger
 import cn.rtast.fancybot.util.initDatabase
 import cn.rtast.fancybot.util.misc.*
@@ -285,7 +284,6 @@ suspend fun main() {
         WSType.Client -> ROneBotFactory.createClient(configManager.wsAddress, accessToken, fancyBot)
         WSType.Server -> ROneBotFactory.createServer(configManager.wsPort, accessToken, fancyBot)
     }
-    ROneBotFactory.interceptor = CommandInterceptor()
     instance.addListeningGroups(*configManager.listeningGroups.toLongArray())
     initDatabase()
     initFilesDir()

@@ -50,4 +50,6 @@ data class Config(
     val azureAppClientId: String,
     val youtubeDataApiKey: String,
     val naiLongApiUrl: String,
+    val osuClientSecret: String,
+    val osuClientId: Int
 )

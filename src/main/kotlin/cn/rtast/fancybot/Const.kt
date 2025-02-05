@@ -23,6 +23,7 @@ import cn.rtast.fancybot.util.file.*
 import cn.rtast.fancybot.util.item.ItemManager
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import java.io.File
 import java.time.Instant
 
 val gson: Gson = GsonBuilder()
@@ -31,6 +32,7 @@ val gson: Gson = GsonBuilder()
     .create()
 
 const val ROOT_PATH = "./data"
+val ROOT_PATH_ = File(ROOT_PATH).apply { mkdirs() }
 const val ASSETS_BASE_URL = "https://static.rtast.cn"
 const val API_RTAST_URL = "https://api.rtast.cn"
 const val PBI_API_URL = "https://pbi.us.kg"
@@ -73,7 +75,9 @@ val DEFAULT_CONFIG = Config(
     apiRtastKey = "114514",
     azureAppClientId = "114514",
     youtubeDataApiKey = "114514",
-    naiLongApiUrl = "http://127.0.0.1:5000/nailong"
+    naiLongApiUrl = "http://127.0.0.1:5000/nailong",
+    osuClientId = 111,
+    osuClientSecret = "222"
 )
 
 val configManager = ConfigManager()
@@ -112,5 +116,6 @@ val commands = listOf(
     TodayEatCommand(), TodayDrinkCommand(), MCLoginCommand(), RCONCommand(),
     GravatarCommand(), PastebinCommand(), ShuffleEchoCommand(), TodayDontEatCommand(),
     TodayDontDrinkCommand(), MCBotCommand(), HTTPCatCommand(), HTTPDogCommand(),
-    AITTSCommand(), NWWNCommand(), TJBGXLCommand(), XNMCommand(), SJCommand()
+    AITTSCommand(), NWWNCommand(), TJBGXLCommand(), XNMCommand(), SJCommand(),
+    OSUCommand()
 )
