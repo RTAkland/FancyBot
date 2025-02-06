@@ -79,6 +79,8 @@ class OSUCommand : BaseCommand() {
             .addText("游玩时间 | ${formatDuration(userData.statistics.playTime)}")
             .addNewLine()
             .addText("游玩次数 | ${userData.statistics.playCount}")
+            .addNewLine()
+            .addText("表现分/PP | ${userData.statistics.pp.toInt()}")
             .build()
         message.reply(msg)
     }
