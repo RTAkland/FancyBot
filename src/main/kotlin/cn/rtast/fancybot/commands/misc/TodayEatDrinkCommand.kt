@@ -66,3 +66,24 @@ class TodayDontDrinkCommand : BaseCommand() {
         message.reply("你喝个结巴, 是吧")
     }
 }
+
+@CommandDescription("今天抽什么")
+class TodaySmokeCommand : BaseCommand() {
+    override val commandNames = listOf("今天抽什么")
+
+    private val smokeList = listOf(
+        "黑利", "蓝利", "白利", "普皖", "金皖",
+        "宽窄", "煊赫门", "骆驼", "百乐(红酒)",
+        "手卷烟", "烟斗", "万宝路", "白沙3代",
+        "白沙2代", "中华", "南京-大观园", "金钗",
+        "银钗", "玉溪", "芒果", "南京-雨花石",
+        "金圣", "南京95", "红塔山", "轿子",
+        "钻石荷花", "黄金叶(天叶)", "芙蓉王",
+        "黄鹤楼", "红河", "长白山", "长丰",
+        "中南海(蓝莓爆珠)", "云烟", "真龙", "红利"
+    )
+
+    override suspend fun executeGroup(message: GroupMessage, args: List<String>) {
+        message.reply("今天抽${smokeList.random()}吧~")
+    }
+}
