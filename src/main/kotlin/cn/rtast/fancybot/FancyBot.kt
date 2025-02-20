@@ -66,9 +66,9 @@ class FancyBot : OneBotListener {
         logger.info("$sender($senderId: $groupId >>> $messageId): $msg")
         logger.trace("$sender($senderId: $groupId >>> $messageId: $json")
 
-        if (message.message.any { it.type == ArrayMessageType.face && it.data.id.toString() == "419" }) {
-            message.reply("你发牛魔的火车呢, 我直接就是打断")
-        }
+//        if (message.message.any { it.type == ArrayMessageType.face && it.data.id.toString() == "419" }) {
+//            message.reply("你发牛魔的火车呢, 我直接就是打断")
+//        }
 
 //        if (message.text.contains("原神")) {
 //            (0..10).forEach { _ -> message.reaction(QQFace.entries.random()) }
