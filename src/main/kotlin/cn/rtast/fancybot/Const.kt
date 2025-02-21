@@ -117,5 +117,5 @@ val commands = listOf(
     GravatarCommand(), PastebinCommand(), ShuffleEchoCommand(), TodayDontEatCommand(),
     TodayDontDrinkCommand(), MCBotCommand(), HTTPCatCommand(), HTTPDogCommand(),
     AITTSCommand(), NWWNCommand(), TJBGXLCommand(), XNMCommand(), SJCommand(),
-    OSUCommand(), TodaySmokeCommand(), GoodNewsCommand()
+    OSUCommand(), TodaySmokeCommand(), GoodNewsCommand(), MRRHRCommand()
 )
