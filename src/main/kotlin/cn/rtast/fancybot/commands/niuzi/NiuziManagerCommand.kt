@@ -25,10 +25,11 @@ class NiuziManagerCommand : BaseCommand() {
             message.reply("此命令可以管理成员的牛子或者银行账户")
             return
         }
+        println(args)
         if (message.sender.isAdmin || message.sender.isOwner) {
             val target = message.message.find { it.type == ArrayMessageType.at }!!.data.qq!!.toLong()
-            val method = args[1]
-            val amount = args.last().toDouble()
+            val method = args[0]
+            val amount = args[1].toDouble()
             when (method) {
                 "set", "s", "设置" -> {
                     val type = args[2]
