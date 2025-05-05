@@ -16,7 +16,7 @@ mcprotolobVersion = "1.21-SNAPSHOT"
 h2Version = "2.3.232"
 
 [libraries]
-ronebot = { group = "cn.rtast", name = "ronebot-onebot-v11", version.ref = "ronebotVersion" }
+ronebot = { group = "cn.rtast.rob", name = "ronebot-onebot-v11", version.ref = "ronebotVersion" }
 motd-pinger = { group = "cn.rtast", name = "motd-pinger", version.ref = "motdPingerVersion" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttpVersion" }
 exposed-core = { group = "org.jetbrains.exposed", name = "exposed-core", version.ref = "exposedVersion" }

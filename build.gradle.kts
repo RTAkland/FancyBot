@@ -18,6 +18,7 @@ repositories {
     maven("https://repo.opencollab.dev/main/")
     maven("https://oss.sonatype.org/content/repositories/snapshots")
     maven("https://repo.maven.rtast.cn/releases/")
+    maven("https://libraries.minecraft.net")
 }
 
 tasks.compileKotlin {
