@@ -31,7 +31,7 @@ class PastebinCommand : BaseCommand() {
                 "$API_RTAST_URL/api/pastebin", pastebinPayload.toJson(),
                 params = mapOf("key" to configManager.apiRtastKey)
             )
-            return "$PBI_API_URL/-/${response.id}"
+            return "https://api.rtast.cn/-/${response.id}"
         }
     }
 
