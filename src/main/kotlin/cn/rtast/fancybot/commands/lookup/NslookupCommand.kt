@@ -76,7 +76,7 @@ class NslookupCommand : BaseCommand() {
                                 .addNewLine()
                                 .addText("$host -> $ip")
                                 .addNewLine()
-                                .addText("国家: ${geo.country} 地区: ${geo.region} 城市: ${geo.city} | 所属组织: ${geo.org}")
+                                .addText("国家: ${if (geo.country == "HK") "CN" else geo.country} 地区: ${geo.region} 城市: ${geo.city} | 所属组织: ${geo.org}")
                                 .build()
                             messages.add(msg)
                         }

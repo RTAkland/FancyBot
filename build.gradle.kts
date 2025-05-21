@@ -69,7 +69,3 @@ application {
     mainClass = "cn.rtast.fancybot.FancyBotKt"
     applicationName = "FancyBot"
 }
-
-kotlin {
-    jvmToolchain(17)
-}
