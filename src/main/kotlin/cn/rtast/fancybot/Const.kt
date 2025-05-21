@@ -99,7 +99,7 @@ val commands = listOf(
     EchoCommand(), JrrpCommand(), NiuziRedeemCommand(), HitokotoCommand(),
     KFCCommand(), GenerateQRCodeCommand(), AntiRevokeCommand(), MCPingCommand(),
     WeatherCommand(), CigaretteCommand(), RemakeCommand(), PixivCommand(),
-    RUACommand(), NslookupCommand(), CompilerCommand(), AICommand(),
+    RUACommand(), CompilerCommand(), AICommand(),
     GithubUserCommand(), AboutCommand(), MusicPlayUrlCommand(), DomainPriceCommand(),
     SendMailCommand(), ZiBiCommand(), UnsetZiBiCommand(), WikipediaCommand(),
     AsciiArtCommand(), StatusCommand(), JueCommand(), ShortLinkCommand(),
